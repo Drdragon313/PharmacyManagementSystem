@@ -33,7 +33,7 @@ const Navbar = () => {
             <Link to="/schema">Schema Definition</Link>
           </Menu.Item>
           <Menu.Item key="3">
-            <Link to="/services">Services</Link>
+          <Link to="/file">Import File</Link>
           </Menu.Item>
         </Menu>
       </Sider>

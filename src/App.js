@@ -7,7 +7,7 @@ import Iframe from "./Iframes/Iframe";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "antd";
 import Schema from "./Pages/Schema_Definition/Schema";
-import Services from "./Pages/Services/Services";
+import File from "./Pages/File Import/File";
 const { Content } = Layout;
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={ <Iframe />} />
           <Route path="schema" element={ <Schema />} />
-          <Route path="services" element={ <Services />} />
+          <Route path="file" element={ <File />} />
          
         </Routes>
         </Content>
