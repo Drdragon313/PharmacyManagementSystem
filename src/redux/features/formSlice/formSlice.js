@@ -4,21 +4,24 @@ const initialState = {
   formDataArray: [],
 };
 
+let rowId = 1;
+
 const formSlice = createSlice({
   name: 'form',
   initialState,
   reducers: {
     addFormData: (state, action) => {
-      state.formDataArray.push(action.payload);
+      const newFormData = { ...action.payload, id: rowId++ };
+      state.formDataArray.push(newFormData);
     },
     removeFormData: (state, action) => {
-        state.formDataArray = state.formDataArray.filter((item) => item.index !== action.payload);
-      },
-      updateSelectedOptions: (state, action) => {
-        state.selectedOptions = action.payload;
-      },
+      const idToRemove = action.payload;
+      state.formDataArray = state.formDataArray.filter((item) => item.id !== idToRemove);
+    },
+    
+    
   },
 });
 
-export const { addFormData,removeFormData,updateSelectedOptions } = formSlice.actions;
+export const { addFormData, removeFormData } = formSlice.actions;
 export default formSlice.reducer;

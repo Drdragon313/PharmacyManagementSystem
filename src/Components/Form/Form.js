@@ -1,99 +1,127 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { Button, Form, Input } from 'antd';
-import SelectOptions from '../Select/Select';
-import formSlice, { addFormData } from '../../redux/features/formSlice/formSlice';
+import React, { useState } from 'react';
+import { Form, Button, Input, Row, Col, Modal } from 'antd';
+import CustomSelect from '../Select/Select'; // Adjust the import path as needed
 
-const SchemaForm = () => {
-    const [form] = Form.useForm();
-  const dispatch = useDispatch();
+const SchemaForm = ({ onAddRow }) => {
+  const [form] = Form.useForm();
+  const [selectedType, setSelectedType] = useState(null);
+  const [selectedValidation, setSelectedValidation] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const onFinish = (values) => {
     console.log('Success:', values);
 
     const formDataEntry = {
       Fieldname: values.Fieldname,
-      Type: values.Type,
-      Validations: values.Validations,
+      Type: selectedType,
+      Validation: selectedValidation,
     };
 
-
-    dispatch(addFormData(formDataEntry));
-
+    onAddRow(formDataEntry);
 
     form.resetFields();
+    setSelectedType(null);
+    setSelectedValidation(null);
+    setIsModalVisible(false); 
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
 
+  const typeOptions = [
+    { value: 'string', label: 'string' },
+    { value: 'number', label: 'number' },
+    { value: 'boolean', label: 'boolean' },
+  ];
+
+  const validationOptions = [
+    { value: 'ValidationOption1', label: 'Validation Option 1' },
+    { value: 'ValidationOption2', label: 'Validation Option 2' },
+   
+  ];
+
   return (
-    <Form
-      name="basic"
-      labelCol={{
-        span: 8,
-      }}
-      wrapperCol={{
-        span: 16,
-      }}
-      style={{
-        maxWidth: 600,
-      }}
-      initialValues={{
-        remember: true,
-      }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
-    >
-      <Form.Item
-        label="Field Name"
-        name="Fieldname"
-        rules={[
-          {
-            required: true,
-            message: 'Please input Field Name',
-          },
-        ]}
+    <div>
+      <Button type="primary" onClick={() => setIsModalVisible(true)}>
+        Add New Entry
+      </Button>
+      <Modal
+        title="Add Schema Details"
+        visible={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        footer={null}
       >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label="Type"
-        name="Type"
-        rules={[
-          {
-            required: true,
-            message: 'Please input Type',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label="Validation"
-        name="Validation"
-        rules={[
-          {
-            required: false,
-            message: 'Please Selects validations',
-          },
-        ]}
-      >
-        <SelectOptions />
-      </Form.Item>
-      <Form.Item
-        wrapperCol={{
-          offset: 8,
-          span: 16,
-        }}
-      >
-        <Button type="primary" htmlType="submit">
-          Add Row
-        </Button>
-      </Form.Item>
-    </Form>
+        <Form
+          form={form}
+          name="basic"
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
+        >
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item
+                label="Field Name"
+                name="Fieldname"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input Field Name',
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="Type"
+                name="Type"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please select Type',
+                  },
+                ]}
+              >
+                <CustomSelect
+                  options={typeOptions}
+                  value={selectedType}
+                  onChange={(value) => setSelectedType(value)}
+                  placeholder="Select a Type"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="Validation"
+                name="Validation"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please select Validation',
+                  },
+                ]}
+              >
+                <CustomSelect
+                  options={validationOptions}
+                  value={selectedValidation}
+                  onChange={(value) => setSelectedValidation(value)}
+                  placeholder="Select a Validation"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Button type="primary" htmlType="submit">
+              Add Row
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+    </div>
   );
 };
 

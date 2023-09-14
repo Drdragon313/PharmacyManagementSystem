@@ -1,56 +1,16 @@
-import React from 'react';
-import { Select, Space } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateSelectedOptions } from '../../redux/features/formSlice/formSlice';
+import React from "react";
+import { Select } from "antd";
 
-const customOptions = [
-  {
-    label: 'MaxLength',
-    value: 'MaxLength',
-  },
-  {
-    label: 'MinLength',
-    value: 'MinLength',
-  },
-  {
-    label: 'Float',
-    value: 'float',
-  },
-  {
-    label: 'No Special Character',
-    value: 'noSpecialCharacter',
-  },
-];
-
-const SelectOptions = () => {
-  const dispatch = useDispatch();
-  const selectedOptions = useSelector((state) => state.form.selectedOptions);
-
-  const handleChange = (value) => {
-    console.log(`Selected: ${value}`);
-    dispatch(updateSelectedOptions(value)); 
-  };
-
+const SelectOption = ({ options, onChange, value, placeholder }) => {
   return (
-    <Space
-      style={{
-        width: '100%',
-      }}
-      direction="vertical"
-    >
-      <Select
-        mode="multiple"
-        allowClear
-        style={{
-          width: '100%',
-        }}
-        placeholder="Please select"
-        defaultValue={selectedOptions}
-        onChange={handleChange}
-        options={customOptions}
-      />
-    </Space>
+    <Select value={value} onChange={onChange} placeholder={placeholder}>
+      {options.map((option) => (
+        <Select.Option key={option.value} value={option.value}>
+          {option.label}
+        </Select.Option>
+      ))}
+    </Select>
   );
 };
 
-export default SelectOptions;
+export default SelectOption;

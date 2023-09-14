@@ -1,83 +1,84 @@
-import React, { useEffect, useState } from "react";
-import { Popconfirm, Table } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  removeFormData,
-} from "../../redux/features/formSlice/formSlice"; 
-import ModalPop from "../Modal/Modal";
+import React, { useState } from 'react';
+import { Button, Table } from 'antd';
+import { useDispatch } from 'react-redux';
+import { addFormData,removeFormData } from '../../redux/features/formSlice/formSlice';
+import SchemaForm from '../Form/Form'; 
+import ModalPop from '../Modal/Modal';
 
 const Stable = () => {
-  const dispatch = useDispatch();
   const [dataSource, setDataSource] = useState([]);
-
-
-  const formDataFromRedux = useSelector((state) => state.form.formDataArray);
-  const selectedOptionsFromRedux = useSelector(
-    (state) => state.form.selectedOptions
-  );
-
-  useEffect(() => {
+  const [rowId, setRowId] = useState(1);
   
-    const updatedDataSource = formDataFromRedux.map((formData) => ({
-      ...formData,
-      selectedOptions: selectedOptionsFromRedux,
-    }));
-    setDataSource(updatedDataSource);
-  }, [formDataFromRedux, selectedOptionsFromRedux]);
+ 
+  const dispatch = useDispatch();
 
-  const handleDelete = (index) => {
-    dispatch(removeFormData(index));
-    const newData = dataSource.filter((item) => item.index !== index);
-    setDataSource(newData);  };
+  const handleAddRow = (formDataEntry) => {
+    formDataEntry.id = rowId;
 
-  const defaultColumns = [
+
+    dispatch(addFormData(formDataEntry));
+
+    setDataSource([...dataSource, formDataEntry]);
+    setRowId(rowId + 1);
+  };
+
+  const handleDelete = (id) => {
+    
+    dispatch(removeFormData(id));
+
+    const newData = dataSource.filter((item) => item.id !== id);
+    setDataSource(newData);
+  };
+
+  const downloadFirstRowAsCSV = () => {
+    if (dataSource.length > 0) {
+      const firstRow = dataSource[0];
+      const csvContent =  Object.values(firstRow).join(',') ;
+      const encodedCSV = encodeURIComponent(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', `data:text/csv;charset=utf-8,${encodedCSV}`);
+      link.setAttribute('download', 'first_row.csv');
+      document.body.appendChild(link);
+      link.click();
+    }
+  };
+
+  const columns = [
     {
-      title: "Index",
-      dataIndex: "index",
-      width: "5%",
-      render: (index) => index + 1,
+      title: 'id',
+      dataIndex: 'id',
+      width: '5%',
     },
     {
-      title: "Field Name",
-      dataIndex: "Fieldname",
-      width: "30%",
-      height: "50%",
-      editable: true,
+      title: 'Field Name',
+      dataIndex: 'Fieldname',
+      width: '30%',
     },
     {
-      title: "Type",
-      dataIndex: "Type",
-      height: "50%",
-      editable: true,
+      title: 'Type',
+      dataIndex: 'Type',
+      width: '30%',
     },
     {
-      title: "Validation",
-      dataIndex: "Validation",
-      editable: true,
-      height: "50%",
-      render: (_, record) => <span>{record.selectedOptions.join(", ")}</span>,
+      title: 'Validation',
+      dataIndex: 'Validation',
+      width: '30%',
     },
     {
-     title: "Operation",
-  dataIndex: "operation",
-  render: (_, record) => (
-    <Popconfirm
-    title="Sure to delete?"
-    onConfirm={() => handleDelete(record.index)}
-  >
-    <a>Delete</a>
-  </Popconfirm>
-        ) 
+      title: 'Operation',
+      dataIndex: 'id',
+      render: (id) => (
+        <Button onClick={() => handleDelete(id)}>Delete</Button>
+      ),
     },
   ];
 
-  const columns = defaultColumns.map((col, index) => {
-    return col;
-  });
   return (
     <div>
-      <ModalPop />
+ 
+      <SchemaForm onAddRow={handleAddRow} />
       <Table bordered dataSource={dataSource} columns={columns} />
+      <Button type='primary' onClick={downloadFirstRowAsCSV}>Download CSV</Button>
     </div>
   );
 };
