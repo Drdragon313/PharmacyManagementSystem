@@ -1,40 +1,51 @@
 import { Upload, Button } from "antd";
 import React, { useState } from "react";
 import Papa from "papaparse";
+import { useSelector } from "react-redux"; 
 import "./File.css";
 
 const File = () => {
   const [error, setError] = useState("");
+  const reduxStructure = useSelector((state) => state.form.formDataArray);
 
   const validateCSV = (file) => {
     return new Promise((resolve, reject) => {
       let hasInvalidChunk = false;
-      console.log(file);
+      
 
       Papa.parse(file, {
         dynamicTyping: true,
+         skipEmptyLines:true, 
         header: true,
+       
         chunk: (results) => {
+          const csvHeaders = Object.keys(results.data[0]);
+          const reduxHeaders = reduxStructure.map((item) => item.Fieldname);
+
+          // Check if CSV headers match Redux headers
+          if (!arraysEqual(csvHeaders, reduxHeaders)) {
+            hasInvalidChunk = true;
+            reject("CSV file does not match the required structure.");
+          }
+
           results.data.forEach((row) => {
-            console.log(typeof row.name);
-              console.log(typeof row.age);
-            // Check if each row has "name" and "age" columns
-            if (!row.name || !row.age) {
-              
-              hasInvalidChunk = true;
-              reject("CSV file does not have the required structure.");
-            }
-            if (typeof row.name !== "string" || typeof row.age !== "number") {
-              hasInvalidChunk = true;
-              reject("CSV file contains invalid data types.");
-            }
+            // Check if data types match the Redux structure
+            reduxStructure.forEach((item) => {
+              const fieldName = item.Fieldname;
+              const expectedType = item.Type;
+              const actualType = typeof row[fieldName];
+
+              if (actualType !== expectedType) {
+                hasInvalidChunk = true;
+                reject(`Invalid data type for ${fieldName}.`);
+              }
+            });
           });
         },
-        
+
         complete: () => {
           if (!hasInvalidChunk) {
             resolve();
-            
           }
         },
       });
@@ -52,13 +63,21 @@ const File = () => {
     }
   };
 
+  // Utility function to compare two arrays for equality
+  const arraysEqual = (arr1, arr2) => {
+    if (arr1.length !== arr2.length) return false;
+    for (let i = 0; i < arr1.length; i++) {
+      if (arr1[i] !== arr2[i]) return false;
+    }
+    return true;
+  };
+
   return (
     <div>
       <Upload.Dragger
         listType="text"
         multiple={true}
-        // action={"https://localhost:3000/"}
-        accept=".csv,.doc"
+        accept=".csv"
         beforeUpload={validateAndUpload}
       >
         Drag Files here or
