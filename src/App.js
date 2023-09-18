@@ -13,11 +13,15 @@ const { Content } = Layout;
 function App() {
   return (
     <BrowserRouter>
-      <Topnav />
+   
+    
+      
 
       <Layout>
         <Navbar />
-        <Content>
+        
+        <Content style={{ height:"71vh"}}>
+        <Topnav />
         <Routes>
           <Route path="/" element={ <Iframe />} />
           <Route path="schema" element={ <Schema />} />
@@ -26,10 +30,9 @@ function App() {
         </Routes>
         </Content>
       </Layout>
+      
 
-      {/* <div >
-        <Iframe />
-      </div> */}
+     
     </BrowserRouter>
   );
 }
