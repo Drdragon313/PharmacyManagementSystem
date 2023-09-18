@@ -13,6 +13,7 @@ const Navbar = () => {
     <>
       <Sider
         width={200}
+        theme="dark"
         style={{
           background: colorBgContainer,
         }}
@@ -33,7 +34,10 @@ const Navbar = () => {
             <Link to="/schema">Schema Definition</Link>
           </Menu.Item>
           <Menu.Item key="3">
-          <Link to="/file">Import File</Link>
+            <Link to="/services">Services</Link>
+          </Menu.Item>
+          <Menu.Item key="4">
+            <Link to="/file">Upload File</Link>
           </Menu.Item>
         </Menu>
       </Sider>

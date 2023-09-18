@@ -30,9 +30,9 @@ const SchemaForm = ({ onAddRow }) => {
   };
 
   const typeOptions = [
-    { value: 'string', label: 'string' },
-    { value: 'number', label: 'number' },
-    { value: 'boolean', label: 'boolean' },
+    { value: 'string', label: 'String' },
+    { value: 'number', label: 'Number' },
+    { value: 'boolean', label: 'Boolean' },
   ];
 
   const validationOptions = [
@@ -43,12 +43,9 @@ const SchemaForm = ({ onAddRow }) => {
 
   return (
     <div>
-      <Button type="primary" onClick={() => setIsModalVisible(true)}>
-        Add New Entry
-      </Button>
       <Modal
         title="Add Schema Details"
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         footer={null}
       >
@@ -121,6 +118,10 @@ const SchemaForm = ({ onAddRow }) => {
           </Form.Item>
         </Form>
       </Modal>
+      <Button type="primary" onClick={() => setIsModalVisible(true)}>
+        Add New Entry
+      </Button>
+      
     </div>
   );
 };
