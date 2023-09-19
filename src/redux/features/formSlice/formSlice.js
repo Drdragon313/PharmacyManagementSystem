@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   formDataArray: [],
@@ -7,7 +7,7 @@ const initialState = {
 let rowId = 1;
 
 const formSlice = createSlice({
-  name: 'form',
+  name: "form",
   initialState,
   reducers: {
     addFormData: (state, action) => {
@@ -16,12 +16,16 @@ const formSlice = createSlice({
     },
     removeFormData: (state, action) => {
       const idToRemove = action.payload;
-      state.formDataArray = state.formDataArray.filter((item) => item.id !== idToRemove);
+      state.formDataArray = state.formDataArray.filter(
+        (item) => item.id !== idToRemove
+      );
     },
-    
-    
+    updateFormDataOrder: (state, action) => {
+      // Update the order of formDataArray based on the action.payload
+      state.formDataArray = action.payload;
+    },
   },
 });
 
-export const { addFormData, removeFormData } = formSlice.actions;
+export const { addFormData, removeFormData,updateFormDataOrder } = formSlice.actions;
 export default formSlice.reducer;

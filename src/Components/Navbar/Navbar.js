@@ -1,6 +1,6 @@
 import Logo from "../Images/Logo.png";
 import React, { useState } from "react";
-import "./Navbar.css"
+import "./Navbar.css";
 import { Link } from "react-router-dom";
 import { Layout, Menu, theme } from "antd";
 import {
@@ -26,46 +26,22 @@ const Navbar = () => {
   };
 
   return (
-    <>
-   
-      <Sider
-        
-        width={200}
-        
+    <Sider width={200} collapsed={collapsed}>
+      <div
         style={{
+          height: "70.1vh",
           background: colorBgContainer,
-          
         }}
-        collapsed={collapsed}
       >
-        
-         <div
-          onClick={toggleCollapse}
-          className="NavbarTop"
-        >
-          <img  src={Logo} alt={"Data Connext Logo"} />
-          
-          
-           
+        <div onClick={toggleCollapse} className="NavbarTop">
+          <img src={Logo} alt={"Data Connext Logo"} />
         </div>
-         
+
         {/* Toggle button/icon */}
-        <div
-          onClick={toggleCollapse}
-          className="NavbarTop"
-        >
-         
-          
-          {collapsed ? (
-            <MenuUnfoldOutlined 
-            />
-          ) : (
-            <MenuFoldOutlined 
-            />
-          )}
-           
+        <div onClick={toggleCollapse} className="NavbarTop">
+          {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         </div>
-       
+
         <Menu
           theme="dark"
           mode="inline"
@@ -73,7 +49,6 @@ const Navbar = () => {
           defaultOpenKeys={["sub1"]}
           className="NavbarMenu"
         >
-         
           <Menu.Item key="1" icon={<HomeOutlined />}>
             <Link to="/">Home</Link>
           </Menu.Item>
@@ -83,31 +58,29 @@ const Navbar = () => {
           <Menu.Item key="3" icon={<UploadOutlined />}>
             <Link to="/file">Import File</Link>
           </Menu.Item>
-          
-         
-          <Menu.Item style={{marginTop:"100%"}} key="4" icon={<LogoutOutlined />} >
-          <Link to="/">Signout</Link>
-           
+
+          <Menu.Item
+            style={{ marginTop: "100%" }}
+            key="4"
+            icon={<LogoutOutlined />}
+          >
+            <Link to="/">Signout</Link>
           </Menu.Item>
-          <div style={{textAlign:"center",fontSize:"11px"}}>
-          <p  >copyRights @2023. All Rights Reserved</p>
-          </div>
-          <div style={{textAlign:"center",fontSize:"11px",backgroundColor:"#ffffff"}}>
-            <p>Powered by 31Green</p>
-          </div>
-          
-          
-          
+          {collapsed ? null : (
+            <div>
+              <div
+                className="NavbarCopy"
+              >
+                <p>copyRights @2023. All Rights Reserved</p>
+              </div>
+              <div className="NavbarFooter">
+                <p>Powered by 31Green</p>
+              </div>
+            </div>
+          )}
         </Menu>
-        <div className="NavbarCopyRight">
-        
-        </div>
-        
-       
-       
-        
-      </Sider>
-    </>
+      </div>
+    </Sider>
   );
 };
 

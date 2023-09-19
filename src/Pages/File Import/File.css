@@ -1,8 +1,10 @@
 .file-container{
-    height:90vh;
+    margin:100px
     
 }
 .import-button{
     margin-top: 10px;
+    background: linear-gradient(to right, #001529, #009DE1);
+    color:white;
     
 }
