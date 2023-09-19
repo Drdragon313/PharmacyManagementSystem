@@ -15,10 +15,11 @@ const { Content } = Layout;
 function App() {
   return (
     <BrowserRouter>
-      <Topnav />
+   
       <Layout>
         <Navbar />
         <Content>
+        <Topnav />
           <Routes>
             <Route exact path="/" element={<Iframe />} />
             <Route path="/schema" element={<Schema />}/>

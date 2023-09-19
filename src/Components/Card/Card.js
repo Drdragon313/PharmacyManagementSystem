@@ -8,7 +8,10 @@ const CustomCard = ({ title, bordered, width, children }) => (
     bordered={bordered}
     style={{
       width: width,
-      margin:"10px"
+      height : "33vmin",
+      margin:"10px",
+      border:"1px solid",
+      borderColor:"#707477"
     }}
   >
     {children}

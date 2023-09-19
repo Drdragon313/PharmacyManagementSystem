@@ -1,7 +1,7 @@
 import { Upload, Button } from "antd";
 import React, { useState } from "react";
 import Papa from "papaparse";
-import { useSelector } from "react-redux"; 
+import { useSelector } from "react-redux";
 import "./File.css";
 
 const File = () => {
@@ -11,25 +11,22 @@ const File = () => {
   const validateCSV = (file) => {
     return new Promise((resolve, reject) => {
       let hasInvalidChunk = false;
-      
 
       Papa.parse(file, {
         dynamicTyping: true,
-         skipEmptyLines:true, 
+        skipEmptyLines: true,
         header: true,
-       
+
         chunk: (results) => {
           const csvHeaders = Object.keys(results.data[0]);
           const reduxHeaders = reduxStructure.map((item) => item.Fieldname);
 
-          // Check if CSV headers match Redux headers
           if (!arraysEqual(csvHeaders, reduxHeaders)) {
             hasInvalidChunk = true;
             reject("CSV file does not match the required structure.");
           }
 
           results.data.forEach((row) => {
-            // Check if data types match the Redux structure
             reduxStructure.forEach((item) => {
               const fieldName = item.Fieldname;
               const expectedType = item.Type;
@@ -63,7 +60,6 @@ const File = () => {
     }
   };
 
-  // Utility function to compare two arrays for equality
   const arraysEqual = (arr1, arr2) => {
     if (arr1.length !== arr2.length) return false;
     for (let i = 0; i < arr1.length; i++) {

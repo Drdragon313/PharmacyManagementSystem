@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button, Input, Row, Col, Modal } from 'antd';
-import CustomSelect from '../Select/Select'; // Adjust the import path as needed
+import CustomSelect from '../Select/Select'; 
 
 const SchemaForm = ({ onAddRow }) => {
   const [form] = Form.useForm();
@@ -22,7 +22,7 @@ const SchemaForm = ({ onAddRow }) => {
     form.resetFields();
     setSelectedType(null);
     setSelectedValidation(null);
-    setIsModalVisible(false); 
+    setIsModalVisible(false);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -38,8 +38,24 @@ const SchemaForm = ({ onAddRow }) => {
   const validationOptions = [
     { value: 'ValidationOption1', label: 'Validation Option 1' },
     { value: 'ValidationOption2', label: 'Validation Option 2' },
-   
+    { value: 'ValidationOption3', label: 'Validation Option 3' },
+    { value: 'ValidationOption4', label: 'Validation Option 4' },
+    { value: 'ValidationOption5', label: 'Validation Option 5' },
+    { value: 'ValidationOption6', label: 'Validation Option 6' },
   ];
+
+  // Filter validation options based on the selected type
+  const filteredValidationOptions = validationOptions.filter((option) => {
+    if (selectedType === 'string') {
+      return option.value === 'ValidationOption1' || option.value === 'ValidationOption2';
+    } else if (selectedType === 'number') {
+      return option.value === 'ValidationOption3' || option.value === 'ValidationOption4';
+    } else if (selectedType ==='boolean'){
+      return option.value === 'ValidationOption5' || option.value === 'ValidationOption6';
+    }
+    return null;
+
+  });
 
   return (
     <div>
@@ -90,7 +106,7 @@ const SchemaForm = ({ onAddRow }) => {
                 />
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col span={16}>
               <Form.Item
                 label="Validation"
                 name="Validation"
@@ -102,7 +118,7 @@ const SchemaForm = ({ onAddRow }) => {
                 ]}
               >
                 <CustomSelect
-                  options={validationOptions}
+                  options={filteredValidationOptions}
                   value={selectedValidation}
                   onChange={(value) => setSelectedValidation(value)}
                   placeholder="Select a Validation"
@@ -121,7 +137,6 @@ const SchemaForm = ({ onAddRow }) => {
       <Button type="primary" onClick={() => setIsModalVisible(true)}>
         Add New Entry
       </Button>
-      
     </div>
   );
 };

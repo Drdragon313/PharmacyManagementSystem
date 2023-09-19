@@ -11,3 +11,23 @@
     margin: 20px;
     margin-bottom: 50px;
 }
+.schemaImg{
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    min-height: 40px;
+    min-width: 20px;
+    max-height: 80px;
+    max-width: 40px;
+}
+.availableSchemasBtn{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    margin-right: 40px;
+    
+}
+.schemaName{
+    font-size: 24;
+    font-weight: bold;
+}

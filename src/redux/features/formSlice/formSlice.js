@@ -21,11 +21,11 @@ const formSlice = createSlice({
       );
     },
     updateFormDataOrder: (state, action) => {
-      // Update the order of formDataArray based on the action.payload
       state.formDataArray = action.payload;
     },
   },
 });
 
-export const { addFormData, removeFormData,updateFormDataOrder } = formSlice.actions;
+export const { addFormData, removeFormData, updateFormDataOrder } =
+  formSlice.actions;
 export default formSlice.reducer;
