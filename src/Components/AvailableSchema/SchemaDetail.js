@@ -1,34 +1,52 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import React from "react";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Table, Button } from "antd";
 
 const SchemaDetail = () => {
   const { schemaId } = useParams();
   const schemaDataArray = useSelector((state) => state.schema.schemaDataArray);
+  const schemaData = schemaDataArray[schemaId];
 
-  console.log('schemaDataArray:', schemaDataArray);
-
-
-  const schemaIndex = parseInt(schemaId, 10) - 1; 
-  if (schemaIndex >= 0 && schemaIndex < schemaDataArray.length) {
-    const schema = schemaDataArray[schemaIndex];
-    console.log('schemaId:', schemaId);
-    console.log('schemaIndex:', schemaIndex);
-    console.log('schemaDataArray:', schemaDataArray);
-    return (
-      <div>
-        <h2>Schema Details</h2>
-        <p>Name: {schema.name}</p>
+  return (
+    <div>
+      {schemaData ? (
         <div>
-          {schemaDataArray}
+          <h3>Schema Name: {schemaData.name}</h3>
+          <Table
+            dataSource={schemaData.data}
+            pagination={false}
+            bordered
+            columns={[
+              {
+                title: "ID",
+                dataIndex: "id",
+                key: "id",
+              },
+              {
+                title: "Field Name",
+                dataIndex: "Fieldname",
+                key: "Fieldname",
+              },
+              {
+                title: "Type",
+                dataIndex: "Type",
+                key: "Type",
+              },
+              {
+                title: "Validation",
+                dataIndex: "Validation",
+                key: "Validation",
+              },
+            ]}
+          />
+          <Button type="primary">Edit Schema</Button>
         </div>
-=
-      </div>
-    );
-  } else {
-
-    return <div>Schema not found</div>;
-  }
-}
+      ) : (
+        <p>Schema not found</p>
+      )}
+    </div>
+  );
+};
 
 export default SchemaDetail;

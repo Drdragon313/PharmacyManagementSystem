@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Form, Button, Input, Row, Col, Modal } from 'antd';
-import CustomSelect from '../Select/Select'; // Adjust the import path as needed
-
+import React, { useState } from "react";
+import { Form, Button, Input, Row, Col, Modal } from "antd";
+import CustomSelect from "../Select/Select";
+import { filterValidationOptions } from "../../Utility Function/Utility Function/validationOptions";
 const SchemaForm = ({ onAddRow }) => {
   const [form] = Form.useForm();
   const [selectedType, setSelectedType] = useState(null);
@@ -9,7 +9,7 @@ const SchemaForm = ({ onAddRow }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const onFinish = (values) => {
-    console.log('Success:', values);
+    console.log("Success:", values);
 
     const formDataEntry = {
       Fieldname: values.Fieldname,
@@ -18,28 +18,34 @@ const SchemaForm = ({ onAddRow }) => {
     };
 
     onAddRow(formDataEntry);
-
-    form.resetFields();
+    form.resetFields(["Fieldname", "Type", "Validation"]);
     setSelectedType(null);
     setSelectedValidation(null);
-    setIsModalVisible(false); 
+    setIsModalVisible(false);
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+    console.log("Failed:", errorInfo);
   };
 
   const typeOptions = [
-    { value: 'string', label: 'String' },
-    { value: 'number', label: 'Number' },
-    { value: 'boolean', label: 'Boolean' },
+    { value: "string", label: "String" },
+    { value: "number", label: "Number" },
+    { value: "boolean", label: "Boolean" },
   ];
 
   const validationOptions = [
-    { value: 'ValidationOption1', label: 'Validation Option 1' },
-    { value: 'ValidationOption2', label: 'Validation Option 2' },
-   
+    { value: "CamelCase", label: "Camel Case" },
+    { value: "SpecialCharacter", label: "Special Character" },
+    { value: "Integer", label: "Integer" },
+    { value: "Decimal", label: "Decimal" },
+    { value: "Required", label: "Required" },
   ];
+
+  const filteredValidationOptions = filterValidationOptions(
+    selectedType,
+    validationOptions
+  );
 
   return (
     <div>
@@ -64,7 +70,7 @@ const SchemaForm = ({ onAddRow }) => {
                 rules={[
                   {
                     required: true,
-                    message: 'Please input Field Name',
+                    message: "Please input Field Name",
                   },
                 ]}
               >
@@ -78,7 +84,7 @@ const SchemaForm = ({ onAddRow }) => {
                 rules={[
                   {
                     required: true,
-                    message: 'Please select Type',
+                    message: "Please select Type",
                   },
                 ]}
               >
@@ -90,19 +96,19 @@ const SchemaForm = ({ onAddRow }) => {
                 />
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col span={16}>
               <Form.Item
                 label="Validation"
                 name="Validation"
                 rules={[
                   {
                     required: true,
-                    message: 'Please select Validation',
+                    message: "Please select Validation",
                   },
                 ]}
               >
                 <CustomSelect
-                  options={validationOptions}
+                  options={filteredValidationOptions}
                   value={selectedValidation}
                   onChange={(value) => setSelectedValidation(value)}
                   placeholder="Select a Validation"
@@ -121,7 +127,6 @@ const SchemaForm = ({ onAddRow }) => {
       <Button type="primary" onClick={() => setIsModalVisible(true)}>
         Add New Entry
       </Button>
-      
     </div>
   );
 };

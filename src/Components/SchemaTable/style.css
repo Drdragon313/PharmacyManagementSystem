@@ -1,22 +1,11 @@
-.editable-cell {
-    position: relative;
-  }
-  
-  .editable-cell-value-wrap {
-    padding: 5px 12px;
-    cursor: pointer;
-    height: 30px;
-  }
-  
-  .editable-row:hover .editable-cell-value-wrap {
-    padding: 4px 11px;
-    border: 1px solid #d9d9d9;
-    border-radius: 2px;
-    color:cornflowerblue;
-  }
   .Stable{
     margin: 20px;
   }
   .csvbtn{
-    margin-top: 10px;
+    margin-right: 10px;
+  }
+  .schemaTable{
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 2px;
   }

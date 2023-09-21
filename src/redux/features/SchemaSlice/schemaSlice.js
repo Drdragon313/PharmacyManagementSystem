@@ -1,4 +1,3 @@
-// schemaSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -11,7 +10,7 @@ const schemaSlice = createSlice({
   reducers: {
     addSchemaData: (state, action) => {
       state.schemaDataArray.push(action.payload);
-      console.log("Schema Added:", state.schemaDataArray); 
+      console.log("Schema Added:", state.schemaDataArray);
     },
     removeSchemaData: (state, action) => {
       const indexToRemove = action.payload;

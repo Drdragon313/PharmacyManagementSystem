@@ -1,15 +1,12 @@
 import React from 'react';
 import { Card } from 'antd';
 import PropTypes from 'prop-types';
-
-const CustomCard = ({ title, bordered, width, children }) => (
+import "./Style.css"
+const CustomCard = ({ title, bordered, children }) => (
   <Card
     title={title}
     bordered={bordered}
-    style={{
-      width: width,
-      margin:"10px"
-    }}
+    className="customcard" 
   >
     {children}
   </Card>
