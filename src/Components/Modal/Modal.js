@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Button, Modal } from 'antd';
-import SchemaForm from '../Form/Form'; 
-import "./style.css"
+import React, { useState } from "react";
+import { Button, Modal } from "antd";
+import SchemaForm from "../Form/Form";
+import "./style.css";
 const ModalPop = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -19,7 +19,7 @@ const ModalPop = () => {
 
   return (
     <>
-      <Button type="primary" className='addnewentry' onClick={showModal} >
+      <Button type="primary" className="addnewentry" onClick={showModal}>
         Add New Entry
       </Button>
       <Modal
@@ -28,7 +28,7 @@ const ModalPop = () => {
         onOk={handleOk}
         onCancel={handleCancel}
         footer={null}
-        className='modal'
+        className="modal"
       >
         <SchemaForm onAddRow={handleOk} />
       </Modal>

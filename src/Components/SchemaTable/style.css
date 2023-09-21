@@ -4,4 +4,8 @@
   .csvbtn{
     margin-right: 10px;
   }
-  
+  .schemaTable{
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 2px;
+  }

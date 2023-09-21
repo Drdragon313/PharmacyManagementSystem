@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Button, Space, Table, message, Modal, Form, Input } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,11 +12,15 @@ import { MenuOutlined } from "@ant-design/icons";
 import "./style.css";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import CustomSelect from "../Select/Select";
+import { reorderFormDataArray } from "../../Utility Function/reorderFormDataArray";
+import { downloadCSV } from "../../Utility Function/downloadCSV";
+import { filterValidationOptions } from "../../Utility Function/validationOptions";
 
 const Stable = () => {
   const [rowId, setRowId] = useState(1);
   const [editRow, setEditRow] = useState(null);
   const [editModalVisible, setEditModalVisible] = useState(false);
+  const [schemaName, setSchemaName] = useState("");
 
   const dispatch = useDispatch();
   const formDataArray = useSelector((state) => state.form.formDataArray);
@@ -47,33 +51,17 @@ const Stable = () => {
     const startIndex = result.source.index;
     const endIndex = result.destination.index;
 
-    const reorderedData = Array.from(formDataArray);
-    const [removed] = reorderedData.splice(startIndex, 1);
-    reorderedData.splice(endIndex, 0, removed);
-
+    const reorderedData = reorderFormDataArray(
+      formDataArray,
+      startIndex,
+      endIndex
+    );
     dispatch(updateFormDataOrder(reorderedData));
   };
 
-  const downloadCSV = () => {
-    const fieldNames = formDataArray.map((entry) => entry.Fieldname);
-    const csvContent = fieldNames.join(",") + "\n";
-    const encodedCSV = encodeURIComponent(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", `data:text/csv;charset=utf-8,${encodedCSV}`);
-    link.setAttribute("download", "field_names.csv");
-    document.body.appendChild(link);
-    link.click();
+  const handleDownloadCSV = () => {
+    downloadCSV(formDataArray);
   };
-
-  const saveSchema = () => {
-    const newSchema = {
-      name: "Schema Name",
-      data: formDataArray,
-    };
-
-    dispatch(addSchemaData(newSchema));
-  };
-
   const [messageApi, contextHolder] = message.useMessage();
   const success = () => {
     messageApi.open({
@@ -83,8 +71,19 @@ const Stable = () => {
   };
 
   const handleSaveAndSuccess = () => {
-    saveSchema();
-    success();
+    if (formDataArray.length > 0) {
+      const newSchema = {
+        name: schemaName,
+        data: formDataArray,
+      };
+
+      dispatch(addSchemaData(newSchema));
+      success();
+
+      setSchemaName("");
+    } else {
+      console.error("No rows to save in the schema.");
+    }
   };
 
   const columns = [
@@ -142,46 +141,24 @@ const Stable = () => {
     const [filteredValidationOptions, setFilteredValidationOptions] = useState(
       []
     );
-    const validationOptions =useMemo(() => [ 
-      { value: "ValidationOption1", label: "Validation Option 1" },
-      { value: "ValidationOption2", label: "Validation Option 2" },
-      { value: "ValidationOption3", label: "Validation Option 3" },
-      { value: "ValidationOption4", label: "Validation Option 4" },
-      { value: "ValidationOption5", label: "Validation Option 5" },
-      { value: "ValidationOption6", label: "Validation Option 6" },
-    ], []);
-
-
+    const validationOptions = useMemo(
+      () => [
+        { value: "CamelCase", label: "Camel Case" },
+        { value: "SpecialCharacter", label: "Special Character" },
+        { value: "Integer", label: "Integer" },
+        { value: "Decimal", label: "Decimal" },
+        { value: "Required", label: "Required" },
+      ],
+      []
+    );
 
     useEffect(() => {
-      if (selectedType === "string") {
-        setFilteredValidationOptions(
-          validationOptions.filter(
-            (option) =>
-              option.value === "ValidationOption1" ||
-              option.value === "ValidationOption2"
-          )
-        );
-      } else if (selectedType === "number") {
-        setFilteredValidationOptions(
-          validationOptions.filter(
-            (option) =>
-              option.value === "ValidationOption3" ||
-              option.value === "ValidationOption4"
-          )
-        );
-      } else if (selectedType === "boolean") {
-        setFilteredValidationOptions(
-          validationOptions.filter(
-            (option) =>
-              option.value === "ValidationOption5" ||
-              option.value === "ValidationOption6"
-          )
-        );
-      } else {
-        setFilteredValidationOptions(validationOptions);
-      }
-    }, [selectedType,validationOptions]);
+      const filteredValidationOptions = filterValidationOptions(
+        selectedType,
+        validationOptions
+      );
+      setFilteredValidationOptions(filteredValidationOptions);
+    }, [selectedType, validationOptions]);
 
     const handleFormSubmit = () => {
       form.validateFields().then((values) => {
@@ -202,7 +179,6 @@ const Stable = () => {
       { value: "boolean", label: "Boolean" },
     ];
 
-   
     return (
       <Modal
         title="Edit Row"
@@ -263,25 +239,25 @@ const Stable = () => {
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <Table
-                bordered
+          
                 dataSource={formDataArray}
                 rowKey="id"
                 pagination={false}
                 columns={columns}
-                style={{ margin: "20px" }}
+                className="schemaTable"          
               />
             </div>
           )}
         </Droppable>
       </DragDropContext>
-      <Button className="csvbtn" type="primary" onClick={downloadCSV}>
+      <Button className="csvbtn" type="primary" onClick={handleDownloadCSV}>
         Download CSV
       </Button>
-      {contextHolder}
+
       <Button type="primary" onClick={handleSaveAndSuccess}>
         Save Schema
       </Button>
-
+      {contextHolder}
       {editRow && (
         <EditForm
           editRow={editRow}

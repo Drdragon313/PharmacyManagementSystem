@@ -1,86 +1,51 @@
-import { Upload, Button } from "antd";
+import { Upload, Button, message } from "antd";
 import React, { useState } from "react";
-import Papa from "papaparse";
+import { validateCSV } from "./FileUtils";
 import { useSelector } from "react-redux";
 import "./File.css";
+import uploadIcon from "../../Components/Images/uploadIcon.png";
 
 const File = () => {
   const [error, setError] = useState("");
-  const reduxStructure = useSelector((state) => state.form.formDataArray);
+  const index = useSelector((state) => state.SchemaSelection.index);
 
-  const validateCSV = (file) => {
-    return new Promise((resolve, reject) => {
-      let hasInvalidChunk = false;
-
-      Papa.parse(file, {
-        dynamicTyping: true,
-        skipEmptyLines: true,
-        header: true,
-
-        chunk: (results) => {
-          const csvHeaders = Object.keys(results.data[0]);
-          const reduxHeaders = reduxStructure.map((item) => item.Fieldname);
-
-          if (!arraysEqual(csvHeaders, reduxHeaders)) {
-            hasInvalidChunk = true;
-            reject("CSV file does not match the required structure.");
-          }
-
-          results.data.forEach((row) => {
-            reduxStructure.forEach((item) => {
-              const fieldName = item.Fieldname;
-              const expectedType = item.Type;
-              const actualType = typeof row[fieldName];
-
-              if (actualType !== expectedType) {
-                hasInvalidChunk = true;
-                reject(`Invalid data type for ${fieldName}.`);
-              }
-            });
-          });
-        },
-
-        complete: () => {
-          if (!hasInvalidChunk) {
-            resolve();
-          }
-        },
-      });
-    });
-  };
+  const schemaDataArray = useSelector((state) => state.schema.schemaDataArray);
 
   const validateAndUpload = async (file) => {
     try {
-      await validateCSV(file);
+      await validateCSV(file, index, schemaDataArray);
       setError("");
-      alert("Valid CSV");
+
+      message.success("Valid CSV File", 2);
     } catch (errorMessage) {
       setError(errorMessage);
-      alert("Invalid CSV");
+      message.error("Invalid CSV File", 2);
     }
-  };
-
-  const arraysEqual = (arr1, arr2) => {
-    if (arr1.length !== arr2.length) return false;
-    for (let i = 0; i < arr1.length; i++) {
-      if (arr1[i] !== arr2[i]) return false;
-    }
-    return true;
   };
 
   return (
     <div>
-      <Upload.Dragger
-        listType="text"
-        multiple={true}
-        accept=".csv"
-        beforeUpload={validateAndUpload}
-      >
-        Drag Files here or
-        <br />
-        <Button className="import-button">Click Upload File</Button>
-      </Upload.Dragger>
-      {error && <div style={{ color: "red" }}>{error}</div>}
+      <div className="file-container">
+        <h2>Files and Assets</h2>
+        <p className="file-paragraph">
+          Documents and Attachments that have been uploaded will be validated
+          with the already defined selected schema in order to upload to the
+          database.
+        </p>
+        <Upload.Dragger
+          listType="text"
+          className="file-upload"
+          accept=".csv"
+          beforeUpload={validateAndUpload}
+        >
+          <img src={uploadIcon} alt="Upload Icon" />
+          <br />
+          <p className="file-uploadText">Drag or Drop your files here</p>
+          <p className="file-supportedText">Files Supported: .CSV</p>
+          <Button className="import-button">Choose File</Button>
+        </Upload.Dragger>
+        {error && <div style={{ color: "red" }}>{error}</div>}
+      </div>
     </div>
   );
 };

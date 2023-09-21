@@ -1,26 +1,46 @@
-import React from 'react'
-import { Layout, theme } from "antd";
-const { Header} = Layout;
+import React from "react";
+
+import { SearchOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Space } from "antd";
+import { Layout } from "antd";
+import { NotificationOutlined } from "@ant-design/icons";
+
+const { Header } = Layout;
 
 const Topnav = () => {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
   return (
     <Layout>
-     <Header
-     theme="light"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            background:colorBgContainer
-          }}
-        >
-          <div className="demo-logo" />
-          
-        </Header> 
+      <Header
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          background: "#fff",
+          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+        }}
+      >
+        <div>
+          <Space wrap>
+            <Button icon={<SearchOutlined />}>Search</Button>
+          </Space>
+        </div>
+        <div>
+          <Space>
+            <NotificationOutlined />
+            <span></span>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <span style={{ height: "20px", color: "#009CDF" }}>John Doe</span>{" "}
+              <span style={{ height: "20px", marginBottom: "50px" }}>
+                Job Title
+              </span>{" "}
+            </div>
+            <span></span>
+            <UserOutlined style={{ fontSize: "20px" }} />{" "}
+          </Space>
+        </div>
+      </Header>
     </Layout>
-  )
-}
+  );
+};
 
-export default Topnav
+export default Topnav;

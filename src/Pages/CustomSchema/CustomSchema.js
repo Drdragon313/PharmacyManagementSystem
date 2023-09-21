@@ -1,13 +1,11 @@
-import React from 'react'
-import Stable from '../../Components/SchemaTable/Stable';
+import React from "react";
+import Stable from "../../Components/SchemaTable/Stable";
 const CustomSchema = () => {
-  
- 
   return (
     <>
-    <Stable/>
+      <Stable />
     </>
   );
-}
+};
 
 export default CustomSchema;

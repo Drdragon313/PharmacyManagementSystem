@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeSchemaData } from "../../redux/features/SchemaSlice/schemaSlice";
 import CustomCard from "../../Components/Card/Card";
@@ -7,42 +7,45 @@ import { Button, Col, Image, Row, Space } from "antd";
 import { Link } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
 import schemaImg from "../../Assets/Schemas.png";
+import SchemaCreationForm from "../../Components/SchemaCreationForm/SchemaCreationForm";
 
 const Schema = () => {
-  const schemaDataArray = useSelector((state) => state.schema.schemaDataArray);
   const dispatch = useDispatch();
+  const schemaDataArray = useSelector((state) => state.schema.schemaDataArray);
+  const [isCreateModalVisible, setCreateModalVisible] = useState(false);
+
 
   const handleRemoveSchema = (indexToRemove) => {
     dispatch(removeSchemaData(indexToRemove));
   };
-
+  const toggleCreateModal = () => {
+    setCreateModalVisible(!isCreateModalVisible);
+  };
   return (
     <>
       <div className="title">
         <h2>Schema Definition</h2>
         <h6>
-          Schemas can be defined here by adding data using different availible
+          Schemas can be defined here by adding data using different available
           methods. These schemas will be matched against any data you import
           into the system
         </h6>
       </div>
-      <div className="availibleSchemas">
-        <h4>Available Schemas</h4>
+      <div className="availableSchemas">
+        <h4 className="AvailSchemastxt">Available Schemas</h4>
         <Row gutter={16}>
           {schemaDataArray.map((schema, index) => (
             <Col span={6} key={index}>
-              <CustomCard bordered={true} span={6}>
-                <Image
-                  className="schemaImg"
-                  src={schemaImg}
-                  preview={false}
-                ></Image>
+              <CustomCard className="card" bordered={true} span={6}
+              
+              >
+                <Image className="schemaImg" src={schemaImg} preview={false} />
                 <p className="schemaName">{`Schema ${index + 1}`}</p>
+                <h6 >Schema Name: {schema.name}</h6>
                 <Space size={44}>
-                <p>No. of Fields:</p>
-                <p>No. of Types:</p>
+                  <p>No. of Fields:{schema.data.length}</p>
+                  <p>No. of Types:</p>
                 </Space>
-                
 
                 <Space size={10} className="availableSchemasBtn">
                   <Link to={`/schema/${index}`}>
@@ -61,20 +64,25 @@ const Schema = () => {
       <div className="addNewSchema">
         <h2>Add Schema</h2>
         <h6>Create New Schema</h6>
-        <Link to="/customschema">
+
           <Button
-            style={{ background: "#01A4EC", color: "#fff" }}
+          className="circlebtn"
+          onClick={toggleCreateModal}
             shape="circle"
             icon={<PlusOutlined />}
             size="large"
           />
           <Button
-            type="link"
-            style={{ fontWeight: "bolder", color: "#01A4EC" }}
+          type="link"      
+          className="linkbtn"
           >
             Create New Schema
           </Button>
-        </Link>
+          <SchemaCreationForm
+        visible={isCreateModalVisible}
+        onCancel={toggleCreateModal}
+      />
+     
       </div>
     </>
   );

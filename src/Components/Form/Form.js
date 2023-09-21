@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
-import { Form, Button, Input, Row, Col, Modal } from 'antd';
-import CustomSelect from '../Select/Select'; 
-
+import React, { useState } from "react";
+import { Form, Button, Input, Row, Col, Modal } from "antd";
+import CustomSelect from "../Select/Select";
+import { filterValidationOptions } from "../../Utility Function/validationOptions";
 const SchemaForm = ({ onAddRow }) => {
+
+
   const [form] = Form.useForm();
   const [selectedType, setSelectedType] = useState(null);
   const [selectedValidation, setSelectedValidation] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const onFinish = (values) => {
-    console.log('Success:', values);
+    console.log("Success:", values);
 
     const formDataEntry = {
       Fieldname: values.Fieldname,
@@ -18,44 +20,34 @@ const SchemaForm = ({ onAddRow }) => {
     };
 
     onAddRow(formDataEntry);
-
-    form.resetFields();
+    form.resetFields(["Fieldname", "Type", "Validation"]);
     setSelectedType(null);
     setSelectedValidation(null);
     setIsModalVisible(false);
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+    console.log("Failed:", errorInfo);
   };
 
   const typeOptions = [
-    { value: 'string', label: 'String' },
-    { value: 'number', label: 'Number' },
-    { value: 'boolean', label: 'Boolean' },
+    { value: "string", label: "String" },
+    { value: "number", label: "Number" },
+    { value: "boolean", label: "Boolean" },
   ];
 
   const validationOptions = [
-    { value: 'ValidationOption1', label: 'Validation Option 1' },
-    { value: 'ValidationOption2', label: 'Validation Option 2' },
-    { value: 'ValidationOption3', label: 'Validation Option 3' },
-    { value: 'ValidationOption4', label: 'Validation Option 4' },
-    { value: 'ValidationOption5', label: 'Validation Option 5' },
-    { value: 'ValidationOption6', label: 'Validation Option 6' },
+    { value: "CamelCase", label: "Camel Case" },
+    { value: "SpecialCharacter", label: "Special Character" },
+    { value: "Integer", label: "Integer" },
+    { value: "Decimal", label: "Decimal" },
+    { value: "Required", label: "Required" },
   ];
 
-  // Filter validation options based on the selected type
-  const filteredValidationOptions = validationOptions.filter((option) => {
-    if (selectedType === 'string') {
-      return option.value === 'ValidationOption1' || option.value === 'ValidationOption2';
-    } else if (selectedType === 'number') {
-      return option.value === 'ValidationOption3' || option.value === 'ValidationOption4';
-    } else if (selectedType ==='boolean'){
-      return option.value === 'ValidationOption5' || option.value === 'ValidationOption6';
-    }
-    return null;
-
-  });
+  const filteredValidationOptions = filterValidationOptions(
+    selectedType,
+    validationOptions
+  );
 
   return (
     <div>
@@ -80,7 +72,7 @@ const SchemaForm = ({ onAddRow }) => {
                 rules={[
                   {
                     required: true,
-                    message: 'Please input Field Name',
+                    message: "Please input Field Name",
                   },
                 ]}
               >
@@ -94,7 +86,7 @@ const SchemaForm = ({ onAddRow }) => {
                 rules={[
                   {
                     required: true,
-                    message: 'Please select Type',
+                    message: "Please select Type",
                   },
                 ]}
               >
@@ -113,7 +105,7 @@ const SchemaForm = ({ onAddRow }) => {
                 rules={[
                   {
                     required: true,
-                    message: 'Please select Validation',
+                    message: "Please select Validation",
                   },
                 ]}
               >

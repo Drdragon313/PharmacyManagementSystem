@@ -1,8 +1,24 @@
 .file-container{
-    height:90vh;
+    margin-left: 20px;
     
 }
 .import-button{
     margin-top: 10px;
+    background: linear-gradient(to right, #001529, #009DE1);
+    color:white;
     
+}
+.file-paragraph{
+    color:#707477;
+}
+.file-upload{
+    width: 80vw;
+}
+.file-uploadText{
+    height:10px;
+}
+.file-supportedText{
+    color:#707477;
+    font-size:11px;
+    height:10px;
 }
