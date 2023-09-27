@@ -5,12 +5,15 @@ import {
   addFormData,
   removeFormData,
   updateFormDataOrder,
- resetFormDataArray,
- resetId
+  resetFormDataArray,
+  resetId,
 } from "../../redux/features/formSlice/formSlice";
-import { addSchemaData, updateSchemaName } from "../../redux/features/SchemaSlice/schemaSlice";
+import {
+  addSchemaData,
+  updateSchemaName,
+} from "../../redux/features/SchemaSlice/schemaSlice";
 import SchemaForm from "../Form/Form";
-import { DragDropContext, Droppable} from "react-beautiful-dnd";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import "./style.css";
 import { reorderFormDataArray } from "../../Utility Function/reorderFormDataArray";
 import EditForm from "../EditForm/EditForm";
@@ -59,8 +62,6 @@ const Stable = () => {
     dispatch(updateFormDataOrder(reorderedData));
   };
 
-
-  
   const [messageApi, contextHolder] = message.useMessage();
   const success = () => {
     messageApi.open({
@@ -113,11 +114,12 @@ const Stable = () => {
           )}
         </Droppable>
       </DragDropContext>
-      
 
-      <Link to="/schema"><Button type="primary" onClick={handleSaveAndSuccess}>
-        Save Schema
-      </Button></Link>
+      <Link to="/schema">
+        <Button type="primary" onClick={handleSaveAndSuccess}>
+          Save Schema
+        </Button>
+      </Link>
       {contextHolder}
       {editRow && (
         <EditForm

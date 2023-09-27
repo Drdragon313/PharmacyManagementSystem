@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   schemaDataArray: [],
-  schemaName:""
+  schemaName: "",
 };
 
 const schemaSlice = createSlice({
@@ -23,5 +23,6 @@ const schemaSlice = createSlice({
   },
 });
 
-export const { addSchemaData, removeSchemaData, updateSchemaName} = schemaSlice.actions;
+export const { addSchemaData, removeSchemaData, updateSchemaName } =
+  schemaSlice.actions;
 export default schemaSlice.reducer;

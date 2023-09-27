@@ -1,12 +1,12 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { Form, Button, Input, Row, Col, Modal } from "antd";
 import CustomSelect from "../Select/Select";
-import  {useOptions}  from "../../optionContext/OptionContext";
+import { useOptions } from "../../optionContext/OptionContext";
 import { filterValidationOptions } from "../../Utility Function/validationOptions";
 
 const SchemaForm = ({ onAddRow }) => {
   const [form] = Form.useForm();
-  const { typeOptions, validationOptions } = useOptions(""); 
+  const { typeOptions, validationOptions } = useOptions("");
   const [selectedData, setSelectedData] = useState({
     type: null,
     validation: null,
@@ -44,7 +44,7 @@ const SchemaForm = ({ onAddRow }) => {
     <div>
       <Modal
         title="Add Schema Details"
-        open={isModalVisible} 
+        open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         footer={null}
       >

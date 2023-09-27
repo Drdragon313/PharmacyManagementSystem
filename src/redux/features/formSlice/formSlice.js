@@ -27,7 +27,7 @@ const formSlice = createSlice({
       state.formDataArray = [];
     },
     resetId: (state) => {
-      state.id = 1; 
+      state.id = 1;
     },
   },
 });
