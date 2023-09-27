@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   schemaDataArray: [],
+  schemaName: "",
 };
 
 const schemaSlice = createSlice({
@@ -16,8 +17,12 @@ const schemaSlice = createSlice({
       const indexToRemove = action.payload;
       state.schemaDataArray.splice(indexToRemove, 1);
     },
+    updateSchemaName: (state, action) => {
+      state.schemaName = action.payload;
+    },
   },
 });
 
-export const { addSchemaData, removeSchemaData } = schemaSlice.actions;
+export const { addSchemaData, removeSchemaData, updateSchemaName } =
+  schemaSlice.actions;
 export default schemaSlice.reducer;

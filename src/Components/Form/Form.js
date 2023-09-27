@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { Form, Button, Input, Row, Col, Modal } from "antd";
 import CustomSelect from "../Select/Select";
+import { useOptions } from "../../optionContext/OptionContext";
 import { filterValidationOptions } from "../../Utility Function/validationOptions";
+
 const SchemaForm = ({ onAddRow }) => {
-
-
   const [form] = Form.useForm();
-  const [selectedType, setSelectedType] = useState(null);
-  const [selectedValidation, setSelectedValidation] = useState(null);
+  const { typeOptions, validationOptions } = useOptions("");
+  const [selectedData, setSelectedData] = useState({
+    type: null,
+    validation: null,
+  });
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const onFinish = (values) => {
@@ -15,14 +18,16 @@ const SchemaForm = ({ onAddRow }) => {
 
     const formDataEntry = {
       Fieldname: values.Fieldname,
-      Type: selectedType,
-      Validation: selectedValidation,
+      Type: selectedData.type,
+      Validation: selectedData.validation,
     };
 
     onAddRow(formDataEntry);
     form.resetFields(["Fieldname", "Type", "Validation"]);
-    setSelectedType(null);
-    setSelectedValidation(null);
+    setSelectedData({
+      type: null,
+      validation: null,
+    });
     setIsModalVisible(false);
   };
 
@@ -30,22 +35,8 @@ const SchemaForm = ({ onAddRow }) => {
     console.log("Failed:", errorInfo);
   };
 
-  const typeOptions = [
-    { value: "string", label: "String" },
-    { value: "number", label: "Number" },
-    { value: "boolean", label: "Boolean" },
-  ];
-
-  const validationOptions = [
-    { value: "CamelCase", label: "Camel Case" },
-    { value: "SpecialCharacter", label: "Special Character" },
-    { value: "Integer", label: "Integer" },
-    { value: "Decimal", label: "Decimal" },
-    { value: "Required", label: "Required" },
-  ];
-
   const filteredValidationOptions = filterValidationOptions(
-    selectedType,
+    selectedData.type,
     validationOptions
   );
 
@@ -92,8 +83,10 @@ const SchemaForm = ({ onAddRow }) => {
               >
                 <CustomSelect
                   options={typeOptions}
-                  value={selectedType}
-                  onChange={(value) => setSelectedType(value)}
+                  value={selectedData.type}
+                  onChange={(value) =>
+                    setSelectedData({ ...selectedData, type: value })
+                  }
                   placeholder="Select a Type"
                 />
               </Form.Item>
@@ -111,8 +104,10 @@ const SchemaForm = ({ onAddRow }) => {
               >
                 <CustomSelect
                   options={filteredValidationOptions}
-                  value={selectedValidation}
-                  onChange={(value) => setSelectedValidation(value)}
+                  value={selectedData.validation}
+                  onChange={(value) =>
+                    setSelectedData({ ...selectedData, validation: value })
+                  }
                   placeholder="Select a Validation"
                 />
               </Form.Item>

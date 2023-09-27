@@ -1,0 +1,85 @@
+.heading {
+  text-align: center;
+  font-weight: bold;
+}
+.sub-heading {
+  text-align: center;
+  font-size: 14px !important;
+}
+.modalstyle {
+  align-items: center;
+}
+.modalstyle p {
+  font-size: 9px;
+}
+.importManuallycard {
+  width: 30vmin;
+  height: 20vmin;
+  margin: 10px;
+  border: 1px solid;
+  border-color: #707477;
+  text-align: center;
+  color: black;
+  transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s,
+    color 0.3s;
+}
+.importManuallycard:hover {
+  cursor: pointer;
+  border-color: #001529;
+  box-shadow: 2px 2px 4px rgba(0, 21, 41, 100);
+  background: linear-gradient(to bottom, #009ee2, #001529);
+  color: aliceblue;
+}
+
+.importfromDataBase {
+  width: 30vmin;
+  height: 20vmin;
+  margin: 10px;
+  border: 1px solid;
+  border-color: #707477;
+  text-align: center;
+  color: black;
+  transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s, color 0,
+    3s;
+}
+.importfromDataBase:hover {
+  cursor: pointer;
+  border-color: #001529;
+  box-shadow: 2px 2px 4px rgba(0, 21, 41, 100);
+  background: linear-gradient(to bottom, #009ee2, #001529);
+  color: aliceblue;
+}
+.importfromCSV {
+  width: 30vmin;
+  height: 20vmin;
+  margin: 10px;
+  border: 1px solid;
+  border-color: #707477;
+  text-align: center;
+  color: black;
+  transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s,
+    color 0.3s;
+}
+.importfromCSV:hover {
+  cursor: pointer;
+  border-color: #001529;
+  box-shadow: 2px 2px 4px rgba(0, 21, 41, 100);
+  background: linear-gradient(to bottom, #009ee2, #001529);
+  color: aliceblue;
+}
+
+.DBimg {
+  height: 30px !important;
+  width: 30px !important;
+  margin-top: -30px;
+}
+.manualImg {
+  height: 30px !important;
+  width: 25px !important;
+  margin-top: -30px;
+}
+.csvImg {
+  height: 30px !important;
+  width: 25px !important;
+  margin-top: -30px;
+}

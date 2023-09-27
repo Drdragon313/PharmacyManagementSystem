@@ -10,6 +10,7 @@ import { Layout } from "antd";
 import Schema from "./Pages/Schema_Definition/Schema";
 import File from "./Pages/File Import/File";
 import ValidationOptions from "./Pages/ValidationOptions/ValidationOptions";
+import AutoPopulate from "./Pages/AutoPopulate/AutoPopulate"
 const { Content } = Layout;
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
             <Route path="file" element={<ValidationOptions />} />
             <Route path="file/fileUpload" element={<File />} />
             <Route path="/schema/:schemaId" element={<SchemaDetail />} />
-            {/* <Route path="/services" element={<Services />} /> */}
+            <Route path="schema/autopopulate" element={<AutoPopulate />} />
             <Route path="/customschema" element={<CustomSchema />} />
           </Routes>
         </Content>
