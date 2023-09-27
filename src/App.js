@@ -33,7 +33,7 @@ function App() {
               element={<UploadSuccess />}
             />
             <Route path="/schema/:schemaId" element={<SchemaDetail />} />
-            {/* <Route path="/services" element={<Services />} /> */}
+            <Route path="schema/autopopulate" element={<AutoPopulate />} />
             <Route path="/customschema" element={<CustomSchema />} />
             <Route path="schema/autopopulate" element={<AutoPopulate />} />
           </Routes>

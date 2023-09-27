@@ -28,9 +28,21 @@ const Stable = () => {
   const dispatch = useDispatch();
   const formDataArray = useSelector((state) => state.form.formDataArray);
 
-  const handleAddRow = (formDataEntry) => {
-    formDataEntry.id = rowId;
-    dispatch(addFormData(formDataEntry));
+  function numericToAlphabetic(id) {
+    let result = "";
+    while (id > 0) {
+      const remainder = (id - 1) % 26;
+      result = String.fromCharCode(65 + remainder) + result;
+      id = Math.floor((id - 1) / 26);
+    }
+    return result;
+  }
+  const handleAddRow = (formDataArray) => {
+    const numericId = rowId;
+    const alphabeticId = numericToAlphabetic(numericId);
+
+    formDataArray.id = alphabeticId;
+    dispatch(addFormData(formDataArray));
     setRowId(rowId + 1);
   };
 

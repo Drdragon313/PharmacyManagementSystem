@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 import "./Schema.css";
-import { Button, Col, Row } from "antd";
+import { Button, Space } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import SchemaCard from "../../Components/Card/SchemaCard";
 import SelectionModal from "../../Components/CreateSchemaSelectionModal/SelectionModal";
@@ -18,32 +18,28 @@ const Schema = () => {
   return (
     <>
       <div className="title">
-        <h2>Schema Definition</h2>
-        <h6>
+        <h4>Schema Definition</h4>
+        <p>
           Schemas can be defined here by adding data using different available
           methods. These schemas will be matched against any data you import
           into the system
-        </h6>
+        </p>
       </div>
-
-      <div className="availableSchemas">
-        <h4 className="AvailSchemastxt">Available Schemas</h4>
-
-        <Row gutter={16} className="SchemaRow">
-          {schemaDataArray.map((schema, index) => (
-            <Col span={6} key={index}>
-              <SchemaCard
-                className="card"
-                key={index}
-                title={schema}
-                schema={schema}
-                index={index}
-                bordered={true}
-                span={6}
-              ></SchemaCard>
-            </Col>
-          ))}
-        </Row>
+      <h4 className="AvailSchemastxt">Available Schemas</h4>
+      <div className="schema-container">
+        {schemaDataArray.map((schema, index) => (
+          <Space span={10} direction="horizontal">
+            <SchemaCard
+              className="card"
+              key={index}
+              title={schema}
+              schema={schema}
+              index={index}
+              bordered={true}
+              span={6}
+            ></SchemaCard>
+          </Space>
+        ))}
       </div>
       <div className="addNewSchema">
         <h2>Add Schema</h2>

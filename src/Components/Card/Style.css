@@ -1,14 +1,6 @@
-.customcard {
-  width: 40vmin;
-  height: 38vmin;
-  margin: 10px;
-  border: 1px solid;
-  border-color: #707477;
+.schemaImg {
+  margin-top: -20px;
 }
-.SchemaViewDetails {
-  margin-left: -15px;
-  margin-top: -10px;
-}
-.SchemaDelete {
-  margin-top: -10px;
+.availableSchemasBtn {
+  margin-top: 2px;
 }

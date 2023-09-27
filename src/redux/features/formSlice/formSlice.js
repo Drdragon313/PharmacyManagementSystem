@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   formDataArray: [],
-  id: 1, // Initialize id in the Redux state
+  id: 1,
 };
 
 const formSlice = createSlice({
@@ -37,7 +37,7 @@ export const {
   removeFormData,
   updateFormDataOrder,
   resetFormDataArray,
-  resetId, // Add the resetId action
+  resetId,
 } = formSlice.actions;
 
 export default formSlice.reducer;

@@ -1,8 +1,10 @@
 import React from "react";
-import { Table, Button, Space } from "antd"; 
-import { MenuOutlined } from "@ant-design/icons"; 
+import { Table, Button, Space } from "antd";
+import { MenuOutlined } from "@ant-design/icons";
 import { Draggable, Droppable } from "react-beautiful-dnd";
-const SchemaTable = ({ data, handleDelete, editFormData, onDragEnd  }) => {
+import { numericToAlphabetic } from "../../Utility Function/numericToAlphabetic";
+
+const SchemaTable = ({ data, handleDelete, editFormData }) => {
   const columns = [
     {
       title: "",
@@ -25,6 +27,7 @@ const SchemaTable = ({ data, handleDelete, editFormData, onDragEnd  }) => {
       title: "ID",
       dataIndex: "id",
       width: "5%",
+      render: (id) => numericToAlphabetic(id),
     },
     {
       title: "Field Name",
@@ -55,13 +58,18 @@ const SchemaTable = ({ data, handleDelete, editFormData, onDragEnd  }) => {
 
   return (
     <div>
-       <Droppable droppableId="data">
-      {(provided) => (
-        <div ref={provided.innerRef} {...provided.droppableProps}>
-          <Table dataSource={data} pagination={false} bordered columns={columns} />
-        </div>
-      )}
-    </Droppable>
+      <Droppable droppableId="data">
+        {(provided) => (
+          <div ref={provided.innerRef} {...provided.droppableProps}>
+            <Table
+              dataSource={data}
+              pagination={true}
+              bordered
+              columns={columns}
+            />
+          </div>
+        )}
+      </Droppable>
     </div>
   );
 };

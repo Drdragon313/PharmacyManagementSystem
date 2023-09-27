@@ -5,7 +5,8 @@ import SchemaTable from "../GeneralSchemaTable/SchemaTable";
 import { DragDropContext } from "react-beautiful-dnd";
 import { downloadCSV } from "../../Utility Function/downloadCSV";
 import { Button } from "antd";
-const SchemaDetails = () => {
+import "./style.css";
+const SchemaDetails = ({ editFormData, handleDelete }) => {
   const { schemaId } = useParams();
   const schemaDataArray = useSelector((state) => state.schema.schemaDataArray);
   const schemaName = useSelector((state) => state.schema.schemaName);
@@ -25,7 +26,11 @@ const SchemaDetails = () => {
         <div>
           <h3>Schema Name: {schemaData.name}</h3>
           <DragDropContext onDragEnd={onDragEnd}>
-            <SchemaTable data={schemaData.data} />
+            <SchemaTable
+              data={schemaData.data}
+              editFormData={editFormData}
+              handleDelete={handleDelete}
+            />
           </DragDropContext>
           <Button className="csvbtn" type="primary" onClick={handleDownloadCSV}>
             Download CSV
