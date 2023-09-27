@@ -26,6 +26,7 @@ const Schema = () => {
         </p>
       </div>
       <h4 className="AvailSchemastxt">Available Schemas</h4>
+
       <div className="schema-container">
         {schemaDataArray.map((schema, index) => (
           <Space span={10} direction="horizontal">

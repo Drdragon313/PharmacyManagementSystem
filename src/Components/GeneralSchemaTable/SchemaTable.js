@@ -63,7 +63,9 @@ const SchemaTable = ({ data, handleDelete, editFormData }) => {
           <div ref={provided.innerRef} {...provided.droppableProps}>
             <Table
               dataSource={data}
-              pagination={true}
+              pagination={{
+                pageSize: 5,
+              }}
               bordered
               columns={columns}
             />
