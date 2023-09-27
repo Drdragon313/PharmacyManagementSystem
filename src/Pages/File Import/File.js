@@ -1,13 +1,15 @@
 import { Upload, Button, message } from "antd";
 import React, { useState } from "react";
-import { validateCSV } from "../../Utility Function/Utility Function/FileUtils";
+import { validateCSV } from "../../Utility Function/FileUtils";
 import { useSelector } from "react-redux";
 import "./File.css";
 import uploadIcon from "../../Components/Images/uploadIcon.png";
+import { useNavigate } from "react-router-dom";
 
 const File = () => {
   const [error, setError] = useState("");
   const index = useSelector((state) => state.SchemaSelection.index);
+  const navigate = useNavigate();
 
   const schemaDataArray = useSelector((state) => state.schema.schemaDataArray);
 
@@ -15,8 +17,8 @@ const File = () => {
     try {
       await validateCSV(file, index, schemaDataArray);
       setError("");
-
       message.success("Valid CSV File", 2);
+      navigate("UploadSuccess");
     } catch (errorMessage) {
       setError(errorMessage);
       message.error("Invalid CSV File", 2);
@@ -35,7 +37,6 @@ const File = () => {
         <Upload.Dragger
           listType="text"
           className="file-upload"
-          // multiple={true}
           accept=".csv"
           beforeUpload={validateAndUpload}
         >

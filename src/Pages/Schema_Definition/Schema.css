@@ -3,6 +3,7 @@
 }
 .addNewSchema {
   margin-left: 15px;
+  margin-top: -20px;
 }
 .AvailSchemastxt {
   margin-top: 10px;
@@ -11,11 +12,12 @@
 .title {
   margin-top: 10px;
   margin-left: 12px;
+  /* margin-bottom: 50px; */
 }
 .schemaImg {
   margin-left: 10px;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  /* margin-top: 10px; */
+  margin-bottom: 2px;
   min-height: 40px;
   min-width: 20px;
   max-height: 80px;
@@ -42,6 +44,13 @@ h6 {
 .linkbtn {
   font-weight: bolder;
   color: #01a4ec;
+}
+.card {
+  width: 45vmin;
+  height: 38vmin;
+  margin: 10px;
+  border: 1px solid;
+  border-color: #707477;
 }
 .SchemaRow {
   margin-top: -10px;

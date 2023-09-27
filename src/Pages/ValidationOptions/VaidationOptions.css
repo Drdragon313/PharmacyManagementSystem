@@ -44,3 +44,13 @@
   background: linear-gradient(to right, #001529, #009de1);
   color: white;
 }
+.Validation-button-disabled {
+  margin-top: 10px;
+}
+.zeroSchemas {
+  color: #707477;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}

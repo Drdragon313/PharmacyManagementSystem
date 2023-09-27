@@ -1,17 +1,17 @@
+// formSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   formDataArray: [],
+  id: 1, // Initialize id in the Redux state
 };
-
-let rowId = 1;
 
 const formSlice = createSlice({
   name: "form",
   initialState,
   reducers: {
     addFormData: (state, action) => {
-      const newFormData = { ...action.payload, id: rowId++ };
+      const newFormData = { ...action.payload, id: state.id++ };
       state.formDataArray.push(newFormData);
     },
     removeFormData: (state, action) => {
@@ -23,9 +23,21 @@ const formSlice = createSlice({
     updateFormDataOrder: (state, action) => {
       state.formDataArray = action.payload;
     },
+    resetFormDataArray: (state) => {
+      state.formDataArray = [];
+    },
+    resetId: (state) => {
+      state.id = 1; 
+    },
   },
 });
 
-export const { addFormData, removeFormData, updateFormDataOrder } =
-  formSlice.actions;
+export const {
+  addFormData,
+  removeFormData,
+  updateFormDataOrder,
+  resetFormDataArray,
+  resetId, // Add the resetId action
+} = formSlice.actions;
+
 export default formSlice.reducer;

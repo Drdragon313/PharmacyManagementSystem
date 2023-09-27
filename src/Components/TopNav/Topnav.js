@@ -1,44 +1,33 @@
 import React from "react";
-
-import { SearchOutlined,UserOutlined } from "@ant-design/icons";
+import "./Topnav.css";
+import { SearchOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Space } from "antd";
 import { Layout } from "antd";
-import { NotificationOutlined } from '@ant-design/icons';
+import { NotificationOutlined } from "@ant-design/icons";
 
 const { Header } = Layout;
 
 const Topnav = () => {
   return (
     <Layout>
-      <Header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          background: "#fff",
-          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-        }}
-      >
-        
+      <Header className="TopnavHeader">
         <div>
           <Space wrap>
             <Button icon={<SearchOutlined />}>Search</Button>
           </Space>
         </div>
         <div>
-        <Space>
+          <Space>
             <NotificationOutlined />
             <span></span>
-            <div style={{display:"flex",flexDirection:"column"}}>
-            <span style={{height:"20px",color:"#009CDF"}}>John Doe</span> {/* Replace with the actual username */}
-           
-            <span style={{height:"20px",marginBottom:"50px"}}>Job Title</span> {/* Replace with the actual job title */}
+            <div className="TopnavUser">
+              <span className="TopnavUserName">John Doe</span>
+
+              <span className="TopnavJobTitle">Job Title</span>
             </div>
             <span></span>
-            <UserOutlined style={{ fontSize: "20px" }} /> {/* Profile picture icon */}
+            <UserOutlined className="TopnavProfileLogo" />
           </Space>
-        
-
         </div>
       </Header>
     </Layout>

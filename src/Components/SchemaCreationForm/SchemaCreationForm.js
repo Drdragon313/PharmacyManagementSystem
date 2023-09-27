@@ -1,23 +1,29 @@
 import React from "react";
 import { Modal, Form, Input, Button } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateSchemaName } from "../../redux/features/SchemaSlice/schemaSlice";
 
-const SchemaCreationForm = ({ visible, onCancel }) => {
+const SchemaCreationForm = (props) => {
+  const dispatch = useDispatch();
+
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
   const handleCreate = () => {
-    form.validateFields().then(() => {
-      navigate(`/customschema`);
-      onCancel();
+    form.validateFields().then((values) => {
+      const { schemaName } = values;
+      navigate("/customschema");
+      props.onCancel();
+      dispatch(updateSchemaName(schemaName));
     });
   };
 
   return (
     <Modal
       title="Create New Schema"
-      open={visible}
-      onCancel={onCancel}
+      open={props.visible}
+      onCancel={props.onCancel}
       footer={null}
     >
       <Form form={form} layout="vertical">
