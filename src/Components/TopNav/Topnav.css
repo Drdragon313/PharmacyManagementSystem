@@ -1,0 +1,22 @@
+.TopnavHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.TopnavUser {
+  display: flex;
+  flex-direction: column;
+}
+.TopnavUserName {
+  height: 20px;
+  color: #009cdf;
+}
+.TopnavJobTitle {
+  height: 20px;
+  margin-bottom: 50px;
+}
+.TopnavProfileLogo {
+  font-size: 20px;
+}

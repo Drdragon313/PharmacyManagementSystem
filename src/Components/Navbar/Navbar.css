@@ -1,0 +1,25 @@
+.NavbarTop {
+  text-align: center;
+  cursor: pointer;
+  padding: 20px;
+  background-color: #001529;
+  color: white;
+
+  font-size: 20px;
+}
+.NavbarMenu{
+    height: 100%;
+    border-right: 0;
+}
+
+.NavbarFooter{
+  text-align:center;
+  font-size:11px;
+  background-color:rgba(255, 255, 255, 0.23);
+  
+}
+.NavbarCopy{
+  text-align: center;
+  font-size: 11px;
+  margin-top: 10px;
+}

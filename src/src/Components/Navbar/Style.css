@@ -1,0 +1,15 @@
+
+
+.logo {
+  margin-left: 60px;
+  margin-top: 10px;
+  margin-bottom: 50px;
+  min-height: 51px;
+  min-width: 48px;
+  max-height: 71px;
+  max-width: 68px;
+}
+.menuSider {
+  height: 200%;
+  border-right: 0;
+}
