@@ -1,11 +1,20 @@
   .Stable{
     margin: 20px;
-  }
-  .csvbtn{
-    margin-right: 10px;
+    margin-top: 5px;
   }
   .schemaTable{
     margin: 10px;
     border: 1px solid black;
     border-radius: 2px;
+  }
+  .btns{
+    margin: 20px;
+    display: flex;
+    flex-direction: row;;
+  }
+  .addrow{
+    margin-right: 10px !important;
+  }
+  .save-schema{
+    margin-left: auto;
   }

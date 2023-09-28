@@ -23,7 +23,7 @@ const Navbar = () => {
     <Sider width={200} collapsed={collapsed}>
       <div
         style={{
-          height: "70.1vh",
+          height: "76.4vh",
           background: colorBgContainer,
         }}
       >

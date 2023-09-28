@@ -40,7 +40,7 @@ const EditForm = ({ editRow, onCancel, onSubmit, editModalVisible }) => {
   return (
     <Modal
       title="Edit Row"
-      visible={editModalVisible}
+      open={editModalVisible}
       onCancel={() => {
         onCancel();
       }}

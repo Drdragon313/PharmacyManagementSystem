@@ -23,7 +23,7 @@ const SchemaDetails = ({ editFormData, handleDelete }) => {
   return (
     <div>
       {schemaData ? (
-        <div>
+        <div className="schema-details">
           <h3>Schema Name: {schemaData.name}</h3>
           <DragDropContext onDragEnd={onDragEnd}>
             <SchemaTable
