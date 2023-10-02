@@ -14,8 +14,8 @@
 }
 
 .importManuallycard {
-  width: 30vmin;
-  height: 20vmin;
+  width: 35vmin;
+  height: 25vmin;
   margin: 10px;
   border: 1px solid;
   border-color: #707477;
@@ -33,8 +33,8 @@
 }
 
 .importfromDataBase {
-  width: 30vmin;
-  height: 20vmin;
+  width: 35vmin;
+  height: 25vmin;
   margin: 10px;
   border: 1px solid;
   border-color: #707477;
@@ -51,8 +51,8 @@
   color: aliceblue;
 }
 .importfromCSV {
-  width: 30vmin;
-  height: 20vmin;
+  width: 35vmin;
+  height: 25vmin;
   margin: 10px;
   border: 1px solid;
   border-color: #707477;

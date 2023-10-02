@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./VaidationOptions.css";
 import CustomCard from "../../Components/Card/Card";
-import { Col, Image, Row, Space, Checkbox, Button } from "antd";
+import { Col, Image, Row, Space, Checkbox, Button, Pagination } from "antd";
 import schemaImg from "../../Assets/Schemas.png";
 import { addIndex } from "../../redux/features/SchemaSelectionSlice/SchemaSelectionSlice";
 import { Link } from "react-router-dom";
@@ -15,6 +15,8 @@ const ValidationOptions = () => {
   const [selectedSchema, setSelectedSchema] = useState(
     schemaDataArray.length === 1 ? 0 : null
   );
+  const [currentPage, setCurrentPage] = useState(1);
+  const schemasPerPage = 3;
   useEffect(() => {
     if (schemaDataArray.length === 1) {
       dispatch(addIndex(0));
@@ -26,6 +28,13 @@ const ValidationOptions = () => {
       prevSelectedSchema === index ? null : index
     );
     dispatch(addIndex(index));
+  };
+  const startIndex = (currentPage - 1) * schemasPerPage;
+  const endIndex = startIndex + schemasPerPage;
+  const displayedSchemas = schemaDataArray.slice(startIndex, endIndex);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -47,7 +56,7 @@ const ValidationOptions = () => {
               <p className="Validation-paragraph">Available Schemas:</p>
 
               <Row gutter={16}>
-                {schemaDataArray.map((schema, index) => (
+                {displayedSchemas.map((schema, index) => (
                   <Col span={6} key={index} className="validation-col">
                     <CustomCard bordered={true} span={6}>
                       <Image
@@ -71,6 +80,13 @@ const ValidationOptions = () => {
                   </Col>
                 ))}
               </Row>
+              <Pagination
+                current={currentPage}
+                total={schemaDataArray.length}
+                pageSize={schemasPerPage}
+                onChange={handlePageChange}
+                className="options-pagination"
+              />
             </div>
           ) : (
             <div className="zeroSchemas">

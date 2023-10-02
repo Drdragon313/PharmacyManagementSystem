@@ -9,7 +9,7 @@
   border-radius: 10px;
   border: 1px solid #d3d3d3;
   width: 75vw;
-  height: 65vh;
+  height: 72vh;
 }
 .Options-containerElements {
   margin-top: 20px;
@@ -53,4 +53,7 @@
   justify-content: center;
   align-items: center;
   height: 50vh;
+}
+.options-pagination {
+  margin-top: 10px;
 }
