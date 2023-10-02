@@ -6,13 +6,14 @@ import SchemaCreationForm from "../SchemaCreationForm/SchemaCreationForm";
 import databaseImg from "../../Assets/uploadDatabase.png";
 import manulaImg from "../../Assets/manual.png";
 import CSVimg from "../../Assets/csv.png";
-import { Link } from "react-router-dom";
 const SelectionModal = ({ visible, setSelectionModalVisible }) => {
   const [isSchemaFormVisible, setSchemaFormVisible] = useState(false);
+  const [selectedType, setSelectedType] = useState(null);
 
-  const openSchemaCreationForm = () => {
+  const openSchemaCreationForm = (selectedType) => {
     setSelectionModalVisible(false);
     setSchemaFormVisible(true);
+    setSelectedType(selectedType);
   };
 
   return (
@@ -47,7 +48,11 @@ const SelectionModal = ({ visible, setSelectionModalVisible }) => {
                 </Space>
               </CustomCard>
             </Col>
-            <Col span={6} onClick={openSchemaCreationForm}>
+            <Col
+              span={6}
+              onClick={() => openSchemaCreationForm("manual")}
+              type="manual"
+            >
               <CustomCard className="importManuallycard">
                 <Space size={1} direction="vertical">
                   <Image
@@ -63,23 +68,25 @@ const SelectionModal = ({ visible, setSelectionModalVisible }) => {
                 </Space>
               </CustomCard>
             </Col>
-            <Col span={6} onClick={openSchemaCreationForm}>
-              <Link to="autopopulate">
-                <CustomCard className="importfromCSV">
-                  <Space size={1} direction="vertical">
-                    <Image
-                      className="csvImg"
-                      src={CSVimg}
-                      preview={false}
-                    ></Image>
-                    <h6>Import from CSV</h6>
-                    <p>
-                      This method will allow users to import there schema by
-                      importing file.
-                    </p>
-                  </Space>
-                </CustomCard>
-              </Link>
+            <Col
+              span={6}
+              onClick={() => openSchemaCreationForm("csv")}
+              type="csv"
+            >
+              <CustomCard className="importfromCSV">
+                <Space size={1} direction="vertical">
+                  <Image
+                    className="csvImg"
+                    src={CSVimg}
+                    preview={false}
+                  ></Image>
+                  <h6>Import from CSV</h6>
+                  <p>
+                    This method will allow users to import there schema by
+                    importing file.
+                  </p>
+                </Space>
+              </CustomCard>
             </Col>
           </Space>
         </Row>
@@ -88,6 +95,7 @@ const SelectionModal = ({ visible, setSelectionModalVisible }) => {
         <SchemaCreationForm
           visible={isSchemaFormVisible}
           onCancel={() => setSchemaFormVisible(false)}
+          selectedType={selectedType}
         />
       )}
     </>

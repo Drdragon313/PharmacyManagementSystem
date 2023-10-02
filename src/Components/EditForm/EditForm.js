@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Form, Input } from "antd";
+import { Modal, Form, Input,Row,Col } from "antd";
 import CustomSelect from "../Select/Select";
 import { useOptions } from "../../optionContext/OptionContext";
 import { filterValidationOptions } from "../../Utility Function/validationOptions";
@@ -40,13 +40,16 @@ const EditForm = ({ editRow, onCancel, onSubmit, editModalVisible }) => {
   return (
     <Modal
       title="Edit Row"
-      visible={editModalVisible}
+      open={editModalVisible}
       onCancel={() => {
         onCancel();
       }}
       onOk={handleFormSubmit}
     >
-      <Form form={form} layout="vertical">
+
+      <Form form={form}>
+      <Row gutter={16}>
+     <Col span={12}>
         <Form.Item
           name="fieldName"
           label="Field Name"
@@ -55,6 +58,8 @@ const EditForm = ({ editRow, onCancel, onSubmit, editModalVisible }) => {
         >
           <Input />
         </Form.Item>
+        </Col>
+        <Col span={12}>
         <Form.Item
           name="type"
           label="Type"
@@ -70,6 +75,8 @@ const EditForm = ({ editRow, onCancel, onSubmit, editModalVisible }) => {
             placeholder="Select a Type"
           />
         </Form.Item>
+        </Col>
+        <Col span={12}>
         <Form.Item
           name="validation"
           label="Validation"
@@ -85,6 +92,8 @@ const EditForm = ({ editRow, onCancel, onSubmit, editModalVisible }) => {
             placeholder="Select a Validation"
           />
         </Form.Item>
+        </Col>
+        </Row>
       </Form>
     </Modal>
   );

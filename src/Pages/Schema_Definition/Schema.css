@@ -11,11 +11,10 @@
 .title {
   margin-top: 10px;
   margin-left: 12px;
-  /* margin-bottom: 50px; */
+
 }
 .schemaImg {
   margin-left: 10px;
-  /* margin-top: 10px; */
   margin-bottom: 2px;
   min-height: 40px;
   min-width: 20px;
@@ -70,4 +69,15 @@ h6 {
   overflow-y: hidden;
   display: flex;
   flex-direction: row;
+}
+
+.content{
+  background-color: white;
+  height: 100%;
+}
+.no-schemastxt{
+  color: #999;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 80px;
 }
