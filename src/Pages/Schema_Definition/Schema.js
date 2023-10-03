@@ -16,9 +16,8 @@ const Schema = () => {
     console.log(isSelectionModalVisible);
   };
 
-
   return (
-    <>
+    <div className="content">
       <div className="title">
         <h4>Schema Definition</h4>
         <p>
@@ -29,14 +28,14 @@ const Schema = () => {
       </div>
       <h4 className="AvailSchemastxt">Available Schemas</h4>
       <div className="schema-container">
-        
         {schemaDataArray.length === 0 ? (
-          <p className="no-schemastxt">No schemas available</p>
+          <h4 className="no-schemastxt">No schemas available</h4>
         ) : (
           schemaDataArray.map((schema, index) => (
             <Space span={10} direction="horizontal" key={index}>
               <SchemaCard
                 className="card"
+                title={schema}
                 schema={schema}
                 index={index}
                 bordered={true}
@@ -65,7 +64,7 @@ const Schema = () => {
           setSelectionModalVisible={setSelectionModalVisible}
         />
       </div>
-    </>
+    </div>
   );
 };
 

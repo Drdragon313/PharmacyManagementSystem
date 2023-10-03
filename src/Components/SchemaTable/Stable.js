@@ -110,15 +110,20 @@ const Stable = () => {
   };
 
   return (
-    <div className="schema-table">
-      <div className="btns">
+    <div className="Stable">
+      <div className="buttons">
         <SchemaForm className="addrow" onAddRow={handleAddRow} />
-        <Link className="save-schema" to="/schema">
-          <Button type="primary" onClick={handleSaveAndSuccess}>
+        <Link to="/schema">
+          <Button
+            type="primary"
+            className="save-button"
+            onClick={handleSaveAndSuccess}
+          >
             Save Schema
           </Button>
         </Link>
       </div>
+
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="formDataArray">
           {(provided) => (

@@ -1,20 +1,17 @@
-  .Stable{
-    margin: 20px;
-    margin-top: 5px;
-  }
-  .schemaTable{
-    margin: 10px;
-    border: 1px solid black;
-    border-radius: 2px;
-  }
-  .btns{
-    margin: 20px;
-    display: flex;
-    flex-direction: row;;
-  }
-  .addrow{
-    margin-right: 10px !important;
-  }
-  .save-schema{
-    margin-left: auto;
-  }
+.Stable {
+  margin: 20px;
+  margin-top: 5px;
+}
+.schemaTable {
+  margin: 10px;
+  border: 1px solid black;
+  border-radius: 2px;
+}
+.buttons {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+.save-button {
+  margin-left: 1010px;
+}
