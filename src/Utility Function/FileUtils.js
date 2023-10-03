@@ -32,11 +32,8 @@ export const validateCSV = async (file, index, schemaDataArray) => {
               const actualType = typeof row[fieldName];
               if (actualType !== expectedType) {
                 hasInvalidChunk = true;
-                // reject(
-                //   `Invalid data type for column ${fieldName} at row ${rowNumber}.`
-                // );
                 errorArray.push(
-                  `Invalid data type for column ${fieldName} at row ${rowNumber}.`
+                  `Invalid data type for column ${fieldName} at row ${rowNumber}, Expected datatype ${expectedType} but instead got ${actualType}.`
                 );
               }
             });

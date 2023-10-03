@@ -6,6 +6,7 @@ import {
   UploadOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
+
 import { Link } from "react-router-dom";
 
 const SideMenuBar = (props) => {
@@ -26,7 +27,6 @@ const SideMenuBar = (props) => {
       <Menu.Item key="3" icon={<UploadOutlined />}>
         <Link to="/file">Import File</Link>
       </Menu.Item>
-
       <Menu.Item
         style={{ marginTop: "100%" }}
         key="4"

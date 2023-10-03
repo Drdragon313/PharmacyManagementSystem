@@ -12,7 +12,7 @@ const Topnav = () => {
     <Layout>
       <Header className="TopnavHeader">
         <div>
-          <Space wrap>
+          <Space wrap className="TopnavSearch">
             <Button icon={<SearchOutlined />}>Search</Button>
           </Space>
         </div>
