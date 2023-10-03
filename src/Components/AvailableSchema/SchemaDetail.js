@@ -23,20 +23,18 @@ const SchemaDetails = ({ editFormData, handleDelete }) => {
   return (
     <div>
       {schemaData ? (
-        <div    className="table">
+        <div className="table">
           <h3>Schema Name: {schemaData.name}</h3>
           <Button className="csvbtn" type="primary" onClick={handleDownloadCSV}>
             Download CSV
           </Button>
           <DragDropContext onDragEnd={onDragEnd}>
             <SchemaTable
-         
               data={schemaData.data}
               editFormData={editFormData}
               handleDelete={handleDelete}
             />
           </DragDropContext>
-         
         </div>
       ) : (
         <p>Schema not found</p>

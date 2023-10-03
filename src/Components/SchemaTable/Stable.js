@@ -112,18 +112,26 @@ const Stable = () => {
   return (
     <div className="Stable">
       <div className="buttons">
-    <SchemaForm className="addrow" onAddRow={handleAddRow} />
-      <Link to="/schema">
-        <Button type="primary" className="save-button" onClick={handleSaveAndSuccess}>
-          Save Schema
-        </Button>
-      </Link>
+        <SchemaForm className="addrow" onAddRow={handleAddRow} />
+        <Link to="/schema">
+          <Button
+            type="primary"
+            className="save-button"
+            onClick={handleSaveAndSuccess}
+          >
+            Save Schema
+          </Button>
+        </Link>
       </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="formDataArray">
           {(provided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className="Stable"
+            >
               <SchemaTable
                 data={formDataArray}
                 onEdit={() => setEditModalVisible(true)}
@@ -135,7 +143,6 @@ const Stable = () => {
         </Droppable>
       </DragDropContext>
 
-     
       {contextHolder}
       {editRow && (
         <EditForm

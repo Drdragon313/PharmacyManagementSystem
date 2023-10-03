@@ -3,6 +3,8 @@ import Papa from "papaparse";
 export const validateCSV = async (file, index, schemaDataArray) => {
   return new Promise((resolve, reject) => {
     let hasInvalidChunk = false;
+    let rowNumber = 0;
+    let errorArray = [];
     if (index !== null && index !== undefined) {
       const selectedSchemaData = schemaDataArray[index];
 
@@ -23,13 +25,16 @@ export const validateCSV = async (file, index, schemaDataArray) => {
           }
 
           results.data.forEach((row) => {
+            rowNumber++;
             selectedSchemaData.data.forEach((item) => {
               const fieldName = item.Fieldname;
               const expectedType = item.Type;
               const actualType = typeof row[fieldName];
               if (actualType !== expectedType) {
                 hasInvalidChunk = true;
-                reject(`Invalid data type for ${fieldName}.`);
+                errorArray.push(
+                  `Invalid data type for column ${fieldName} at row ${rowNumber}, Expected datatype ${expectedType} but instead got ${actualType}.`
+                );
               }
             });
           });
@@ -38,6 +43,8 @@ export const validateCSV = async (file, index, schemaDataArray) => {
         complete: () => {
           if (!hasInvalidChunk) {
             resolve();
+          } else {
+            reject(errorArray);
           }
         },
       });

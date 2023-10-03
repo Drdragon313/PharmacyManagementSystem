@@ -1,4 +1,10 @@
 .MainContent {
   background-color: white;
-  height: 81.1vmin;
+  height: 77vh;
+}
+@media screen and (max-width: 480px) {
+  .MainContent {
+    background-color: white;
+    height: 50vh;
+  }
 }

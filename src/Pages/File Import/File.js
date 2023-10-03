@@ -7,7 +7,7 @@ import uploadIcon from "../../Components/Images/uploadIcon.png";
 import { useNavigate } from "react-router-dom";
 
 const File = () => {
-  const [error, setError] = useState("");
+  const [error, setError] = useState([]);
   const index = useSelector((state) => state.SchemaSelection.index);
   const navigate = useNavigate();
 
@@ -34,19 +34,30 @@ const File = () => {
           with the already defined selected schema in order to upload to the
           database.
         </p>
-        <Upload.Dragger
-          listType="text"
-          className="file-upload"
-          accept=".csv"
-          beforeUpload={validateAndUpload}
-        >
-          <img src={uploadIcon} alt="Upload Icon" />
-          <br />
-          <p className="file-uploadText">Drag or Drop your files here</p>
-          <p className="file-supportedText">Files Supported: .CSV</p>
-          <Button className="import-button">Choose File</Button>
-        </Upload.Dragger>
-        {error && <div style={{ color: "red" }}>{error}</div>}
+        <div className="file-dragger">
+          <Upload.Dragger
+            listType="text"
+            className="file-upload"
+            accept=".csv"
+            beforeUpload={validateAndUpload}
+            onRemove={() => {
+              setError();
+            }}
+          >
+            <img src={uploadIcon} alt="Upload Icon" />
+            <br />
+            <p className="file-uploadText">Drag or Drop your files here</p>
+            <p className="file-supportedText">Files Supported: .CSV</p>
+            <Button className="import-button">Choose File</Button>
+          </Upload.Dragger>
+        </div>
+        {error && (
+          <div style={{ color: "red" }}>
+            {error.map((value, index) => (
+              <p key={index}>{value}</p>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

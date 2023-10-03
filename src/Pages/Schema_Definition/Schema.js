@@ -15,6 +15,7 @@ const Schema = () => {
     setSelectionModalVisible(true);
     console.log(isSelectionModalVisible);
   };
+
   return (
     <div className="content">
       <div className="title">
@@ -26,7 +27,6 @@ const Schema = () => {
         </p>
       </div>
       <h4 className="AvailSchemastxt">Available Schemas</h4>
-
       <div className="schema-container">
         {schemaDataArray.length === 0 ? (
           <h4 className="no-schemastxt">No schemas available</h4>

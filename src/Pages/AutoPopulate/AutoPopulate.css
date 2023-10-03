@@ -1,25 +1,25 @@
-.file-container {
+.populate-container {
   margin-left: 20px;
 }
-.import-button {
+.populate-import-button {
   margin-top: 10px;
   background: linear-gradient(to right, #001529, #009de1);
   color: white;
 }
-.file-paragraph {
+.populate-paragraph {
   color: #707477;
 }
-.file-upload {
+.populate-file-upload {
   width: 80vw;
 }
-.file-uploadText {
+.populate-uploadText {
   height: 10px;
 }
-.file-supportedText {
+.populate-supportedText {
   color: #707477;
   font-size: 11px;
   height: 10px;
 }
-.file-dragger {
+.populate-dragger {
   width: 79vw;
 }
