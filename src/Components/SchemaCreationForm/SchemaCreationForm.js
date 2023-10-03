@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { updateSchemaName } from "../../redux/features/SchemaSlice/schemaSlice";
 import { validateSchemaName } from "../../Utility Function/validateSchemaName";
 
-const SchemaCreationForm = ({ visible, onCancel }) => {
+const SchemaCreationForm = ({ visible, onCancel,selectedType }) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -16,7 +16,15 @@ const SchemaCreationForm = ({ visible, onCancel }) => {
       const values = await form.validateFields();
       const { schemaName } = values;
       dispatch(updateSchemaName(schemaName));
-      navigate(`/customschema`);
+      
+      if (selectedType === 'manual') {
+        navigate(`/customschema`);
+      } else if (selectedType === 'database') {
+        navigate(`/database`);
+      } else if (selectedType === 'csv') {
+        navigate(`/schema/autopopulate`);
+      }
+      
       onCancel();
     } catch (error) {
       message.error("Validation error", error, 3);
