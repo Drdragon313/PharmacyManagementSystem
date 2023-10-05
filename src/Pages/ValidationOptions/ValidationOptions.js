@@ -58,7 +58,7 @@ const ValidationOptions = () => {
               <Row gutter={16}>
                 {displayedSchemas.map((schema, index) => (
                   <Col span={6} key={index} className="validation-col">
-                    <CustomCard bordered={true} span={6}>
+                    <CustomCard bordered={true} className="optionsCustomCard">
                       <Image
                         className="Validation-Img"
                         src={schemaImg}
@@ -69,12 +69,9 @@ const ValidationOptions = () => {
                         onChange={() => handleSelect(index)}
                         checked={index === selectedSchema}
                       />
-                      <p className="Validation-schemaName">{`Schema ${
-                        index + 1
-                      }`}</p>
+                      <h6> {schema.name}</h6>
                       <Space size={44}>
-                        <p>No. of Fields:</p>
-                        <p>No. of Types:</p>
+                        <p>No. of Fields: {schema.data.length}</p>
                       </Space>
                     </CustomCard>
                   </Col>

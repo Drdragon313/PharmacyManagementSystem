@@ -1,3 +1,19 @@
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+  .Stable{
+    margin: 20px;
+  }
+  .csvbtn{
+    margin-right: 10px;
+  }
+  .schemaTable{
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 2px;
+  }
+=======
+>>>>>>> Stashed changes
 .Stable {
   margin: 20px;
   margin-top: 5px;
@@ -10,8 +26,22 @@
 .buttons {
   display: flex;
   flex-direction: row;
+<<<<<<< Updated upstream
   margin-bottom: 10px;
 }
 .save-button {
   margin-left: 1010px;
 }
+=======
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+}
+.save-button {
+  margin-left: 830px;
+}
+.addNewEntry {
+  margin-left: 10px;
+}
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes

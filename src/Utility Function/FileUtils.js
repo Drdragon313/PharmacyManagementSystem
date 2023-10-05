@@ -21,7 +21,8 @@ export const validateCSV = async (file, index, schemaDataArray) => {
 
           if (!arraysEqual(csvHeaders, schemaHeaders)) {
             hasInvalidChunk = true;
-            reject("CSV file does not match the required structure.");
+            // reject("CSV file does not match the required structure.");
+            errorArray.push("CSV file does not match the required structure.");
           }
 
           results.data.forEach((row) => {

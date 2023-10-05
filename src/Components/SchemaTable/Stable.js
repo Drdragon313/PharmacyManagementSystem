@@ -111,8 +111,16 @@ const Stable = () => {
 
   return (
     <div className="Stable">
+<<<<<<< Updated upstream
       <div className="buttons">
         <SchemaForm className="addrow" onAddRow={handleAddRow} />
+=======
+<<<<<<< Updated upstream
+      <SchemaForm className="addrow" onAddRow={handleAddRow} />
+=======
+      <div className="buttons">
+        <SchemaForm className="addNewEntry" onAddRow={handleAddRow} />
+>>>>>>> Stashed changes
         <Link to="/schema">
           <Button
             type="primary"
@@ -124,6 +132,10 @@ const Stable = () => {
         </Link>
       </div>
 
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="formDataArray">
           {(provided) => (
