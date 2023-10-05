@@ -8,6 +8,7 @@ import {
   resetFormDataArray,
   resetId,
 } from "../../redux/features/formSlice/formSlice";
+
 import {
   addSchemaData,
   updateSchemaName,
@@ -24,10 +25,8 @@ const Stable = () => {
   const [editRow, setEditRow] = useState(null);
   const [editModalVisible, setEditModalVisible] = useState(false);
   const schemaName = useSelector((state) => state.schema.schemaName);
-
   const dispatch = useDispatch();
   const formDataArray = useSelector((state) => state.form.formDataArray);
-
   function numericToAlphabetic(id) {
     let result = "";
     while (id > 0) {
@@ -40,16 +39,13 @@ const Stable = () => {
   const handleAddRow = (formDataArray) => {
     const numericId = rowId;
     const alphabeticId = numericToAlphabetic(numericId);
-
     formDataArray.id = alphabeticId;
     dispatch(addFormData(formDataArray));
     setRowId(rowId + 1);
   };
-
   const handleDelete = (id) => {
     dispatch(removeFormData(id));
   };
-
   const editFormData = (id) => {
     const rowToEdit = formDataArray.find((entry) => entry.id === id);
     if (rowToEdit) {
@@ -57,15 +53,12 @@ const Stable = () => {
       setEditModalVisible(true);
     }
   };
-
   const onDragEnd = (result) => {
     if (!result.destination) {
       return;
     }
-
     const startIndex = result.source.index;
     const endIndex = result.destination.index;
-
     const reorderedData = reorderFormDataArray(
       formDataArray,
       startIndex,
@@ -73,7 +66,6 @@ const Stable = () => {
     );
     dispatch(updateFormDataOrder(reorderedData));
   };
-
   const [messageApi, contextHolder] = message.useMessage();
   const success = () => {
     messageApi.open({
@@ -81,14 +73,12 @@ const Stable = () => {
       content: "Schema Saved Successfully",
     });
   };
-
   const handleSaveAndSuccess = () => {
     if (formDataArray.length > 0) {
       const newSchema = {
         name: schemaName,
         data: formDataArray,
       };
-
       dispatch(addSchemaData(newSchema));
       success();
       dispatch(resetFormDataArray());
@@ -99,7 +89,6 @@ const Stable = () => {
       console.error("No rows to save in the schema.");
     }
   };
-
   const handleEditSubmit = (editedData) => {
     const updatedDataArray = formDataArray.map((entry) =>
       entry.id === editedData.id ? editedData : entry
@@ -108,19 +97,11 @@ const Stable = () => {
     setEditRow(null);
     setEditModalVisible(false);
   };
-
   return (
     <div className="Stable">
-<<<<<<< Updated upstream
       <div className="buttons">
         <SchemaForm className="addrow" onAddRow={handleAddRow} />
-=======
-<<<<<<< Updated upstream
-      <SchemaForm className="addrow" onAddRow={handleAddRow} />
-=======
-      <div className="buttons">
-        <SchemaForm className="addNewEntry" onAddRow={handleAddRow} />
->>>>>>> Stashed changes
+
         <Link to="/schema">
           <Button
             type="primary"
@@ -132,18 +113,10 @@ const Stable = () => {
         </Link>
       </div>
 
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="formDataArray">
           {(provided) => (
-            <div
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-              className="Stable"
-            >
+            <div ref={provided.innerRef} {...provided.droppableProps}>
               <SchemaTable
                 data={formDataArray}
                 onEdit={() => setEditModalVisible(true)}
@@ -156,6 +129,7 @@ const Stable = () => {
       </DragDropContext>
 
       {contextHolder}
+
       {editRow && (
         <EditForm
           editRow={editRow}
