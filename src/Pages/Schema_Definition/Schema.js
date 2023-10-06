@@ -29,7 +29,9 @@ const Schema = () => {
       <h4 className="AvailSchemastxt">Available Schemas</h4>
       <div className="schema-container">
         {schemaDataArray.length === 0 ? (
-          <h4 className="no-schemastxt">No schemas available</h4>
+          <div>
+            <h4 className="no-schemastxt">No schemas available</h4>
+          </div>
         ) : (
           schemaDataArray.map((schema, index) => (
             <Space span={10} direction="horizontal" key={index}>
@@ -47,7 +49,6 @@ const Schema = () => {
       </div>
       <div className="addNewSchema">
         <h2>Add Schema</h2>
-        <h6>Create New Schema</h6>
 
         <Button
           className="circlebtn"

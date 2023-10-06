@@ -1,5 +1,5 @@
-.Schema-Container {
-  margin-top: 10px;
+.content {
+  overflow-y: hidden;
 }
 .addNewSchema {
   margin-left: 15px;
@@ -49,13 +49,13 @@ h6 {
   max-height: 250px;
   margin-left: 10px;
   padding: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(74, 74, 74, 0.2);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 16px;
   color: #333;
-  border-color: #707477;
+  border-color: #cccccc;
 }
 @media (max-width: 786px) {
   .card {
@@ -64,10 +64,9 @@ h6 {
 }
 
 .schema-container {
-  overflow-x: auto;
-  overflow-y: hidden;
   display: flex;
   flex-direction: row;
+  overflow: hidden;
 }
 
 .content {
