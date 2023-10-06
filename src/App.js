@@ -12,20 +12,21 @@ import File from "./Pages/File Import/File";
 import ValidationOptions from "./Pages/ValidationOptions/ValidationOptions";
 import UploadSuccess from "./Pages/UploadSuccess/UploadSuccess";
 import AutoPopulate from "./Pages/AutoPopulate/AutoPopulate";
+import Signin from "./Pages/Signin/Signin";
 const { Content } = Layout;
 
 function App() {
   return (
     <BrowserRouter>
       <Layout>
-        <Navbar />
+        {shouldRenderNavbar() && <Navbar />}
 
         <Content className="MainContent">
-          <Topnav />
+          {shouldRenderTopnav() && <Topnav />}
           <Routes>
+            <Route path="signin" element={<Signin />} />
             <Route path="/" element={<Iframe />} />
             <Route path="schema" element={<Schema />} />
-
             <Route path="file" element={<ValidationOptions />} />
             <Route path="file/fileUpload" element={<File />} />
             <Route
@@ -41,6 +42,15 @@ function App() {
       </Layout>
     </BrowserRouter>
   );
+}
+function shouldRenderNavbar() {
+  const currentPath = window.location.pathname;
+  return currentPath !== "/signin";
+}
+
+function shouldRenderTopnav() {
+  const currentPath = window.location.pathname;
+  return currentPath !== "/signin";
 }
 
 export default App;
