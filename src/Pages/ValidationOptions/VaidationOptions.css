@@ -54,6 +54,12 @@
   align-items: center;
   height: 50vh;
 }
+
 .options-pagination {
   margin-top: 10px;
+}
+.optionsCustomCard {
+  height: 35vh;
+  width: 20vw;
+  margin-left: 30px;
 }

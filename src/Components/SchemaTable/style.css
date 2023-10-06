@@ -10,8 +10,13 @@
 .buttons {
   display: flex;
   flex-direction: row;
+  margin-top: 10px;
   margin-bottom: 10px;
+  margin-left: 20px;
 }
 .save-button {
-  margin-left: 1010px;
+  margin-left: 830px;
+}
+.addNewEntry {
+  margin-left: 10px;
 }
