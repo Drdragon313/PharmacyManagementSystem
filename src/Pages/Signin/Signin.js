@@ -2,9 +2,6 @@ import React from "react";
 import signinlogo from "../../Components/Images/SigninLogo.svg";
 import "./Signin.css";
 import { Link } from "react-router-dom";
-//This file is new
-//I published this branch but it showed all the files as new files so i had to delete the branch and commit again so that
-//only changed files could be shown
 const Signin = () => {
   return (
     <div className="siginContainer">

@@ -2,15 +2,12 @@ import Logo from "../Images/Logo.png";
 import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 import SideMenuBar from "./SideMenuBar";
-
 import { Layout } from "antd";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 
 const { Sider } = Layout;
-
 const Navbar = () => {
   const [collapsed, setCollapsed] = useState(false);
-
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
   };
@@ -40,11 +37,9 @@ const Navbar = () => {
             {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
           </div>
         ) : null}
-
         <SideMenuBar collapsed={collapsed} />
       </div>
     </Sider>
   );
 };
-
 export default Navbar;

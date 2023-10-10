@@ -101,7 +101,6 @@ const Stable = () => {
     <div className="Stable">
       <div className="buttons">
         <SchemaForm className="addrow" onAddRow={handleAddRow} />
-
         <Link to="/schema">
           <Button
             type="primary"
@@ -112,7 +111,6 @@ const Stable = () => {
           </Button>
         </Link>
       </div>
-
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="formDataArray">
           {(provided) => (
@@ -127,9 +125,7 @@ const Stable = () => {
           )}
         </Droppable>
       </DragDropContext>
-
       {contextHolder}
-
       {editRow && (
         <EditForm
           editRow={editRow}
