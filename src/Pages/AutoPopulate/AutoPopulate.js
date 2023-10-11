@@ -13,6 +13,7 @@ const AutoPopulate = () => {
   const [errorArray, setErrorArray] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const validateCSV = async (file) => {
     return new Promise((resolve, reject) => {
       let headers = [];
@@ -29,7 +30,6 @@ const AutoPopulate = () => {
             setErrorArray([...errorArray, "No data found in the CSV file."]);
           } else {
             let csvHeaders = Object.keys(results.data[0]);
-
             totalLines += results.data.length;
             let progress = Math.round((totalLines / file.size) * 10000);
             setProgress(progress);
@@ -65,6 +65,7 @@ const AutoPopulate = () => {
       });
     });
   };
+
   const createTableData = (headers, columnData) => {
     let currentId = 1;
     const uniqueHeaders = [...new Set(headers)];
@@ -98,6 +99,7 @@ const AutoPopulate = () => {
       setIsLoading(false);
     }
   };
+
   return (
     <div>
       <div className="populate-container">

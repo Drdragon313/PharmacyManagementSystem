@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import signinlogo from "../../Components/Images/SigninLogo.svg";
 import "./Signin.css";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { message } from "antd";
+import { loginUser } from "../../APIs/apiService";
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -11,22 +11,20 @@ const Signin = () => {
     email: "",
     password: "",
   });
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://13.40.195.165:3001/login",
-        data
-      );
-      if (response.status === 200) {
-        message.success("Logged In Successfully!", 2);
-        navigate("/");
-      } else {
-        message.error("Invalid Credentials", 2);
-      }
-    } catch (error) {
-      message.error("Login Failed", 2);
-    }
+    loginUser(data)
+      .then((response) => {
+        if (response.status === 200) {
+          message.success("Logged In Successfully!", 2);
+          navigate("/");
+        } else {
+          message.error("Invalid Credentials", 2);
+        }
+      })
+      .catch((error) => {
+        message.error(error);
+      });
   };
   const handleInputChange = (event) => {
     setData(() => ({
