@@ -1,10 +1,16 @@
 import Papa from "papaparse";
 
-export const validateCSV = async (file, index, schemaDataArray) => {
+export const validateCSV = async (
+  file,
+  index,
+  schemaDataArray,
+  setProgress
+) => {
   return new Promise((resolve, reject) => {
     let hasInvalidChunk = false;
     let rowNumber = 0;
     let errorArray = [];
+    let totalLines = 0;
     if (index !== null && index !== undefined) {
       const selectedSchemaData = schemaDataArray[index];
 
@@ -12,18 +18,18 @@ export const validateCSV = async (file, index, schemaDataArray) => {
         dynamicTyping: true,
         skipEmptyLines: true,
         header: true,
-
         chunk: (results) => {
+          totalLines += results.data.length;
+          let progress = Math.round((totalLines / file.size) * 10000);
+          setProgress(progress);
           const csvHeaders = Object.keys(results.data[0]);
           const schemaHeaders = selectedSchemaData.data.map(
             (item) => item.Fieldname
           );
-
           if (!arraysEqual(csvHeaders, schemaHeaders)) {
             hasInvalidChunk = true;
             errorArray.push("CSV file does not match the required structure.");
           }
-
           results.data.forEach((row) => {
             rowNumber++;
             selectedSchemaData.data.forEach((item) => {

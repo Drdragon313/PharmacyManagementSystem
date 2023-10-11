@@ -1,4 +1,4 @@
-import { Upload, Button, message } from "antd";
+import { Upload, Button, message, Progress } from "antd";
 import React, { useState } from "react";
 import { validateCSV } from "../../Utility Function/FileUtils";
 import { useSelector } from "react-redux";
@@ -7,6 +7,8 @@ import uploadIcon from "../../Components/Images/uploadIcon.png";
 import { useNavigate } from "react-router-dom";
 
 const File = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [error, setError] = useState([]);
   const index = useSelector((state) => state.SchemaSelection.index);
   const navigate = useNavigate();
@@ -15,13 +17,22 @@ const File = () => {
 
   const validateAndUpload = async (file) => {
     try {
-      await validateCSV(file, index, schemaDataArray);
+      setIsLoading(true);
+      await validateCSV(
+        file,
+        index,
+        schemaDataArray,
+        setProgress,
+        (event) => {}
+      );
       setError("");
       message.success("Valid CSV File", 2);
       navigate("UploadSuccess");
     } catch (errorMessage) {
       setError(errorMessage);
       message.error("Invalid CSV File", 2);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -51,12 +62,18 @@ const File = () => {
             <Button className="import-button">Choose File</Button>
           </Upload.Dragger>
         </div>
-        {error && (
-          <div style={{ color: "red" }}>
-            {error.map((value, index) => (
-              <p key={index}>{value}</p>
-            ))}
+        {isLoading ? (
+          <div className="loading-indicator">
+            <Progress className="fileProgress" percent={progress} />
           </div>
+        ) : (
+          error && (
+            <div style={{ color: "red" }}>
+              {error.map((value, index) => (
+                <p key={index}>{value}</p>
+              ))}
+            </div>
+          )
         )}
       </div>
     </div>
