@@ -14,17 +14,11 @@ const Signin = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      console.log(data);
-      // const response = await axios.post(
-      //   "http://13.40.195.165:3001/login",
-      //   data
-      // );
       const response = await axios.post(
-        "https://da84-39-44-137-119.ngrok.io/login",
+        "http://13.40.195.165:3001/login",
         data
       );
       if (response.status === 200) {
-        console.log(response);
         message.success("Logged In Successfully!", 2);
         navigate("/");
       } else {
@@ -32,7 +26,6 @@ const Signin = () => {
       }
     } catch (error) {
       message.error("Login Failed", 2);
-      console.log(error);
     }
   };
   const handleInputChange = (event) => {

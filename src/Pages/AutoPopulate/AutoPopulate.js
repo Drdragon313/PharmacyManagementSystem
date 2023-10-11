@@ -24,7 +24,6 @@ const AutoPopulate = () => {
         skipEmptyLines: true,
         header: true,
         chunk: (results) => {
-          console.log("Result Object", results);
           if (results.data.length === 0) {
             hasError = true;
             setErrorArray([...errorArray, "No data found in the CSV file."]);
