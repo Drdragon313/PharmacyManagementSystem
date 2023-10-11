@@ -10,7 +10,6 @@ import "./AutoPopulate.css";
 const AutoPopulate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const validateCSV = async (file) => {
     return new Promise((resolve, reject) => {
       let headers = [];

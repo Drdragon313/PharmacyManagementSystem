@@ -1,5 +1,4 @@
 import "./App.css";
-
 import Navbar from "./Components/Navbar/Navbar";
 import Topnav from "./Components/TopNav/Topnav";
 import SchemaDetail from "./Components/AvailableSchema/SchemaDetail";
@@ -12,7 +11,7 @@ import File from "./Pages/File Import/File";
 import ValidationOptions from "./Pages/ValidationOptions/ValidationOptions";
 import UploadSuccess from "./Pages/UploadSuccess/UploadSuccess";
 import AutoPopulate from "./Pages/AutoPopulate/AutoPopulate";
-import Signin from "./Pages/SignIn/Signin";
+import Signin from "./Pages/Signin/Signin";
 import SignUp from "./Pages/SignUp/SignUp";
 const { Content } = Layout;
 

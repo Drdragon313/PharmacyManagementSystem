@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./VaidationOptions.css";
-import CustomCard from "../../Components/Card/Card";
-import { Col, Image, Row, Space, Checkbox, Button, Pagination } from "antd";
-import schemaImg from "../../Assets/Schemas.png";
+import { Col, Row, Button, Pagination } from "antd";
+
+import SchemaCard from "../../Components/Card/SchemaCard";
 import { addIndex } from "../../redux/features/SchemaSelectionSlice/SchemaSelectionSlice";
 import { Link } from "react-router-dom";
 
@@ -58,22 +58,13 @@ const ValidationOptions = () => {
               <Row gutter={16}>
                 {displayedSchemas.map((schema, index) => (
                   <Col span={6} key={index} className="validation-col">
-                    <CustomCard bordered={true} className="optionsCustomCard">
-                      <Image
-                        className="Validation-Img"
-                        src={schemaImg}
-                        preview={false}
-                      ></Image>
-                      <Checkbox
-                        className="Validation-Schemacheckbox"
-                        onChange={() => handleSelect(index)}
-                        checked={index === selectedSchema}
-                      />
-                      <h6> {schema.name}</h6>
-                      <Space size={44}>
-                        <p>No. of Fields: {schema.data.length}</p>
-                      </Space>
-                    </CustomCard>
+                    <SchemaCard
+                      schema={schema}
+                      index={index}
+                      withCheckbox={true}
+                      onCheckboxChange={handleSelect}
+                      isSelected={index === selectedSchema}
+                    />
                   </Col>
                 ))}
               </Row>

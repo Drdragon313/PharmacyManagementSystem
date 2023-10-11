@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Table, Button, Space } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { numericToAlphabetic } from "../../Utility Function/numericToAlphabetic";
+import MoveRowModal from "../MoveRowModal/MoveRowModal";
+import { updateFormDataOrder } from "../../redux/features/formSlice/formSlice";
+import { moveRow } from "../../Utility Function/moveRow";
 
 const SchemaTable = ({ data, handleDelete, editFormData }) => {
+  const dispatch = useDispatch();
+  const [moveRowModalVisible, setMoveRowModalVisible] = useState(false);
+  const [selectedRowId, setSelectedRowId] = useState(null);
+
   const columns = [
     {
       title: "",
@@ -45,16 +53,27 @@ const SchemaTable = ({ data, handleDelete, editFormData }) => {
       width: "30%",
     },
     {
-      title: "Operation",
+      title: "Operations",
       dataIndex: "id",
       render: (id) => (
         <Space size={10}>
           <Button onClick={() => handleDelete(id)}>Delete</Button>
           <Button onClick={() => editFormData(id)}>Edit</Button>
+          <Button onClick={() => handleMoveRow(id)}>...</Button>
         </Space>
       ),
     },
   ];
+
+  const handleMoveRow = (id) => {
+    setSelectedRowId(id);
+    setMoveRowModalVisible(true);
+  };
+
+  const onMoveRowOk = (moveToId) => {
+    moveRow(selectedRowId, moveToId, data, dispatch, updateFormDataOrder);
+    setMoveRowModalVisible(false);
+  };
 
   return (
     <div>
@@ -68,6 +87,12 @@ const SchemaTable = ({ data, handleDelete, editFormData }) => {
               }}
               bordered
               columns={columns}
+            />
+            <MoveRowModal
+              visible={moveRowModalVisible}
+              onCancel={() => setMoveRowModalVisible(false)}
+              onOk={onMoveRowOk}
+              data={data}
             />
           </div>
         )}

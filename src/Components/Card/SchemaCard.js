@@ -3,11 +3,17 @@ import "./Style.css";
 import { useDispatch } from "react-redux";
 import { removeSchemaData } from "../../redux/features/SchemaSlice/schemaSlice";
 import CustomCard from "../../Components/Card/Card";
-import { Button, Image, Space } from "antd";
+import { Button, Image, Space, Checkbox } from "antd";
 import { Link } from "react-router-dom";
 import schemaImg from "../../Assets/Schemas.png";
 
-const SchemaCard = ({ schema, index }) => {
+const SchemaCard = ({
+  schema,
+  index,
+  withCheckbox,
+  onCheckboxChange,
+  isSelected,
+}) => {
   const dispatch = useDispatch();
 
   const handleRemoveSchema = () => {
@@ -16,6 +22,13 @@ const SchemaCard = ({ schema, index }) => {
 
   return (
     <CustomCard className="card" bordered={true} span={6}>
+      {withCheckbox && (
+        <Checkbox
+          className="checkbox"
+          onChange={() => onCheckboxChange(index)}
+          checked={isSelected}
+        />
+      )}
       <Image className="schemaImg" src={schemaImg} preview={false} />
       <h6>Schema Name: {schema.name}</h6>
       <Space size={44}>

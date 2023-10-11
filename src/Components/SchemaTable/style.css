@@ -15,8 +15,17 @@
   margin-left: 20px;
 }
 .save-button {
-  margin-left: 830px;
+  background: linear-gradient(to right, #001529, #009de1);
+  position: absolute;
+  top: 5;
+  right: 40px;
 }
-.addNewEntry {
-  margin-left: 10px;
+
+.addrow {
+  background: linear-gradient(to right, #001529, #009de1) !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  z-index: 999;
 }

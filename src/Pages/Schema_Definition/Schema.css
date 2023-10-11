@@ -1,5 +1,6 @@
 .content {
-  overflow-y: hidden;
+  margin-left: 11px;
+  margin-top: 10px;
 }
 .addNewSchema {
   margin-left: 15px;
@@ -36,6 +37,12 @@ h6 {
 .circlebtn {
   background: #01a4ec;
   color: #fff;
+  transition: color 0.3s;
+  margin-top: 20px;
+}
+.circlebtn:hover {
+  background: linear-gradient(to bottom, #001529, #009de1);
+  color: #fff !important;
 }
 
 .linkbtn {
@@ -45,10 +52,12 @@ h6 {
 .card {
   width: 100%;
   height: 100%;
-  min-width: 330px;
+  min-width: 310px;
+  max-width: 310px;
   max-height: 250px;
-  margin-left: 10px;
-  padding: 16px;
+  margin-left: 10px !important;
+  margin-top: 10px;
+  padding: 10px;
   box-shadow: 0 4px 8px rgba(74, 74, 74, 0.2);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -66,7 +75,7 @@ h6 {
 .schema-container {
   display: flex;
   flex-direction: row;
-  overflow: hidden;
+  flex-wrap: wrap;
 }
 
 .content {
@@ -78,4 +87,7 @@ h6 {
   margin-top: 10px;
   margin-left: 10px;
   margin-bottom: 80px;
+}
+.pagination-container {
+  margin-top: 10px;
 }
