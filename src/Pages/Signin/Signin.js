@@ -1,8 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import signinlogo from "../../Components/Images/SigninLogo.svg";
 import "./Signin.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { message } from "antd";
+import { loginUser } from "../../APIs/apiService";
+
 const Signin = () => {
+  const navigate = useNavigate();
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    loginUser(data)
+      .then((response) => {
+        if (response.status === 200) {
+          message.success("Logged In Successfully!", 2);
+          navigate("/");
+        } else {
+          message.error("Invalid Credentials", 2);
+        }
+      })
+      .catch((error) => {
+        message.error(error);
+      });
+  };
+  const handleInputChange = (event) => {
+    setData(() => ({
+      ...data,
+      [event.target.name]: event.target.value,
+    }));
+  };
   return (
     <div className="siginContainer">
       <div className="signinLogoContainer">
@@ -12,7 +41,7 @@ const Signin = () => {
         <div className="signinFields">
           <h5>Welcome Back!</h5>
           <p className="signinText">Lets get you signed in...</p>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label
                 htmlFor="exampleInputEmail1"
@@ -23,8 +52,9 @@ const Signin = () => {
               <input
                 type="email"
                 className="form-control"
-                id="exampleInputEmail1"
+                name="email"
                 aria-describedby="emailHelp"
+                onChange={handleInputChange}
                 required={true}
               />
             </div>
@@ -38,8 +68,9 @@ const Signin = () => {
               <input
                 type="password"
                 className="form-control"
-                id="exampleInputPassword1"
+                name="password"
                 required={true}
+                onChange={handleInputChange}
               ></input>
             </div>
             <div>
