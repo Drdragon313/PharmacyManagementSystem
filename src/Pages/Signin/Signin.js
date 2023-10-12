@@ -34,10 +34,8 @@ const Signin = () => {
   };
   return (
     <div className="siginContainer">
-      <div className="signinLogoContainer">
-        <img className="sigininPowerdby" src={signinlogo} alt="Logo"></img>
-      </div>
       <div className="siginFieldsContainer">
+        <img alt="logo" className="company-logo" src={Logo}></img>
         <div className="signinFields">
           <h5>Welcome Back!</h5>
           <p className="signinText">Lets get you signed in...</p>
@@ -47,12 +45,13 @@ const Signin = () => {
                 htmlFor="exampleInputEmail1"
                 className="form-label signinBoldLabel"
               >
-                Email address
+                Email
               </label>
-              <input
+              <Input
+                prefix={<MailOutlined />}
+                size="medium"
                 type="email"
-                className="form-control"
-                name="email"
+                id="exampleInputEmail1"
                 aria-describedby="emailHelp"
                 onChange={handleInputChange}
                 required={true}
@@ -65,27 +64,53 @@ const Signin = () => {
               >
                 Password
               </label>
-              <input
-                type="password"
-                className="form-control"
-                name="password"
+              <Input.Password
+                prefix={<LockOutlined />}
+                id="exampleInputPassword1"
                 required={true}
-                onChange={handleInputChange}
-              ></input>
+                iconRender={(visible) =>
+                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                }
+              />
             </div>
-            <div>
-              <Link className="signinForget">Forget Password?</Link>
+
+            <div className="stay-signedin-forgot-pass">
+              <div className="stay-signedin">
+                <Switch
+                  size="small"
+                  defaultChecked
+                  onChange={onChange}
+                ></Switch>
+                <p className="stay-signedin-txt"> Stay Signed in</p>
+              </div>
+
+              <Link to="/forgotpassword" className="signinForget">
+                Forget Password?
+              </Link>
             </div>
             <button type="submit" className="btn my-3 signinbtn">
               Log In
             </button>
           </form>
-          <div className="my-2 siginTerms"></div>
-          <div>
-            <p className="signinFooter">
-              Don't Have an account?
-              <Link className="signinRegisterNow">Register Now</Link>
-            </p>
+        </div>
+      </div>
+      <div className="signinLogoContainer">
+        <img alt="pharm" className="pharm-img" src={pharmImg}></img>
+        <div className="txt">
+          <h2 className="title">Elevate your pharmacy insights</h2>
+          <h5 className="description-txt">
+            Pharmlytics stands out as the premier choice for pharmacies,
+            offering unparalleled data insights that drive smarter decisions and
+            ultimately lea to enhanced performance and patient care.
+          </h5>
+          <div className="container-foot">
+            <p>www.pharmyltics.co.uk</p>
+            <button type="button" className="btn btn-light">
+              <Space>
+                Learn More
+                <ArrowRightOutlined />
+              </Space>
+            </button>
           </div>
         </div>
       </div>

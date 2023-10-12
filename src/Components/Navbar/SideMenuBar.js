@@ -41,6 +41,13 @@ const SideMenuBar = (props) => {
           icon={<UploadOutlined />}
           onClick={() => handleMenuItemClick("3")}
         >
+          <Link to="/datatiles">Data Tiles</Link>
+        </Menu.Item>
+        <Menu.Item
+          key="4"
+          icon={<UploadOutlined />}
+          onClick={() => handleMenuItemClick("4")}
+        >
           <Link to="/file">Import File</Link>
         </Menu.Item>
       </Menu>

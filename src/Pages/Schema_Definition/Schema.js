@@ -63,8 +63,8 @@ const Schema = () => {
   return (
     <div className="content">
       <div className="title">
-        <h5>Schema Definition</h5>
-        <p>
+        <h5 className="schema-def-txt">Schema Definition</h5>
+        <p className="description">
           Schemas can be defined here by adding data using different available
           methods. These schemas will be matched against any data you import
           into the system

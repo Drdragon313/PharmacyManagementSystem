@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Table, Button, Space } from "antd";
-import { MenuOutlined } from "@ant-design/icons";
+import { Table, Button, Dropdown, Menu } from "antd";
+import { DownOutlined, MenuOutlined } from "@ant-design/icons";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { numericToAlphabetic } from "../../Utility Function/numericToAlphabetic";
 import MoveRowModal from "../MoveRowModal/MoveRowModal";
@@ -56,11 +56,26 @@ const SchemaTable = ({ data, handleDelete, editFormData }) => {
       title: "Operations",
       dataIndex: "id",
       render: (id) => (
-        <Space size={10}>
-          <Button onClick={() => handleDelete(id)}>Delete</Button>
-          <Button onClick={() => editFormData(id)}>Edit</Button>
-          <Button onClick={() => handleMoveRow(id)}>...</Button>
-        </Space>
+        <Dropdown
+          overlay={
+            <Menu onClick={(e) => e.domEvent.stopPropagation()}>
+              <Menu.Item key="delete" onClick={() => handleDelete(id)}>
+                Delete
+              </Menu.Item>
+              <Menu.Item key="edit" onClick={() => editFormData(id)}>
+                Edit
+              </Menu.Item>
+              <Menu.Item key="move" onClick={() => handleMoveRow(id)}>
+                Move
+              </Menu.Item>
+            </Menu>
+          }
+          trigger={["click"]}
+        >
+          <Button>
+            Actions <DownOutlined />
+          </Button>
+        </Dropdown>
       ),
     },
   ];
