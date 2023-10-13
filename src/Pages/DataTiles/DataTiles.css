@@ -1,0 +1,36 @@
+.allcards {
+  display: flex;
+  flex-direction: row;
+  margin: 20px;
+}
+.tilecards {
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  padding: 16px;
+  background-color: #707477;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-left: 10px;
+  width: 300px;
+}
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+.create-card-button {
+  margin-top: 16px;
+}
+.title-description {
+  margin-left: 30px;
+  margin-top: 20px;
+}
+.add-new-tile {
+  display: flex;
+  flex-direction: row;
+  margin-left: 30px;
+}
+.create-new-tile-btn-txt {
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+}

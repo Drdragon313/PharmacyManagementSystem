@@ -1,37 +1,47 @@
 import React, { useState } from "react";
-import signinlogo from "../../Components/Images/SigninLogo.svg";
-import "./Signin.css";
-import { Link, useNavigate } from "react-router-dom";
+import pharmImg from "../../Assets/pharm_img.svg";
+import Logo from "../../Assets/logo.svg";
+import { useNavigate } from "react-router-dom";
 import { message } from "antd";
-import { loginUser } from "../../APIs/apiService";
+import { Input, Space, Switch } from "antd";
+import {
+  EyeTwoTone,
+  EyeInvisibleOutlined,
+  MailOutlined,
+  LockOutlined,
+} from "@ant-design/icons";
+import { login } from "../../Utility Function/login";
+import "./Signin.css";
+import { Link } from "react-router-dom";
+import { ArrowRightOutlined } from "@ant-design/icons";
 
 const Signin = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-  });
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    loginUser(data)
-      .then((response) => {
-        if (response.status === 200) {
-          message.success("Logged In Successfully!", 2);
-          navigate("/");
-        } else {
-          message.error("Invalid Credentials", 2);
-        }
-      })
-      .catch((error) => {
-        message.error(error);
-      });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const port = 3001;
+
+  const onChange = (checked) => {
+    console.log(`switch to ${checked}`);
   };
-  const handleInputChange = (event) => {
-    setData(() => ({
-      ...data,
-      [event.target.name]: event.target.value,
-    }));
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await login(email, password, port);
+      if (response.status === 200) {
+        message.success("Logged In Successfully!", 2);
+        navigate("/schema");
+      } else {
+        message.error("Invalid Credentials", 2);
+      }
+    } catch (error) {
+      message.error("An error occurred while logging in", 2);
+      console.error("Error:", error);
+    }
   };
+
   return (
     <div className="siginContainer">
       <div className="siginFieldsContainer">
@@ -39,7 +49,7 @@ const Signin = () => {
         <div className="signinFields">
           <h5>Welcome Back!</h5>
           <p className="signinText">Lets get you signed in...</p>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleLogin}>
             <div className="mb-3">
               <label
                 htmlFor="exampleInputEmail1"
@@ -53,8 +63,9 @@ const Signin = () => {
                 type="email"
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
-                onChange={handleInputChange}
                 required={true}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="mb-3">
@@ -71,9 +82,10 @@ const Signin = () => {
                 iconRender={(visible) =>
                   visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                 }
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-
             <div className="stay-signedin-forgot-pass">
               <div className="stay-signedin">
                 <Switch
@@ -83,7 +95,6 @@ const Signin = () => {
                 ></Switch>
                 <p className="stay-signedin-txt"> Stay Signed in</p>
               </div>
-
               <Link to="/forgotpassword" className="signinForget">
                 Forget Password?
               </Link>
@@ -101,10 +112,10 @@ const Signin = () => {
           <h5 className="description-txt">
             Pharmlytics stands out as the premier choice for pharmacies,
             offering unparalleled data insights that drive smarter decisions and
-            ultimately lea to enhanced performance and patient care.
+            ultimately lead to enhanced performance and patient care.
           </h5>
           <div className="container-foot">
-            <p>www.pharmyltics.co.uk</p>
+            <p>www.pharmlytics.co.uk</p>
             <button type="button" className="btn btn-light">
               <Space>
                 Learn More
