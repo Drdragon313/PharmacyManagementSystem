@@ -4,6 +4,7 @@ import {
   HomeOutlined,
   FileTextOutlined,
   UploadOutlined,
+  AppstoreOutlined,
 } from "@ant-design/icons";
 import "./Style.css";
 import { Link } from "react-router-dom";
@@ -38,8 +39,15 @@ const SideMenuBar = (props) => {
         </Menu.Item>
         <Menu.Item
           key="3"
-          icon={<UploadOutlined />}
+          icon={<AppstoreOutlined />}
           onClick={() => handleMenuItemClick("3")}
+        >
+          <Link to="/datatiles">Data Tiles</Link>
+        </Menu.Item>
+        <Menu.Item
+          key="4"
+          icon={<UploadOutlined />}
+          onClick={() => handleMenuItemClick("4")}
         >
           <Link to="/file">Import File</Link>
         </Menu.Item>

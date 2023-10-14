@@ -30,7 +30,7 @@ const SchemaCard = ({
         />
       )}
       <Image className="schemaImg" src={schemaImg} preview={false} />
-      <h6>Schema Name: {schema.name}</h6>
+      <h6>Name: {schema.name}</h6>
       <Space size={44}>
         <p>No. of Fields: {schema.data.length}</p>
       </Space>

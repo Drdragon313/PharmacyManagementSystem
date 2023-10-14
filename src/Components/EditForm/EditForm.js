@@ -4,7 +4,13 @@ import CustomSelect from "../Select/Select";
 import { useOptions } from "../../optionContext/OptionContext";
 import { filterValidationOptions } from "../../Utility Function/validationOptions";
 
-const EditForm = ({ editRow, onCancel, onSubmit, editModalVisible }) => {
+const EditForm = ({
+  editRow,
+  onCancel,
+  onSubmit,
+  editModalVisible,
+  dataStructure,
+}) => {
   const { typeOptions, validationOptions } = useOptions("");
   const [form] = Form.useForm();
   const [selectedData, setSelectedData] = useState({
