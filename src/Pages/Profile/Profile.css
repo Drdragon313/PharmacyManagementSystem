@@ -1,0 +1,37 @@
+/* .ProfileNavbarContainer {
+  margin: 10px;
+}
+
+.ProfileNavbarMenu {
+  height: 70vh;
+  border-right: 0;
+}
+.ProfileMainContent {
+  background-color: white;
+  height: 77vh;
+}
+.ProfileSider {
+  background-color: white;
+  color: black;
+}
+.ProfileNavbarTop {
+  text-align: center;
+  cursor: pointer;
+  padding: 20px;
+  background-color: #001529;
+  color: white;
+
+  font-size: 20px;
+} */
+.ProfileMainContent {
+  margin-top: 10px;
+}
+.ProfileMainLayout {
+  padding: 24px 0;
+  background: #ffffff;
+  height: 95vh;
+}
+.ProfileNestedContent {
+  padding: 0 24px;
+  min-height: 280px;
+}
