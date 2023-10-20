@@ -38,6 +38,8 @@ const DataTiles = () => {
       console.error("Error creating card:", error);
     }
   };
+  console.log("Tiles array contains", tiles);
+
   return (
     <div>
       <div className="title-description">
@@ -57,7 +59,7 @@ const DataTiles = () => {
             onCreateCard={handleCreateCard}
             title={tile.TileName}
           >
-            <Link to={`/datatiles/${tile.tilepath}`}>Create Card</Link>
+            <Link to={`/datatiles/${tile.TileName}`}>View Card</Link>
           </Card>
         ))}
         <Modal
