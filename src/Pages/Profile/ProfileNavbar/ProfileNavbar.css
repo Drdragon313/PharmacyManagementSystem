@@ -5,3 +5,6 @@
 .ProfileNavbarMenu {
   height: 91.2vh;
 }
+.custom-menu-item a {
+  text-decoration: none;
+}

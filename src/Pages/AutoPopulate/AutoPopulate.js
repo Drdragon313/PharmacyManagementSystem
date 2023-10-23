@@ -25,11 +25,13 @@ const AutoPopulate = () => {
         skipEmptyLines: true,
         header: true,
         chunk: (results) => {
+          console.log("Results:", results);
           if (results.data.length === 0) {
             hasError = true;
             setErrorArray([...errorArray, "No data found in the CSV file."]);
           } else {
             let csvHeaders = Object.keys(results.data[0]);
+            console.log("These are CSV Headers", csvHeaders);
             totalLines += results.data.length;
             let progress = Math.round((totalLines / file.size) * 10000);
             setProgress(progress);
@@ -42,7 +44,15 @@ const AutoPopulate = () => {
                 ]);
               }
             });
-            headers.push(...csvHeaders);
+            csvHeaders.forEach((header) => {
+              if (csvHeaders.includes(header)) {
+                hasError = true;
+                setErrorArray([...errorArray, "Duplicate header found "]);
+                console.log("inside if");
+              }
+              headers.push(header);
+            });
+
             csvHeaders.forEach((fieldName) => {
               if (!columnData[fieldName]) {
                 columnData[fieldName] = {};

@@ -1,0 +1,20 @@
+.PermissionsContainer {
+  background-color: #d3d3d3;
+  height: 90vh;
+  border-radius: 20px;
+}
+.PermissionsInnerContainer {
+  padding-top: 2%;
+  margin-left: 9%;
+  margin-right: 9%;
+  padding-bottom: 2%;
+  height: 90vh;
+  width: 70vw;
+}
+.PermissionsText {
+  color: #707477;
+}
+.PermisionsLabel {
+  margin-left: 2%;
+  color: #707477;
+}

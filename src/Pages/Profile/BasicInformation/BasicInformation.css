@@ -1,14 +1,15 @@
 .BasicContainer {
   background-color: #d3d3d3;
-  height: 90vh;
+  height: 94vh;
   border-radius: 20px;
 }
 .BasicInfoHeading {
-  padding-top: 2%;
+  padding-top: 1%;
   margin-left: 9%;
 }
 .ProfilePhoto {
-  margin: 2%;
+  margin-top: 1%;
+  margin-bottom: 4%;
   margin-left: 9%;
 }
 .ProfileImg {
@@ -42,5 +43,9 @@
 }
 .InformationUpdateBtn {
   border: none;
+  margin-top: 4%;
   margin-right: 8%;
+}
+.PhoneInput{
+  width:293px;
 }
