@@ -32,7 +32,7 @@ export const deleteCard = async (tileName) => {
     );
     return response.data.Data.tiles;
   } catch (error) {
-    console.error("Error deleting the card:", error);
+    console.error("Error in deleting the card:", error);
     return [];
   }
 };

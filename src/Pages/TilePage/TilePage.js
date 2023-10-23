@@ -16,7 +16,6 @@ const TilePage = () => {
   const [newCardName, setNewCardName] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [breadcrumbPath, setBreadcrumbPath] = useState(["Home"]);
-
   const getPath = () => {
     if (path.length === 1) {
       return "/";
@@ -24,19 +23,12 @@ const TilePage = () => {
   };
 
   useEffect(() => {
-    fetchTiles(getPath());
+    fetchDataTiles(getPath());
   }, [path]);
 
-  const fetchTiles = async (tile_path) => {
-    try {
-      const response = await axios.get(
-        `http://13.40.195.165:3001/get-all-tile?tilePath=${tile_path}`
-      );
-      const tilesData = response.data.Data.tiles;
-      setTiles(tilesData);
-    } catch (error) {
-      console.error("Error fetching tiles:", error);
-    }
+  const fetchDataTiles = async (tilePath) => {
+    const tilesData = await fetchTiles(tilePath);
+    setTiles(tilesData);
   };
 
   const handleTileClick = (cardPath) => {
@@ -58,9 +50,10 @@ const TilePage = () => {
     if (success) {
       setNewCardName("");
       setModalVisible(false);
-      fetchTiles(getPath());
+      fetchDataTiles(getPath());
     }
   };
+
   const handleDeleteCard = async (tileName) => {
     const updatedTilesData = await deleteCard(tileName);
     if (updatedTilesData) {

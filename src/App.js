@@ -45,42 +45,7 @@ function MainContent() {
           <Route path="checkemail" element={<CheckEmail />} />
           <Route path="resetpassword" element={<ResetPassword />} />
           <Route path="/" element={<Iframe />} />
-          <Route path="datatiles" element={<DataTiles />} />
-          <Route path="/datatiles/:tilepath" element={<TilePage />} />
-          <Route path="schema" element={<Schema />} />
-          <Route path="file" element={<ValidationOptions />} />
-          <Route path="file/fileUpload" element={<File />} />
-          <Route
-            path="file/fileUpload/UploadSuccess"
-            element={<UploadSuccess />}
-          />
-          <Route path="/schema/:schemaId" element={<SchemaDetail />} />
-          <Route path="schema/autopopulate" element={<AutoPopulate />} />
-          <Route path="/customschema" element={<CustomSchema />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="schema/autopopulate" element={<AutoPopulate />} />
-        </Routes>
-      </Content>
-    </>
-  );
-}
-
-function MainContent() {
-  const location = useLocation();
-
-  return (
-    <>
-      {shouldRenderNavbar(location) && <Navbar />}
-      <Content className="MainContent">
-        {shouldRenderTopnav(location) && <Topnav />}
-        <Routes>
-          <Route path="signin" element={<Signin />} />
-          <Route path="forgotpassword" element={<ForgotPassword />} />
-          <Route path="checkemail" element={<CheckEmail />} />
-          <Route path="resetpassword" element={<ResetPassword />} />
-          <Route path="/" element={<Iframe />} />
-          <Route path="datatiles" element={<DataTiles />} />
-          <Route path="/datatiles/:tilepath" element={<TilePage />} />
+          <Route path="/tilepage" element={<TilePage />} />
           <Route path="schema" element={<Schema />} />
           <Route path="file" element={<ValidationOptions />} />
           <Route path="file/fileUpload" element={<File />} />
