@@ -4,6 +4,7 @@ import { SearchOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Space } from "antd";
 import { Layout } from "antd";
 import { NotificationOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const { Header } = Layout;
 
@@ -26,7 +27,10 @@ const Topnav = () => {
               <span className="TopnavJobTitle">Job Title</span>
             </div>
             <span></span>
-            <UserOutlined className="TopnavProfileLogo" />
+
+            <Link to="/profile">
+              <UserOutlined className="TopnavProfileLogo" />
+            </Link>
           </Space>
         </div>
       </Header>

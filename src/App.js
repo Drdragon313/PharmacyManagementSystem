@@ -1,11 +1,11 @@
-import "./App.css";
+import React from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { Layout } from "antd";
 import Navbar from "./Components/Navbar/Navbar";
 import Topnav from "./Components/TopNav/Topnav";
 import SchemaDetail from "./Components/AvailableSchema/SchemaDetail";
 import CustomSchema from "./Pages/CustomSchema/CustomSchema";
 import Iframe from "./Iframes/Iframe";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Layout } from "antd";
 import Schema from "./Pages/Schema_Definition/Schema";
 import File from "./Pages/File Import/File";
 import ValidationOptions from "./Pages/ValidationOptions/ValidationOptions";
@@ -16,57 +16,108 @@ import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword";
 import CheckEmail from "./Pages/CheckEmail/CheckEmail";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import TilePage from "./Pages/TilePage/TilePage";
+import Profile from "./Pages/Profile/Profile";
+import "./App.css";
+
 const { Content } = Layout;
 
 function App() {
   return (
     <BrowserRouter>
       <Layout>
-        {shouldRenderNavbar() && <Navbar />}
-
-        <Content className="MainContent">
-          {shouldRenderTopnav() && <Topnav />}
-          <Routes>
-            <Route path="signin" element={<Signin />} />
-            <Route path="forgotpassword" element={<ForgotPassword />} />
-            <Route path="checkemail" element={<CheckEmail />} />
-            <Route path="resetpassword" element={<ResetPassword />} />
-            <Route path="/" element={<Iframe />} />
-            <Route path="/tilepage" element={<TilePage />} />
-            <Route path="schema" element={<Schema />} />
-            <Route path="file" element={<ValidationOptions />} />
-            <Route path="file/fileUpload" element={<File />} />
-            <Route
-              path="file/fileUpload/UploadSuccess"
-              element={<UploadSuccess />}
-            />
-            <Route path="/schema/:schemaId" element={<SchemaDetail />} />
-            <Route path="schema/autopopulate" element={<AutoPopulate />} />
-            <Route path="/customschema" element={<CustomSchema />} />
-            <Route path="schema/autopopulate" element={<AutoPopulate />} />
-          </Routes>
-        </Content>
+        <MainContent />
       </Layout>
     </BrowserRouter>
   );
 }
-function shouldRenderNavbar() {
-  const currentPath = window.location.pathname;
+
+function MainContent() {
+  const location = useLocation();
+
   return (
-    currentPath !== "/signin" &&
-    currentPath !== "/forgotpassword" &&
-    currentPath !== "/checkemail" &&
-    currentPath !== "/resetpassword"
+    <>
+      {shouldRenderNavbar(location) && <Navbar />}
+      <Content className="MainContent">
+        {shouldRenderTopnav(location) && <Topnav />}
+        <Routes>
+          <Route path="signin" element={<Signin />} />
+          <Route path="forgotpassword" element={<ForgotPassword />} />
+          <Route path="checkemail" element={<CheckEmail />} />
+          <Route path="resetpassword" element={<ResetPassword />} />
+          <Route path="/" element={<Iframe />} />
+          <Route path="datatiles" element={<DataTiles />} />
+          <Route path="/datatiles/:tilepath" element={<TilePage />} />
+          <Route path="schema" element={<Schema />} />
+          <Route path="file" element={<ValidationOptions />} />
+          <Route path="file/fileUpload" element={<File />} />
+          <Route
+            path="file/fileUpload/UploadSuccess"
+            element={<UploadSuccess />}
+          />
+          <Route path="/schema/:schemaId" element={<SchemaDetail />} />
+          <Route path="schema/autopopulate" element={<AutoPopulate />} />
+          <Route path="/customschema" element={<CustomSchema />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="schema/autopopulate" element={<AutoPopulate />} />
+        </Routes>
+      </Content>
+    </>
   );
 }
 
-function shouldRenderTopnav() {
-  const currentPath = window.location.pathname;
+function MainContent() {
+  const location = useLocation();
+
+  return (
+    <>
+      {shouldRenderNavbar(location) && <Navbar />}
+      <Content className="MainContent">
+        {shouldRenderTopnav(location) && <Topnav />}
+        <Routes>
+          <Route path="signin" element={<Signin />} />
+          <Route path="forgotpassword" element={<ForgotPassword />} />
+          <Route path="checkemail" element={<CheckEmail />} />
+          <Route path="resetpassword" element={<ResetPassword />} />
+          <Route path="/" element={<Iframe />} />
+          <Route path="datatiles" element={<DataTiles />} />
+          <Route path="/datatiles/:tilepath" element={<TilePage />} />
+          <Route path="schema" element={<Schema />} />
+          <Route path="file" element={<ValidationOptions />} />
+          <Route path="file/fileUpload" element={<File />} />
+          <Route
+            path="file/fileUpload/UploadSuccess"
+            element={<UploadSuccess />}
+          />
+          <Route path="/schema/:schemaId" element={<SchemaDetail />} />
+          <Route path="schema/autopopulate" element={<AutoPopulate />} />
+          <Route path="/customschema" element={<CustomSchema />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="schema/autopopulate" element={<AutoPopulate />} />
+        </Routes>
+      </Content>
+    </>
+  );
+}
+
+function shouldRenderNavbar(location) {
+  const currentPath = location.pathname;
   return (
     currentPath !== "/signin" &&
     currentPath !== "/forgotpassword" &&
     currentPath !== "/checkemail" &&
-    currentPath !== "/resetpassword"
+    currentPath !== "/resetpassword" &&
+    currentPath !== "/profile"
+  );
+}
+
+function shouldRenderTopnav(location) {
+  const currentPath = location.pathname;
+  return (
+    currentPath !== "/signin" &&
+    currentPath !== "/forgotpassword" &&
+    currentPath !== "/checkemail" &&
+    currentPath !== "/resetpassword" &&
+    currentPath !== "/profile"
   );
 }
 

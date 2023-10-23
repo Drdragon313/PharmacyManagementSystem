@@ -1,0 +1,46 @@
+.BasicContainer {
+  background-color: #d3d3d3;
+  height: 90vh;
+  border-radius: 20px;
+}
+.BasicInfoHeading {
+  padding-top: 2%;
+  margin-left: 9%;
+}
+.ProfilePhoto {
+  margin: 2%;
+  margin-left: 9%;
+}
+.ProfileImg {
+  border-radius: 50%;
+}
+.UserDetails {
+  display: flex;
+  height: 40vh;
+}
+.OneDetails {
+  width: 50vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #707477;
+}
+.TwoDetails {
+  width: 50vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #707477;
+}
+.UserDetailsInput {
+  width: 25vw;
+}
+.InformationUpdateBtnContainer {
+  display: flex;
+  width: 80vw;
+  justify-content: flex-end;
+}
+.InformationUpdateBtn {
+  border: none;
+  margin-right: 8%;
+}
