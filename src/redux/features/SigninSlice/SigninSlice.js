@@ -11,19 +11,6 @@ const SigninSlice = createSlice({
     addSigninData: (state, action) => {
       state.data.push(action.payload);
     },
-    // removeData: (state, action) => {
-    //   const idToRemove = action.payload;
-    //   state.data = state.data.filter((item) => item.id !== idToRemove);
-    // },
-    // updateData: (state, action) => {
-    //   const updatedData = action.payload;
-    //   const indexToUpdate = state.data.findIndex(
-    //     (item) => item.id === updatedData.id
-    //   );
-    //   if (indexToUpdate !== -1) {
-    //     state.data[indexToUpdate] = updatedData;
-    //   }
-    // },
   },
 });
 
