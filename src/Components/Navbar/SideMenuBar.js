@@ -42,7 +42,7 @@ const SideMenuBar = (props) => {
           icon={<AppstoreOutlined />}
           onClick={() => handleMenuItemClick("3")}
         >
-          <Link to="/datatiles">Data Tiles</Link>
+          <Link to="/tilepage">Data Tiles</Link>
         </Menu.Item>
         <Menu.Item
           key="4"
@@ -50,6 +50,13 @@ const SideMenuBar = (props) => {
           onClick={() => handleMenuItemClick("4")}
         >
           <Link to="/file">Import File</Link>
+        </Menu.Item>
+        <Menu.Item
+          key="5"
+          icon={<UploadOutlined />}
+          onClick={() => handleMenuItemClick("5")}
+        >
+          <Link to="/signin">Sign Out</Link>
         </Menu.Item>
       </Menu>
       {props.collapsed ? null : (

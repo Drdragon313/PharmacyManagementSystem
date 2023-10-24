@@ -15,7 +15,6 @@ import Signin from "./Pages/Signin/Signin";
 import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword";
 import CheckEmail from "./Pages/CheckEmail/CheckEmail";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
-import DataTiles from "./Pages/DataTiles/DataTiles";
 import TilePage from "./Pages/TilePage/TilePage";
 import Profile from "./Pages/Profile/Profile";
 import Permissions from "./Pages/Profile/Permissions/Permissions";
@@ -47,8 +46,7 @@ function MainContent() {
           <Route path="checkemail" element={<CheckEmail />} />
           <Route path="resetpassword" element={<ResetPassword />} />
           <Route path="/" element={<Iframe />} />
-          <Route path="datatiles" element={<DataTiles />} />
-          <Route path="/datatiles/:tilepath" element={<TilePage />} />
+          <Route path="/tilepage" element={<TilePage />} />
           <Route path="schema" element={<Schema />} />
           <Route path="file" element={<ValidationOptions />} />
           <Route path="file/fileUpload" element={<File />} />
