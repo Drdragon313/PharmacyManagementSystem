@@ -14,8 +14,11 @@ import { login } from "../../Utility Function/login";
 import "./Signin.css";
 import { Link } from "react-router-dom";
 import { ArrowRightOutlined } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
+import { addSigninData } from "../../redux/features/SigninSlice/SigninSlice";
 
 const Signin = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,11 +30,14 @@ const Signin = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
       const response = await login(email, password, port);
       if (response.status === 200) {
         message.success("Logged In Successfully!", 2);
+        console.log("This is the response from API", response.data.token);
+        dispatch(addSigninData(response.data.token));
+        const AuthorizationToken = `Bearer ${response.data.token}`;
+        localStorage.setItem("AuthorizationToken", AuthorizationToken);
         navigate("/schema");
       } else {
         message.error("Invalid Credentials", 2);

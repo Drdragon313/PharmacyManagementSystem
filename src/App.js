@@ -18,6 +18,7 @@ import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import DataTiles from "./Pages/DataTiles/DataTiles";
 import TilePage from "./Pages/TilePage/TilePage";
 import Profile from "./Pages/Profile/Profile";
+import Permissions from "./Pages/Profile/Permissions/Permissions";
 import "./App.css";
 
 const { Content } = Layout;
@@ -58,7 +59,10 @@ function MainContent() {
           <Route path="/schema/:schemaId" element={<SchemaDetail />} />
           <Route path="schema/autopopulate" element={<AutoPopulate />} />
           <Route path="/customschema" element={<CustomSchema />} />
-          <Route path="profile" element={<Profile />} />
+          <Route path="/profile" element={<Profile />}>
+            <Route path="permissions" element={<Permissions />} />
+          </Route>
+
           <Route path="schema/autopopulate" element={<AutoPopulate />} />
         </Routes>
       </Content>
@@ -73,7 +77,8 @@ function shouldRenderNavbar(location) {
     currentPath !== "/forgotpassword" &&
     currentPath !== "/checkemail" &&
     currentPath !== "/resetpassword" &&
-    currentPath !== "/profile"
+    currentPath !== "/profile" &&
+    currentPath !== "/profile/permissions"
   );
 }
 
@@ -84,7 +89,8 @@ function shouldRenderTopnav(location) {
     currentPath !== "/forgotpassword" &&
     currentPath !== "/checkemail" &&
     currentPath !== "/resetpassword" &&
-    currentPath !== "/profile"
+    currentPath !== "/profile" &&
+    currentPath !== "/profile/permissions"
   );
 }
 
