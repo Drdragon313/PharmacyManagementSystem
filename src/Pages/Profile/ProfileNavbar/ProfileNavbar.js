@@ -50,7 +50,7 @@ const ProfileNavbar = () => {
           className="custom-menu-item"
           onClick={() => handleMenuItemClick("4")}
         >
-          <Link to="/">
+          <Link to="updatePassword">
             <strong>Password & Security</strong>
           </Link>
         </Menu.Item>

@@ -20,6 +20,7 @@ import TilePage from "./Pages/TilePage/TilePage";
 import Profile from "./Pages/Profile/Profile";
 import Permissions from "./Pages/Profile/Permissions/Permissions";
 import "./App.css";
+import UpdatePassword from "./Pages/Profile/UpdatePassword/UpdatePassword";
 
 const { Content } = Layout;
 
@@ -61,6 +62,7 @@ function MainContent() {
           <Route path="/customschema" element={<CustomSchema />} />
           <Route path="/profile" element={<Profile />}>
             <Route path="permissions" element={<Permissions />} />
+            <Route path="updatePassword" element={<UpdatePassword />} />
           </Route>
 
           <Route path="schema/autopopulate" element={<AutoPopulate />} />
@@ -78,7 +80,8 @@ function shouldRenderNavbar(location) {
     currentPath !== "/checkemail" &&
     currentPath !== "/resetpassword" &&
     currentPath !== "/profile" &&
-    currentPath !== "/profile/permissions"
+    currentPath !== "/profile/permissions" &&
+    currentPath !== "/profile/updatePassword"
   );
 }
 
@@ -90,7 +93,8 @@ function shouldRenderTopnav(location) {
     currentPath !== "/checkemail" &&
     currentPath !== "/resetpassword" &&
     currentPath !== "/profile" &&
-    currentPath !== "/profile/permissions"
+    currentPath !== "/profile/permissions" &&
+    currentPath !== "/profile/updatePassword"
   );
 }
 
