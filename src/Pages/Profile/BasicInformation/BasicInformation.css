@@ -39,6 +39,12 @@
   width: 25vw;
   border-radius: 15px;
 }
+.ant-select-selector {
+  height: 39.05px;
+  width: 25vw;
+  border-radius: 15px;
+}
+
 .InformationUpdateBtnContainer {
   display: flex;
   width: 80vw;
@@ -56,4 +62,7 @@
 }
 .react-international-phone-input-container {
   border-radius: 15px;
+}
+.ant-select-arrow {
+  padding-bottom: 5px;
 }

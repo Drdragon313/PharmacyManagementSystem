@@ -6,10 +6,18 @@ import ProfilePhoto from "../../../Components/Images/ProfilePhoto.svg";
 import axios from "axios";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
-import { message } from "antd";
+import { Select, message } from "antd";
 import { Country, State, City } from "country-state-city";
 import { getMaxDate } from "../../../Utility Function/DateUtils";
+import { getMinDate } from "../../../Utility Function/DateUtils";
+import { handleBlur } from "../../../Utility Function/DateUtils";
 import { baseURL } from "../../../Components/BaseURLAPI/BaseURLAPI";
+import {
+  handleCountryChange,
+  handleStateChange,
+  handleCityChange,
+} from "../../../Utility Function/AddressUtils";
+const { Option } = Select;
 
 const BasicInformation = () => {
   let countryData = Country.getAllCountries();
@@ -18,45 +26,6 @@ const BasicInformation = () => {
   const [stateData, setStateData] = useState();
   const [selectedCountryObject, setSelectedCountryObject] = useState();
   const [cityData, setCityData] = useState();
-
-  const handleCountryChange = (event) => {
-    const selectedCountryValue = event.target.value;
-    const selectedCountry = countryData.find(
-      (country) => country.name === selectedCountryValue
-    );
-    setSelectedCountryObject(selectedCountry);
-    console.log("selected Country", selectedCountry.isoCode);
-    const statesForSelectedCountry = State.getStatesOfCountry(
-      selectedCountry.isoCode
-    );
-    setStateData(statesForSelectedCountry);
-    console.log("states for selected county", stateData);
-    setUserData((prevUserData) => ({
-      ...prevUserData,
-      Country: selectedCountryValue,
-    }));
-    console.log("UseState Object for API:", userData);
-  };
-
-  const handleStateChange = (event) => {
-    const SelectedStateValue = event.target.value;
-    const currentState = allStateData.find(
-      (state) => state.name === SelectedStateValue
-    );
-    console.log("selected country object:", selectedCountryObject);
-    const citiesForSelectedState = City.getCitiesOfState(
-      selectedCountryObject.isoCode,
-      currentState.isoCode
-    );
-    setCityData(citiesForSelectedState);
-    console.log("Cities for selected state:", citiesForSelectedState);
-    console.log("current State", currentState);
-    setUserData((prevUserData) => ({
-      ...prevUserData,
-      State: SelectedStateValue,
-    }));
-    console.log("UseState Object for State:", userData);
-  };
 
   const [userData, setUserData] = useState({
     StreetAddress: "",
@@ -83,7 +52,6 @@ const BasicInformation = () => {
       .get(`${baseURL}/get-profile`, { headers })
       .then((response) => {
         const apiUserData = response.data.data;
-        console.log("APIGETUSERDATA", apiUserData);
         setUserData((prevUserData) => ({
           ...prevUserData,
           City: apiUserData.City,
@@ -100,10 +68,9 @@ const BasicInformation = () => {
           State: apiUserData.State,
           StreetAddress: apiUserData.StreetAddress,
         }));
-        console.log("This is the result of USEState from get API", userData);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        message.error("Some Error has Occured in Loading Information!", 2);
       });
   }, []);
 
@@ -125,13 +92,14 @@ const BasicInformation = () => {
           City: userData.City,
           PostCode: userData.PostCode,
           DateOfBirth: userData.DateOfBirth.toString(),
+          Gender: userData.Gender,
         },
         { headers }
       )
-      .then((response) => {
+      .then(() => {
         message.success("Data Updated Successfully!", 2);
       })
-      .catch((error) => {
+      .catch(() => {
         message.error("Data Updation Failed!", 2);
       });
   };
@@ -141,16 +109,13 @@ const BasicInformation = () => {
       ...prevUserData,
       [name]: value,
     }));
-    console.log("UseState Object for API:", userData);
   };
   const handlePhoneChange = (value, name) => {
     setUserData((prevUserData) => ({
       ...prevUserData,
       [name]: value,
     }));
-    console.log("UseState Object for API:", userData);
   };
-
   return (
     <div className="BasicContainer">
       <div className="BasicInfoHeading">
@@ -170,24 +135,26 @@ const BasicInformation = () => {
                 value={userData.FName}
                 className="UserDetailsInput"
                 prefix={<UserOutlined />}
-                size="medium"
-                type="email"
                 name="FName"
-                aria-describedby="emailHelp"
               />
             </div>
             <div className="mb-3">
               <label htmlFor="Gender">Gender</label>
               <br />
-              <Input
+              <select
+                className="form-select UserDetailsInput"
+                name="Gender"
                 value={userData.Gender}
                 onChange={handleChange}
-                disabled={true}
-                name="Gender"
-                prefix={<UserOutlined />}
-                className="UserDetailsInput"
-                required={true}
-              />
+              >
+                <option value="">Select Your Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+                <option value="Do Not Wish to Disclose">
+                  Do Not Wish to Disclose
+                </option>
+              </select>
             </div>
             <div className="mb-3">
               <label htmlFor="Contact">Contact</label>
@@ -198,7 +165,6 @@ const BasicInformation = () => {
                 onChange={(value) => handlePhoneChange(value, "Contact")}
                 name="Contact"
                 className="UserDetailsInput react-international-phone-input react-international-phone-input-container"
-                required={true}
               />
             </div>
             <div className="mb-3">
@@ -210,47 +176,56 @@ const BasicInformation = () => {
                 onChange={handleChange}
                 name="Department"
                 className="UserDetailsInput"
-                required={true}
               />
             </div>
             <div className="mb-3">
               <label htmlFor="Country">Address</label>
               <br />
-              <select
-                className="form-select UserDetailsInput"
+              <Select
+                className="ant-select-selector ant-select-arrow"
                 name="Country"
                 value={userData.Country}
-                onChange={handleCountryChange}
+                onChange={(selectedCountryValue) =>
+                  handleCountryChange(
+                    selectedCountryValue,
+                    setSelectedCountryObject,
+                    setStateData,
+                    setUserData,
+                    countryData,
+                    State
+                  )
+                }
               >
-                <option value="">Select a country</option>
+                <Option value="">Select a Country</Option>
                 {countryData &&
                   countryData.map((country) => (
-                    <option key={country.isoCode} value={country.name}>
+                    <Option key={country.isoCode} value={country.name}>
                       {country.name}
-                    </option>
+                    </Option>
                   ))}
-              </select>
+              </Select>
             </div>
             <div className="mb-3">
               <label htmlFor="City">City</label>
               <br />
-              {console.log("The City Value is", userData.City)}
-              <select
-                className="form-select UserDetailsInput"
+              <Select
+                className="ant-select-selector ant-select-arrow"
                 name="City"
                 value={userData.City}
-                onChange={handleChange}
+                onChange={(selectedCityValue) => {
+                  handleCityChange(selectedCityValue, setUserData);
+                }}
               >
-                <option value="">Select a city</option>
+                <Option value="">Select a City</Option>
                 {userData.Country &&
                   userData.State &&
                   cityData &&
                   cityData.map((city) => (
-                    <option key={city.id} value={city.name}>
+                    <Option key={city.id} value={city.name}>
                       {city.name}
-                    </option>
+                    </Option>
                   ))}
-              </select>
+              </Select>
             </div>
           </form>
         </div>
@@ -264,10 +239,7 @@ const BasicInformation = () => {
                 value={userData.LName}
                 className="UserDetailsInput"
                 prefix={<UserOutlined />}
-                size="medium"
-                type="email"
                 name="LName"
-                aria-describedby="emailHelp"
               />
             </div>
             <div className="mb-3">
@@ -279,10 +251,8 @@ const BasicInformation = () => {
                 disabled={true}
                 className="UserDetailsInput"
                 prefix={<MailOutlined />}
-                size="medium"
                 type="email"
                 name="Email"
-                aria-describedby="emailHelp"
               />
             </div>
             <div className="mb-3">
@@ -291,11 +261,19 @@ const BasicInformation = () => {
               <Input
                 value={userData.DateOfBirth}
                 onChange={handleChange}
+                onBlur={(e) =>
+                  handleBlur(
+                    "DateOfBirth",
+                    e.target.value,
+                    userData,
+                    setUserData
+                  )
+                }
                 type="date"
                 name="DateOfBirth"
                 className="UserDetailsInput"
-                required={true}
                 max={getMaxDate()}
+                min={getMinDate()}
               />
             </div>
             <div className="mb-3">
@@ -307,28 +285,35 @@ const BasicInformation = () => {
                 onChange={handleChange}
                 name="Designation"
                 className="UserDetailsInput"
-                required={true}
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="State">State</label>
+              <label htmlFor="State">State/County</label>
               <br />
-              <select
-                className="form-select UserDetailsInput"
+              <Select
+                className="ant-select-selector ant-select-arrow"
                 name="State"
                 value={userData.State}
-                onChange={handleStateChange}
+                onChange={(selectedStateValue) =>
+                  handleStateChange(
+                    selectedStateValue,
+                    setCityData,
+                    setUserData,
+                    City,
+                    allStateData,
+                    selectedCountryObject
+                  )
+                }
               >
-                {console.log("The State Value is", userData.State)}
-                <option value="">Select a state</option>
+                <Option value="">Select a state</Option>
                 {userData.Country &&
                   stateData &&
                   stateData.map((state) => (
-                    <option key={state.id} value={state.name}>
+                    <Option key={state.id} value={state.name}>
                       {state.name}
-                    </option>
+                    </Option>
                   ))}
-              </select>
+              </Select>
             </div>
             <div className="mb-3">
               <label htmlFor="StreetAddress">Street Address</label>
@@ -338,7 +323,6 @@ const BasicInformation = () => {
                 onChange={handleChange}
                 name="StreetAddress"
                 className="UserDetailsInput"
-                required={true}
               />
             </div>
             <div className="mb-3">
@@ -349,7 +333,6 @@ const BasicInformation = () => {
                 onChange={handleChange}
                 name="PostCode"
                 className="UserDetailsInput"
-                required={true}
               />
             </div>
           </form>
