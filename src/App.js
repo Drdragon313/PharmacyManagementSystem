@@ -21,6 +21,9 @@ import Profile from "./Pages/Profile/Profile";
 import Permissions from "./Pages/Profile/Permissions/Permissions";
 import "./App.css";
 import UpdatePassword from "./Pages/Profile/UpdatePassword/UpdatePassword";
+import Users from "./Pages/Users/Users";
+import AddUsers from "./Pages/AddUsers/AddUsers";
+import ViewEmployees from "./Pages/ViewEmployees/ViewEmployees";
 
 const { Content } = Layout;
 
@@ -66,6 +69,9 @@ function MainContent() {
           </Route>
 
           <Route path="schema/autopopulate" element={<AutoPopulate />} />
+          <Route path="users" element={<Users />} />
+          <Route path="users/AddUser" element={<AddUsers />} />
+          <Route path="users/ViewEmployees" element={<ViewEmployees />} />
         </Routes>
       </Content>
     </>

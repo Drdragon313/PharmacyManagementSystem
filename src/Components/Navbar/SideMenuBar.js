@@ -5,6 +5,7 @@ import {
   FileTextOutlined,
   UploadOutlined,
   AppstoreOutlined,
+  UsergroupAddOutlined,
 } from "@ant-design/icons";
 import "./Style.css";
 import { Link } from "react-router-dom";
@@ -50,6 +51,13 @@ const SideMenuBar = (props) => {
           onClick={() => handleMenuItemClick("4")}
         >
           <Link to="/file">Import File</Link>
+        </Menu.Item>
+        <Menu.Item
+          key="5"
+          icon={<UsergroupAddOutlined />}
+          onClick={() => handleMenuItemClick("5")}
+        >
+          <Link to="/users">Users</Link>
         </Menu.Item>
       </Menu>
       {props.collapsed ? null : (
