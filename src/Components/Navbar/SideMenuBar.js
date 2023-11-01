@@ -43,7 +43,7 @@ const SideMenuBar = (props) => {
           icon={<AppstoreOutlined />}
           onClick={() => handleMenuItemClick("3")}
         >
-          <Link to="/datatiles">Data Tiles</Link>
+          <Link to="/tilepage">Data Tiles</Link>
         </Menu.Item>
         <Menu.Item
           key="4"
