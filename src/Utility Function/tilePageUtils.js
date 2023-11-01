@@ -11,7 +11,6 @@ export const fetchTiles = async (tilePath) => {
     return [];
   }
 };
-
 export const createCard = async (newCardName, tilePath) => {
   try {
     await axios.post("http://13.40.195.165:3001/save-tile", {
@@ -24,7 +23,6 @@ export const createCard = async (newCardName, tilePath) => {
     return false;
   }
 };
-
 export const deleteCard = async (tileName) => {
   try {
     const response = await axios.delete(

@@ -62,7 +62,7 @@ const SelectionModal = ({ visible, setSelectionModalVisible }) => {
                   ></Image>
                   <h6>Import Manually</h6>
                   <p>
-                    Using this method user will upload the entire schema
+                    Using this method User will upload the entire schema
                     manually by adding each field and validation individually.
                   </p>
                 </Space>

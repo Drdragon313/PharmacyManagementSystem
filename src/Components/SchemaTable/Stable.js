@@ -20,22 +20,20 @@ import { reorderFormDataArray } from "../../Utility Function/reorderFormDataArra
 import EditForm from "../EditForm/EditForm";
 import SchemaTable from "../GeneralSchemaTable/SchemaTable";
 import { Link } from "react-router-dom";
+import { numericToAlphabetic } from "../../Utility Function/numericToAlphabetic";
+import {
+  saveSchema,
+  updateFormDataArrayOnEdit,
+} from "../../Utility Function/stableUtil";
 const Stable = () => {
+  const tilePath = localStorage.getItem("tilePath");
   const [rowId, setRowId] = useState(1);
   const [editRow, setEditRow] = useState(null);
   const [editModalVisible, setEditModalVisible] = useState(false);
   const schemaName = useSelector((state) => state.schema.schemaName);
   const dispatch = useDispatch();
   const formDataArray = useSelector((state) => state.form.formDataArray);
-  function numericToAlphabetic(id) {
-    let result = "";
-    while (id > 0) {
-      const remainder = (id - 1) % 26;
-      result = String.fromCharCode(65 + remainder) + result;
-      id = Math.floor((id - 1) / 26);
-    }
-    return result;
-  }
+
   const handleAddRow = (formDataArray) => {
     const numericId = rowId;
     const alphabeticId = numericToAlphabetic(numericId);
@@ -73,25 +71,20 @@ const Stable = () => {
       content: "Schema Saved Successfully",
     });
   };
-  const handleSaveAndSuccess = () => {
-    if (formDataArray.length > 0) {
-      const newSchema = {
-        name: schemaName,
-        data: formDataArray,
-      };
-      dispatch(addSchemaData(newSchema));
+  const handleSaveAndSuccess = async () => {
+    saveSchema(schemaName, formDataArray, tilePath, dispatch, (newSchema) => {
       success();
+      dispatch(addSchemaData(newSchema));
       dispatch(resetFormDataArray());
       dispatch(updateFormDataOrder([]));
       dispatch(updateSchemaName(newSchema.name));
       dispatch(resetId());
-    } else {
-      console.error("No rows to save in the schema.");
-    }
+    });
   };
   const handleEditSubmit = (editedData) => {
-    const updatedDataArray = formDataArray.map((entry) =>
-      entry.id === editedData.id ? editedData : entry
+    const updatedDataArray = updateFormDataArrayOnEdit(
+      formDataArray,
+      editedData
     );
     dispatch(updateFormDataOrder(updatedDataArray));
     setEditRow(null);

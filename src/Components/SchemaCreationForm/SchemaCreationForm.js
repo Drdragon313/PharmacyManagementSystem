@@ -53,7 +53,7 @@ const SchemaCreationForm = ({ visible, onCancel, selectedType }) => {
         >
           <Input />
         </Form.Item>
-        <Form.Item label="Description" name="description">
+        <Form.Item label="description" name="description">
           <Input.TextArea />
         </Form.Item>
         <Form.Item>
