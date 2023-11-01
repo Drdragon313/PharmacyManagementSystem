@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import "./Profile.css";
 import BasicInformation from "./BasicInformation/BasicInformation";
 import Permissions from "./Permissions/Permissions";
+import UpdatePassword from "./UpdatePassword/UpdatePassword";
 const { Content } = Layout;
 
 const Profile = () => {
@@ -17,6 +18,7 @@ const Profile = () => {
         <Routes>
           <Route path="/" element={<BasicInformation />} />
           <Route path="permissions" element={<Permissions />} />
+          <Route path="updatePassword" element={<UpdatePassword />} />
         </Routes>
       </Content>
     </Layout>

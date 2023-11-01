@@ -4,13 +4,34 @@ import { MailOutlined, UserOutlined } from "@ant-design/icons";
 import Input from "antd/es/input/Input";
 import ProfilePhoto from "../../../Components/Images/ProfilePhoto.svg";
 import axios from "axios";
-// import { PhoneInput } from "react-international-phone";
+import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
-import { message } from "antd";
+import { Select, message } from "antd";
+import { Country, State, City } from "country-state-city";
+import { getMaxDate } from "../../../Utility Function/DateUtils";
+import { getMinDate } from "../../../Utility Function/DateUtils";
+import { handleBlur } from "../../../Utility Function/DateUtils";
+import { baseURL } from "../../../Components/BaseURLAPI/BaseURLAPI";
+import {
+  handleCountryChange,
+  handleStateChange,
+  handleCityChange,
+} from "../../../Utility Function/AddressUtils";
+const { Option } = Select;
 
 const BasicInformation = () => {
+  let countryData = Country.getAllCountries();
+  let allStateData = State.getAllStates();
+
+  const [stateData, setStateData] = useState();
+  const [selectedCountryObject, setSelectedCountryObject] = useState();
+  const [cityData, setCityData] = useState();
+
   const [userData, setUserData] = useState({
-    Address: "",
+    StreetAddress: "",
+    Country: "",
+    State: "",
+    City: "",
     Contact: "",
     DateOfBirth: "",
     Department: "",
@@ -24,20 +45,18 @@ const BasicInformation = () => {
 
   useEffect(() => {
     const localHeader = localStorage.getItem("AuthorizationToken");
-    console.log("Result of getItem:", localHeader);
     const headers = {
       Authorization: localHeader,
     };
-    console.log("This is headerObject", headers);
     axios
-      .get(`http://13.40.195.165:3001/get-profile`, { headers })
+      .get(`${baseURL}/get-profile`, { headers })
       .then((response) => {
-        console.log("This is the response from get API", response);
         const apiUserData = response.data.data;
         setUserData((prevUserData) => ({
           ...prevUserData,
-          Address: apiUserData.Address,
+          City: apiUserData.City,
           Contact: apiUserData.Contact,
+          Country: apiUserData.Country,
           DateOfBirth: apiUserData.DateOfBirth,
           Department: apiUserData.Department,
           Designation: apiUserData.Designation,
@@ -46,41 +65,41 @@ const BasicInformation = () => {
           Gender: apiUserData.Gender,
           LName: apiUserData.LName,
           PostCode: apiUserData.PostCode,
+          State: apiUserData.State,
+          StreetAddress: apiUserData.StreetAddress,
         }));
-        console.log("This is the result of USEState from get API", userData);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        message.error("Some Error has Occured in Loading Information!", 2);
       });
   }, []);
 
-  console.log("Use State Object", userData);
   const handleUpdate = () => {
     const localHeader = localStorage.getItem("AuthorizationToken");
-    console.log("Result of getItem:", localHeader);
     const headers = {
       Authorization: localHeader,
     };
-    console.log("This is headerObject", headers);
     axios
       .put(
-        `http://13.40.195.165:3001/update-profile`,
+        `${baseURL}/update-profile`,
         {
           FName: userData.FName,
           LName: userData.LName,
           Contact: userData.Contact,
-          Address: userData.Address,
+          StreetAddress: userData.StreetAddress,
+          Country: userData.Country,
+          State: userData.State,
+          City: userData.City,
           PostCode: userData.PostCode,
           DateOfBirth: userData.DateOfBirth.toString(),
+          Gender: userData.Gender,
         },
         { headers }
       )
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         message.success("Data Updated Successfully!", 2);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
         message.error("Data Updation Failed!", 2);
       });
   };
@@ -91,7 +110,12 @@ const BasicInformation = () => {
       [name]: value,
     }));
   };
-
+  const handlePhoneChange = (value, name) => {
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      [name]: value,
+    }));
+  };
   return (
     <div className="BasicContainer">
       <div className="BasicInfoHeading">
@@ -104,53 +128,47 @@ const BasicInformation = () => {
         <div className="OneDetails">
           <form>
             <div className="mb-3">
-              <label htmlFor="exampleInputEmail1">First Name</label>
+              <label htmlFor="FName">First Name</label>
               <br />
               <Input
                 onChange={handleChange}
                 value={userData.FName}
                 className="UserDetailsInput"
                 prefix={<UserOutlined />}
-                size="medium"
-                type="email"
                 name="FName"
-                aria-describedby="emailHelp"
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleInputPassword1">Gender</label>
+              <label htmlFor="Gender">Gender</label>
               <br />
-              <Input
+              <select
+                className="form-select UserDetailsInput"
+                name="Gender"
                 value={userData.Gender}
                 onChange={handleChange}
-                disabled={true}
-                name="Gender"
-                prefix={<UserOutlined />}
-                className="UserDetailsInput"
-                required={true}
-              />
+              >
+                <option value="">Select Your Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+                <option value="Do Not Wish to Disclose">
+                  Do Not Wish to Disclose
+                </option>
+              </select>
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleInputPassword1">Contact</label>
+              <label htmlFor="Contact">Contact</label>
               <br />
-              <Input
-                value={userData.Contact}
-                onChange={handleChange}
-                name="Contact"
-                className="UserDetailsInput"
-                required={true}
-              />
-              {/* <PhoneInput
+              <PhoneInput
                 defaultCountry="ua"
                 value={userData.Contact}
-                onChange={handleChange}
+                onChange={(value) => handlePhoneChange(value, "Contact")}
                 name="Contact"
-                className="UserDetailsInput PhoneInput"
-                required={true}
-              /> */}
+                className="UserDetailsInput react-international-phone-input react-international-phone-input-container"
+              />
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleInputPassword1">Department</label>
+              <label htmlFor="Department">Department</label>
               <br />
               <Input
                 value={userData.Department}
@@ -158,40 +176,74 @@ const BasicInformation = () => {
                 onChange={handleChange}
                 name="Department"
                 className="UserDetailsInput"
-                required={true}
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleInputPassword1">Address</label>
+              <label htmlFor="Country">Address</label>
               <br />
-              <Input
-                value={userData.Address}
-                onChange={handleChange}
-                name="Address"
-                className="UserDetailsInput"
-                required={true}
-              />
+              <Select
+                className="ant-select-selector ant-select-arrow"
+                name="Country"
+                value={userData.Country}
+                onChange={(selectedCountryValue) =>
+                  handleCountryChange(
+                    selectedCountryValue,
+                    setSelectedCountryObject,
+                    setStateData,
+                    setUserData,
+                    countryData,
+                    State
+                  )
+                }
+              >
+                <Option value="">Select a Country</Option>
+                {countryData &&
+                  countryData.map((country) => (
+                    <Option key={country.isoCode} value={country.name}>
+                      {country.name}
+                    </Option>
+                  ))}
+              </Select>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="City">City</label>
+              <br />
+              <Select
+                className="ant-select-selector ant-select-arrow"
+                name="City"
+                value={userData.City}
+                onChange={(selectedCityValue) => {
+                  handleCityChange(selectedCityValue, setUserData);
+                }}
+              >
+                <Option value="">Select a City</Option>
+                {userData.Country &&
+                  userData.State &&
+                  cityData &&
+                  cityData.map((city) => (
+                    <Option key={city.id} value={city.name}>
+                      {city.name}
+                    </Option>
+                  ))}
+              </Select>
             </div>
           </form>
         </div>
         <div className="TwoDetails">
           <form>
             <div className="mb-3">
-              <label htmlFor="exampleInputEmail1">Last Name</label>
+              <label htmlFor="LName">Last Name</label>
               <br />
               <Input
                 onChange={handleChange}
                 value={userData.LName}
                 className="UserDetailsInput"
                 prefix={<UserOutlined />}
-                size="medium"
-                type="email"
                 name="LName"
-                aria-describedby="emailHelp"
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleInputEmail1">Email Address</label>
+              <label htmlFor="Email">Email Address</label>
               <br />
               <Input
                 onChange={handleChange}
@@ -199,26 +251,33 @@ const BasicInformation = () => {
                 disabled={true}
                 className="UserDetailsInput"
                 prefix={<MailOutlined />}
-                size="medium"
                 type="email"
                 name="Email"
-                aria-describedby="emailHelp"
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleInputPassword1">Date of Birth</label>
+              <label htmlFor="DateOfBirth">Date of Birth</label>
               <br />
               <Input
                 value={userData.DateOfBirth}
                 onChange={handleChange}
+                onBlur={(e) =>
+                  handleBlur(
+                    "DateOfBirth",
+                    e.target.value,
+                    userData,
+                    setUserData
+                  )
+                }
                 type="date"
                 name="DateOfBirth"
                 className="UserDetailsInput"
-                required={true}
+                max={getMaxDate()}
+                min={getMinDate()}
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleInputPassword1">Designation</label>
+              <label htmlFor="Designation">Designation</label>
               <br />
               <Input
                 value={userData.Designation}
@@ -226,18 +285,54 @@ const BasicInformation = () => {
                 onChange={handleChange}
                 name="Designation"
                 className="UserDetailsInput"
-                required={true}
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleInputPassword1">Post Code</label>
+              <label htmlFor="State">State/County</label>
+              <br />
+              <Select
+                className="ant-select-selector ant-select-arrow"
+                name="State"
+                value={userData.State}
+                onChange={(selectedStateValue) =>
+                  handleStateChange(
+                    selectedStateValue,
+                    setCityData,
+                    setUserData,
+                    City,
+                    allStateData,
+                    selectedCountryObject
+                  )
+                }
+              >
+                <Option value="">Select a state</Option>
+                {userData.Country &&
+                  stateData &&
+                  stateData.map((state) => (
+                    <Option key={state.id} value={state.name}>
+                      {state.name}
+                    </Option>
+                  ))}
+              </Select>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="StreetAddress">Street Address</label>
+              <br />
+              <Input
+                value={userData.StreetAddress}
+                onChange={handleChange}
+                name="StreetAddress"
+                className="UserDetailsInput"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="PostCode">Post Code</label>
               <br />
               <Input
                 value={userData.PostCode}
                 onChange={handleChange}
                 name="PostCode"
                 className="UserDetailsInput"
-                required={true}
               />
             </div>
           </form>

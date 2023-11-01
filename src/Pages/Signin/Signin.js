@@ -22,8 +22,6 @@ const Signin = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const port = 3001;
-
   const onChange = (checked) => {
     console.log(`switch to ${checked}`);
   };
@@ -31,7 +29,7 @@ const Signin = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await login(email, password, port);
+      const response = await login(email, password);
       if (response.status === 200) {
         message.success("Logged In Successfully!", 2);
         console.log("This is the response from API", response.data.token);

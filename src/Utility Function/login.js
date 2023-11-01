@@ -1,7 +1,8 @@
 import axios from "axios";
-export const login = async (email, password, port) => {
+import { baseURL } from "../Components/BaseURLAPI/BaseURLAPI";
+export const login = async (email, password) => {
   try {
-    const response = await axios.post(`http://13.40.195.165:${port}/login`, {
+    const response = await axios.post(`${baseURL}/login`, {
       email,
       password,
     });
