@@ -1,12 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import pharmImg from "../../Assets/pharm_img.svg";
 import Logo from "../../Assets/logo.svg";
-import { Input, Space } from "antd";
+import { Input, Space, message } from "antd";
 import "./ForgotPassword.css";
 import { ArrowRightOutlined, MailOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 const ForgotPassword = () => {
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
+  const handleInputChange = (e) => {
+    setEmail(e.target.value);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    localStorage.setItem("userEmail", email);
+    console.log("form Submitted!");
+    axios
+      .post(`${baseURL}/forget`, {
+        email: email,
+      })
+      .then(() => {
+        message.success("Email sent Successfully!", 3);
+        navigate("/resendemail");
+      })
+      .catch(() => {
+        message.error("Email sending Failed", 3);
+      });
+  };
+
   const HandleBtnBacktoLogin = () => {
     navigate("/signin");
   };
@@ -20,7 +43,7 @@ const ForgotPassword = () => {
             Enter the email you used to create your account so we can send you a
             link for resetting your password.
           </p>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label
                 htmlFor="exampleInputEmail1"
@@ -29,25 +52,26 @@ const ForgotPassword = () => {
                 Email
               </label>
               <Input
+                onChange={handleInputChange}
+                value={email}
                 prefix={<MailOutlined />}
                 type="email"
-                id="exampleInputEmail1"
+                name="email"
                 aria-describedby="emailHelp"
                 required={true}
               />
             </div>
-
             <button type="submit" className="btn my-3 signinbtn">
               Send
             </button>
-            <button
-              onClick={HandleBtnBacktoLogin}
-              type="button"
-              className="btn btn-primary"
-            >
-              Back to Login
-            </button>
           </form>
+          <button
+            onClick={HandleBtnBacktoLogin}
+            type="button"
+            className="btn btn-primary"
+          >
+            Back to Login
+          </button>
         </div>
       </div>
       <div className="signinLogoContainer">

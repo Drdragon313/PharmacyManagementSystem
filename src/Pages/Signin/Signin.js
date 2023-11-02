@@ -22,9 +22,6 @@ const Signin = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const onChange = (checked) => {
-    console.log(`switch to ${checked}`);
-  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -32,7 +29,6 @@ const Signin = () => {
       const response = await login(email, password);
       if (response.status === 200) {
         message.success("Logged In Successfully!", 2);
-        console.log("This is the response from API", response.data.token);
         dispatch(addSigninData(response.data.token));
         const AuthorizationToken = `Bearer ${response.data.token}`;
         localStorage.setItem("AuthorizationToken", AuthorizationToken);
@@ -92,11 +88,7 @@ const Signin = () => {
             </div>
             <div className="stay-signedin-forgot-pass">
               <div className="stay-signedin">
-                <Switch
-                  size="small"
-                  defaultChecked
-                  onChange={onChange}
-                ></Switch>
+                <Switch size="small" defaultChecked></Switch>
                 <p className="stay-signedin-txt"> Stay Signed in</p>
               </div>
               <Link to="/forgotpassword" className="signinForget">
