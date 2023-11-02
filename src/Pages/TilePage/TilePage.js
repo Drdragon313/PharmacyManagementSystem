@@ -9,7 +9,6 @@ import {
   fetchTiles,
 } from "../../Utility Function/tilePageUtils";
 import "./TilePage.css";
-
 const TilePage = () => {
   const [path, setPath] = useState([""]);
   const [tiles, setTiles] = useState([]);
