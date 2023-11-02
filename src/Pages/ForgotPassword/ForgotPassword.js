@@ -4,12 +4,7 @@ import Logo from "../../Assets/logo.svg";
 import { Input, Space } from "antd";
 import "./ForgotPassword.css";
 import { ArrowRightOutlined, MailOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
 const ForgotPassword = () => {
-  const navigate = useNavigate();
-  const HandleBtnBacktoLogin = () => {
-    navigate("/signin");
-  };
   return (
     <div className="siginContainer">
       <div className="siginFieldsContainer">
@@ -40,11 +35,7 @@ const ForgotPassword = () => {
             <button type="submit" className="btn my-3 signinbtn">
               Send
             </button>
-            <button
-              onClick={HandleBtnBacktoLogin}
-              type="button"
-              className="btn btn-primary"
-            >
+            <button type="button" className="btn btn-primary">
               Back to Login
             </button>
           </form>

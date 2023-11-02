@@ -1,19 +1,21 @@
 import axios from "axios";
+import { baseURL } from "../Components/BaseURLAPI/BaseURLAPI";
 
-export const fetchTiles = async (tilePath) => {
+export const fetchTilesAndSchemas = async (tilePath) => {
   try {
     const response = await axios.get(
-      `http://13.40.195.165:3001/get-all-tile?tilePath=${tilePath}`
+      `${baseURL}/get-all-tile?tilePath=${tilePath}`
     );
-    return response.data.Data.tiles;
+    return response.data.Data;
   } catch (error) {
-    console.error("Error fetching tiles:", error);
-    return [];
+    console.error("Error fetching tiles and schemas:", error);
+    return { tiles: [], schemas: [] };
   }
 };
+
 export const createCard = async (newCardName, tilePath) => {
   try {
-    await axios.post("http://13.40.195.165:3001/save-tile", {
+    await axios.post(`${baseURL}/save-tile`, {
       tile_name: newCardName,
       tile_path: tilePath,
     });
@@ -23,14 +25,26 @@ export const createCard = async (newCardName, tilePath) => {
     return false;
   }
 };
+
 export const deleteCard = async (tileName) => {
   try {
     const response = await axios.delete(
-      `http://13.40.195.165:3001/delete-tile?tileName=${tileName}`
+      `${baseURL}/delete-tile?tileName=${tileName}`
     );
     return response.data.Data.tiles;
   } catch (error) {
     console.error("Error in deleting the card:", error);
+    return [];
+  }
+};
+export const deleteSchema = async (schema_id) => {
+  try {
+    const response = await axios.delete(
+      `${baseURL}/delete-tile-schema?schema_id=${schema_id}`
+    );
+    return response.data.Data.schemas;
+  } catch (error) {
+    console.error("Error in deleting the schema:", error);
     return [];
   }
 };

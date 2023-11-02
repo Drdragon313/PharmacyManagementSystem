@@ -6,7 +6,7 @@ import { updateSchemaName } from "../../redux/features/SchemaSlice/schemaSlice";
 import { validateSchemaName } from "../../Utility Function/validateSchemaName";
 import "./schemaCreationForm.css";
 
-const SchemaCreationForm = ({ visible, onCancel, selectedType }) => {
+const SchemaCreationForm = ({ visible, onCancel, selectedType, tilePath }) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const navigate = useNavigate();
@@ -25,10 +25,12 @@ const SchemaCreationForm = ({ visible, onCancel, selectedType }) => {
       onCancel();
     } catch (error) {
       message.error("Validation error", error, 3);
+      console.log(error);
       setTimeout(() => {
         message.destroy();
       }, 2000);
     }
+    console.log("path: ", tilePath);
   };
   return (
     <Modal
@@ -53,7 +55,7 @@ const SchemaCreationForm = ({ visible, onCancel, selectedType }) => {
         >
           <Input />
         </Form.Item>
-        <Form.Item label="description" name="description">
+        <Form.Item label="Description" name="description">
           <Input.TextArea />
         </Form.Item>
         <Form.Item>
