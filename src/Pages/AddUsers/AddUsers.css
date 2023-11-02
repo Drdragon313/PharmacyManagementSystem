@@ -1,0 +1,67 @@
+.AddUsersBasicContainer {
+  height: 95vh;
+}
+.AddUsersBasicInfoHeading {
+  padding-top: 1%;
+  margin-left: 9%;
+}
+.AddUsersProfilePhoto {
+  margin-top: 1%;
+  margin-bottom: 1%;
+  margin-left: 9%;
+}
+.AddUsersProfileImg {
+  border-radius: 50%;
+}
+.AddUsersDetails {
+  display: flex;
+  height: 50vh;
+}
+.AddUsersOneDetails {
+  width: 34vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.AddUsersTwoDetails {
+  width: 34vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.AddUsersThreeDetails {
+  width: 34vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.AddUsersDetailsInput {
+  height: 6vh;
+  width: 15vw;
+  border-radius: 15px;
+}
+.ant-select-selector {
+  height: 39.05px;
+  width: 15vw;
+  border-radius: 15px;
+}
+
+.AddUsersInformationUpdateBtnContainer {
+  display: flex;
+  width: 80vw;
+  justify-content: flex-end;
+}
+.AddUsersInformationUpdateBtn {
+  border: none;
+  margin-right: 3%;
+}
+
+.react-international-phone-input {
+  width: 158px;
+}
+.react-international-phone-input-container {
+  border-radius: 15px;
+}
+.ant-select-arrow {
+  padding-bottom: 5px;
+}
