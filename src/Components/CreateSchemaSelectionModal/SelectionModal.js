@@ -6,7 +6,7 @@ import SchemaCreationForm from "../SchemaCreationForm/SchemaCreationForm";
 import databaseImg from "../../Assets/uploadDatabase.png";
 import manulaImg from "../../Assets/manual.png";
 import CSVimg from "../../Assets/csv.png";
-const SelectionModal = ({ visible, setSelectionModalVisible }) => {
+const SelectionModal = ({ visible, setSelectionModalVisible, tilePath }) => {
   const [isSchemaFormVisible, setSchemaFormVisible] = useState(false);
   const [selectedType, setSelectedType] = useState(null);
 
@@ -14,6 +14,7 @@ const SelectionModal = ({ visible, setSelectionModalVisible }) => {
     setSelectionModalVisible(false);
     setSchemaFormVisible(true);
     setSelectedType(selectedType);
+    console.log("tilepath = ", tilePath);
   };
 
   return (
@@ -62,7 +63,7 @@ const SelectionModal = ({ visible, setSelectionModalVisible }) => {
                   ></Image>
                   <h6>Import Manually</h6>
                   <p>
-                    Using this method User will upload the entire schema
+                    Using this method user will upload the entire schema
                     manually by adding each field and validation individually.
                   </p>
                 </Space>
@@ -82,8 +83,8 @@ const SelectionModal = ({ visible, setSelectionModalVisible }) => {
                   ></Image>
                   <h6>Import from CSV</h6>
                   <p>
-                    This method will allow users to import there schema by
-                    importing file.
+                    This method will allow users to import their schema by
+                    importing a file.
                   </p>
                 </Space>
               </CustomCard>
@@ -96,6 +97,7 @@ const SelectionModal = ({ visible, setSelectionModalVisible }) => {
           visible={isSchemaFormVisible}
           onCancel={() => setSchemaFormVisible(false)}
           selectedType={selectedType}
+          tilePath={tilePath}
         />
       )}
     </>

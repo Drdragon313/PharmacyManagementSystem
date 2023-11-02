@@ -1,24 +1,35 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Modal, Input, Button, Card } from "antd";
+import { Modal, Input, Button, Image, Space, Upload, Avatar } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { Breadcrumb } from "antd";
 import {
   createCard,
   deleteCard,
-  fetchTiles,
+  fetchTilesAndSchemas,
+  deleteSchema,
 } from "../../Utility Function/tilePageUtils";
 import "./TilePage.css";
+import SelectionModal from "../../Components/CreateSchemaSelectionModal/SelectionModal";
+import CustomCard from "../../Components/Card/Card";
+import schemaImg from "../../Assets/Schemas.png";
+import { Link } from "react-router-dom";
+import tileImg from "../../Assets/tileimg.svg";
+
 const TilePage = () => {
   const [path, setPath] = useState([""]);
   const [tiles, setTiles] = useState([]);
   const [newCardName, setNewCardName] = useState("");
-  const [modalVisible, setModalVisible] = useState(false);
   const [breadcrumbPath, setBreadcrumbPath] = useState(["Home"]);
+  const [activeModal, setActiveModal] = useState(null);
+  const [isSelectionModalVisible, setSelectionModalVisible] = useState(null);
+  const [schemas, setSchemas] = useState([]);
+  const [imageUrl, setImageUrl] = useState();
   const getPath = () => {
     if (path.length === 1) {
       return "/";
-    } else return path.join(`/`);
+    } else {
+      return `/${path[path.length - 1]}`;
+    }
   };
 
   useEffect(() => {
@@ -26,8 +37,11 @@ const TilePage = () => {
   }, [path]);
 
   const fetchDataTiles = async (tilePath) => {
-    const tilesData = await fetchTiles(tilePath);
-    setTiles(tilesData);
+    const data = await fetchTilesAndSchemas(tilePath);
+    setTiles(data.tiles);
+    setSchemas(data.schemas);
+    console.log(data.schemas);
+    localStorage.setItem("tilePath", tilePath);
   };
 
   const handleTileClick = (cardPath) => {
@@ -48,7 +62,7 @@ const TilePage = () => {
     const success = await createCard(newCardName, getPath());
     if (success) {
       setNewCardName("");
-      setModalVisible(false);
+
       fetchDataTiles(getPath());
     }
   };
@@ -59,6 +73,35 @@ const TilePage = () => {
       setTiles(updatedTilesData);
     }
   };
+  const handleDeleteSchema = async (schemaId) => {
+    const updatedSchemasData = await deleteSchema(schemaId);
+    if (updatedSchemasData) {
+      setSchemas(updatedSchemasData);
+    }
+  };
+
+  const openCardModal = (modalType) => {
+    setSelectionModalVisible(modalType);
+    setActiveModal(modalType);
+  };
+
+  const closeCardModal = () => {
+    setActiveModal(null);
+    setNewCardName("");
+    setSelectionModalVisible(false);
+  };
+  const uploadButton = (
+    <div>
+      <div
+        style={{
+          marginTop: 8,
+        }}
+      >
+        Upload
+      </div>
+    </div>
+  );
+
   return (
     <div>
       <Breadcrumb className="breadcrumb" separator=">">
@@ -77,57 +120,180 @@ const TilePage = () => {
       <div className="title-description">
         <h3>Available Options</h3>
         <p>
-          You can choose from the options given flow for which you want to
+          You can choose from the options given below for which you want to
           upload data.
         </p>
       </div>
-
+      <h4 style={{ marginLeft: "30px" }}>Available Tiles</h4>
       <div className="allcards">
         {tiles.map((tile, index) => (
-          <Card
+          <CustomCard
             className="tilecards"
             key={index}
             bordered={true}
-            title={tile.TileName}
             onClick={() => handleTileClick(tile.TileName)}
           >
-            <div className="buttons">
-              <Button
-                type="primary"
-                onClick={() => handleDeleteCard(tile.TileName)}
-              >
-                Delete
-              </Button>
+            <div class="dropdown">
+              <Button class="dropbtn">...</Button>
+              <div class="dropdown-content">
+                <Button
+                  type="link"
+                  onClick={() => handleDeleteCard(tile.TileName)}
+                >
+                  Delete
+                </Button>
+              </div>
             </div>
-          </Card>
+            <Space direction="vertical" size={8}>
+              <Avatar
+                className="tile-img"
+                size={{
+                  xs: 22,
+                  sm: 38,
+                  md: 36,
+                  lg: 50,
+                  xl: 70,
+                  xxl: 90,
+                }}
+                shape="square"
+              >
+                <Image
+                  preview={false}
+                  src={tileImg}
+                  size={{
+                    xs: 30,
+                    sm: 40,
+                    md: 50,
+                    lg: 60,
+                    xl: 70,
+                    xxl: 90,
+                  }}
+                ></Image>
+              </Avatar>
+
+              <h5 className="tile-name">{tile.TileName}</h5>
+            </Space>
+          </CustomCard>
         ))}
-        <Modal
-          open={modalVisible}
-          title="Create New Card"
-          onOk={handleCreateCard}
-          onCancel={() => {
-            setNewCardName("");
-            setModalVisible(false);
-          }}
-        >
-          <Input
-            placeholder="Enter name"
-            value={newCardName}
-            onChange={(e) => setNewCardName(e.target.value)}
-          />
-        </Modal>
+        <div className="button-container">
+          <Button
+            onClick={() => openCardModal("createTile")}
+            shape="circle"
+            icon={<PlusOutlined />}
+            size="large"
+            className="new-card-btn"
+          ></Button>
+          <Button className="create-new-tile-btn-txt" type="link">
+            Add new Tile
+          </Button>
+        </div>
       </div>
-      <Button
-        shape="circle"
-        icon={<PlusOutlined />}
-        size="large"
-        className="new-card-btn"
-        onClick={() => setModalVisible(true)}
-      ></Button>
-      <Button className="create-new-tile-btn-txt" type="link">
-        ADD NEW DATA TILE
-      </Button>
+      <h4 style={{ marginLeft: "30px" }}>Available Schemas</h4>
+      <div className="allSchemas">
+        {schemas ? (
+          schemas.map((schema, index) => (
+            <CustomCard className="schemacards" key={index} bordered={true}>
+              <div class="dropdown">
+                <Button class="dropbtn-schema">...</Button>
+                <div class="dropdown-content">
+                  <Button
+                    type="link"
+                    onClick={() => handleDeleteSchema(schema.id)}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              </div>
+              <Space className="schema-content" direction="vertical" size={5}>
+                <Image
+                  preview={false}
+                  src={schemaImg}
+                  size={{
+                    xs: 30,
+                    sm: 40,
+                    md: 50,
+                    lg: 60,
+                    xl: 70,
+                    xxl: 90,
+                  }}
+                ></Image>
+
+                <h5 className="tile-name">{schema.schema_name}</h5>
+                <Link to={`/schema/${index}`}>
+                  <Button>View Details</Button>
+                </Link>
+              </Space>
+            </CustomCard>
+          ))
+        ) : (
+          <p>No schemas available.</p>
+        )}
+        <CustomCard className="button-container-schema">
+          <Button
+            shape="circle"
+            icon={<PlusOutlined />}
+            size="large"
+            className="new-card-btn"
+            onClick={() => openCardModal("createSchema")}
+          ></Button>
+          <Button className="create-new-tile-btn-txt" type="link">
+            Add new Schema
+          </Button>
+        </CustomCard>
+      </div>
+
+      <SelectionModal
+        visible={isSelectionModalVisible === "createSchema"}
+        setSelectionModalVisible={setSelectionModalVisible}
+        onCancel={closeCardModal}
+        tilePath={path}
+      />
+
+      <Modal
+        open={activeModal === "createTile"}
+        title="Create New Tile"
+        onOk={handleCreateCard}
+        okText="Done"
+        onCancel={closeCardModal}
+      >
+        <Input
+          placeholder="Enter name"
+          value={newCardName}
+          onChange={(e) => setNewCardName(e.target.value)}
+        />
+        <div className="upload-img">
+          <div>
+            <Upload
+              name="avatar"
+              listType="picture-card"
+              className="avatar-uploader"
+              showUploadList={false}
+              action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+            >
+              {imageUrl ? (
+                <img
+                  alt="avatar"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                  }}
+                />
+              ) : (
+                uploadButton
+              )}
+            </Upload>
+          </div>
+          <div className="upload-img-text">
+            <h6>Upload Icon Here</h6>
+            <p>
+              Files Supported: PNG, JPG, SVG <br /> Maximum size: 100MB
+            </p>
+            <Button type="primary">Choose File</Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
+
 export default TilePage;

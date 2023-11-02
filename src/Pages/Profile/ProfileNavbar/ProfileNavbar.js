@@ -16,41 +16,23 @@ const ProfileNavbar = () => {
         defaultOpenKeys={["sub1"]}
         className="ProfileNavbarMenu"
       >
-        <Menu.Item
-          style={{ textDecoration: "none" }}
-          key="1"
-          className="custom-menu-item"
-          onClick={() => handleMenuItemClick("1")}
-        >
-          <Link to="/profile">
+        <Menu.Item key="1" onClick={() => handleMenuItemClick("1")}>
+          <Link to="/">
             <strong>Basic Information</strong>
           </Link>
         </Menu.Item>
-        <Menu.Item
-          style={{ textDecoration: "none" }}
-          key="2"
-          className="custom-menu-item"
-          onClick={() => handleMenuItemClick("2")}
-        >
+        <Menu.Item key="2" onClick={() => handleMenuItemClick("2")}>
           <Link to="permissions">
             <strong>Account Permissions</strong>
           </Link>
         </Menu.Item>
-        <Menu.Item
-          key="3"
-          className="custom-menu-item"
-          onClick={() => handleMenuItemClick("3")}
-        >
+        <Menu.Item key="3" onClick={() => handleMenuItemClick("3")}>
           <Link to="/">
             <strong>Notifications </strong>
           </Link>
         </Menu.Item>
-        <Menu.Item
-          key="4"
-          className="custom-menu-item"
-          onClick={() => handleMenuItemClick("4")}
-        >
-          <Link to="updatePassword">
+        <Menu.Item key="4" onClick={() => handleMenuItemClick("4")}>
+          <Link to="/">
             <strong>Password & Security</strong>
           </Link>
         </Menu.Item>
