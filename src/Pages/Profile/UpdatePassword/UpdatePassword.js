@@ -4,6 +4,7 @@ import { baseURL } from "../../../Components/BaseURLAPI/BaseURLAPI";
 import { message } from "antd";
 import PasswordInput from "../../../Components/Input/PasswordInput";
 import axios from "axios";
+import { PasswordRegex } from "../../../Utility Function/PasswordRegex";
 const UpdatePassword = () => {
   const [formData, setFormData] = useState({
     PreviousPassword: "",
@@ -12,28 +13,42 @@ const UpdatePassword = () => {
   });
   const handleSubmit = (e) => {
     e.preventDefault();
+    const regex = PasswordRegex();
     const localHeader = localStorage.getItem("AuthorizationToken");
     const headers = {
       Authorization: localHeader,
     };
     if (formData.NewPassword === formData.ConfirmNewPassword) {
       if (formData.PreviousPassword !== formData.NewPassword) {
-        axios
-          .post(
-            `${baseURL}/change-password`,
-            {
-              old_password: formData.PreviousPassword,
-              new_password: formData.NewPassword,
-            },
-            { headers }
-          )
-          .then(() => {
-            message.success("Password Updated Successfully!", 2);
-          })
-          .catch((error) => {
-            message.error("An error occurred while updating password", 2);
-            console.error("Error:", error);
-          });
+        if (regex.test(formData.NewPassword)) {
+          axios
+            .post(
+              `${baseURL}/change-password`,
+              {
+                old_password: formData.PreviousPassword,
+                new_password: formData.NewPassword,
+              },
+              { headers }
+            )
+            .then(() => {
+              message.success("Password Updated Successfully!", 3);
+            })
+            .catch((error) => {
+              console.log(error);
+              if (
+                error.response &&
+                error.response.data &&
+                error.response.data.error &&
+                error.response.data.error.message
+              ) {
+                message.error(error.response.data.error.message, 3);
+              } else {
+                message.error("An error occurred while updating password", 3);
+              }
+            });
+        } else {
+          message.error("New Password doesnt meet the required criteria!", 3);
+        }
       } else {
         message.error("Old Password and New Password cannot be same!", 2);
       }
@@ -63,6 +78,11 @@ const UpdatePassword = () => {
             name="NewPassword"
             onChange={handleChange}
           />
+          <p>
+            Password should be atleats 8 characters with 1 Capital letter, 1
+            <br />
+            number and 1 special character.
+          </p>
           <PasswordInput
             label="Confirm New Password"
             name="ConfirmNewPassword"

@@ -14,24 +14,24 @@ import { login } from "../../Utility Function/login";
 import "./Signin.css";
 import { Link } from "react-router-dom";
 import { ArrowRightOutlined } from "@ant-design/icons";
-
+import { useDispatch } from "react-redux";
+import { addSigninData } from "../../redux/features/SigninSlice/SigninSlice";
 const Signin = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const port = 3001;
-
-  const onChange = (checked) => {
-    console.log(`switch to ${checked}`);
-  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await login(email, password, port);
+      const response = await login(email, password);
       if (response.status === 200) {
         message.success("Logged In Successfully!", 2);
+        dispatch(addSigninData(response.data.token));
+        const AuthorizationToken = `Bearer ${response.data.token}`;
+        localStorage.setItem("AuthorizationToken", AuthorizationToken);
         navigate("/schema");
       } else {
         message.error("Invalid Credentials", 2);
@@ -88,11 +88,7 @@ const Signin = () => {
             </div>
             <div className="stay-signedin-forgot-pass">
               <div className="stay-signedin">
-                <Switch
-                  size="small"
-                  defaultChecked
-                  onChange={onChange}
-                ></Switch>
+                <Switch size="small" defaultChecked></Switch>
                 <p className="stay-signedin-txt"> Stay Signed in</p>
               </div>
               <Link to="/forgotpassword" className="signinForget">

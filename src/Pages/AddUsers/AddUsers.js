@@ -2,7 +2,7 @@ import React from "react";
 import "./AddUsers.css";
 import Input from "antd/es/input/Input";
 import { PhoneInput } from "react-international-phone";
-import ProfilePhoto from "../../Components/Images/ProfilePhoto.svg";
+import Profile from "../../Components/Images/Profile.png";
 const AddUsers = () => {
   return (
     <div className="AddUsersBasicContainer">
@@ -10,7 +10,13 @@ const AddUsers = () => {
         <h5>Add User</h5>
       </div>
       <div className="AddUsersProfilePhoto">
-        <img className="AddUsersProfileImg" src={ProfilePhoto} alt="User Pic" />
+        <img
+          className="AddUsersProfileImg"
+          src={Profile}
+          width={200}
+          height={200}
+          alt="User Pic"
+        />
       </div>
       <div className="AddUsersDetails">
         <div className="AddUsersOneDetails">
@@ -95,7 +101,7 @@ const AddUsers = () => {
           </form>
         </div>
       </div>
-      <div className="InformationUpdateBtnContainer">
+      <div className="AddUsersInformationUpdateBtnContainer">
         <button
           type="button"
           className="btn btn-light AddUsersInformationUpdateBtn"

@@ -1,13 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./VaidationOptions.css";
-import { Col, Row, Button, Pagination } from "antd";
-
+import { Col, Row, Button, Pagination, message } from "antd";
+import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import SchemaCard from "../../Components/Card/SchemaCard";
 import { addIndex } from "../../redux/features/SchemaSelectionSlice/SchemaSelectionSlice";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const ValidationOptions = () => {
+  const [schemaData, setSchemaData] = useState();
+
+  useEffect(() => {
+    const localHeader = localStorage.getItem("AuthorizationToken");
+    const headers = {
+      Authorization: localHeader,
+    };
+    axios
+      .get(`${baseURL}/schema/get-all-schema`, { headers })
+      .then((response) => {
+        console.log("inside then", response.data.data);
+        setSchemaData(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        message.error("There was an issue while fetching the schemas!", 3);
+      });
+  }, []);
+  useEffect(() => {
+    console.log("This is data from APi", schemaData);
+  }, [schemaData]);
+
   const schemaDataArray = useSelector((state) => state.schema.schemaDataArray);
 
   const dispatch = useDispatch();

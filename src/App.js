@@ -23,6 +23,7 @@ import UpdatePassword from "./Pages/Profile/UpdatePassword/UpdatePassword";
 import Users from "./Pages/Users/Users";
 import AddUsers from "./Pages/AddUsers/AddUsers";
 import ViewEmployees from "./Pages/ViewEmployees/ViewEmployees";
+import ResendEmail from "./Pages/ResendEmail/ResendEmail";
 
 const { Content } = Layout;
 
@@ -70,6 +71,7 @@ function MainContent() {
           <Route path="users" element={<Users />} />
           <Route path="users/AddUser" element={<AddUsers />} />
           <Route path="users/ViewEmployees" element={<ViewEmployees />} />
+          <Route path="resendemail" element={<ResendEmail />} />
         </Routes>
       </Content>
     </>
@@ -85,7 +87,8 @@ function shouldRenderNavbar(location) {
     currentPath !== "/resetpassword" &&
     currentPath !== "/profile" &&
     currentPath !== "/profile/permissions" &&
-    currentPath !== "/profile/updatePassword"
+    currentPath !== "/profile/updatePassword" &&
+    currentPath !== "/resendemail"
   );
 }
 
@@ -98,7 +101,8 @@ function shouldRenderTopnav(location) {
     currentPath !== "/resetpassword" &&
     currentPath !== "/profile" &&
     currentPath !== "/profile/permissions" &&
-    currentPath !== "/profile/updatePassword"
+    currentPath !== "/profile/updatePassword" &&
+    currentPath !== "/resendemail"
   );
 }
 

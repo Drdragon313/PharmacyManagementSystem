@@ -1,24 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
 import pharmImg from "../../Assets/pharm_img.svg";
 import Logo from "../../Assets/logo.svg";
-import { Input, Space } from "antd";
+import { Input, Space, message } from "antd";
 import {
   EyeTwoTone,
   EyeInvisibleOutlined,
   LockOutlined,
 } from "@ant-design/icons";
-
+import { PasswordRegex } from "../../Utility Function/PasswordRegex";
 import "./ResetPassword.css";
 import { ArrowRightOutlined } from "@ant-design/icons";
-const Signin = () => {
+import { Link, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
+import axios from "axios";
+const ResetPassword = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [data, setData] = useState({
+    password: "",
+    confirmPassword: "",
+  });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setData((prevUserData) => ({
+      ...prevUserData,
+      [name]: value,
+    }));
+  };
+  const email = searchParams.get("email");
+  const forgetPasswordKey = searchParams.get("forgetPasswordKey");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (data.password === data.confirmPassword) {
+      const regex = PasswordRegex();
+      if (regex.test(data.password)) {
+        axios
+          .post(`${baseURL}/update`, {
+            email: email,
+            unique_string: forgetPasswordKey,
+            password: data.password,
+          })
+          .then(() => {
+            message.success("Password Updated Successfully!", 3);
+            navigate("/signin");
+          })
+          .catch((error) => {
+            if (
+              error.response &&
+              error.response.data &&
+              error.response.data.error &&
+              error.response.data.error.message
+            ) {
+              message.error(error.response.data.error.message, 3);
+            } else {
+              message.error("Password updation Failed!", 3);
+            }
+          });
+      } else {
+        message.error("Password doesnt meet the required criteria");
+      }
+    } else {
+      message.error("Passwords donot match!", 3);
+    }
+  };
+
   return (
     <div className="siginContainer">
       <div className="siginFieldsContainer">
         <img alt="logo" className="company-logo" src={Logo}></img>
         <div className="signinFields">
-          <h5>Welcome Back!</h5>
-          <p className="signinText">Lets get you signed in...</p>
-          <form>
+          <h5>Reset Password</h5>
+          <p className="signinText">Choose a new password for your account</p>
+          <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label
                 htmlFor="exampleInputPassword1"
@@ -27,13 +81,18 @@ const Signin = () => {
                 New Password
               </label>
               <Input.Password
+                onChange={handleInputChange}
                 prefix={<LockOutlined />}
-                id="newPassword"
+                name="password"
                 required={true}
                 iconRender={(visible) =>
                   visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                 }
               />
+              <p className="signinText">
+                Password should be atleats 8 characters with 1 Capital letter, 1
+                number and 1 special character.
+              </p>
             </div>
             <div className="mb-3">
               <label
@@ -43,8 +102,9 @@ const Signin = () => {
                 Confirm Password
               </label>
               <Input.Password
+                onChange={handleInputChange}
                 prefix={<LockOutlined />}
-                id="confirmPassword"
+                name="confirmPassword"
                 required={true}
                 iconRender={(visible) =>
                   visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
@@ -52,12 +112,14 @@ const Signin = () => {
               />
             </div>
             <button type="submit" className="btn my-3 signinbtn">
-              Log In
+              Reset Password
             </button>
+          </form>
+          <Link to="/signin">
             <button type="button" className="btn btn-primary">
               Back to Login
             </button>
-          </form>
+          </Link>
         </div>
       </div>
       <div className="signinLogoContainer">
@@ -84,4 +146,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default ResetPassword;
