@@ -25,8 +25,17 @@ const ForgotPassword = () => {
         message.success("Email sent Successfully!", 3);
         navigate("/resendemail");
       })
-      .catch(() => {
-        message.error("Email sending Failed", 3);
+      .catch((error) => {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.error &&
+          error.response.data.error.message
+        ) {
+          message.error(error.response.data.error.message, 3);
+        } else {
+          message.error("Email Sending Failed!", 3);
+        }
       });
   };
 

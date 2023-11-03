@@ -1,6 +1,6 @@
 .BasicContainer {
   background-color: #d3d3d3;
-  height: 128vh;
+  height: 132vh;
   border-radius: 20px;
 }
 .BasicInfoHeading {
@@ -34,35 +34,35 @@
   align-items: center;
   color: #707477;
 }
-.UserDetailsInput {
+.BasicUserDetailsInput {
   height: 6vh;
   width: 25vw;
   border-radius: 15px;
 }
-.ant-select-selector {
+.basic-ant-select-selector {
   height: 39.05px;
   width: 25vw;
   border-radius: 15px;
 }
 
-.InformationUpdateBtnContainer {
+.BasicInformationUpdateBtnContainer {
   display: flex;
   width: 80vw;
   justify-content: flex-end;
 }
-.InformationUpdateBtn {
+.BasicInformationUpdateBtn {
   border: none;
   margin-top: 5%;
   margin-right: 9%;
   margin-bottom: 2%;
 }
 
-.react-international-phone-input {
+.basic-react-international-phone-input {
   width: 340px;
 }
 .react-international-phone-input-container {
   border-radius: 15px;
 }
-.ant-select-arrow {
+.basic-ant-select-arrow {
   padding-bottom: 5px;
 }

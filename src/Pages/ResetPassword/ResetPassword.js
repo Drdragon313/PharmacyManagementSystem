@@ -46,7 +46,6 @@ const ResetPassword = () => {
             navigate("/signin");
           })
           .catch((error) => {
-            console.log(error);
             if (
               error.response &&
               error.response.data &&
