@@ -90,7 +90,7 @@ const AddUsers = () => {
               <PhoneInput
                 defaultCountry="ua"
                 name="Contact"
-                className="AddUsersDetailsInput react-international-phone-input react-international-phone-input-container"
+                className="AddUsersDetailsInput adduser-react-international-phone-input adduser-react-international-phone-input-container"
               />
             </div>
             <div className="mb-3">
