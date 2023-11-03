@@ -1,14 +1,15 @@
 .BasicContainer {
   background-color: #d3d3d3;
-  height: 132vh;
+  height: 128vh;
   border-radius: 20px;
 }
 .BasicInfoHeading {
-  padding-top: 2%;
+  padding-top: 1%;
   margin-left: 9%;
 }
 .ProfilePhoto {
-  margin: 2%;
+  margin-top: 1%;
+  margin-bottom: 4%;
   margin-left: 9%;
 }
 .ProfileImg {
@@ -16,7 +17,7 @@
 }
 .UserDetails {
   display: flex;
-  height: 40vh;
+  height: 72vh;
 }
 .OneDetails {
   width: 50vw;
@@ -26,15 +27,17 @@
   color: #707477;
 }
 .TwoDetails {
+  margin-top: 4.5%;
   width: 50vw;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #707477;
 }
-.BasicUserDetailsInput {
+.UserDetailsInput {
   height: 6vh;
   width: 25vw;
+  border-radius: 15px;
 }
 .basic-ant-select-selector {
   height: 39.05px;
@@ -42,19 +45,19 @@
   border-radius: 15px;
 }
 
-.BasicInformationUpdateBtnContainer {
+.InformationUpdateBtnContainer {
   display: flex;
   width: 80vw;
   justify-content: flex-end;
 }
-.BasicInformationUpdateBtn {
+.InformationUpdateBtn {
   border: none;
   margin-top: 5%;
   margin-right: 9%;
   margin-bottom: 2%;
 }
 
-.basic-react-international-phone-input {
+.react-international-phone-input {
   width: 340px;
 }
 .react-international-phone-input-container {

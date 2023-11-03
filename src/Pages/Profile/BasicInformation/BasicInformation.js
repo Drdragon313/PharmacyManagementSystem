@@ -182,7 +182,7 @@ const BasicInformation = () => {
               <label htmlFor="Country">Address</label>
               <br />
               <Select
-                className="ant-select-selector ant-select-arrow"
+                className="basic-ant-select-selector basic-ant-select-arrow"
                 name="Country"
                 value={userData.Country}
                 onChange={(selectedCountryValue) =>
@@ -209,7 +209,7 @@ const BasicInformation = () => {
               <label htmlFor="City">City</label>
               <br />
               <Select
-                className="ant-select-selector ant-select-arrow"
+                className="basic-ant-select-selector basic-ant-select-arrow"
                 name="City"
                 value={userData.City}
                 onChange={(selectedCityValue) => {
@@ -291,7 +291,7 @@ const BasicInformation = () => {
               <label htmlFor="State">State/County</label>
               <br />
               <Select
-                className="ant-select-selector ant-select-arrow"
+                className="basic-ant-select-selector basic-ant-select-arrow"
                 name="State"
                 value={userData.State}
                 onChange={(selectedStateValue) =>
