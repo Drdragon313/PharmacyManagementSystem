@@ -4,12 +4,11 @@
   border-radius: 20px;
 }
 .BasicInfoHeading {
-  padding-top: 1%;
+  padding-top: 2%;
   margin-left: 9%;
 }
 .ProfilePhoto {
-  margin-top: 1%;
-  margin-bottom: 4%;
+  margin: 2%;
   margin-left: 9%;
 }
 .ProfileImg {
@@ -17,7 +16,7 @@
 }
 .UserDetails {
   display: flex;
-  height: 72vh;
+  height: 40vh;
 }
 .OneDetails {
   width: 50vw;
@@ -27,7 +26,6 @@
   color: #707477;
 }
 .TwoDetails {
-  margin-top: 4.5%;
   width: 50vw;
   display: flex;
   justify-content: center;
@@ -37,7 +35,6 @@
 .BasicUserDetailsInput {
   height: 6vh;
   width: 25vw;
-  border-radius: 15px;
 }
 .basic-ant-select-selector {
   height: 39.05px;

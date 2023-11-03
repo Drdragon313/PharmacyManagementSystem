@@ -73,6 +73,9 @@ const ForgotPassword = () => {
             <button type="submit" className="btn my-3 signinbtn">
               Send
             </button>
+            <button type="button" className="btn btn-primary">
+              Back to Login
+            </button>
           </form>
           <button
             onClick={HandleBtnBacktoLogin}

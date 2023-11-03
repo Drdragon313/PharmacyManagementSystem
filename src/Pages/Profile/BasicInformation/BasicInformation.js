@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./BasicInformation.css";
 import { MailOutlined, UserOutlined } from "@ant-design/icons";
 import Input from "antd/es/input/Input";
-import Profile from "../../../Components/Images/Profile.png";
+import ProfilePhoto from "../../../Components/Images/ProfilePhoto.svg";
 import axios from "axios";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
@@ -122,13 +122,7 @@ const BasicInformation = () => {
         <h5>Basic Information</h5>
       </div>
       <div className="ProfilePhoto">
-        <img
-          className="ProfileImg"
-          src={Profile}
-          height={200}
-          width={200}
-          alt="User Pic"
-        />
+        <img className="ProfileImg" src={ProfilePhoto} alt="User Pic" />
       </div>
       <div className="UserDetails">
         <div className="OneDetails">
@@ -139,7 +133,7 @@ const BasicInformation = () => {
               <Input
                 onChange={handleChange}
                 value={userData.FName}
-                className="BasicUserDetailsInput"
+                className="UserDetailsInput"
                 prefix={<UserOutlined />}
                 name="FName"
               />
@@ -148,7 +142,7 @@ const BasicInformation = () => {
               <label htmlFor="Gender">Gender</label>
               <br />
               <select
-                className="form-select BasicUserDetailsInput"
+                className="form-select UserDetailsInput"
                 name="Gender"
                 value={userData.Gender}
                 onChange={handleChange}
@@ -170,7 +164,7 @@ const BasicInformation = () => {
                 value={userData.Contact}
                 onChange={(value) => handlePhoneChange(value, "Contact")}
                 name="Contact"
-                className=" basic-react-international-phone-input BasicUserDetailsInput react-international-phone-input-container"
+                className="UserDetailsInput react-international-phone-input react-international-phone-input-container"
               />
             </div>
             <div className="mb-3">
@@ -181,14 +175,14 @@ const BasicInformation = () => {
                 disabled={true}
                 onChange={handleChange}
                 name="Department"
-                className="BasicUserDetailsInput"
+                className="UserDetailsInput"
               />
             </div>
             <div className="mb-3">
               <label htmlFor="Country">Address</label>
               <br />
               <Select
-                className="basic-ant-select-selector basic-ant-select-arrow"
+                className="ant-select-selector ant-select-arrow"
                 name="Country"
                 value={userData.Country}
                 onChange={(selectedCountryValue) =>
@@ -215,7 +209,7 @@ const BasicInformation = () => {
               <label htmlFor="City">City</label>
               <br />
               <Select
-                className="basic-ant-select-selector basic-ant-select-arrow"
+                className="ant-select-selector ant-select-arrow"
                 name="City"
                 value={userData.City}
                 onChange={(selectedCityValue) => {
@@ -243,7 +237,7 @@ const BasicInformation = () => {
               <Input
                 onChange={handleChange}
                 value={userData.LName}
-                className="BasicUserDetailsInput"
+                className="UserDetailsInput"
                 prefix={<UserOutlined />}
                 name="LName"
               />
@@ -255,7 +249,7 @@ const BasicInformation = () => {
                 onChange={handleChange}
                 value={userData.Email}
                 disabled={true}
-                className="BasicUserDetailsInput"
+                className="UserDetailsInput"
                 prefix={<MailOutlined />}
                 type="email"
                 name="Email"
@@ -277,7 +271,7 @@ const BasicInformation = () => {
                 }
                 type="date"
                 name="DateOfBirth"
-                className="BasicUserDetailsInput"
+                className="UserDetailsInput"
                 max={getMaxDate()}
                 min={getMinDate()}
               />
@@ -290,14 +284,14 @@ const BasicInformation = () => {
                 disabled={true}
                 onChange={handleChange}
                 name="Designation"
-                className="BasicUserDetailsInput"
+                className="UserDetailsInput"
               />
             </div>
             <div className="mb-3">
               <label htmlFor="State">State/County</label>
               <br />
               <Select
-                className="basic-ant-select-selector basic-ant-select-arrow"
+                className="ant-select-selector ant-select-arrow"
                 name="State"
                 value={userData.State}
                 onChange={(selectedStateValue) =>
@@ -328,7 +322,7 @@ const BasicInformation = () => {
                 value={userData.StreetAddress}
                 onChange={handleChange}
                 name="StreetAddress"
-                className="BasicUserDetailsInput"
+                className="UserDetailsInput"
               />
             </div>
             <div className="mb-3">
@@ -338,17 +332,17 @@ const BasicInformation = () => {
                 value={userData.PostCode}
                 onChange={handleChange}
                 name="PostCode"
-                className="BasicUserDetailsInput"
+                className="UserDetailsInput"
               />
             </div>
           </form>
         </div>
       </div>
-      <div className="BasicInformationUpdateBtnContainer">
+      <div className="InformationUpdateBtnContainer">
         <button
           onClick={handleUpdate}
           type="button"
-          className="btn btn-light BasicInformationUpdateBtn"
+          className="btn btn-light InformationUpdateBtn"
         >
           Update
         </button>

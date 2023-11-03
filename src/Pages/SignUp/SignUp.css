@@ -1,0 +1,66 @@
+.signupContainer {
+  display: flex;
+}
+.signupLogoContainer {
+  width: 50vw;
+  height: 100vh;
+}
+.signupPowerdby {
+  height: 100vh;
+}
+.siginPowerText {
+  color: white;
+  margin-top: 15px;
+  margin-right: 5px;
+}
+.signupFieldsContainer {
+  width: 70vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.signinFields {
+  width: 35vw;
+}
+.signinText {
+  color: #707477;
+}
+.signinBoldLabel {
+  font-weight: bold;
+}
+.signinBoldLabel::after {
+  content: " *";
+  color: red;
+}
+.signinForget {
+  text-decoration: none;
+}
+.signinbtn {
+  color: white;
+  width: 35vw;
+  background: linear-gradient(to right, #001529, #009de1);
+  border: none;
+}
+.siginTerms {
+  border-top: 1px solid #dddddf;
+}
+.signinFooter {
+  margin-top: 15%;
+  color: #707477;
+}
+.signinRegisterNow {
+  color: black;
+  font-weight: bold;
+}
+.row {
+  margin-bottom: 10px;
+}
+.siginTerms {
+  text-align: center;
+  margin-top: 20px;
+}
