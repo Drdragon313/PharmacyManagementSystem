@@ -23,7 +23,6 @@ const ModalPop = () => {
         Add New Entry
       </Button>
       <Modal
-        title="Add Schema Details"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
