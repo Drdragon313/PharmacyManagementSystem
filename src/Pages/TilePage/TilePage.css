@@ -12,18 +12,38 @@
   border: 1px solid #dcdcdc;
   border-radius: 10px;
   padding: 16px;
-  background-color: #707477;
+  background: linear-gradient(to bottom, #009ee2, #001529);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-left: 10px;
   width: 300px;
   text-align: center;
+  height: 190px;
+  transform: border-style 0.5s border-color 0.5s, box-shadow 1s;
 }
-.tile-img {
+.tilecards:hover {
+  cursor: pointer;
+  border-color: #fff;
+  box-shadow: 2px 2px 4px rgba(0, 21, 41, 100);
+  color: aliceblue;
+  border-style: solid;
+}
+.tile-avatar-img {
   background-color: transparent;
   border: 1px solid #fff;
+  height: 80px;
+  width: 80px;
+  align-items: center;
+  justify-content: center;
+}
+.tile-avatar-img .tile-img {
+  height: 80px;
+  width: 80px;
 }
 .tile-name {
   color: #fff;
+}
+.tile-content {
+  margin-top: 20px;
 }
 .card-title {
   font-size: 18px;
@@ -75,7 +95,16 @@
 .schemacards {
   margin-left: 10px;
   width: 300px;
-  background-color: #707477;
+  background: linear-gradient(to bottom, #009ee2, #001529);
+  height: 190px;
+  transform: border-style 0.5s border-color 0.5s box-shadow 1s;
+}
+.schemacards:hover {
+  cursor: pointer;
+  border-color: #fff;
+  box-shadow: 2px 2px 4px rgba(0, 21, 41, 100);
+  color: aliceblue;
+  border-style: solid;
 }
 .add-button {
   margin-left: 50px;
@@ -90,56 +119,77 @@
   flex-direction: row;
   margin-left: 10px;
   width: 300px;
-  height: 180px;
+  height: 190px;
   border-width: 3px;
   border-style: dashed;
   border-color: #707477;
   border-radius: 15px;
   align-items: center;
   justify-content: center;
+  transition: border-style 0.5s border-color 0.5s, box-shadow 0.5s,
+    background-color 0.5s, color 0.5s;
+}
+.button-container:hover {
+  cursor: pointer;
+  border-color: #001529;
+  box-shadow: 2px 2px 4px rgba(0, 21, 41, 100);
+  background: linear-gradient(to bottom, #009ee2, #001529);
+  color: aliceblue;
+  border-style: solid;
 }
 .button-container-schema {
   display: flex;
   flex-direction: row;
   margin-left: 10px;
   width: 300px;
-  height: 180px;
+  height: 190px;
   border-width: 3px;
   border-style: dashed;
   border-color: #707477;
   border-radius: 15px;
   align-items: center;
   justify-content: center;
+  transition: border-style 0.5s border-color 0.5s, box-shadow 0.5s,
+    background-color 0.5s, color 0.5s;
+}
+.button-container-schema:hover {
+  cursor: pointer;
+  border-color: #001529;
+  box-shadow: 2px 2px 4px rgba(0, 21, 41, 100);
+  background: linear-gradient(to bottom, #009ee2, #001529);
+  color: aliceblue;
+  border-style: solid;
 }
 .avatar-uploader {
-  margin-top: 10px;
+  margin-top: 1px;
+  margin-top: 20px;
 }
 .upload-img {
   display: flex;
   flex-direction: row;
 }
 .upload-img-text {
-  margin-top: 10px;
+  margin-top: 1px;
 }
-
-/* dropdown */
+.available-tiles-txt {
+  margin-left: 30px;
+}
 .dropbtn {
-  background-color: white;
-  color: black;
-  padding: 16px;
-  font-size: 16px;
+  color: white;
+  padding: 1px;
+  border-radius: 5px;
+  margin-left: 5px;
+  margin-top: -30px;
+  font-size: 25px;
   border: none;
   cursor: pointer;
+  background-color: transparent;
+  position: absolute;
 }
 
 .dropdown {
   margin-left: 200px;
   margin-top: -20px;
-  background-color: transparent;
-}
-.dropbtn {
-  margin-left: auto;
-  height: 20px;
 }
 
 .dropdown-content {
@@ -166,23 +216,25 @@
   display: block;
 }
 
-.dropdown:hover .dropbtn {
-  background-color: #3e8e41;
-}
 .schema-content {
   text-align: left;
   margin-left: 10px;
 }
 .dropbtn-schema {
-  background-color: white;
-  color: black;
-  width: 40px;
-  height: 30px;
+  color: white;
+  padding: 1px;
   border-radius: 5px;
-  margin-left: 18px;
-  margin-top: 18px;
-  font-size: 16px;
+  margin-left: 28px;
+  margin-top: -30px;
+  font-size: 25px;
   border: none;
   cursor: pointer;
   background-color: transparent;
+}
+.tiles-modal-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }

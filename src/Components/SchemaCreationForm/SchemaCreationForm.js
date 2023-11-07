@@ -3,7 +3,6 @@ import { Modal, Form, Input, Button, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateSchemaName } from "../../redux/features/SchemaSlice/schemaSlice";
-import { validateSchemaName } from "../../Utility Function/validateSchemaName";
 import "./schemaCreationForm.css";
 
 const SchemaCreationForm = ({ visible, onCancel, selectedType, tilePath }) => {
@@ -47,9 +46,6 @@ const SchemaCreationForm = ({ visible, onCancel, selectedType, tilePath }) => {
             {
               required: true,
               message: "Please enter a schema name",
-            },
-            {
-              validator: validateSchemaName,
             },
           ]}
         >

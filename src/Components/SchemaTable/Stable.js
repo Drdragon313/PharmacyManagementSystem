@@ -94,7 +94,7 @@ const Stable = () => {
     <div className="Stable">
       <div className="buttons">
         <SchemaForm className="addrow" onAddRow={handleAddRow} />
-        <Link to="/schema">
+        <Link to="/tilepage">
           <Button
             type="primary"
             className="save-button"

@@ -48,3 +48,38 @@ export const deleteSchema = async (schema_id) => {
     return [];
   }
 };
+export const moveSchemaToTile = (
+  selectedSchemaId,
+  selectedTileId,
+  handleCloseMoveModal
+) => {
+  if (selectedSchemaId && selectedTileId) {
+    return axios
+      .post(
+        `${baseURL}/move-tile-schema?schema_id=${selectedSchemaId}&tile_id=${selectedTileId}`
+      )
+      .then((response) => {
+        console.log("Schema moved successfully");
+        handleCloseMoveModal();
+        return response;
+      })
+      .catch((error) => {
+        console.error("Error moving schema:", error);
+        throw error;
+      });
+  } else {
+    console.error("Selected schema or tile is not valid");
+  }
+};
+
+export const fetchMoveTileData = (setMoveTileData) => {
+  return axios
+    .get(`${baseURL}/get-all-tile`)
+    .then((response) => {
+      setMoveTileData(response.data.Data.tiles);
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+      throw error;
+    });
+};

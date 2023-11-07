@@ -63,3 +63,9 @@
   width: 20vw;
   margin-left: 30px;
 }
+.dropdown {
+  margin-top: 2px;
+}
+.schemacards-fileimport {
+  height: 180px;
+}
