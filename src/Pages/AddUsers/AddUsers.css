@@ -30,12 +30,7 @@
 }
 .AddUsersDetailsInput {
   height: 6vh;
-  width: 15vw;
-  border-radius: 15px;
-}
-.ant-select-selector {
-  height: 39.05px;
-  width: 15vw;
+  width: 18vw;
   border-radius: 15px;
 }
 
@@ -49,12 +44,18 @@
   margin-right: 3%;
 }
 
-.adduser-react-international-phone-input {
-  width: 158px;
-}
-.adduser-react-international-phone-input-container {
+.ant-select-custom .ant-select-selector {
+  height: 6vh !important;
+  width: 18vw !important;
   border-radius: 15px;
+  display: flex;
+  align-items: center;
 }
-.ant-select-arrow {
-  padding-bottom: 5px;
+.ant-select-custom .ant-select-arrow {
+  padding-top: 1px;
+  padding-bottom: 0;
+}
+.ant-select-custom .ant-select-selection-placeholder::placeholder {
+  display: flex;
+  align-items: center;
 }

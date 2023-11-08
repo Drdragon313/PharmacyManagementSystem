@@ -4,7 +4,8 @@ import Input from "antd/es/input/Input";
 import { useEffect } from "react";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import axios from "axios";
-import { message } from "antd";
+import { Select, message } from "antd";
+const { Option } = Select;
 const AddUsers = () => {
   const [data, setData] = useState({
     FName: "",
@@ -27,7 +28,6 @@ const AddUsers = () => {
       !data.Role ||
       !data.Designation ||
       !data.Email ||
-      !data.Pharmacy ||
       !data.Salary
     ) {
       message.error("Please fill in all the fields.", 3);
@@ -74,13 +74,19 @@ const AddUsers = () => {
       [name]: value,
     }));
   };
+  const handleSelectChange = (fieldName, value) => {
+    setData((prevData) => ({
+      ...prevData,
+      [fieldName]: value,
+    }));
+  };
   useEffect(() => {
     console.log(data);
   }, [data]);
   return (
     <div className="AddUsersBasicContainer">
       <div className="AddUsersBasicInfoHeading">
-        <h5>Add User</h5>
+        <h5>Add Employee</h5>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="AddUsersDetails">
@@ -99,20 +105,19 @@ const AddUsers = () => {
               <div className="mb-3">
                 <label htmlFor="Gender">Gender</label>
                 <br />
-                <select
-                  className="form-select AddUsersDetailsInput"
+                <Select
+                  className="ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
                   name="Gender"
-                  value={data.Gender}
-                  onChange={handleChange}
+                  placeholder="Select Gender"
+                  onChange={(value) => handleSelectChange("Gender", value)}
                 >
-                  <option value="">Select Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                  <option value="Do Not Wish to Disclose">
+                  <Option value="Male">Male</Option>
+                  <Option value="Female">Female</Option>
+                  <Option value="Other">Other</Option>
+                  <Option value="Do Not Wish to Disclose">
                     Do Not Wish to Disclose
-                  </option>
-                </select>
+                  </Option>
+                </Select>
               </div>
 
               <div className="mb-3">
@@ -140,20 +145,20 @@ const AddUsers = () => {
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="Gender">Role</label>
+                <label htmlFor="Role">Role</label>
                 <br />
-                <select
-                  className="form-select AddUsersDetailsInput"
+                <Select
+                  className="ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
                   name="Role"
-                  onChange={handleChange}
-                  value={data.Role}
+                  placeholder="Select Role"
+                  onChange={(value) => handleSelectChange("Role", value)}
                 >
-                  <option value="">Select Role</option>
-                  <option value="Male">Senior Manager</option>
-                  <option value="Female">Pharmacy Manager</option>
-                  <option value="Other">User</option>
-                </select>
+                  <Option value="Senior Manager">Senior Manager</Option>
+                  <Option value="Pharmacy Manager">Pharmacy Manager</Option>
+                  <Option value="User">User</Option>
+                </Select>
               </div>
+
               <div className="mb-3">
                 <label htmlFor="Designation">Designation</label>
                 <br />
@@ -180,19 +185,18 @@ const AddUsers = () => {
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="Gender">Pharmacy</label>
+                <label htmlFor="Pharmacy">Pharmacy</label>
                 <br />
-                <select
-                  className="form-select AddUsersDetailsInput"
-                  name="Pharmacy"
-                  onChange={handleChange}
-                  value={data.Pharmacy}
+                <Select
+                  className="ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
+                  name="Role"
+                  placeholder="Select Pharmacy"
+                  onChange={(value) => handleSelectChange("Pharmacy", value)}
                 >
-                  <option value="">Select pharmacy</option>
-                  <option value="Male">Pharmacy 1</option>
-                  <option value="Female">Pharmacy 2</option>
-                  <option value="Other">Pharmacy 3</option>
-                </select>
+                  <Option value="Pharmacy 1">Pharmacy 1</Option>
+                  <Option value="Pharmacy 2">Pharmacy 2</Option>
+                  <Option value="Pharmacy 3">Pharmacy 3</Option>
+                </Select>
               </div>
               <div className="mb-3">
                 <label htmlFor="Salary">Salary</label>
