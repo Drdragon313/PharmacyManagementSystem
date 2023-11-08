@@ -1,22 +1,25 @@
 import React from "react";
 import "./Users.css";
 import { Link } from "react-router-dom";
+import { Button } from "antd";
 
 const Users = () => {
   return (
-    <div className="app-container">
-      <div className="users-button-container">
-        <div className="button-group">
+    <div className="cardscontainer">
+      <div className="ContainerButtons">
+        <div>
           <Link to="/users/ViewEmployees">
-            <button className="users-action-button">View Employees</button>
+            <Button className="gridStyleButtons">List of Employees</Button>
           </Link>
-          <button className="users-action-button">Roles</button>
+          <Button className="gridStyleButtons">
+            Assign Roles and Permissions
+          </Button>
         </div>
-        <div className="button-group">
+        <div>
           <Link to="/users/AddUser">
-            <button className="users-action-button">Add User</button>
+            <Button className="gridStyleButtons">Create New Employee</Button>
           </Link>
-          <button className="users-action-button">Permissions</button>
+          <Button className="gridStyleButtons">Staffing Cost</Button>
         </div>
       </div>
     </div>
