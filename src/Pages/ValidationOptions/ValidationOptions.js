@@ -1,37 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./VaidationOptions.css";
-import { Col, Row, Button, Pagination, Space, Image, Checkbox } from "antd";
+import { Col, Row, Button, Pagination, Checkbox, Space, Image } from "antd";
+import schemaImg from "../../Assets/Schemas.png";
 import axios from "axios";
+import SchemaCard from "../../Components/Card/SchemaCard";
 import { addIndex } from "../../redux/features/SchemaSelectionSlice/SchemaSelectionSlice";
 import { Link } from "react-router-dom";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import CustomCard from "../../Components/Card/Card";
-import schemaImg from "../../Assets/Schemas.png";
 
 const ValidationOptions = () => {
-  const [schemaData, setSchemaData] = useState();
-
-  useEffect(() => {
-    const localHeader = localStorage.getItem("AuthorizationToken");
-    const headers = {
-      Authorization: localHeader,
-    };
-    axios
-      .get(`${baseURL}/schema/get-all-schema`, { headers })
-      .then((response) => {
-        console.log("inside then", response.data.data);
-        setSchemaData(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-        message.error("There was an issue while fetching the schemas!", 3);
-      });
-  }, []);
-  useEffect(() => {
-    console.log("This is data from APi", schemaData);
-  }, [schemaData]);
-
   const schemaDataArray = useSelector((state) => state.schema.schemaDataArray);
   const [schemas, setSchemas] = useState([]);
   const dispatch = useDispatch();
@@ -55,23 +34,40 @@ const ValidationOptions = () => {
       });
   }, []);
   const [selectedSchema, setSelectedSchema] = useState(
-    schemas.length === 1 ? 0 : null
+    schemaDataArray.length === 1 ? 0 : null
   );
   console.log("schemas for useState", schemas);
   const [currentPage, setCurrentPage] = useState(1);
   const schemasPerPage = 3;
   useEffect(() => {
-    if (schemas.length === 1) {
+    if (schemaDataArray.length === 1) {
       dispatch(addIndex(0));
     }
-  }, [schemas, dispatch]);
+  }, [schemaDataArray, dispatch]);
 
   const handleSelect = (index) => {
     setSelectedSchema((prevSelectedSchema) =>
       prevSelectedSchema === index ? null : index
     );
     dispatch(addIndex(index));
+
+    const selectedSchemaId = schemas[index].schema_id;
+    axios
+      .get(`${baseURL}/schema/get-all-schema?schema_id=${selectedSchemaId}`, {
+        headers,
+      })
+      .then((response) => {
+        const schemaData = response.data.schema.schemaDataArray[0].data;
+        localStorage.setItem("selectedSchemaData", JSON.stringify(schemaData));
+        console.log("second api", schemaData);
+      })
+      .catch((error) => {
+        console.error("Error fetching selected schema data: ", error);
+      });
   };
+  const startIndex = (currentPage - 1) * schemasPerPage;
+  const endIndex = startIndex + schemasPerPage;
+  const displayedSchemas = schemas.slice(startIndex, endIndex);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -97,7 +93,8 @@ const ValidationOptions = () => {
 
               <Row gutter={16}>
                 {schemas.map((schema, index) => (
-                  <Col span={6} className="validation-col" key={index}>
+                  <Col span={6} className="validation-col">
+                    {console.log("ye loooo", schemas)}
                     <CustomCard
                       className="schemacards"
                       key={index}
@@ -128,7 +125,7 @@ const ValidationOptions = () => {
               </Row>
               <Pagination
                 current={currentPage}
-                total={schemaDataArray.length}
+                total={schemas.length}
                 pageSize={schemasPerPage}
                 onChange={handlePageChange}
                 className="options-pagination"

@@ -14,10 +14,16 @@
   background: linear-gradient(to left, #ffffff 97%, #045ee7 3%);
   color: #001529 !important;
 }
+.NavbarMenu {
+  height: 100%;
+  font-weight: bold;
+  background-color: #001529;
+}
 
 .NavbarFooter {
-  background-color: #001529;
+  background-color: transparent;
   color: aliceblue;
+  margin-bottom: auto;
 }
 .logo {
   margin-left: 60px;
@@ -28,11 +34,7 @@
   max-height: 71px;
   max-width: 68px;
 }
-.menuSider {
-  height: 100%;
-  border-right: 0;
-}
-.NavbarMenu {
-  font-weight: bold;
-  background-color: #001529;
+.ant-layout-sider-collapsed .ant-layout-sider-children {
+  height: 80px;
+  transition: all 0.2s;
 }
