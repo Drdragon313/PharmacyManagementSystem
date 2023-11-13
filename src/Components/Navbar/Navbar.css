@@ -4,14 +4,15 @@
   padding: 20px;
   background-color: #001529;
   color: white;
-
   font-size: 20px;
 }
 .NavbarMenu {
   height: 70vh;
   border-right: 0;
 }
-
+.navbar-sider {
+  height: 100vh;
+}
 .NavbarFooter {
   text-align: center;
   font-size: 11px;

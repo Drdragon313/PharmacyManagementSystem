@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Input, Button, Image, Space, Upload, Avatar } from "antd";
+import {
+  Modal,
+  Input,
+  Button,
+  Image,
+  Space,
+  Upload,
+  Avatar,
+  Row,
+  Col,
+} from "antd";
 import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
 import { Breadcrumb } from "antd";
-
+import axios from "axios";
+import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import {
   createCard,
   deleteCard,
@@ -31,7 +42,9 @@ const TilePage = () => {
   const [moveTileData, setMoveTileData] = useState([]);
   const [selectedSchemaId, setSelectedSchemaId] = useState(null);
   const [selectedTileId, setSelectedTileId] = useState(null);
-
+  const [isUploadModalVisible, setUploadModalVisible] = useState(false);
+  const [iconsData, setIconsData] = useState([]);
+  const [selectedButtonIndex, setSelectedButtonIndex] = useState(-1);
   const handleMoveButtonClick = (schemaId) => {
     setSelectedSchemaId(schemaId);
     fetchMoveTileData(setMoveTileData).then(() => {
@@ -42,7 +55,10 @@ const TilePage = () => {
   const handleCloseMoveModal = () => {
     setIsMoveModalVisible(false);
   };
-
+  const openUploadModal = () => {
+    setUploadModalVisible(true);
+    fetchIconsData();
+  };
   const getPath = () => {
     if (path.length === 1) {
       return "/";
@@ -53,6 +69,14 @@ const TilePage = () => {
   useEffect(() => {
     fetchDataTiles(getPath());
   }, [path]);
+  const fetchIconsData = async () => {
+    try {
+      const response = await axios.get(`${baseURL}/icons`);
+      console.log(setIconsData(response.data));
+    } catch (error) {
+      console.error("Error fetching icons data:", error);
+    }
+  };
 
   const fetchDataTiles = async (tilePath) => {
     const data = await fetchTilesAndSchemas(tilePath);
@@ -128,7 +152,7 @@ const TilePage = () => {
   };
 
   return (
-    <div>
+    <div className="tilepage-container">
       <Breadcrumb className="breadcrumb" separator=">">
         {path.map((pathItem, index) => (
           <Breadcrumb.Item
@@ -141,142 +165,158 @@ const TilePage = () => {
         ))}
       </Breadcrumb>
 
-      <div className="title-description">
-        <h3>Available Options</h3>
-        <p>
-          You can choose from the options given below for which you want to
-          upload data.
-        </p>
-      </div>
-      <h4 className="available-tiles-txt">Available Tiles</h4>
-      <div className="allcards">
-        {tiles.map((tile, index) => (
-          <CustomCard
-            className="tilecards"
-            key={index}
-            bordered={true}
-            onClick={() => handleTileClick(tile.TileName)}
-          >
-            <div className="dropdown">
-              <Button className="dropbtn">
-                <MoreOutlined />
-              </Button>
-              <div className="dropdown-content">
-                <Button
-                  type="link"
-                  onClick={() => handleDeleteCard(tile.TileName)}
-                >
-                  Delete
-                </Button>
-              </div>
-            </div>
-            <Space direction="vertical" size={8} className="tile-content">
-              <Avatar className="tile-avatar-img" shape="square">
-                <Image
-                  className="tile-img"
-                  preview={false}
-                  src={tileImg}
-                ></Image>
-              </Avatar>
-              <h5 className="tile-name">{tile.TileName}</h5>
-            </Space>
-          </CustomCard>
-        ))}
-        <CustomCard
-          className="button-container"
-          onClick={() => openCardModal("createTile")}
-        >
-          <Button
-            shape="circle"
-            icon={<PlusOutlined />}
-            size="large"
-            className="new-card-btn"
-          ></Button>
-          <Button className="create-new-tile-btn-txt" type="link">
-            Add new Tile
-          </Button>
-        </CustomCard>
-      </div>
-      <h4 className="available-tiles-txt">Available Schemas</h4>
-      <div className="allSchemas">
-        {schemas ? (
-          schemas.map((schema, index) => (
-            <CustomCard className="schemacards" key={index} bordered={true}>
-              <div className="dropdown">
-                <Button className="dropbtn-schema">
-                  <MoreOutlined />
-                </Button>
-                <div className="dropdown-content">
-                  <Button
-                    type="link"
-                    onClick={() => handleDeleteSchema(schema.id)}
-                  >
-                    Delete
+      <Row gutter={24}>
+        <div className="title-description">
+          <h3>Available Options</h3>
+          <p>
+            You can choose from the options given below for which you want to
+            upload data.
+          </p>
+        </div>
+        <Col span={22} md={12} lg={16} xl={22}>
+          <h4 className="available-tiles-txt">Available Tiles</h4>
+          <div className="allcards">
+            {tiles.map((tile, index) => (
+              <CustomCard
+                className="tilecards"
+                key={index}
+                bordered={true}
+                onClick={() => handleTileClick(tile.TileName)}
+              >
+                <div className="dropdown">
+                  <Button className="dropbtn">
+                    <MoreOutlined />
                   </Button>
-                  <Button
-                    type="link"
-                    onClick={() => handleMoveButtonClick(schema.id)}
-                  >
-                    Move
-                  </Button>
-                  <Modal
-                    open={isMoveModalVisible}
-                    title="Move Tile"
-                    onCancel={handleCloseMoveModal}
-                    footer={[
-                      <Button key="back" onClick={handleCloseMoveModal}>
-                        Cancel
-                      </Button>,
-                    ]}
-                  >
-                    <p>Select a Tile to move </p>
-                    <ul>
-                      {moveTileData &&
-                        moveTileData.map((tile, index) => (
-                          <div className="tiles-modal-list">
-                            <Button
-                              key={index}
-                              type="text"
-                              onClick={() => {
-                                setSelectedTileId(tile.ID);
-                              }}
-                            >
-                              {tile.TileName}
-                            </Button>
-                          </div>
-                        ))}
-                    </ul>
-                    <Button onClick={moveSchema}>Move</Button>
-                  </Modal>
+                  <div className="dropdown-content">
+                    <Button
+                      type="link"
+                      onClick={() => handleDeleteCard(tile.TileName)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
                 </div>
-              </div>
-              <Space className="schema-content" direction="vertical" size={5}>
-                <Image preview={false} src={schemaImg}></Image>
-                <h5 className="tile-name">{schema.schema_name}</h5>
-                <Link to={`/schema/${index}`}>
-                  <Button>View Details</Button>
-                </Link>
-              </Space>
+                <Space direction="vertical" size={8} className="tile-content">
+                  <Avatar className="tile-avatar-img" shape="square">
+                    <Image
+                      className="tile-img"
+                      preview={false}
+                      src={tileImg}
+                    ></Image>
+                  </Avatar>
+                  <h5 className="tile-name">{tile.TileName}</h5>
+                </Space>
+              </CustomCard>
+            ))}
+            <CustomCard
+              className="button-container"
+              onClick={() => openCardModal("createTile")}
+            >
+              <Button
+                shape="circle"
+                icon={<PlusOutlined />}
+                size="large"
+                className="new-card-btn"
+              ></Button>
+              <Button className="create-new-tile-btn-txt" type="link">
+                Add new Tile
+              </Button>
             </CustomCard>
-          ))
-        ) : (
-          <p></p>
-        )}
-        <CustomCard
-          className="button-container-schema"
-          onClick={() => openCardModal("createSchema")}
-        >
-          <Button
-            shape="circle"
-            icon={<PlusOutlined />}
-            size="large"
-            className="new-card-btn"
-          ></Button>
-          <Button className="create-new-tile-btn-txt" type="link">
-            Add new Schema
-          </Button>
-        </CustomCard>
-      </div>
+          </div>
+        </Col>
+      </Row>
+      <Row gutter={16}>
+        <Col span={22} md={12} lg={16} xl={22}>
+          <h4 className="available-tiles-txt">Available Schemas</h4>
+          <div className="allSchemas">
+            {schemas ? (
+              schemas.map((schema, index) => (
+                <CustomCard className="schemacards" key={index} bordered={true}>
+                  <div className="dropdown">
+                    <Button className="dropbtn-schema">
+                      <MoreOutlined />
+                    </Button>
+                    <div className="dropdown-content">
+                      <Button
+                        type="link"
+                        onClick={() => handleDeleteSchema(schema.id)}
+                      >
+                        Delete
+                      </Button>
+                      <Button
+                        type="link"
+                        onClick={() => handleMoveButtonClick(schema.id)}
+                      >
+                        Move
+                      </Button>
+                      <Modal
+                        open={isMoveModalVisible}
+                        title="Move Tile"
+                        onCancel={handleCloseMoveModal}
+                        footer={false}
+                      >
+                        <p>Select a Tile to move </p>
+                        <ul>
+                          {moveTileData &&
+                            moveTileData.map((tile, index) => (
+                              <div className="tiles-modal-list">
+                                <Button
+                                  className={`move-tile-name-btn ${
+                                    selectedButtonIndex === index
+                                      ? "clicked"
+                                      : ""
+                                  }`}
+                                  key={index}
+                                  type="text"
+                                  onClick={() => {
+                                    setSelectedTileId(tile.ID);
+                                    setSelectedButtonIndex(index);
+                                  }}
+                                >
+                                  {tile.TileName}
+                                </Button>
+                              </div>
+                            ))}
+                        </ul>
+                        <Button type="primary" onClick={moveSchema}>
+                          Move
+                        </Button>
+                      </Modal>
+                    </div>
+                  </div>
+                  <Space
+                    className="schema-content"
+                    direction="vertical"
+                    size={5}
+                  >
+                    <Image preview={false} src={schemaImg}></Image>
+                    <h5 className="tile-name">{schema.schema_name}</h5>
+                    <Link to={`/schema/${index}`}>
+                      <Button>View Details</Button>
+                    </Link>
+                  </Space>
+                </CustomCard>
+              ))
+            ) : (
+              <p></p>
+            )}
+            <CustomCard
+              className="button-container-schema"
+              onClick={() => openCardModal("createSchema")}
+            >
+              <Button
+                shape="circle"
+                icon={<PlusOutlined />}
+                size="large"
+                className="new-card-btn"
+              ></Button>
+              <Button className="create-new-tile-btn-txt" type="link">
+                Add new Schema
+              </Button>
+            </CustomCard>
+          </div>
+        </Col>
+      </Row>
       <SelectionModal
         visible={isSelectionModalVisible === "createSchema"}
         setSelectionModalVisible={setSelectionModalVisible}
@@ -296,25 +336,35 @@ const TilePage = () => {
           onChange={(e) => setNewCardName(e.target.value)}
         />
         <div className="upload-img">
-          <div>
-            <Upload
-              name="avatar"
-              listType="picture-card"
-              className="avatar-uploader"
-              showUploadList={false}
-              action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-            >
-              {imageUrl ? <img alt="avatar" /> : uploadButton}
-            </Upload>
-          </div>
           <div className="upload-img-text">
             <h6>Upload Icon Here</h6>
             <p>
               Files Supported: PNG, JPG, SVG <br /> Maximum size: 100MB
             </p>
-            <Button type="primary">Choose File</Button>
+            <Button type="primary" onClick={openUploadModal}>
+              Choose File
+            </Button>
           </div>
         </div>
+        <Modal
+          open={isUploadModalVisible}
+          title="Upload Modal Title"
+          onOk={() => setUploadModalVisible(false)}
+          onCancel={() => setUploadModalVisible(false)}
+        >
+          {Array.isArray(iconsData) ? (
+            iconsData.map((icon, index) => (
+              <div key={index}>
+                <p>{icon[0]}</p>
+              </div>
+            ))
+          ) : (
+            <p>No icons data available.</p>
+          )}
+          <Button type="primary" onClick={() => setUploadModalVisible(false)}>
+            Upload
+          </Button>
+        </Modal>
       </Modal>
     </div>
   );

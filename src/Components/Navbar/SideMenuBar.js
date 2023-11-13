@@ -20,7 +20,7 @@ const SideMenuBar = (props) => {
   return (
     <div className="navbar-menu">
       <Menu
-        mode="inline"
+        mode={props.collapsed ? "vertical" : "inline"} // Adjust the menu mode
         selectedKeys={selectedKeys}
         defaultOpenKeys={["sub1"]}
         className="NavbarMenu"
@@ -77,8 +77,8 @@ const SideMenuBar = (props) => {
       </Menu>
       {props.collapsed ? null : (
         <div className="NavbarFooter">
-          <p>copyRights @2023. All Rights Reserved</p>
-          <p>Powered by 31Green</p>
+          {/* <p>copyRights @2023. All Rights Reserved</p>
+          <p>Powered by 31Green</p> */}
         </div>
       )}
     </div>
