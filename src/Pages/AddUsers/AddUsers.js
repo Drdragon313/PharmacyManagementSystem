@@ -22,13 +22,11 @@ const AddUsers = () => {
     e.preventDefault();
     if (
       !data.FName ||
-      !data.Gender ||
       !data.Department ||
       !data.LName ||
       !data.Role ||
       !data.Designation ||
-      !data.Email ||
-      !data.Salary
+      !data.Email
     ) {
       message.error("Please fill in all the fields.", 3);
       return;
@@ -93,7 +91,9 @@ const AddUsers = () => {
           <div className="AddUsersOneDetails">
             <form>
               <div className="mb-3">
-                <label htmlFor="FName">First Name</label>
+                <label htmlFor="FName" className="adduserLabel">
+                  First Name
+                </label>
                 <br />
                 <Input
                   className="AddUsersDetailsInput"
@@ -110,6 +110,7 @@ const AddUsers = () => {
                   name="Gender"
                   placeholder="Select Gender"
                   onChange={(value) => handleSelectChange("Gender", value)}
+                  value={data.Gender}
                 >
                   <Option value="Male">Male</Option>
                   <Option value="Female">Female</Option>
@@ -121,7 +122,9 @@ const AddUsers = () => {
               </div>
 
               <div className="mb-3">
-                <label htmlFor="Department">Department</label>
+                <label htmlFor="Department" className="adduserLabel">
+                  Department
+                </label>
                 <br />
                 <Input
                   name="Department"
@@ -135,7 +138,9 @@ const AddUsers = () => {
           <div className="AddUsersTwoDetails">
             <form>
               <div className="mb-3">
-                <label htmlFor="LName">Last Name</label>
+                <label htmlFor="LName" className="adduserLabel">
+                  Last Name
+                </label>
                 <br />
                 <Input
                   className="AddUsersDetailsInput"
@@ -145,13 +150,16 @@ const AddUsers = () => {
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="Role">Role</label>
+                <label htmlFor="Role" className="adduserLabel">
+                  Role
+                </label>
                 <br />
                 <Select
                   className="ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
                   name="Role"
                   placeholder="Select Role"
                   onChange={(value) => handleSelectChange("Role", value)}
+                  value={data.Role}
                 >
                   <Option value="Senior Manager">Senior Manager</Option>
                   <Option value="Pharmacy Manager">Pharmacy Manager</Option>
@@ -160,7 +168,9 @@ const AddUsers = () => {
               </div>
 
               <div className="mb-3">
-                <label htmlFor="Designation">Designation</label>
+                <label htmlFor="Designation" className="adduserLabel">
+                  Designation
+                </label>
                 <br />
                 <Input
                   name="Designation"
@@ -174,7 +184,9 @@ const AddUsers = () => {
           <div className="AddUsersThreeDetails">
             <form>
               <div className="mb-3">
-                <label htmlFor="Email">Email</label>
+                <label htmlFor="Email" className="adduserLabel">
+                  Email
+                </label>
                 <br />
                 <Input
                   type="email"
@@ -189,9 +201,10 @@ const AddUsers = () => {
                 <br />
                 <Select
                   className="ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
-                  name="Role"
+                  name="Pharmacy"
                   placeholder="Select Pharmacy"
                   onChange={(value) => handleSelectChange("Pharmacy", value)}
+                  value={data.Pharmacy}
                 >
                   <Option value="Pharmacy 1">Pharmacy 1</Option>
                   <Option value="Pharmacy 2">Pharmacy 2</Option>
