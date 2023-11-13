@@ -24,6 +24,9 @@ import Users from "./Pages/Users/Users";
 import AddUsers from "./Pages/AddUsers/AddUsers";
 import ViewEmployees from "./Pages/ViewEmployees/ViewEmployees";
 import ResendEmail from "./Pages/ResendEmail/ResendEmail";
+import Pharmacies from "./Pages/Pharmacies/Pharmacies";
+import Reports from "./Pages/Reports/Reports";
+import SetPassword from "./Pages/SetPassword/SetPassword";
 
 const { Content } = Layout;
 
@@ -50,6 +53,7 @@ function MainContent() {
           <Route path="forgotpassword" element={<ForgotPassword />} />
           <Route path="checkemail" element={<CheckEmail />} />
           <Route path="resetpassword" element={<ResetPassword />} />
+          <Route path="setpassword" element={<SetPassword />} />
           <Route path="/" element={<Iframe />} />
           <Route path="/tilepage" element={<TilePage />} />
           <Route path="schema" element={<Schema />} />
@@ -72,6 +76,8 @@ function MainContent() {
           <Route path="users/AddUser" element={<AddUsers />} />
           <Route path="users/ViewEmployees" element={<ViewEmployees />} />
           <Route path="resendemail" element={<ResendEmail />} />
+          <Route path="pharmacies" element={<Pharmacies />} />
+          <Route path="reports" element={<Reports />} />
         </Routes>
       </Content>
     </>
@@ -85,6 +91,7 @@ function shouldRenderNavbar(location) {
     currentPath !== "/forgotpassword" &&
     currentPath !== "/checkemail" &&
     currentPath !== "/resetpassword" &&
+    currentPath !== "/setpassword" &&
     currentPath !== "/profile" &&
     currentPath !== "/profile/permissions" &&
     currentPath !== "/profile/updatePassword" &&
@@ -99,6 +106,7 @@ function shouldRenderTopnav(location) {
     currentPath !== "/forgotpassword" &&
     currentPath !== "/checkemail" &&
     currentPath !== "/resetpassword" &&
+    currentPath !== "/setpassword" &&
     currentPath !== "/profile" &&
     currentPath !== "/profile/permissions" &&
     currentPath !== "/profile/updatePassword" &&
