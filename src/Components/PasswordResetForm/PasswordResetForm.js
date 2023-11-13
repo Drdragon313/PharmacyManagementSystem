@@ -30,7 +30,7 @@ const PasswordResetForm = (props) => {
     }));
   };
   const email = searchParams.get("email");
-  const forgetPasswordKey = searchParams.get("forgetPasswordKey");
+  const forgetPasswordKey = searchParams.get("passwordKey");
   const handleSubmit = (e) => {
     e.preventDefault();
     if (data.password === data.confirmPassword) {
@@ -39,7 +39,7 @@ const PasswordResetForm = (props) => {
         axios
           .post(`${baseURL}/update`, {
             email: email,
-            unique_string: forgetPasswordKey,
+            passwordKey: forgetPasswordKey,
             password: data.password,
           })
           .then(() => {
