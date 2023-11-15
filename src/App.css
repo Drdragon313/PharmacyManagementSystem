@@ -1,10 +1,6 @@
 .MainContent {
   background-color: white;
-  height: 77vh;
-}
-@media screen and (max-width: 480px) {
-  .MainContent {
-    background-color: white;
-    height: 50vh;
-  }
+  min-height: 100vh;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }

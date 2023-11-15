@@ -23,18 +23,13 @@ const ValidationOptions = () => {
     axios
       .get(`${baseURL}/schema/get-all-schema`, { headers })
       .then((response) => {
-        console.log("Received data:", response.data);
-
         const schemaData = response.data.data.published;
-        console.log("Schema ID:", schemaData[0].schema_id);
         setSchemas(schemaData);
       })
       .catch((error) => {
         console.error("Error fetching schemas: ", error);
       });
   }, []);
-
-  console.log("schemas for useState", schemas);
 
   const schemasPerPage = 3;
   useEffect(() => {
@@ -64,17 +59,12 @@ const ValidationOptions = () => {
       })
       .then((response) => {
         const schemaData = response.data.schema.schemaDataArray[0].data;
-        console.log("Ya raha response:", schemaData);
         localStorage.setItem("selectedSchemaData", JSON.stringify(schemaData));
-        console.log("second api", response.data.schema);
       })
       .catch((error) => {
         console.error("Error fetching selected schema data: ", error);
       });
   };
-  const startIndex = (currentPage - 1) * schemasPerPage;
-  const endIndex = startIndex + schemasPerPage;
-  const displayedSchemas = schemas.slice(startIndex, endIndex);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -101,7 +91,6 @@ const ValidationOptions = () => {
               <Row gutter={16}>
                 {schemas.map((schema, index) => (
                   <Col span={6} className="validation-col">
-                    {console.log("ye loooo", schemas)}
                     <CustomCard
                       className="schemacards"
                       key={index}

@@ -13,7 +13,7 @@ const Navbar = () => {
   };
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth <= 480) {
+      if (window.innerWidth <= 768) {
         setCollapsed(true);
       } else {
         setCollapsed(false);
@@ -27,16 +27,17 @@ const Navbar = () => {
   }, []);
 
   return (
-    <Sider width={200} collapsed={collapsed}>
+    <Sider className="navbar-sider" width={200} collapsed={collapsed}>
       <div className="NavbarSiderContainer">
         <div onClick={toggleCollapse} className="NavbarTop">
           <img src={Logo} alt={"Data Connext Logo"} />
+
+          {window.innerWidth > 768 ? (
+            <div onClick={toggleCollapse} className="NavbarTop">
+              {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            </div>
+          ) : null}
         </div>
-        {window.innerWidth > 480 ? (
-          <div onClick={toggleCollapse} className="NavbarTop">
-            {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-          </div>
-        ) : null}
         <SideMenuBar collapsed={collapsed} />
       </div>
     </Sider>

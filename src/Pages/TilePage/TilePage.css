@@ -8,6 +8,9 @@
   flex-direction: row;
   margin: 20px;
 }
+.tilepage-container {
+  height: 80%;
+}
 .tilecards {
   border: 1px solid #dcdcdc;
   border-radius: 10px;
@@ -237,4 +240,17 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+.move-tile-name-btn {
+  background-color: #ffffff; /* Default background color */
+  /* Other button styles */
+}
+
+.move-tile-name-btn.clicked {
+  background: linear-gradient(
+    to bottom,
+    #009ee2,
+    #001529
+  ); /* Change background color when clicked */
+  /* Other button styles for the clicked state */
 }
