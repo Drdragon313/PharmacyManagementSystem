@@ -101,11 +101,12 @@ const File = () => {
           </div>
         ) : (
           <div>
-            {getCurrentPageErrors().map((value, index) => (
-              <div style={{ color: "red" }} key={index}>
-                <p>{value}</p>
-              </div>
-            ))}
+            {error &&
+              getCurrentPageErrors().map((value, index) => (
+                <div style={{ color: "red" }} key={index}>
+                  <p>{value}</p>
+                </div>
+              ))}
             {error.length > errorsPerPage && (
               <Pagination
                 current={currentPage}
