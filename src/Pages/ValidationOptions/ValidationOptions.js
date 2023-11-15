@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./VaidationOptions.css";
 import { Col, Row, Button, Pagination, Checkbox, Space, Image } from "antd";
@@ -16,9 +16,12 @@ const ValidationOptions = () => {
   const [selectedSchema, setSelectedSchema] = useState();
   const dispatch = useDispatch();
   const localHeader = localStorage.getItem("AuthorizationToken");
-  const headers = {
-    Authorization: localHeader,
-  };
+  const headers = useMemo(() => {
+    return {
+      Authorization: localHeader,
+    };
+  }, [localHeader]);
+
   useEffect(() => {
     axios
       .get(`${baseURL}/schema/get-all-schema`, { headers })
@@ -29,7 +32,7 @@ const ValidationOptions = () => {
       .catch((error) => {
         console.error("Error fetching schemas: ", error);
       });
-  }, []);
+  }, [headers]);
 
   const schemasPerPage = 3;
   useEffect(() => {
