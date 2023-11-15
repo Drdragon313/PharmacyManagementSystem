@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Modal,
   Input,
   Button,
   Image,
   Space,
-  Upload,
   Avatar,
   Row,
   Col,
+  message,
 } from "antd";
 import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
 import { Breadcrumb } from "antd";
@@ -37,19 +37,17 @@ const TilePage = () => {
   const [activeModal, setActiveModal] = useState(null);
   const [isSelectionModalVisible, setSelectionModalVisible] = useState(null);
   const [schemas, setSchemas] = useState([]);
-  const [imageUrl, setImageUrl] = useState();
   const [isMoveModalVisible, setIsMoveModalVisible] = useState(false);
   const [moveTileData, setMoveTileData] = useState([]);
   const [selectedSchemaId, setSelectedSchemaId] = useState(null);
   const [selectedTileId, setSelectedTileId] = useState(null);
   const [isUploadModalVisible, setUploadModalVisible] = useState(false);
-  const [iconsData, setIconsData] = useState([]);
+  const [iconsData, setIconsData] = useState();
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(-1);
   const handleMoveButtonClick = (schemaId) => {
     setSelectedSchemaId(schemaId);
     fetchMoveTileData(setMoveTileData).then(() => {
       setIsMoveModalVisible(true);
-      console.log("schemaID", schemaId);
     });
   };
   const handleCloseMoveModal = () => {
@@ -59,20 +57,22 @@ const TilePage = () => {
     setUploadModalVisible(true);
     fetchIconsData();
   };
-  const getPath = () => {
+  const getPath = useCallback(() => {
     if (path.length === 1) {
       return "/";
     } else {
       return `${path.join("/")}`;
     }
-  };
+  }, [path]);
+
   useEffect(() => {
     fetchDataTiles(getPath());
-  }, [path]);
+  }, [getPath]);
   const fetchIconsData = async () => {
     try {
       const response = await axios.get(`${baseURL}/icons`);
-      console.log(setIconsData(response.data));
+      let Icon = Object.values(response.data.imageUrls);
+      setIconsData(Icon);
     } catch (error) {
       console.error("Error fetching icons data:", error);
     }
@@ -82,7 +82,6 @@ const TilePage = () => {
     const data = await fetchTilesAndSchemas(tilePath);
     setTiles(data.tiles);
     setSchemas(data.schemas);
-    console.log(data.schemas);
     localStorage.setItem("tilePath", tilePath);
   };
   const handleTileClick = (cardPath) => {
@@ -131,23 +130,17 @@ const TilePage = () => {
     setSelectionModalVisible(false);
   };
 
-  const uploadButton = (
-    <div>
-      <div>Upload</div>
-    </div>
-  );
-
   const moveSchema = () => {
     if (selectedSchemaId && selectedTileId) {
       moveSchemaToTile(selectedSchemaId, selectedTileId, handleCloseMoveModal)
         .then(() => {
-          console.log("Schema moved successfully");
+          message.success("Schema moved successfully");
         })
         .catch((error) => {
-          console.error("Error moving schema:", error);
+          message.error("Error moving schema:", error);
         });
     } else {
-      console.error("Selected schema or tile is not valid");
+      message.error("Selected schema or tile is not valid");
     }
   };
 
@@ -331,6 +324,7 @@ const TilePage = () => {
         onCancel={closeCardModal}
       >
         <Input
+          required={true}
           placeholder="Enter name"
           value={newCardName}
           onChange={(e) => setNewCardName(e.target.value)}
@@ -352,15 +346,17 @@ const TilePage = () => {
           onOk={() => setUploadModalVisible(false)}
           onCancel={() => setUploadModalVisible(false)}
         >
-          {Array.isArray(iconsData) ? (
-            iconsData.map((icon, index) => (
-              <div key={index}>
-                <p>{icon[0]}</p>
-              </div>
-            ))
-          ) : (
-            <p>No icons data available.</p>
-          )}
+          <div className="icons-modal">
+            {iconsData && iconsData.length > 0 ? (
+              iconsData.map((icon, index) => (
+                <div key={index}>
+                  <Image preview={false} src={icon.URL} className="icons" />
+                </div>
+              ))
+            ) : (
+              <p>No icons data available.</p>
+            )}
+          </div>
           <Button type="primary" onClick={() => setUploadModalVisible(false)}>
             Upload
           </Button>

@@ -254,3 +254,23 @@
   ); /* Change background color when clicked */
   /* Other button styles for the clicked state */
 }
+.icons {
+  background: linear-gradient(to bottom, #009ee2, #001529);
+  max-width: 100px !important;
+  max-height: 100px !important;
+  border-radius: 5px;
+  transform: border-style 0.5s border-color 0.5s box-shadow 1s;
+}
+.icons-modal {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+}
+.icons:hover {
+  cursor: pointer;
+  border-color: black;
+  box-shadow: 2px 2px 4px rgba(0, 21, 41, 100);
+  color: aliceblue;
+  border-style: solid;
+}
