@@ -30,6 +30,7 @@ const PasswordResetForm = (props) => {
     }));
   };
   const email = searchParams.get("email");
+  console.log("Params Email:", email);
   const forgetPasswordKey = searchParams.get("passwordKey");
   const handleSubmit = (e) => {
     e.preventDefault();
