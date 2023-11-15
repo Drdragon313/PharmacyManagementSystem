@@ -1,20 +1,11 @@
 import Papa from "papaparse";
 
-export const validateCSV = async (
-  file,
-  // index,
-  // schemaDataArray,
-  schemaData,
-  setProgress
-) => {
+export const validateCSV = async (file, schemaData, setProgress) => {
   return new Promise((resolve, reject) => {
     let hasInvalidChunk = false;
     let rowNumber = 0;
     let errorArray = [];
     let totalLines = 0;
-    // if (index !== null && index !== undefined) {
-    //   const selectedSchemaData = schemaDataArray[index];
-
     Papa.parse(file, {
       dynamicTyping: true,
       skipEmptyLines: true,
@@ -26,9 +17,6 @@ export const validateCSV = async (
         let progress = Math.round((totalLines / file.size) * 10000);
         setProgress(progress);
         const csvHeaders = Object.keys(results.data[0]);
-        // const schemaHeaders = selectedSchemaData.data.map(
-        //   (item) => item.Fieldname
-        // );
         const schemaHeaders = schemaDataArray.map((item) => item.Fieldname);
         if (!arraysEqual(csvHeaders, schemaHeaders)) {
           hasInvalidChunk = true;
@@ -60,9 +48,6 @@ export const validateCSV = async (
         }
       },
     });
-    // } else {
-    //   alert("no index");
-    // }
   });
 };
 
