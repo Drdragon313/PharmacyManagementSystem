@@ -11,6 +11,7 @@
 }
 .TopnavUserName {
   height: 20px;
+  margin-left: 5px;
   color: #009cdf;
 }
 .TopnavJobTitle {

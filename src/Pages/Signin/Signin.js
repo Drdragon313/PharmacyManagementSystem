@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import pharmImg from "../../Assets/pharm_img.svg";
-import Logo from "../../Assets/logo.svg";
+import pharmImg from "../../Assets/Signin.png";
+import GLogo from "../../Components/Images/gLogo.svg";
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
-import { Input, Space, Switch } from "antd";
+import { Input } from "antd";
 import {
   EyeTwoTone,
   EyeInvisibleOutlined,
@@ -13,7 +13,6 @@ import {
 import { login } from "../../Utility Function/login";
 import "./Signin.css";
 import { Link } from "react-router-dom";
-import { ArrowRightOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { addSigninData } from "../../redux/features/SigninSlice/SigninSlice";
 const Signin = () => {
@@ -31,23 +30,31 @@ const Signin = () => {
         dispatch(addSigninData(response.data.token));
         const AuthorizationToken = `Bearer ${response.data.token}`;
         localStorage.setItem("AuthorizationToken", AuthorizationToken);
-        navigate("/schema");
+        navigate("/tilepage");
       } else {
         message.error("Invalid Credentials", 2);
       }
     } catch (error) {
-      message.error("An error occurred while logging in", 2);
-      console.error("Error:", error);
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.error &&
+        error.response.data.error.message
+      ) {
+        message.error(error.response.data.error.message, 3);
+      } else {
+        message.error("Something went wrong!", 3);
+      }
     }
   };
 
   return (
     <div className="siginContainer">
       <div className="siginFieldsContainer">
-        <img alt="logo" className="company-logo" src={Logo}></img>
+        <img alt="logo" className="company-logo" src={GLogo}></img>
         <div className="signinFields">
           <h5>Welcome Back!</h5>
-          <p className="signinText">Lets get you signed in...</p>
+          <p className="signinText">Let's get you signed in</p>
           <form onSubmit={handleLogin}>
             <div className="mb-3">
               <label
@@ -86,10 +93,7 @@ const Signin = () => {
               />
             </div>
             <div className="stay-signedin-forgot-pass">
-              <div className="stay-signedin">
-                <Switch size="small" defaultChecked></Switch>
-                <p className="stay-signedin-txt"> Stay Signed in</p>
-              </div>
+              {/* <div className="stay-signedin"></div> */}
               <Link to="/forgotpassword" className="signinForget">
                 Forget Password?
               </Link>
@@ -101,23 +105,18 @@ const Signin = () => {
         </div>
       </div>
       <div className="signinLogoContainer">
-        <img alt="pharm" className="pharm-img" src={pharmImg}></img>
-        <div className="txt">
-          <h2 className="title">Elevate your pharmacy insights</h2>
-          <h5 className="description-txt">
-            Pharmlytics stands out as the premier choice for pharmacies,
-            offering unparalleled data insights that drive smarter decisions and
+        <img
+          alt="pharm"
+          className="SigninLogoContainerpharm-img"
+          src={pharmImg}
+        ></img>
+        <div className="SigninLogoContainertxt">
+          <h2 className="SigninLogoContainertitle">Elevate your insights</h2>
+          <h5 className="SigninLogoContainerdescription-txt">
+            Our System stands out as the premier choice for pharmacies, offering
+            unparalleled data insights that drive smarter decisions and
             ultimately lead to enhanced performance and patient care.
           </h5>
-          <div className="container-foot">
-            <p>www.pharmlytics.co.uk</p>
-            <button type="button" className="btn btn-light">
-              <Space>
-                Learn More
-                <ArrowRightOutlined />
-              </Space>
-            </button>
-          </div>
         </div>
       </div>
     </div>

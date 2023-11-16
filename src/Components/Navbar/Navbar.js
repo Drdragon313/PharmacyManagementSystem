@@ -1,4 +1,4 @@
-import Logo from "../Images/Logo.png";
+import Logo from "../Images/gLogo.svg";
 import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 import SideMenuBar from "./SideMenuBar";
@@ -30,7 +30,7 @@ const Navbar = () => {
     <Sider className="navbar-sider" width={200} collapsed={collapsed}>
       <div className="NavbarSiderContainer">
         <div onClick={toggleCollapse} className="NavbarTop">
-          <img src={Logo} alt={"Data Connext Logo"} />
+          <img src={Logo} alt={"Logo"} />
 
           {window.innerWidth > 768 ? (
             <div onClick={toggleCollapse} className="NavbarTop">

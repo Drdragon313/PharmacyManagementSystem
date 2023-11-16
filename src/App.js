@@ -49,12 +49,12 @@ function MainContent() {
       <Content className="MainContent">
         {shouldRenderTopnav(location) && <Topnav />}
         <Routes>
-          <Route path="signin" element={<Signin />} />
+          <Route path="/" element={<Signin />} />
           <Route path="forgotpassword" element={<ForgotPassword />} />
           <Route path="checkemail" element={<CheckEmail />} />
           <Route path="resetpassword" element={<ResetPassword />} />
           <Route path="setpassword" element={<SetPassword />} />
-          <Route path="/" element={<Iframe />} />
+          <Route path="home" element={<Iframe />} />
           <Route path="/tilepage" element={<TilePage />} />
           <Route path="schema" element={<Schema />} />
           <Route path="file" element={<ValidationOptions />} />
@@ -87,7 +87,7 @@ function MainContent() {
 function shouldRenderNavbar(location) {
   const currentPath = location.pathname;
   return (
-    currentPath !== "/signin" &&
+    currentPath !== "/" &&
     currentPath !== "/forgotpassword" &&
     currentPath !== "/checkemail" &&
     currentPath !== "/resetpassword" &&
@@ -102,7 +102,7 @@ function shouldRenderNavbar(location) {
 function shouldRenderTopnav(location) {
   const currentPath = location.pathname;
   return (
-    currentPath !== "/signin" &&
+    currentPath !== "/" &&
     currentPath !== "/forgotpassword" &&
     currentPath !== "/checkemail" &&
     currentPath !== "/resetpassword" &&

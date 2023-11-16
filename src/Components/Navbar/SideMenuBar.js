@@ -7,11 +7,12 @@ import {
   AppstoreOutlined,
   UsergroupAddOutlined,
   AppstoreAddOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import "./Style.css";
 import { Link } from "react-router-dom";
 const SideMenuBar = (props) => {
-  const [selectedKeys, setSelectedKeys] = useState(["1"]);
+  const [selectedKeys, setSelectedKeys] = useState(["2"]);
 
   const handleMenuItemClick = (key) => {
     setSelectedKeys([key]);
@@ -20,7 +21,7 @@ const SideMenuBar = (props) => {
   return (
     <div className="navbar-menu">
       <Menu
-        mode={props.collapsed ? "vertical" : "inline"} // Adjust the menu mode
+        mode={props.collapsed ? "vertical" : "inline"}
         selectedKeys={selectedKeys}
         defaultOpenKeys={["sub1"]}
         className="NavbarMenu"
@@ -30,49 +31,49 @@ const SideMenuBar = (props) => {
           icon={<HomeOutlined />}
           onClick={() => handleMenuItemClick("1")}
         >
-          <Link to="/">Home</Link>
+          <Link to="/home">Home</Link>
         </Menu.Item>
-        {/* <Menu.Item
-          key="2"
-          icon={<FileTextOutlined />}
-          onClick={() => handleMenuItemClick("2")}
-        >
-          <Link to="/schema">Schema Definition</Link>
-        </Menu.Item> */}
         <Menu.Item
-          key="3"
+          key="2"
           icon={<AppstoreOutlined />}
-          onClick={() => handleMenuItemClick("3")}
+          onClick={() => handleMenuItemClick("2")}
         >
           <Link to="/tilepage">Data Tiles</Link>
         </Menu.Item>
         <Menu.Item
-          key="4"
+          key="3"
           icon={<UploadOutlined />}
-          onClick={() => handleMenuItemClick("4")}
+          onClick={() => handleMenuItemClick("3")}
         >
           <Link to="/file">Import File</Link>
         </Menu.Item>
         <Menu.Item
-          key="5"
+          key="4"
           icon={<UsergroupAddOutlined />}
-          onClick={() => handleMenuItemClick("5")}
+          onClick={() => handleMenuItemClick("4")}
         >
           <Link to="/users">Employees</Link>
         </Menu.Item>
         <Menu.Item
-          key="6"
+          key="5"
           icon={<AppstoreAddOutlined />}
-          onClick={() => handleMenuItemClick("6")}
+          onClick={() => handleMenuItemClick("5")}
         >
           <Link to="/pharmacies">Pharmacies</Link>
         </Menu.Item>
         <Menu.Item
-          key="7"
+          key="6"
           icon={<FileTextOutlined />}
-          onClick={() => handleMenuItemClick("7")}
+          onClick={() => handleMenuItemClick("6")}
         >
           <Link to="/reports">Reports</Link>
+        </Menu.Item>
+        <Menu.Item
+          key="7"
+          icon={<LogoutOutlined />}
+          onClick={() => handleMenuItemClick("7")}
+        >
+          <Link to="/">Signout</Link>
         </Menu.Item>
       </Menu>
       {props.collapsed ? null : (
