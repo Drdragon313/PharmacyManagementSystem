@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import pharmImg from "../../Assets/pharm_img.svg";
-import Logo from "../../Assets/logo.svg";
-import { Input, Space, message } from "antd";
+import pharmImg from "../../Assets/Signin.png";
+import Logo from "../../Components/Images/gLogo.svg";
+import { Input, message } from "antd";
 import {
   EyeTwoTone,
   EyeInvisibleOutlined,
   LockOutlined,
 } from "@ant-design/icons";
 import { PasswordRegex } from "../../Utility Function/PasswordRegex";
-import { ArrowRightOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
@@ -45,7 +44,7 @@ const PasswordResetForm = (props) => {
           })
           .then(() => {
             message.success("Password Updated Successfully!", 3);
-            navigate("/signin");
+            navigate("/");
           })
           .catch((error) => {
             if (
@@ -117,7 +116,7 @@ const PasswordResetForm = (props) => {
               {props.buttonText}
             </button>
           </form>
-          <Link to="/signin">
+          <Link to="/">
             <button type="button" className="btn btn-primary">
               Back to Login
             </button>
@@ -125,23 +124,14 @@ const PasswordResetForm = (props) => {
         </div>
       </div>
       <div className="signinLogoContainer">
-        <img alt="pharm" className="pharm-img" src={pharmImg}></img>
+        <img alt="pharm" className="Resetpharm-img" src={pharmImg}></img>
         <div className="txt">
-          <h2 className="title">Elevate your pharmacy insights</h2>
+          <h2 className="title">Elevate your insights</h2>
           <h5 className="description-txt">
-            Pharmlytics stands out as the premier choice for pharmacies,
-            offering unparalleled data insights that drive smarter decisions and
+            Our System stands out as the premier choice for pharmacies, offering
+            unparalleled data insights that drive smarter decisions and
             ultimately lea to enhanced performance and patient care.
           </h5>
-          <div className="container-foot">
-            <p>www.pharmyltics.co.uk</p>
-            <button type="button" className="btn btn-light">
-              <Space>
-                Learn More
-                <ArrowRightOutlined />
-              </Space>
-            </button>
-          </div>
         </div>
       </div>
     </div>

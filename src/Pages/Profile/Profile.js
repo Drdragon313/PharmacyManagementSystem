@@ -10,8 +10,6 @@ const { Content } = Layout;
 
 const Profile = () => {
   return (
-    // <Layout>
-    //   <Content className="ProfileMainContent">
     <Layout className="ProfileMainLayout">
       <ProfileNavbar />
       <Content className="ProfileNestedContent">
@@ -22,8 +20,6 @@ const Profile = () => {
         </Routes>
       </Content>
     </Layout>
-    //   </Content>
-    // </Layout>
   );
 };
 

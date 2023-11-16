@@ -1,14 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Topnav.css";
 import { SearchOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Space } from "antd";
+import { Button, Space, message } from "antd";
 import { Layout } from "antd";
 import { NotificationOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { baseURL } from "../BaseURLAPI/BaseURLAPI";
 
 const { Header } = Layout;
 
 const Topnav = () => {
+  const [userData, setUserData] = useState({
+    FName: "",
+    LName: "",
+    Designation: "",
+  });
+  useEffect(() => {
+    const localHeader = localStorage.getItem("AuthorizationToken");
+    const headers = {
+      Authorization: localHeader,
+    };
+    axios
+      .get(`${baseURL}/get-profile`, { headers })
+      .then((response) => {
+        const apiUserData = response.data.data;
+        setUserData((prevUserData) => ({
+          ...prevUserData,
+          Designation: apiUserData.Designation,
+          FName: apiUserData.FName,
+          LName: apiUserData.LName,
+        }));
+      })
+      .catch(() => {
+        message.error("Some Error has Occured in Loading Information!", 2);
+      });
+  }, []);
   return (
     <Layout>
       <Header className="TopnavHeader">
@@ -22,9 +49,11 @@ const Topnav = () => {
             <NotificationOutlined />
             <span></span>
             <div className="TopnavUser">
-              <span className="TopnavUserName">John Doe</span>
+              <span className="TopnavUserName">
+                {userData.FName} {userData.LName}
+              </span>
 
-              <span className="TopnavJobTitle">Job Title</span>
+              <span className="TopnavJobTitle">{userData.Designation}</span>
             </div>
             <span></span>
 
