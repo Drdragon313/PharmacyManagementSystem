@@ -6,6 +6,7 @@ import Topnav from "./Components/TopNav/Topnav";
 import SchemaDetail from "./Components/AvailableSchema/SchemaDetail";
 import CustomSchema from "./Pages/CustomSchema/CustomSchema";
 import Iframe from "./Iframes/Iframe";
+import PharmacyIfame from "./Iframes/PharmacyIfame";
 import Schema from "./Pages/Schema_Definition/Schema";
 import File from "./Pages/File Import/File";
 import ValidationOptions from "./Pages/ValidationOptions/ValidationOptions";
@@ -63,6 +64,8 @@ function MainContent() {
             path="file/fileUpload/UploadSuccess"
             element={<UploadSuccess />}
           />
+          <Route path="employee" element={<Iframe />} />
+          <Route path="pharmacy" element={<PharmacyIfame />} />
           <Route path="/schema/:schemaId" element={<SchemaDetail />} />
           <Route path="schema/autopopulate" element={<AutoPopulate />} />
           <Route path="/customschema" element={<CustomSchema />} />
