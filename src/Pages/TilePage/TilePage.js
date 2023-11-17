@@ -9,6 +9,7 @@ import {
   Row,
   Col,
   message,
+  Form,
 } from "antd";
 import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
 import { Breadcrumb } from "antd";
@@ -44,6 +45,14 @@ const TilePage = () => {
   const [isUploadModalVisible, setUploadModalVisible] = useState(false);
   const [iconsData, setIconsData] = useState();
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(-1);
+  const [form] = Form.useForm();
+
+  const normFile = (e) => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  };
   const handleMoveButtonClick = (schemaId) => {
     setSelectedSchemaId(schemaId);
     fetchMoveTileData(setMoveTileData).then(() => {
@@ -98,20 +107,36 @@ const TilePage = () => {
   };
 
   const handleCreateCard = async () => {
+    if (!newCardName) {
+      message.error("Please enter a tile name.");
+      return;
+    }
+
+    const isTileNameExists = tiles.some(
+      (tile) => tile.TileName === newCardName
+    );
+    if (isTileNameExists) {
+      message.error(
+        "Tile with the same name already exists. Please choose a different name."
+      );
+      return;
+    }
     const success = await createCard(newCardName, getPath());
+
     if (success) {
       setNewCardName("");
       fetchDataTiles(getPath());
+      closeCardModal();
     }
   };
 
-  const handleDeleteCard = async (tileName) => {
+  const handleDeleteCard = async (tileName, event) => {
+    event.stopPropagation();
     const updatedTilesData = await deleteCard(tileName);
     if (updatedTilesData) {
       setTiles(updatedTilesData);
     }
   };
-
   const handleDeleteSchema = async (schemaId) => {
     const updatedSchemasData = await deleteSchema(schemaId);
     if (updatedSchemasData) {
@@ -170,24 +195,28 @@ const TilePage = () => {
           <h4 className="available-tiles-txt">Available Tiles</h4>
           <div className="allcards">
             {tiles.map((tile, index) => (
-              <CustomCard
-                className="tilecards"
-                key={index}
-                bordered={true}
-                onClick={() => handleTileClick(tile.TileName)}
-              >
+              <CustomCard className="tilecards" key={index} bordered={true}>
                 <div className="dropdown">
                   <Button className="dropbtn">
                     <MoreOutlined />
+                    <div className="dropdown-content">
+                      <Button
+                        type="link"
+                        onClick={(event) =>
+                          handleDeleteCard(tile.TileName, event)
+                        }
+                      >
+                        Delete
+                      </Button>
+                      <Button
+                        className="tile navigate"
+                        onClick={() => handleTileClick(tile.TileName)}
+                        type="link"
+                      >
+                        Navigate to Tile Path
+                      </Button>
+                    </div>
                   </Button>
-                  <div className="dropdown-content">
-                    <Button
-                      type="link"
-                      onClick={() => handleDeleteCard(tile.TileName)}
-                    >
-                      Delete
-                    </Button>
-                  </div>
                 </div>
                 <Space direction="vertical" size={8} className="tile-content">
                   <Avatar className="tile-avatar-img" shape="square">
@@ -319,27 +348,38 @@ const TilePage = () => {
       <Modal
         open={activeModal === "createTile"}
         title="Create New Tile"
-        onOk={handleCreateCard}
-        okText="Done"
+        onOk={() => form.submit()}
+        okText="Create Tile"
         onCancel={closeCardModal}
       >
-        <Input
-          required={true}
-          placeholder="Enter name"
-          value={newCardName}
-          onChange={(e) => setNewCardName(e.target.value)}
-        />
-        <div className="upload-img">
-          <div className="upload-img-text">
-            <h6>Upload Icon Here</h6>
-            <p>
-              Files Supported: PNG, JPG, SVG <br /> Maximum size: 100MB
-            </p>
-            <Button type="primary" onClick={openUploadModal}>
-              Choose File
-            </Button>
-          </div>
-        </div>
+        <Form form={form} onFinish={handleCreateCard}>
+          <Form.Item
+            name="newCardName"
+            label="Enter name"
+            rules={[{ required: true, message: "Please enter a Tile name!" }]}
+          >
+            <Input
+              placeholder="Enter name"
+              value={newCardName}
+              onChange={(e) => setNewCardName(e.target.value)}
+            />
+          </Form.Item>
+          <Form.Item
+            name="upload"
+            label="Upload Icon Here"
+            valuePropName="fileList"
+            getValueFromEvent={normFile}
+            extra="Files Supported: PNG, JPG, SVG | Maximum size: 100MB"
+          >
+            <div className="upload-img">
+              <div className="upload-img-text">
+                <Button type="primary" onClick={openUploadModal}>
+                  Choose File
+                </Button>
+              </div>
+            </div>
+          </Form.Item>
+        </Form>
         <Modal
           open={isUploadModalVisible}
           title="Upload Modal Title"
