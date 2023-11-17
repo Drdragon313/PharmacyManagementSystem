@@ -11,6 +11,8 @@ import {
 } from "@ant-design/icons";
 import "./Style.css";
 import { Link } from "react-router-dom";
+
+const { SubMenu } = Menu;
 const SideMenuBar = (props) => {
   const [selectedKeys, setSelectedKeys] = useState(["2"]);
 
@@ -61,13 +63,19 @@ const SideMenuBar = (props) => {
         >
           <Link to="/pharmacies">Pharmacies</Link>
         </Menu.Item>
-        <Menu.Item
-          key="6"
+        <SubMenu
+          style={{ color: "white" }}
+          key="sub1"
           icon={<FileTextOutlined />}
-          onClick={() => handleMenuItemClick("6")}
+          title="Reports"
         >
-          <Link to="/reports">Reports</Link>
-        </Menu.Item>
+          <Menu.Item key="sub2" onClick={() => handleMenuItemClick("sub2")}>
+            <Link to="/employee">Employee</Link>
+          </Menu.Item>
+          <Menu.Item key="sub3" onClick={() => handleMenuItemClick("sub3")}>
+            <Link to="/pharmacy">Pharmacy</Link>
+          </Menu.Item>
+        </SubMenu>
         <Menu.Item
           key="7"
           icon={<LogoutOutlined />}
