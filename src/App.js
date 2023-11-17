@@ -28,6 +28,7 @@ import ResendEmail from "./Pages/ResendEmail/ResendEmail";
 import Pharmacies from "./Pages/Pharmacies/Pharmacies";
 import Reports from "./Pages/Reports/Reports";
 import SetPassword from "./Pages/SetPassword/SetPassword";
+import HomeIframe from "./Iframes/HomeIframe";
 
 const { Content } = Layout;
 
@@ -55,7 +56,7 @@ function MainContent() {
           <Route path="checkemail" element={<CheckEmail />} />
           <Route path="resetpassword" element={<ResetPassword />} />
           <Route path="setpassword" element={<SetPassword />} />
-          <Route path="home" element={<Iframe />} />
+          <Route path="home" element={<HomeIframe />} />
           <Route path="/tilepage" element={<TilePage />} />
           <Route path="schema" element={<Schema />} />
           <Route path="file" element={<ValidationOptions />} />
