@@ -11,7 +11,8 @@
   border-right: 0;
 }
 .navbar-sider {
-  height: 115vh;
+  max-height: 115vh;
+  min-height: 100vh;
 }
 .NavbarFooter {
   text-align: center;

@@ -31,6 +31,7 @@ export const deleteCard = async (tileName) => {
     const response = await axios.delete(
       `${baseURL}/delete-tile?tileName=${tileName}`
     );
+    console.log(response.data);
     return response.data.Data.tiles;
   } catch (error) {
     console.error("Error in deleting the card:", error);
