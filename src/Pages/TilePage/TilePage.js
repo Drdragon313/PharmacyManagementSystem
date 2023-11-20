@@ -128,7 +128,6 @@ const TilePage = () => {
     event.stopPropagation();
     const updatedTilesData = await deleteCard(tileName);
     if (updatedTilesData) {
-      // Fetch updated tile data without updating the path
       fetchDataTiles(getPath());
     }
   };
