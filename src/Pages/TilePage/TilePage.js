@@ -13,8 +13,7 @@ import {
   Breadcrumb,
 } from "antd";
 import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
-import axios from "axios";
-import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
+
 import {
   createCard,
   deleteCard,
@@ -42,13 +41,8 @@ const TilePage = () => {
   const [moveTileData, setMoveTileData] = useState([]);
   const [selectedSchemaId, setSelectedSchemaId] = useState(null);
   const [selectedTileId, setSelectedTileId] = useState(null);
-  const [isUploadModalVisible, setUploadModalVisible] = useState(false);
-  const [iconsData, setIconsData] = useState();
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(-1);
   const [form] = Form.useForm();
-
-  const normFile = (e) => (Array.isArray(e) ? e : e && e.fileList);
-
   const handleMoveButtonClick = (schemaId) => {
     setSelectedSchemaId(schemaId);
     fetchMoveTileData(setMoveTileData).then(() => {
@@ -60,11 +54,6 @@ const TilePage = () => {
     setIsMoveModalVisible(false);
   };
 
-  const openUploadModal = () => {
-    setUploadModalVisible(true);
-    fetchIconsData();
-  };
-
   const getPath = useCallback(
     () => (path.length === 1 ? "/" : path.join("/")),
     [path]
@@ -73,15 +62,6 @@ const TilePage = () => {
   useEffect(() => {
     fetchDataTiles(getPath());
   }, [getPath]);
-
-  const fetchIconsData = async () => {
-    try {
-      const response = await axios.get(`${baseURL}/icons`);
-      setIconsData(Object.values(response.data.imageUrls));
-    } catch (error) {
-      console.error("Error fetching icons data:", error);
-    }
-  };
 
   const fetchDataTiles = async (tilePath) => {
     const data = await fetchTilesAndSchemas(tilePath);
@@ -356,43 +336,7 @@ const TilePage = () => {
               onChange={(e) => setNewCardName(e.target.value)}
             />
           </Form.Item>
-          <Form.Item
-            name="upload"
-            label="Upload Icon Here"
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
-            extra="Files Supported: PNG, JPG, SVG | Maximum size: 100MB"
-          >
-            <div className="upload-img">
-              <div className="upload-img-text">
-                <Button type="primary" onClick={openUploadModal}>
-                  Choose File
-                </Button>
-              </div>
-            </div>
-          </Form.Item>
         </Form>
-        <Modal
-          open={isUploadModalVisible}
-          title="Upload Modal Title"
-          onOk={() => setUploadModalVisible(false)}
-          onCancel={() => setUploadModalVisible(false)}
-        >
-          <div className="icons-modal">
-            {iconsData && iconsData.length > 0 ? (
-              iconsData.map((icon, index) => (
-                <div key={index}>
-                  <Image preview={false} src={icon.URL} className="icons" />
-                </div>
-              ))
-            ) : (
-              <p>No icons data available.</p>
-            )}
-          </div>
-          <Button type="primary" onClick={() => setUploadModalVisible(false)}>
-            Upload
-          </Button>
-        </Modal>
       </Modal>
     </div>
   );
