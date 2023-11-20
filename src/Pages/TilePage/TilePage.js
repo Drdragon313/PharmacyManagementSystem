@@ -10,9 +10,9 @@ import {
   Col,
   message,
   Form,
+  Breadcrumb,
 } from "antd";
 import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
-import { Breadcrumb } from "antd";
 import axios from "axios";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import {
@@ -47,41 +47,37 @@ const TilePage = () => {
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(-1);
   const [form] = Form.useForm();
 
-  const normFile = (e) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e && e.fileList;
-  };
+  const normFile = (e) => (Array.isArray(e) ? e : e && e.fileList);
+
   const handleMoveButtonClick = (schemaId) => {
     setSelectedSchemaId(schemaId);
     fetchMoveTileData(setMoveTileData).then(() => {
       setIsMoveModalVisible(true);
     });
   };
+
   const handleCloseMoveModal = () => {
     setIsMoveModalVisible(false);
   };
+
   const openUploadModal = () => {
     setUploadModalVisible(true);
     fetchIconsData();
   };
-  const getPath = useCallback(() => {
-    if (path.length === 1) {
-      return "/";
-    } else {
-      return `${path.join("/")}`;
-    }
-  }, [path]);
+
+  const getPath = useCallback(
+    () => (path.length === 1 ? "/" : path.join("/")),
+    [path]
+  );
 
   useEffect(() => {
     fetchDataTiles(getPath());
   }, [getPath]);
+
   const fetchIconsData = async () => {
     try {
       const response = await axios.get(`${baseURL}/icons`);
-      let Icon = Object.values(response.data.imageUrls);
-      setIconsData(Icon);
+      setIconsData(Object.values(response.data.imageUrls));
     } catch (error) {
       console.error("Error fetching icons data:", error);
     }
@@ -93,6 +89,7 @@ const TilePage = () => {
     setSchemas(data.schemas);
     localStorage.setItem("tilePath", tilePath);
   };
+
   const handleTileClick = (cardPath) => {
     setPath((prev) => {
       const previous = [...prev];
@@ -101,17 +98,13 @@ const TilePage = () => {
       return previous;
     });
   };
+
   const handleBreadcrumbClick = (index) => {
     setPath(breadcrumbPath.slice(0, index + 1));
     setBreadcrumbPath(breadcrumbPath.slice(0, index + 1));
   };
 
   const handleCreateCard = async () => {
-    if (!newCardName) {
-      message.error("Please enter a tile name.");
-      return;
-    }
-
     const isTileNameExists = tiles.some(
       (tile) => tile.TileName === newCardName
     );
@@ -121,6 +114,7 @@ const TilePage = () => {
       );
       return;
     }
+
     const success = await createCard(newCardName, getPath());
 
     if (success) {
@@ -134,9 +128,11 @@ const TilePage = () => {
     event.stopPropagation();
     const updatedTilesData = await deleteCard(tileName);
     if (updatedTilesData) {
-      setTiles(updatedTilesData);
+      // Fetch updated tile data without updating the path
+      fetchDataTiles(getPath());
     }
   };
+
   const handleDeleteSchema = async (schemaId) => {
     const updatedSchemasData = await deleteSchema(schemaId);
     if (updatedSchemasData) {
@@ -195,7 +191,12 @@ const TilePage = () => {
           <h4 className="available-tiles-txt">Available Tiles</h4>
           <div className="allcards">
             {tiles.map((tile, index) => (
-              <CustomCard className="tilecards" key={index} bordered={true}>
+              <CustomCard
+                className="tilecards"
+                key={index}
+                bordered={true}
+                onClick={() => handleTileClick(tile.TileName)}
+              >
                 <div className="dropdown">
                   <Button className="dropbtn">
                     <MoreOutlined />
@@ -207,13 +208,6 @@ const TilePage = () => {
                         }
                       >
                         Delete
-                      </Button>
-                      <Button
-                        className="tile navigate"
-                        onClick={() => handleTileClick(tile.TileName)}
-                        type="link"
-                      >
-                        Navigate to Tile Path
                       </Button>
                     </div>
                   </Button>
@@ -281,14 +275,13 @@ const TilePage = () => {
                         <ul>
                           {moveTileData &&
                             moveTileData.map((tile, index) => (
-                              <div className="tiles-modal-list">
+                              <div className="tiles-modal-list" key={index}>
                                 <Button
                                   className={`move-tile-name-btn ${
                                     selectedButtonIndex === index
                                       ? "clicked"
                                       : ""
                                   }`}
-                                  key={index}
                                   type="text"
                                   onClick={() => {
                                     setSelectedTileId(tile.ID);
