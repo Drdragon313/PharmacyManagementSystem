@@ -8,12 +8,20 @@
 }
 .modalstyle {
   align-items: center;
+  max-width: 120vmin;
+  min-width: 110vmin;
+  max-height: 60vh;
+  min-height: 50vh;
 }
 .modalstyle p {
   font-size: 9px;
 }
-
-.importManuallycard {
+.importManuallycard,
+.importfromDataBase,
+.importfromCSV {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 30vmin;
   height: 20vmin;
   margin: 10px;
@@ -24,6 +32,7 @@
   transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s,
     color 0.3s;
 }
+
 .importManuallycard:hover {
   cursor: pointer;
   border-color: #001529;
@@ -83,4 +92,17 @@
   height: 30px !important;
   width: 25px !important;
   margin-top: -30px;
+}
+.importManuallycard p,
+.importfromDataBase p,
+.importfromCSV p {
+  font-size: 8px;
+}
+
+@media (max-width: 1200px) {
+  .importManuallycard p,
+  .importfromDataBase p,
+  .importfromCSV p {
+    display: none;
+  }
 }
