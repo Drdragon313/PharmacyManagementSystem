@@ -1,7 +1,16 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./VaidationOptions.css";
-import { Col, Row, Button, Pagination, Checkbox, Space, Image } from "antd";
+import {
+  Col,
+  Row,
+  Button,
+  Pagination,
+  Checkbox,
+  Space,
+  Image,
+  Spin,
+} from "antd";
 import schemaImg from "../../Assets/Schemas.png";
 import axios from "axios";
 import { addIndex } from "../../redux/features/SchemaSelectionSlice/SchemaSelectionSlice";
@@ -15,6 +24,7 @@ const ValidationOptions = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedSchema, setSelectedSchema] = useState();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
   const localHeader = localStorage.getItem("AuthorizationToken");
   const headers = useMemo(() => {
     return {
@@ -28,13 +38,14 @@ const ValidationOptions = () => {
       .then((response) => {
         const schemaData = response.data.data.published;
         setSchemas(schemaData);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching schemas: ", error);
+        setLoading(false);
       });
   }, [headers]);
 
-  const schemasPerPage = 3;
   useEffect(() => {
     if (schemaDataArray.length === 1) {
       dispatch(addIndex(0));
@@ -81,62 +92,57 @@ const ValidationOptions = () => {
         the already defined selected schema in order to upload to the database.
       </p>
       <div className="Options-container">
-        <div className="Options-containerElements">
-          {schemas.length !== 0 ? (
-            <div>
-              <h5>
-                Select the schema with which you want to validate this file's
-                data with.
-              </h5>
-
-              <p className="Validation-paragraph">Available Schemas:</p>
-
-              <Row gutter={16}>
-                {schemas.map((schema, index) => (
-                  <Col span={6} className="validation-col">
-                    <CustomCard
-                      className="schemacards"
-                      key={index}
-                      bordered={true}
-                      onCheckboxChange={handleSelect}
+        {loading ? (
+          <div className="loader">
+            <Spin size={"large"}></Spin>
+            loading...
+          </div>
+        ) : (
+          <div className="Options-containerElements">
+            <h5>
+              Select the schema with which you want to validate this file's data
+              with.
+            </h5>
+            <p className="Validation-paragraph">Available Schemas:</p>
+            <Row gutter={16}>
+              {schemas.map((schema, index) => (
+                <Col span={6} className="validation-col" key={index}>
+                  <CustomCard
+                    className="schemacards"
+                    bordered={true}
+                    onCheckboxChange={handleSelect}
+                  >
+                    <div className="dropdown">
+                      <Checkbox
+                        className="checkbox"
+                        onChange={() => handleSelect(index)}
+                        checked={schema.selected}
+                      />
+                    </div>
+                    <Space
+                      className="schema-content"
+                      direction="vertical"
+                      size={5}
                     >
-                      <div className="dropdown">
-                        <Checkbox
-                          className="checkbox"
-                          onChange={() => handleSelect(index)}
-                          checked={schema.selected}
-                        />
-                      </div>
-                      <Space
-                        className="schema-content"
-                        direction="vertical"
-                        size={5}
-                      >
-                        <Image preview={false} src={schemaImg}></Image>
-
-                        <h5 className="tile-name">{schema.schema_name}</h5>
-                        <h6 className="tile-name">
-                          Tile Path: {schema.tile_path}
-                        </h6>
-                      </Space>
-                    </CustomCard>
-                  </Col>
-                ))}
-              </Row>
-              <Pagination
-                current={currentPage}
-                total={schemas.length}
-                pageSize={schemasPerPage}
-                onChange={handlePageChange}
-                className="options-pagination"
-              />
-            </div>
-          ) : (
-            <div className="zeroSchemas">
-              <h5>No Available Schemas</h5>
-            </div>
-          )}
-        </div>
+                      <Image preview={false} src={schemaImg}></Image>
+                      <h5 className="tile-name">{schema.schema_name}</h5>
+                      <h6 className="tile-name">
+                        Tile Path: {schema.tile_path}
+                      </h6>
+                    </Space>
+                  </CustomCard>
+                </Col>
+              ))}
+            </Row>
+            <Pagination
+              current={currentPage}
+              total={schemas.length}
+              pageSize={3}
+              onChange={handlePageChange}
+              className="options-pagination"
+            />
+          </div>
+        )}
         <div className="Validation-buttoncontainer">
           {schemas.length !== 0 ? (
             selectedSchema !== null ? (
