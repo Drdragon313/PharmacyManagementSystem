@@ -1,97 +1,77 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import SchemaTable from "../GeneralSchemaTable/SchemaTable";
-import { DragDropContext } from "react-beautiful-dnd";
-import { downloadCSV } from "../../Utility Function/downloadCSV";
-import { Button, Modal } from "antd";
-
-import {
-  updateSchemaDataOrder,
-  removeData,
-  updateData,
-} from "../../redux/features/SchemaSlice/schemaSlice";
-
-import "./style.css";
-import EditForm from "../EditForm/EditForm";
+import axios from "axios";
+import { numericToAlphabetic } from "../../Utility Function/numericToAlphabetic";
+import { baseURL } from "../BaseURLAPI/BaseURLAPI";
+import { Spin, Table } from "antd";
 
 const SchemaDetails = () => {
   const { schemaId } = useParams();
-  const dispatch = useDispatch();
-  const schemaDataArray = useSelector((state) => state.schema.schemaDataArray);
-  const schemaName = useSelector((state) => state.schema.schemaName);
-  const schemaData = schemaDataArray[schemaId];
+  const [schemaData, setSchemaData] = useState(null);
+  const localHeader = localStorage.getItem("AuthorizationToken");
+  const headers = useMemo(() => {
+    return {
+      Authorization: localHeader,
+    };
+  }, [localHeader]);
 
-  const [editModalVisible, setEditModalVisible] = useState(false);
-  const [selectedRow, setSelectedRow] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${baseURL}/schema/get-all-schema?schema_id=${schemaId}`,
+          { headers }
+        );
+        setSchemaData(response.data.schema.schemaDataArray[0]);
+        console.log(response.data.schema.schemaDataArray[0].data);
+      } catch (error) {
+        console.error("Error fetching schema data:", error);
+      }
+    };
 
-  const onDragEnd = (result) => {
-    if (!result.destination) {
-      return;
-    }
-
-    const startIndex = result.source.index;
-    const endIndex = result.destination.index;
-    const reorderedData = Array.from(schemaData.data);
-    const [movedItem] = reorderedData.splice(startIndex, 1);
-    reorderedData.splice(endIndex, 0, movedItem);
-    dispatch(updateSchemaDataOrder({ schemaId, updatedData: reorderedData }));
-  };
-
-  const handleEdit = (id) => {
-    const dataToEdit = schemaData.data.find((item) => item.id === id);
-    setSelectedRow(dataToEdit);
-    setEditModalVisible(true);
-  };
-
-  const handleEditSubmit = (editedData) => {
-    dispatch(updateData(editedData));
-    setEditModalVisible(false);
-  };
-
-  const handleDelete = (id) => {
-    dispatch(removeData(id));
-  };
-
-  const handleDownloadCSV = () => {
-    downloadCSV(schemaDataArray, schemaName);
-  };
-
+    fetchData();
+  }, [schemaId, headers]);
+  const columns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      width: "5%",
+      render: (id) => numericToAlphabetic(id),
+    },
+    {
+      title: "Field Name",
+      dataIndex: "Fieldname",
+      width: "30%",
+    },
+    {
+      title: "Type",
+      dataIndex: "Type",
+      width: "30%",
+    },
+    {
+      title: "Validation",
+      dataIndex: "Validation",
+      width: "30%",
+    },
+  ];
   return (
     <div>
       {schemaData ? (
         <div className="table">
-          <h3>Schema Name: {schemaData.name}</h3>
-          <Button className="csvbtn" type="primary" onClick={handleDownloadCSV}>
-            Download CSV
-          </Button>
-          <DragDropContext onDragEnd={onDragEnd}>
-            <SchemaTable
-              data={schemaData.data}
-              handleEdit={handleEdit}
-              handleDelete={handleDelete}
-            />
-          </DragDropContext>
+          <h3 style={{ marginLeft: "10px" }}>Schema Name: {schemaData.name}</h3>
+          <Table
+            className="schema-table"
+            dataSource={schemaData.data}
+            columns={columns}
+            bordered
+          />
         </div>
       ) : (
-        <p>Schema not found</p>
+        <div className="loader">
+          <Spin size="large"></Spin>
+          <p>Loading schema data...</p>
+        </div>
       )}
-
-      <Modal
-        title="Edit Data"
-        open={editModalVisible}
-        onOk={() => handleEditSubmit(selectedRow)}
-        onCancel={() => setEditModalVisible(false)}
-        footer={null}
-      >
-        {selectedRow && (
-          <EditForm
-            editRow={selectedRow}
-            onSubmit={handleEditSubmit}
-            onCancel={() => setEditModalVisible(false)}
-          />
-        )}
-      </Modal>
     </div>
   );
 };

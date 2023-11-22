@@ -285,7 +285,7 @@ const TilePage = () => {
                   >
                     <Image preview={false} src={schemaImg}></Image>
                     <h5 className="tile-name">{schema.schema_name}</h5>
-                    <Link to={`/schema/${index}`}>
+                    <Link to={`/schema/${schema.id}`}>
                       <Button>View Details</Button>
                     </Link>
                   </Space>

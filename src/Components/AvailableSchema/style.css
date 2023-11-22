@@ -3,5 +3,20 @@
   background: linear-gradient(to right, #001529, #009de1);
 }
 .table {
-  margin: 5px;
+  margin: 20px;
+}
+.table .schema-table {
+  margin: 20px;
+  border: 2px solid black;
+  border-radius: 2px;
+}
+.loader {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  align-items: center;
+  position: absolute;
+  top: 55%;
+  left: 56%;
+  transform: translate(-50%, -50%);
 }
