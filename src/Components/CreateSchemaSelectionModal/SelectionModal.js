@@ -21,7 +21,7 @@ const SelectionModal = ({ visible, setSelectionModalVisible, tilePath }) => {
     <>
       <Modal
         open={visible}
-        width={800}
+        // width={800}
         onCancel={() => setSelectionModalVisible(false)}
         footer={null}
         className="modalstyle"
