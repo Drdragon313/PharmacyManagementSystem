@@ -85,7 +85,7 @@ const File = () => {
             accept=".csv"
             beforeUpload={validateAndUpload}
             onRemove={() => {
-              setError();
+              setError([]);
             }}
           >
             <img src={uploadIcon} alt="Upload Icon" />
