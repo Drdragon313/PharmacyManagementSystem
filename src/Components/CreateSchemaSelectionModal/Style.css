@@ -8,10 +8,7 @@
 }
 .modalstyle {
   align-items: center;
-  max-width: 120vmin;
-  min-width: 110vmin;
-  max-height: 60vh;
-  min-height: 50vh;
+  width: 55vw !important;
 }
 .modalstyle p {
   font-size: 9px;
