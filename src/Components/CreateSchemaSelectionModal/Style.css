@@ -19,8 +19,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 16vw !important;
-  height: 10vh !important;
+  width: 30vmin;
+  height: 20vmin;
   margin: 10px;
   border: 1px solid;
   border-color: #707477;
