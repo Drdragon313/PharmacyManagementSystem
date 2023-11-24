@@ -1,17 +1,22 @@
 import React, { useState } from "react";
-import pharmImg from "../../Assets/Signin.png";
-import Logo from "../../Components/Images/gLogo.svg";
-import { Input, message } from "antd";
+import signinBackground from "../../Assets/SigninBack.svg";
+import PharmacyImage from "../../Assets/Pharmacy-img.svg";
+import PharmalyticsLogo from "../../Assets/Pharmalytics-Logo.svg";
+import Forgot_Icon from "../../Assets/Forgot_Password_Icon.svg";
+import { Button, Input, message } from "antd";
 import "./ForgotPassword.css";
-import { MailOutlined } from "@ant-design/icons";
+import Email_icon from "../../Assets/Email-icon.svg";
+import { ArrowRightOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(true);
   const navigate = useNavigate();
   const handleInputChange = (e) => {
     setEmail(e.target.value);
+    setIsEmailValid(true);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,7 +37,9 @@ const ForgotPassword = () => {
           error.response.data.error &&
           error.response.data.error.message
         ) {
-          message.error(error.response.data.error.message, 3);
+          if (error.response.data.error.message === "Email not Registered") {
+            setIsEmailValid(false);
+          }
         } else {
           message.error("Email Sending Failed!", 3);
         }
@@ -44,54 +51,99 @@ const ForgotPassword = () => {
   };
   return (
     <div className="siginContainer">
+      <div className="signinLogoMainContainer">
+        <img
+          alt="SigninBackground"
+          className="SigninLogoContainerpharm-img"
+          src={signinBackground}
+        ></img>
+        <div>
+          <img
+            className="PharmacyImage"
+            alt="pharmacyImage"
+            src={PharmacyImage}
+          ></img>
+        </div>
+        <div className="SigninLogoContainertxt">
+          <p className="SigninLogoContainertitletext1">Elevate Your</p>
+          <p className="SigninLogoContainertitletext2">Pharmacy Insights</p>
+        </div>
+        <div className="LearnMoreBtn">
+          <Button>
+            Learn More <ArrowRightOutlined className="LearnMoreArrow" />
+          </Button>
+        </div>
+      </div>
       <div className="siginFieldsContainer">
-        <img alt="logo" className="company-logo" src={Logo}></img>
+        <div>
+          <img
+            alt="PharmalyticsLogo"
+            className="PharmalyticsLogo"
+            src={PharmalyticsLogo}
+          ></img>
+        </div>
         <div className="signinFields">
-          <h5>Forgot Password</h5>
+          <h3 className="LoginText">
+            <img
+              className="forgotIcon"
+              alt="Forgot icon"
+              src={Forgot_Icon}
+            ></img>
+            <strong>Forgot</strong> Password
+          </h3>
           <p className="signinText">
-            Enter the email you used to create your account so we can send you a
-            link for resetting your password.
+            Provide your account's email for which you want to reset your
+            password
           </p>
           <form onSubmit={handleSubmit}>
-            <div className="mb-3">
+            <div className="mb-3 mt-4">
               <label
                 htmlFor="exampleInputEmail1"
-                className="form-label signinBoldLabel"
+                className={`form-label signinboldLabel ${
+                  !isEmailValid ? "SigninErrorLabel" : ""
+                }`}
               >
                 Email
               </label>
               <Input
+                className={`SigninInputField ${
+                  !isEmailValid ? "SigninErrorInput" : ""
+                }`}
                 onChange={handleInputChange}
                 value={email}
-                prefix={<MailOutlined />}
+                prefix={
+                  <img
+                    className="Email_icon"
+                    src={Email_icon}
+                    alt="Email Icon"
+                  />
+                }
                 type="email"
                 name="email"
                 aria-describedby="emailHelp"
                 required={true}
               />
+              {!isEmailValid && (
+                <p className="SigninErrorText">
+                  Invalid email. Please enter your registered email.
+                </p>
+              )}
             </div>
-            <button type="submit" className="btn my-3 signinbtn">
-              Send
+            <button
+              onClick={HandleBtnBacktoLogin}
+              type="button"
+              className="btn forget-btn-primary"
+            >
+              Back to Log in
+            </button>
+            <button
+              disabled={!email}
+              type="submit"
+              className="btn my-3 forgetbtn"
+            >
+              Request Reset Password
             </button>
           </form>
-          <button
-            onClick={HandleBtnBacktoLogin}
-            type="button"
-            className="btn btn-primary"
-          >
-            Back to Login
-          </button>
-        </div>
-      </div>
-      <div className="signinLogoContainer">
-        <img alt="pharm" className="forgetpharm-img" src={pharmImg}></img>
-        <div className="txt">
-          <h2 className="title">Elevate your insights</h2>
-          <h5 className="description-txt">
-            Our Company stands out as the premier choice for pharmacies,
-            offering unparalleled data insights that drive smarter decisions and
-            ultimately lea to enhanced performance and patient care.
-          </h5>
         </div>
       </div>
     </div>

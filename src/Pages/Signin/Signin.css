@@ -1,12 +1,8 @@
 .siginContainer {
   display: flex;
 }
-.company-logo {
-  position: absolute;
-  top: 30px;
-  left: 50px;
-}
-.signinLogoContainer {
+
+.signinLogoMainContainer {
   position: relative;
   width: 50vw;
   height: 100vh;
@@ -17,8 +13,32 @@
   flex-direction: column;
 }
 .SigninLogoContainerpharm-img {
-  height: 100%;
-  width: 100%;
+  height: calc(100% + 10%);
+  width: calc(100% + 10%);
+  background: linear-gradient(115deg, #3a3475 0%, #110a59 77.92%);
+  position: absolute;
+  top: -5%;
+  left: -5%;
+  z-index: 0;
+}
+.PharmacyImage {
+  height: 45%;
+  width: 45%;
+  z-index: 1;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -80%);
+}
+.LearnMoreArrow {
+  display: inline-flex !important;
+}
+.LearnMoreBtn {
+  z-index: 1;
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -80%);
 }
 .siginPowerText {
   color: white;
@@ -26,12 +46,16 @@
   margin-right: 5px;
 }
 .siginFieldsContainer {
+  z-index: 1;
+  background-color: white;
   width: 50vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-top-left-radius: 5%;
+  border-bottom-left-radius: 5%;
 }
 .signinFields {
   width: 50%;
@@ -39,23 +63,24 @@
 .signinText {
   color: #707477;
 }
-.signinBoldLabel {
+.signinboldLabel {
   font-weight: bold;
+  font-size: 12px;
+  margin-left: 6px;
 }
-.signinBoldLabel::after {
+.signinboldLabel::after {
   content: " *";
   color: red;
 }
 .signinForget {
   text-decoration: none;
   font-size: 11px;
-  color: #001529;
+  color: #3a3475;
 }
-.signinbtn {
+.signinBtn {
   color: white;
   width: 100%;
-  background: #818181;
-  border: none;
+  background: #3a3475;
   border-radius: 10px;
 }
 .siginTerms {
@@ -81,13 +106,25 @@
 }
 .stay-signedin-txt {
   margin-left: 5px;
-  font-size: 10px;
 }
-.SigninLogoContainertitle {
-  font-size: 30px;
-  font-weight: bold;
-  color: white;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+.SigninLogoContainertitletext1 {
+  color: #fff;
+  text-align: center;
+  font-family: Lato;
+  font-size: 29px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 50%;
+  letter-spacing: 2px;
+}
+.SigninLogoContainertitletext2 {
+  color: #fff;
+  font-family: Lato;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 50%;
+  letter-spacing: 2px;
 }
 .SigninLogoContainerdescription-txt {
   color: white;
@@ -96,7 +133,7 @@
 }
 .SigninLogoContainertxt {
   position: absolute;
-  top: 70%;
+  top: 75%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
@@ -119,4 +156,30 @@
   font-weight: bold;
   text-align: center;
   border-radius: 10px;
+}
+.PharmalyticsLogo {
+  height: 90%;
+  width: 90%;
+}
+.LoginText {
+  margin-top: 3%;
+  color: #3a3475;
+  font-weight: 350;
+}
+.LoginOutlined {
+  margin-right: 3%;
+}
+.SigninInputField {
+  border-radius: 12px;
+  height: 40px;
+  border: 1px solid #dddddf;
+  background: #f9f9f9;
+  color: #f9f9f9;
+}
+.ant-input {
+  background: #f9f9f9;
+}
+.Email_icon {
+  height: 80%;
+  width: 80%;
 }
