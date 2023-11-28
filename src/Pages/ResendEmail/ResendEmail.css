@@ -124,3 +124,24 @@
   text-align: center;
   border-radius: 10px;
 }
+.CheckEmailIcon {
+  margin-right: 3%;
+  width: 8%;
+  height: 8%;
+  margin-bottom: 2%;
+}
+.resend-btn-primary {
+  width: 38%;
+  background-color: #fff;
+  color: #3a3475;
+  border-color: #3a3475;
+  border-radius: 10px;
+}
+.resendbtn {
+  margin-left: 23%;
+  color: white;
+  width: 38%;
+  background: #3a3475;
+  border: none;
+  border-radius: 10px;
+}

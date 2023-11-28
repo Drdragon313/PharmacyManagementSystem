@@ -1,8 +1,10 @@
 import "./ResendEmail.css";
 import React from "react";
-import pharmImg from "../../Assets/pharm_img.svg";
-import Logo from "../../Assets/logo.svg";
-import { Space, message } from "antd";
+import signinBackground from "../../Assets/SigninBack.svg";
+import EmailBackgroundLogo from "../../Assets/EmailBackgroundLogo.svg";
+import PharmalyticsLogo from "../../Assets/Pharmalytics-Logo.svg";
+import CheckEmailicon from "../../Assets/CheckEmailicon.svg";
+import { Button, message } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
@@ -22,50 +24,66 @@ const ResendEmail = () => {
       });
   };
   return (
-    <div className="ResendContainer">
-      <div className="ResendFieldsContainer">
-        <img alt="logo" className="resend-company-logo" src={Logo}></img>
+    <div className="siginContainer">
+      <div className="signinLogoMainContainer">
+        <img
+          alt="SigninBackground"
+          className="SigninLogoContainerpharm-img"
+          src={signinBackground}
+        ></img>
+        <div>
+          <img
+            className="PharmacyImage"
+            alt="pharmacyImage"
+            src={EmailBackgroundLogo}
+          ></img>
+        </div>
+        <div className="SigninLogoContainertxt">
+          <p className="SigninLogoContainertitletext1">Elevate Your</p>
+          <p className="SigninLogoContainertitletext2">Pharmacy Insights</p>
+        </div>
+        <div className="LearnMoreBtn">
+          <Button>
+            Learn More <ArrowRightOutlined className="LearnMoreArrow" />
+          </Button>
+        </div>
+      </div>
+      <div className="siginFieldsContainer">
+        <div>
+          <img
+            alt="PharmalyticsLogo"
+            className="PharmalyticsLogo"
+            src={PharmalyticsLogo}
+          ></img>
+        </div>
         <div className="ResendFields">
-          <h5>Check Email</h5>
+          <h3 className="my-5 LoginText">
+            <img
+              className="CheckEmailIcon"
+              alt="Check Email icon"
+              src={CheckEmailicon}
+            ></img>
+            <strong>Check</strong> your email
+          </h3>
           <p className="ResendText">
             We have sent an email with password reset information to {userEmail}
-            .
+            . Please check your inbox.
           </p>
           <p className="ResendText-small">
-            Didn't receive the email? Check span folder or
+            Didn’t receive the email? Check span folder or
           </p>
+          <Link to="/">
+            <button type="button" className="btn resend-btn-primary">
+              Back to Login
+            </button>
+          </Link>
           <button
             type="submit"
-            className="btn my-2 Resendbtn"
+            className="btn my-3 resendbtn"
             onClick={handleResendbtn}
           >
             Resend Email
           </button>
-          <Link to="/signin">
-            <button type="button" className="btn btn-primary">
-              Back to Login
-            </button>
-          </Link>
-        </div>
-      </div>
-      <div className="ResendLogoContainer">
-        <img alt="pharm" className="resend-pharm-img " src={pharmImg}></img>
-        <div className="resend-description-txt">
-          <h2 className="resend-title ">Elevate your pharmacy insights</h2>
-          <h5 className="resend-description-txt">
-            Pharmlytics stands out as the premier choice for pharmacies,
-            offering unparalleled data insights that drive smarter decisions and
-            ultimately lea to enhanced performance and patient care.
-          </h5>
-          <div className="resend-container-foot ">
-            <p>www.pharmyltics.co.uk</p>
-            <button type="button" className="btn btn-light">
-              <Space>
-                Learn More
-                <ArrowRightOutlined />
-              </Space>
-            </button>
-          </div>
         </div>
       </div>
     </div>
