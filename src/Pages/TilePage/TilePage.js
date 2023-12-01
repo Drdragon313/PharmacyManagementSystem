@@ -13,7 +13,8 @@ import {
   Breadcrumb,
 } from "antd";
 import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
-
+import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
+import axios from "axios";
 import {
   createCard,
   deleteCard,
@@ -42,6 +43,7 @@ const TilePage = () => {
   const [selectedSchemaId, setSelectedSchemaId] = useState(null);
   const [selectedTileId, setSelectedTileId] = useState(null);
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(-1);
+  const [iconsData, setIconsData] = useState();
   const [form] = Form.useForm();
   const handleMoveButtonClick = (schemaId) => {
     setSelectedSchemaId(schemaId);
@@ -53,7 +55,15 @@ const TilePage = () => {
   const handleCloseMoveModal = () => {
     setIsMoveModalVisible(false);
   };
-
+  const fetchIconsData = async () => {
+    try {
+      const response = await axios.get(`${baseURL}/icons`);
+      let Icon = Object.values(response.data.imageUrls);
+      setIconsData(Icon);
+    } catch (error) {
+      console.error("Error fetching icons data:", error);
+    }
+  };
   const getPath = useCallback(
     () => (path.length === 1 ? "/" : path.join("/")),
     [path]
@@ -68,6 +78,7 @@ const TilePage = () => {
     setTiles(data.tiles);
     setSchemas(data.schemas);
     localStorage.setItem("tilePath", tilePath);
+    fetchIconsData();
   };
 
   const handleTileClick = (cardPath) => {
@@ -115,7 +126,7 @@ const TilePage = () => {
   const handleDeleteSchema = async (schemaId) => {
     const updatedSchemasData = await deleteSchema(schemaId);
     if (updatedSchemasData) {
-      setSchemas(updatedSchemasData);
+      fetchDataTiles(getPath());
     }
   };
 
@@ -135,6 +146,7 @@ const TilePage = () => {
       moveSchemaToTile(selectedSchemaId, selectedTileId, handleCloseMoveModal)
         .then(() => {
           message.success("Schema moved successfully");
+          fetchDataTiles(getPath());
         })
         .catch((error) => {
           message.error("Error moving schema:", error);
@@ -335,6 +347,19 @@ const TilePage = () => {
               value={newCardName}
               onChange={(e) => setNewCardName(e.target.value)}
             />
+          </Form.Item>
+          <Form.Item>
+            <div>
+              {iconsData && iconsData.length > 0 ? (
+                iconsData.map((icon, index) => (
+                  <div key={index}>
+                    <Image preview={false} src={icon.URL} className="icons" />
+                  </div>
+                ))
+              ) : (
+                <p>No icons data available.</p>
+              )}
+            </div>
           </Form.Item>
         </Form>
       </Modal>

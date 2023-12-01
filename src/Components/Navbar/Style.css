@@ -1,25 +1,29 @@
 .NavbarMenu .ant-menu-item {
   background-color: transparent !important;
-  color: aliceblue !important;
-  transition: background-color 0.3s;
+  color: #bababa !important;
+  transition: color 0.3s;
   outline: none !important;
-  border-top-right-radius: 2px;
-  border-bottom-right-radius: 2px;
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
 }
 .NavbarMenu .ant-menu-item:hover,
 .NavbarMenu .ant-menu-item:active,
 .NavbarMenu .ant-menu-item-selected {
-  background: linear-gradient(to left, #ffffff 97%, #045ee7 3%);
-  color: #001529 !important;
+  color: #fff !important;
 }
 .NavbarMenu {
   height: 100%;
   font-weight: bold;
-  background-color: #001529;
+  background-color: #3a3475;
+  margin-top: 30px;
 }
-
+.menu-items-sidebar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.icons-sidenav {
+  height: 10px;
+  width: 10px;
+}
 .NavbarFooter {
   background-color: transparent;
   color: aliceblue;
