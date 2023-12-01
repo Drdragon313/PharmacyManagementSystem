@@ -29,6 +29,7 @@ import Pharmacies from "./Pages/Pharmacies/Pharmacies";
 import Reports from "./Pages/Reports/Reports";
 import SetPassword from "./Pages/SetPassword/SetPassword";
 import HomeIframe from "./Iframes/HomeIframe";
+import AddPharmacy from "./Pages/AddPharmacy/AddPharmacy";
 
 const { Content } = Layout;
 
@@ -78,9 +79,11 @@ function MainContent() {
           <Route path="schema/autopopulate" element={<AutoPopulate />} />
           <Route path="users" element={<Users />} />
           <Route path="users/AddUser" element={<AddUsers />} />
+
           <Route path="users/ViewEmployees" element={<ViewEmployees />} />
           <Route path="resendemail" element={<ResendEmail />} />
           <Route path="pharmacies" element={<Pharmacies />} />
+          <Route path="pharmacies/AddPharmacy" element={<AddPharmacy />} />
           <Route path="reports" element={<Reports />} />
         </Routes>
       </Content>
