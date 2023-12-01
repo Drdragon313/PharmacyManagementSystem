@@ -1,138 +1,246 @@
 import React, { useState } from "react";
-import pharmImg from "../../Assets/Signin.png";
-import Logo from "../../Components/Images/gLogo.svg";
-import { Input, message } from "antd";
+import pharmImg from "../../Assets/Asset 1 4.png";
+import { Button, Image, Input } from "antd";
+import { useEffect } from "react";
+
 import {
   EyeTwoTone,
   EyeInvisibleOutlined,
-  LockOutlined,
+  ArrowRightOutlined,
 } from "@ant-design/icons";
-import { PasswordRegex } from "../../Utility Function/PasswordRegex";
 import { Link, useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
-import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
-import axios from "axios";
+import phamalyticsLogo from "../../Assets/pharmaylics_logo.svg";
+import Lockimg from "../../Assets/lockoutlined.svg";
+import LockGreyImg from "../../Assets/lockGreyIcon.svg";
+import LinkExpired from "../../Assets/pajamas_expire.svg";
+import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
+import {
+  handleInputChangeUtil,
+  handleSubmitUtil,
+  resendEmail,
+  validateVerificationLink,
+} from "../../Utility Function/ResetPasswordUtils";
 import "./PasswordResetForm.css";
 
 const PasswordResetForm = (props) => {
+  const [apiStatus, setApiStatus] = useState(null);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   const [searchParams] = useSearchParams();
   const [data, setData] = useState({
     password: "",
     confirmPassword: "",
   });
+  const [conditions, setConditions] = useState({
+    minLength: false,
+    upperCase: false,
+    lowerCase: false,
+    numberOrSpecialChar: false,
+  });
+
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setData((prevUserData) => ({
-      ...prevUserData,
-      [name]: value,
-    }));
+    handleInputChangeUtil(e, setData, setConditions);
   };
+
+  const handleSubmit = (e) => {
+    handleSubmitUtil(
+      e,
+      data,
+      email,
+      forgetPasswordKey,
+      navigate,
+      handleApiStatus
+    );
+  };
+
+  const handleApiStatus = (status) => {
+    setApiStatus(status);
+  };
+
   const email = searchParams.get("email");
   console.log("Params Email:", email);
   const forgetPasswordKey = searchParams.get("passwordKey");
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (data.password === data.confirmPassword) {
-      const regex = PasswordRegex();
-      if (regex.test(data.password)) {
-        axios
-          .post(`${baseURL}/update`, {
-            email: email,
-            passwordKey: forgetPasswordKey,
-            password: data.password,
-          })
-          .then(() => {
-            message.success("Password Updated Successfully!", 3);
-            navigate("/");
-          })
-          .catch((error) => {
-            if (
-              error.response &&
-              error.response.data &&
-              error.response.data.error &&
-              error.response.data.error.message
-            ) {
-              message.error(error.response.data.error.message, 3);
-            } else {
-              message.error("Password updation Failed!", 3);
-            }
-          });
-      } else {
-        message.error("Password doesnt meet the required criteria");
-      }
-    } else {
-      message.error("Passwords donot match!", 3);
-    }
+  const handleResendEmail = () => {
+    resendEmail(email)
+      .then(() => {})
+      .catch(() => {});
   };
 
+  useEffect(() => {
+    validateVerificationLink(
+      email,
+      forgetPasswordKey,
+      setApiStatus,
+      setLoading
+    );
+  }, [email, forgetPasswordKey]);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="siginContainer">
-      <div className="siginFieldsContainer">
-        <img alt="logo" className="company-logo" src={Logo}></img>
-        <div className="signinFields">
-          <h5>{props.heading}</h5>
-          <p className="signinText">Choose a new password for your account</p>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label
-                htmlFor="exampleInputPassword1"
-                className="form-label signinBoldLabel"
-              >
-                New Password
-              </label>
-              <Input.Password
-                onChange={handleInputChange}
-                prefix={<LockOutlined />}
-                name="password"
-                required={true}
-                iconRender={(visible) =>
-                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                }
-              />
-              <p className="signinText">
-                Password should be atleats 8 characters with 1 Capital letter, 1
-                number and 1 special character.
-              </p>
-            </div>
-            <div className="mb-3">
-              <label
-                htmlFor="exampleInputPassword1"
-                className="form-label signinBoldLabel"
-              >
-                Confirm Password
-              </label>
-              <Input.Password
-                onChange={handleInputChange}
-                prefix={<LockOutlined />}
-                name="confirmPassword"
-                required={true}
-                iconRender={(visible) =>
-                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                }
-              />
-            </div>
-            <button type="submit" className="btn my-3 signinbtn">
-              {props.buttonText}
-            </button>
-          </form>
-          <Link to="/">
-            <button type="button" className="btn btn-primary">
-              Back to Login
-            </button>
-          </Link>
-        </div>
-      </div>
       <div className="signinLogoContainer">
         <img alt="pharm" className="Resetpharm-img" src={pharmImg}></img>
         <div className="txt">
-          <h2 className="title">Elevate your insights</h2>
-          <h5 className="description-txt">
-            Our System stands out as the premier choice for pharmacies, offering
-            unparalleled data insights that drive smarter decisions and
-            ultimately lea to enhanced performance and patient care.
-          </h5>
+          <p className="title">
+            Elevate Your <br /> <strong>Pharmacy Insights</strong>{" "}
+          </p>
         </div>
+        <div className="LearnMoreBtn">
+          <Button>
+            Learn More <ArrowRightOutlined className="LearnMoreArrow" />
+          </Button>
+        </div>
+      </div>
+      <div className="siginFieldsContainer">
+        <Image
+          className="pharmalytics-logo"
+          src={phamalyticsLogo}
+          preview={false}
+        ></Image>
+        {apiStatus === false ? (
+          <div className="signinFields">
+            <div className="reset-heading">
+              <Image
+                preview={false}
+                src={LinkExpired}
+                className="lock-img"
+              ></Image>
+              <h2>
+                <strong>Link </strong>expired
+              </h2>
+            </div>
+            <p>
+              Your link has expired, because you haven't used it. Reset password
+              link expires in every 1 hour and can be used only once. You can
+              create one by clicking the Resend Email button.
+            </p>
+            <div className="reset-password-btns">
+              <Link to="/">
+                <Button type="button" className="btn btn-primary backbtn">
+                  Back to Login
+                </Button>
+              </Link>
+
+              <Button
+                type="submit"
+                className="btn my-3 signinbtn"
+                onClick={handleResendEmail}
+              >
+                Resend Email
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div className="signinFields">
+            <div className="reset-heading">
+              <Image preview={false} src={Lockimg} className="lock-img"></Image>
+              <h2>
+                <strong>Reset</strong> Your Password
+              </h2>
+            </div>
+            <ul className="conditions-signin">
+              <li>
+                {conditions.minLength ? (
+                  <CheckCircleTwoTone twoToneColor="#06C552" />
+                ) : (
+                  <CloseCircleTwoTone twoToneColor="#EE0004" />
+                )}
+                Password should be at least 8 characters long.
+              </li>
+              <li>
+                {conditions.upperCase ? (
+                  <CheckCircleTwoTone twoToneColor="#06C552" />
+                ) : (
+                  <CloseCircleTwoTone twoToneColor="#EE0004" />
+                )}
+                Password must contain at least one upper case.
+              </li>
+              <li>
+                {conditions.lowerCase ? (
+                  <CheckCircleTwoTone twoToneColor="#06C552" />
+                ) : (
+                  <CloseCircleTwoTone twoToneColor="#EE0004" />
+                )}
+                One lower case letter.
+              </li>
+              <li>
+                {conditions.numberOrSpecialChar ? (
+                  <CheckCircleTwoTone twoToneColor="#06C552" />
+                ) : (
+                  <CloseCircleTwoTone twoToneColor="#EE0004" />
+                )}
+                Password must contain at least one number or special character.
+              </li>
+            </ul>
+
+            <form onSubmit={handleSubmit}>
+              <div className="mb-3">
+                <label
+                  htmlFor="exampleInputPassword1"
+                  className="form-label signinBoldLabel"
+                >
+                  New Password
+                </label>
+                <Input.Password
+                  className="input-password"
+                  onChange={handleInputChange}
+                  prefix={
+                    <Image
+                      preview={false}
+                      src={LockGreyImg}
+                      className="lock-Grey-img"
+                    ></Image>
+                  }
+                  name="password"
+                  required={true}
+                  iconRender={(visible) =>
+                    visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label
+                  htmlFor="exampleInputPassword1"
+                  className="form-label signinBoldLabel"
+                >
+                  Confirm Password
+                </label>
+                <Input.Password
+                  className="input-password"
+                  onChange={handleInputChange}
+                  prefix={
+                    <Image
+                      preview={false}
+                      src={LockGreyImg}
+                      className="lock-Grey-img"
+                    ></Image>
+                  }
+                  name="confirmPassword"
+                  required={true}
+                  iconRender={(visible) =>
+                    visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                  }
+                />
+              </div>
+              <div className="reset-password-btns">
+                <Link to="/">
+                  <Button type="button" className="btn btn-primary backbtn">
+                    Back to Login
+                  </Button>
+                </Link>
+                <Button
+                  type="submit"
+                  className="btn my-3 signinbtn"
+                  onClick={handleSubmit}
+                >
+                  {props.buttonText}
+                </Button>
+              </div>
+            </form>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -4,24 +4,16 @@ import signinBackground from "../../Assets/SigninBack.svg";
 import EmailBackgroundLogo from "../../Assets/EmailBackgroundLogo.svg";
 import PharmalyticsLogo from "../../Assets/Pharmalytics-Logo.svg";
 import CheckEmailicon from "../../Assets/CheckEmailicon.svg";
-import { Button, message } from "antd";
+import { Button } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
-import axios from "axios";
+import { resendEmail } from "../../Utility Function/ResetPasswordUtils";
+
 const ResendEmail = () => {
   const userEmail = localStorage.getItem("userEmail");
+
   const handleResendbtn = () => {
-    axios
-      .post(`${baseURL}/forget`, {
-        email: userEmail,
-      })
-      .then(() => {
-        message.success("Email Resent Successfully!", 3);
-      })
-      .catch(() => {
-        message.error("Email Resending Failed!", 3);
-      });
+    resendEmail(userEmail);
   };
   return (
     <div className="siginContainer">

@@ -2,7 +2,9 @@ import React from "react";
 import PasswordResetForm from "../../Components/PasswordResetForm/PasswordResetForm";
 const ResetPassword = () => {
   return (
-    <PasswordResetForm heading="Reset Password" buttonText="Reset Password" />
+    <div className="reset-password-body">
+      <PasswordResetForm heading="Reset Password" buttonText="Reset Password" />
+    </div>
   );
 };
 

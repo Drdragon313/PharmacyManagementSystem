@@ -2,7 +2,6 @@
   text-align: center;
   cursor: pointer;
   padding: 20px;
-  background-color: #001529;
   color: white;
   font-size: 20px;
 }
@@ -13,20 +12,14 @@
 .navbar-sider {
   max-height: 165vh;
   min-height: 100vh;
+  background-color: #3a3475 !important;
 }
-.NavbarFooter {
-  text-align: center;
-  font-size: 11px;
-  background-color: rgba(255, 255, 255, 0.23);
-}
-.NavbarCopy {
-  text-align: center;
-  font-size: 11px;
-  margin-top: 10px;
-}
+
 .NavbarSiderContainer {
   height: 76.4vh;
+  background-color: #3a3475;
 }
+
 @media screen and (max-width: 480px) {
   .NavbarTop {
     font-size: 14px;
@@ -38,5 +31,6 @@
   .NavbarFooter,
   .NavbarCopy {
     display: none;
+    background-color: #3a3475;
   }
 }

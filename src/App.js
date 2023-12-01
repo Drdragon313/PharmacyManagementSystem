@@ -30,6 +30,7 @@ import Reports from "./Pages/Reports/Reports";
 import SetPassword from "./Pages/SetPassword/SetPassword";
 import HomeIframe from "./Iframes/HomeIframe";
 import AddPharmacy from "./Pages/AddPharmacy/AddPharmacy";
+import PasswordUpdatedSuccess from "./Pages/PasswordUpdatedSuccess/PasswordUpdatedSuccess";
 
 const { Content } = Layout;
 
@@ -56,6 +57,10 @@ function MainContent() {
           <Route path="forgotpassword" element={<ForgotPassword />} />
           <Route path="checkemail" element={<CheckEmail />} />
           <Route path="resetpassword" element={<ResetPassword />} />
+          <Route
+            path="passwordupdatesuccess"
+            element={<PasswordUpdatedSuccess />}
+          />
           <Route path="setpassword" element={<SetPassword />} />
           <Route path="home" element={<HomeIframe />} />
           <Route path="/tilepage" element={<TilePage />} />
@@ -102,7 +107,8 @@ function shouldRenderNavbar(location) {
     currentPath !== "/profile" &&
     currentPath !== "/profile/permissions" &&
     currentPath !== "/profile/updatePassword" &&
-    currentPath !== "/resendemail"
+    currentPath !== "/resendemail" &&
+    currentPath !== "/passwordupdatesuccess"
   );
 }
 
@@ -117,7 +123,8 @@ function shouldRenderTopnav(location) {
     currentPath !== "/profile" &&
     currentPath !== "/profile/permissions" &&
     currentPath !== "/profile/updatePassword" &&
-    currentPath !== "/resendemail"
+    currentPath !== "/resendemail" &&
+    currentPath !== "/passwordupdatesuccess"
   );
 }
 
