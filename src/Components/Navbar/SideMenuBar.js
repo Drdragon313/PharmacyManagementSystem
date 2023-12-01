@@ -1,17 +1,9 @@
 import React, { useState } from "react";
 import { Image, Menu } from "antd";
-import {
-  FileTextOutlined,
-  // UploadOutlined,
-  // UsergroupAddOutlined,
-  // AppstoreAddOutlined,
-  // LogoutOutlined,
-} from "@ant-design/icons";
+import { FileTextOutlined } from "@ant-design/icons";
 import "./Style.css";
 import { Link } from "react-router-dom";
-import Heart from "../../Assets/heart.svg";
 import dataLive from "../../Assets/datalive.svg";
-import ReportsIcon from "../../Assets/reports_icon.svg";
 import HeartGrey from "../../Assets/heart grey.svg";
 import empIcon from "../../Assets/emp_icon.svg";
 import pharmIcon from "../../Assets/streamline_pharmacy.svg";
@@ -56,41 +48,25 @@ const SideMenuBar = (props) => {
             </div>
           </Menu.Item>
         </SubMenu>
-        <Menu.Item
-          key="2"
-          // icon={<AppstoreOutlined />}
-          onClick={() => handleMenuItemClick("2")}
-        >
+        <Menu.Item key="2" onClick={() => handleMenuItemClick("2")}>
           <div className="menu-items-sidebar">
             <Image className="icons-sidenav" src={dataLive}></Image>
             <Link to="/tilepage">Data Live</Link>
           </div>
         </Menu.Item>
-        <Menu.Item
-          key="3"
-          // icon={<UploadOutlined />}
-          onClick={() => handleMenuItemClick("3")}
-        >
+        <Menu.Item key="3" onClick={() => handleMenuItemClick("3")}>
           {" "}
           <div className="menu-items-sidebar">
             <Link to="/file">Import File</Link>
           </div>
         </Menu.Item>
-        <Menu.Item
-          key="4"
-          // icon={<UsergroupAddOutlined />}
-          onClick={() => handleMenuItemClick("4")}
-        >
+        <Menu.Item key="4" onClick={() => handleMenuItemClick("4")}>
           <div className="menu-items-sidebar">
             <Image className="icons-sidenav" src={empIcon}></Image>
             <Link to="/users">Employees</Link>
           </div>
         </Menu.Item>
-        <Menu.Item
-          key="5"
-          // icon={<AppstoreAddOutlined />}
-          onClick={() => handleMenuItemClick("5")}
-        >
+        <Menu.Item key="5" onClick={() => handleMenuItemClick("5")}>
           <div className="menu-items-sidebar">
             <Image className="icons-sidenav" src={pharmIcon}></Image>
             <Link to="/pharmacies">Pharmacy</Link>

@@ -4,7 +4,7 @@ import signinBackground from "../../Assets/SigninBack.svg";
 import EmailBackgroundLogo from "../../Assets/EmailBackgroundLogo.svg";
 import PharmalyticsLogo from "../../Assets/Pharmalytics-Logo.svg";
 import CheckEmailicon from "../../Assets/CheckEmailicon.svg";
-import { Button, message } from "antd";
+import { Button } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { resendEmail } from "../../Utility Function/ResetPasswordUtils";
