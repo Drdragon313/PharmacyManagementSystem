@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "antd";
 import "./Pharmacies.css";
+import { Link } from "react-router-dom";
 
 const Pharmacies = () => {
   return (
@@ -8,7 +9,9 @@ const Pharmacies = () => {
       <div className="ContainerButtons">
         <div>
           <Button className="gridStyleButtons">List of Pharmacies</Button>
-          <Button className="gridStyleButtons">Create new Pharmacy</Button>
+          <Link to="AddPharmacy">
+            <Button className="gridStyleButtons">Create new Pharmacy</Button>
+          </Link>
         </div>
         <div>
           <Button className="gridStyleButtons">
