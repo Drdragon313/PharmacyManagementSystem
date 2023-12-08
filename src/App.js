@@ -30,6 +30,7 @@ import Reports from "./Pages/Reports/Reports";
 import SetPassword from "./Pages/SetPassword/SetPassword";
 import HomeIframe from "./Iframes/HomeIframe";
 import AddPharmacy from "./Pages/AddPharmacy/AddPharmacy";
+import PharmacyDetails from "./Pages/PharmacyDetails/PharmacyDetails";
 import PasswordUpdatedSuccess from "./Pages/PasswordUpdatedSuccess/PasswordUpdatedSuccess";
 
 const { Content } = Layout;
@@ -89,6 +90,7 @@ function MainContent() {
           <Route path="resendemail" element={<ResendEmail />} />
           <Route path="pharmacies" element={<Pharmacies />} />
           <Route path="pharmacies/AddPharmacy" element={<AddPharmacy />} />
+          <Route path="pharmacies/:pharmacy_id" element={<PharmacyDetails />} />
           <Route path="reports" element={<Reports />} />
         </Routes>
       </Content>
