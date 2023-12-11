@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
@@ -15,8 +16,12 @@ import "./PharmacyDetails.css";
 
 const PharmacyDetails = () => {
   const { pharmacy_id } = useParams();
+  const { employee_id } = useParams();
+
   const [pharmacyDetails, setPharmacyDetails] = useState(null);
   const [tableDataSource, setTableDataSource] = useState([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchPharmacyDetails = async () => {
       try {
@@ -56,6 +61,10 @@ const PharmacyDetails = () => {
       console.error("Error deleting employee:", error);
     }
   };
+  const handleViewEmployeeDetails = () => {
+    navigate(`pharmacies/${pharmacy_id}/${employee_id}`);
+  };
+
   if (!pharmacyDetails) {
     return <Spinner />;
   }
@@ -92,14 +101,16 @@ const PharmacyDetails = () => {
       fixed: "right",
       render: (text, record) => (
         <Space className="action-btns">
-          {/* <Link to={`/pharmacies/${record.id}`}> */}
-          <Image preview={false} src={eyeIcon}></Image>
-          {/* </Link> */}
+          <Image
+            preview={false}
+            onClick={() => handleViewEmployeeDetails(record.id)}
+            src={eyeIcon}
+          ></Image>
+
           <Image
             preview={false}
             src={editIconBlue}
             style={{ fill: "#3A3475" }}
-            // onClick={() => handleDelete(record.id)}
           ></Image>
           <Image
             preview={false}

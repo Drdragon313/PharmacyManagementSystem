@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Image, Menu } from "antd";
-import { FileTextOutlined } from "@ant-design/icons";
+import { FileTextOutlined, LogoutOutlined } from "@ant-design/icons";
 import "./Style.css";
 import { Link } from "react-router-dom";
 import dataLive from "../../Assets/datalive.svg";
 import HeartGrey from "../../Assets/heart grey.svg";
 import empIcon from "../../Assets/emp_icon.svg";
 import pharmIcon from "../../Assets/streamline_pharmacy.svg";
+import { baseURL } from "../BaseURLAPI/BaseURLAPI";
+import axios from "axios";
 const { SubMenu } = Menu;
 const SideMenuBar = (props) => {
   const [selectedKeys, setSelectedKeys] = useState(["2"]);
@@ -15,6 +17,29 @@ const SideMenuBar = (props) => {
     setSelectedKeys([key]);
   };
 
+  const handleSignout = async () => {
+    try {
+      const authToken = localStorage.getItem("AuthorizationToken");
+
+      if (!authToken) {
+        console.error("Auth token not found");
+        return;
+      }
+      const response = await axios.post(
+        `${baseURL}/signout`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+      localStorage.removeItem("AuthorizationToken");
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error during signout:", error);
+    }
+  };
   return (
     <div className="navbar-menu">
       <Menu
@@ -73,13 +98,16 @@ const SideMenuBar = (props) => {
           </div>
         </Menu.Item>
 
-        {/* <Menu.Item
+        <Menu.Item
           key="7"
           icon={<LogoutOutlined />}
-          onClick={() => handleMenuItemClick("7")}
+          onClick={() => {
+            handleMenuItemClick("7");
+            handleSignout(); // Call the handleSignout function on menu item click
+          }}
         >
           <Link to="/">Signout</Link>
-        </Menu.Item> */}
+        </Menu.Item>
       </Menu>
       {props.collapsed ? null : (
         <div className="NavbarFooter">

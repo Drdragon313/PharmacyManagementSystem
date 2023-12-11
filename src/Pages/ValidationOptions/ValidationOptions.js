@@ -17,7 +17,7 @@ import { addIndex } from "../../redux/features/SchemaSelectionSlice/SchemaSelect
 import { Link } from "react-router-dom";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import CustomCard from "../../Components/Card/Card";
-
+import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";
 const ValidationOptions = () => {
   const schemaDataArray = useSelector((state) => state.schema.schemaDataArray);
   const [schemas, setSchemas] = useState([]);
@@ -26,6 +26,9 @@ const ValidationOptions = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const localHeader = localStorage.getItem("AuthorizationToken");
+
+  const [modalVisible, setModalVisible] = useState(!localHeader);
+
   const headers = useMemo(() => {
     return {
       Authorization: localHeader,
@@ -83,7 +86,12 @@ const ValidationOptions = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-
+  if (!localHeader) {
+    const openModal = () => {
+      setModalVisible(true);
+    };
+    return <SignInFirstModal visible={modalVisible} open={openModal} />;
+  }
   return (
     <div className="Validation-container">
       <h2>Files and Assets</h2>

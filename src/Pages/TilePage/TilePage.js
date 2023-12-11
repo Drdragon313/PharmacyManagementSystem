@@ -29,8 +29,12 @@ import CustomCard from "../../Components/Card/Card";
 import schemaImg from "../../Assets/Schemas.png";
 import { Link } from "react-router-dom";
 import tileImg from "../../Assets/tileimg.svg";
+import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";
 
 const TilePage = () => {
+  const authToken = localStorage.getItem("AuthorizationToken");
+  const [modalVisible, setModalVisible] = useState(!authToken);
+
   const [path, setPath] = useState([""]);
   const [tiles, setTiles] = useState([]);
   const [newCardName, setNewCardName] = useState("");
@@ -155,7 +159,12 @@ const TilePage = () => {
       message.error("Selected schema or tile is not valid");
     }
   };
-
+  if (!authToken) {
+    const openModal = () => {
+      setModalVisible(true);
+    };
+    return <SignInFirstModal visible={modalVisible} open={openModal} />;
+  }
   return (
     <div className="tilepage-container">
       <Breadcrumb className="breadcrumb" separator=">">

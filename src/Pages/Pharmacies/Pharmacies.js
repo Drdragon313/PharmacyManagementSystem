@@ -1,21 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  Col,
-  Image,
-  Input,
-  Row,
-  Select,
-  Space,
-  message,
-  Pagination,
-} from "antd";
+import { Col, Image, Row, Space, message, Pagination } from "antd";
 import { Button } from "antd";
 import "./Pharmacies.css";
 import eyeIcon from "../../Assets/Icon feather-eye.svg";
 import deleteActionbtn from "../../Assets/deleteAction.svg";
-import FilterIcon from "../../Assets/FilterIcon.svg";
-import SearchIcon from "../../Assets/searchIcon.svg";
 import plusOutline from "../../Assets/PlusOutlined.svg";
 import { Link } from "react-router-dom";
 import CustomTable from "../../Components/CustomTable/CustomTable";
@@ -24,13 +13,12 @@ import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb"
 import Spinner from "../../Components/Spinner/Spinner";
 import rightArrow from "../../Assets/rightarrow.svg";
 import leftArrow from "../../Assets/leftarrow.svg";
-import noteBookImg from "../../Assets/notebook.svg";
 import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";
 const Pharmacies = () => {
   const [tableDataSource, setTableDataSource] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5); // Set an initial value
+  const [limit, setLimit] = useState(5);
   const [totalItems, setTotalItems] = useState(0);
   const [sortField, setSortField] = useState("rent");
   const [sortDirection, setSortDirection] = useState("asc");
@@ -93,11 +81,6 @@ const Pharmacies = () => {
       message.error("Error deleting pharmacy:", error);
     }
   };
-  // const CustomSorterTooltip = ({ title }) => (
-  //   <Tooltip title={title} overlayStyle={{ marginTop: "8px" }}>
-  //     <div>{title}</div>
-  //   </Tooltip>
-  // );
   const tableColumns = [
     {
       title: "Pharmacy Name",
@@ -110,16 +93,7 @@ const Pharmacies = () => {
       key: "location",
     },
     {
-      title: (
-        <div>
-          Creation date
-          {/* <CustomSorterTooltip
-            title={`Sort by creation date ${
-              sortDirection === "asc" ? "descending" : "ascending"
-            }`}
-          /> */}
-        </div>
-      ),
+      title: <div>Creation date</div>,
       dataIndex: "dateOfCreation",
       key: "dateOfCreation",
       sorter: true,
@@ -263,11 +237,7 @@ const Pharmacies = () => {
         <Col className="gutter-row" span={8}></Col>
         <Col className="filter-container-pharm" span={3.5}>
           <div className="custom-select-container">
-            <select
-              className="filter-pharm-btn"
-              // value={yourSelectedValue}  {/* Specify the selected value if needed */}
-              // onChange={(e) => handleSelectChange(e.target.value)} {/* Add an onChange handler if needed */}
-            >
+            <select className="filter-pharm-btn">
               <option value="">Pharmacy postal code</option>
               <option value="lucy">Lucy</option>
               {/* Add other options as needed */}

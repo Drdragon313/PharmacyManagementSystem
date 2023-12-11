@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Iframe.css";
-
+import SignInFirstModal from "../Components/SingInFirstModal/SignInFirstModal";
 const Iframe = () => {
+  const authToken = localStorage.getItem("AuthorizationToken");
+  const [modalVisible, setModalVisible] = useState(!authToken);
+
+  if (!authToken) {
+    const openModal = () => {
+      setModalVisible(true);
+    };
+    return <SignInFirstModal visible={modalVisible} open={openModal} />;
+  }
   return (
     <div className="iframe-container">
       <iframe
