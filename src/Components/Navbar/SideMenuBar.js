@@ -82,6 +82,7 @@ const SideMenuBar = (props) => {
         <Menu.Item key="3" onClick={() => handleMenuItemClick("3")}>
           {" "}
           <div className="menu-items-sidebar">
+            <FileTextOutlined></FileTextOutlined>{" "}
             <Link to="/file">Import File</Link>
           </div>
         </Menu.Item>
@@ -100,13 +101,15 @@ const SideMenuBar = (props) => {
 
         <Menu.Item
           key="7"
-          icon={<LogoutOutlined />}
           onClick={() => {
             handleMenuItemClick("7");
             handleSignout(); // Call the handleSignout function on menu item click
           }}
         >
-          <Link to="/">Signout</Link>
+          <div className="menu-items-sidebar">
+            <LogoutOutlined />
+            <Link to="/">Signout</Link>
+          </div>
         </Menu.Item>
       </Menu>
       {props.collapsed ? null : (

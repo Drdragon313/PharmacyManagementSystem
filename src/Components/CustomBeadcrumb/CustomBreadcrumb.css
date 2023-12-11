@@ -1,0 +1,23 @@
+/* CustomBreadcrumb.css */
+.custom-breadcrumb {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-link {
+  text-decoration: none;
+  color: #425cda; /* Default link color */
+}
+
+.breadcrumb-link.active-link {
+  color: #2d2d2d; /* Set your desired color for active link */
+}
+
+.breadcrumb-label {
+  color: #333; /* Set your desired label color */
+}
+
+.breadcrumb-separator {
+  margin: 0 5px;
+  color: #777; /* Set your desired separator color */
+}

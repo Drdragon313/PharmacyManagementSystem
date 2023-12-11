@@ -1,16 +1,16 @@
-/* CustomButton.css */
 .custom-button {
-  /* Default Style */
   font-family: "Poppins", sans-serif;
   color: white;
   width: 100%;
-  background: #3a3475;
+  background-color: #425cda;
   border-radius: 10px;
+  transition: all;
 
   /* Hover Style */
   &:hover {
     background-color: #1e38ba;
     border-color: #1e38ba;
+    color: #fff;
   }
 
   /* Focus Style */

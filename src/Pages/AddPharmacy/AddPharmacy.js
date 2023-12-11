@@ -10,10 +10,12 @@ import {
   AddressHandler,
   PostCodeHandler,
 } from "../../Utility Function/PostCodeUtils";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import CustomButton from "../../Components/CustomButton/CustomButton";
 const { Option } = Select;
 const AddPharmacy = () => {
   const [user, setUsers] = useState([]);
+  const navigate = useNavigate();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const users = selectedUsers;
   console.log(users);
@@ -81,6 +83,7 @@ const AddPharmacy = () => {
       .then((response) => {
         console.log("Pharmacy created successfully:", response.data);
         message.success("Pharmacy Created Successfully");
+        navigate("/pharmacies");
         setData({
           pharmacyName: "",
           dateOfCreation: "",
@@ -259,13 +262,20 @@ const AddPharmacy = () => {
         </div>
         <div className="AddPharmacyInformationUpdateBtnContainer">
           <Link to="/pharmacies">
-            <button className="btn AddPharmacyInformationCancelBtn">
+            <CustomButton
+              type="default"
+              className="AddPharmacyInformationCancelBtn"
+            >
               Cancel
-            </button>
+            </CustomButton>
           </Link>
-          <button type="submit" className="btn AddPharmacyInformationUpdateBtn">
+          <CustomButton
+            type="primary"
+            htmlType="submit"
+            className="AddPharmacyInformationUpdateBtn"
+          >
             Create Pharmacy
-          </button>
+          </CustomButton>
         </div>
       </form>
     </div>

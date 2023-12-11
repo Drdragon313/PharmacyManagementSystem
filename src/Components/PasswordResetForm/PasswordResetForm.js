@@ -22,6 +22,7 @@ import {
   validateVerificationLink,
 } from "../../Utility Function/ResetPasswordUtils";
 import "./PasswordResetForm.css";
+import CustomButton from "../CustomButton/CustomButton";
 
 const PasswordResetForm = (props) => {
   const [apiStatus, setApiStatus] = useState(null);
@@ -123,13 +124,13 @@ const PasswordResetForm = (props) => {
                 </Button>
               </Link>
 
-              <Button
-                type="submit"
+              <CustomButton
+                htmlType="submit"
                 className="btn my-3 signinbtn"
                 onClick={handleResendEmail}
               >
                 Resend Email
-              </Button>
+              </CustomButton>
             </div>
           </div>
         ) : (
