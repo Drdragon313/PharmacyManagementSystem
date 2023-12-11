@@ -154,7 +154,6 @@ const AddPharmacy = () => {
                 }
                 value={data.postTown}
               />
-
               <CustomInput
                 divclassName="mb-3"
                 labelclassName="adduserNotLabel"
