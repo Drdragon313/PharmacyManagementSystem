@@ -24,7 +24,8 @@ import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb"
 import Spinner from "../../Components/Spinner/Spinner";
 import rightArrow from "../../Assets/rightarrow.svg";
 import leftArrow from "../../Assets/leftarrow.svg";
-
+import noteBookImg from "../../Assets/notebook.svg";
+import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";
 const Pharmacies = () => {
   const [tableDataSource, setTableDataSource] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -33,6 +34,9 @@ const Pharmacies = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [sortField, setSortField] = useState("rent");
   const [sortDirection, setSortDirection] = useState("asc");
+  const authToken = localStorage.getItem("AuthorizationToken");
+  const [modalVisible, setModalVisible] = useState(!authToken);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -200,6 +204,13 @@ const Pharmacies = () => {
   if (loading === true) {
     return <Spinner />;
   }
+
+  if (!authToken) {
+    const openModal = () => {
+      setModalVisible(true);
+    };
+    return <SignInFirstModal visible={modalVisible} open={openModal} />;
+  }
   return (
     <div className="main-container-pharmacies" style={{ margin: "10px" }}>
       <Row
@@ -249,33 +260,19 @@ const Pharmacies = () => {
           lg: 32,
         }}
       >
-        <Col className="gutter-row" span={8}>
-          <Input
-            className="search-bar"
-            suffix={<Image src={SearchIcon} preview={false}></Image>}
-            placeholder="Search here..."
-          />
-        </Col>
-        <Col className="gutter-row" span={3.5}>
-          <Select
-            className="filter-pharm-btn"
-            placeholder={
-              <div className="filter-select-placeholder">
-                <Image
-                  className="filter-icon"
-                  src={FilterIcon}
-                  alt="Filter Icon"
-                />
-                {" Filter"}
-              </div>
-            }
-            options={[
-              {
-                value: "lucy",
-                label: "Lucy",
-              },
-            ]}
-          ></Select>
+        <Col className="gutter-row" span={8}></Col>
+        <Col className="filter-container-pharm" span={3.5}>
+          <div className="custom-select-container">
+            <select
+              className="filter-pharm-btn"
+              // value={yourSelectedValue}  {/* Specify the selected value if needed */}
+              // onChange={(e) => handleSelectChange(e.target.value)} {/* Add an onChange handler if needed */}
+            >
+              <option value="">Pharmacy postal code</option>
+              <option value="lucy">Lucy</option>
+              {/* Add other options as needed */}
+            </select>
+          </div>
         </Col>
       </Row>
       <Row
@@ -328,14 +325,12 @@ const Pharmacies = () => {
             <Col span={8} style={{ paddingLeft: "40px" }}>
               <Space direction="horizontal">
                 Showing
-                <p style={{ color: "#425CDA", marginTop: "15px" }}>{page}</p>-
-                <p style={{ color: "#425CDA", marginTop: "15px" }}>
+                <p style={{ marginTop: "15px" }}>{page}</p>-
+                <p style={{ marginTop: "15px" }}>
                   {Math.ceil(totalItems / limit)}
                 </p>
                 of
-                <p style={{ color: "#425CDA", marginTop: "15px" }}>
-                  {totalItems}
-                </p>
+                <p style={{ marginTop: "15px" }}>{totalItems}</p>
                 <Pagination
                   itemRender={itemRender}
                   current={page}
