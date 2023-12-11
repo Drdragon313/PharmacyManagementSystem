@@ -47,12 +47,12 @@
   color: #3a3475;
   width: 7vw;
 }
-.AddPharmacyInformationUpdateBtn {
+/* .AddPharmacyInformationUpdateBtn {
   border-radius: 10px;
   background: #425cda;
   color: white;
   width: 12vw;
-}
+} */
 .ant-select-custom .ant-select-selector {
   height: 6vh !important;
   width: 100%;
@@ -122,4 +122,19 @@ div.ant-select-selector {
 }
 .ant-input.css-dev-only-do-not-override-nnuwmp.AddUsersDetailsInput {
   background: #f9f9f9 !important;
+}
+.AddPharmacyInformationUpdateBtn {
+  font-family: "Poppins", sans-serif;
+  color: white;
+  width: 100%;
+  background-color: #425cda;
+  border-radius: 10px;
+  transition: all;
+  margin-left: 20px;
+  border-radius: 10px;
+  width: 12vw;
+}
+
+.AddPharmacyInformationUpdateBtn:focus {
+  box-shadow: 0 0 0 2px #425cda;
 }

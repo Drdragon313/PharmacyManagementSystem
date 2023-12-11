@@ -8,6 +8,7 @@ import { Button } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { resendEmail } from "../../Utility Function/ResetPasswordUtils";
+import CustomButton from "../../Components/CustomButton/CustomButton";
 
 const ResendEmail = () => {
   const userEmail = localStorage.getItem("userEmail");
@@ -64,18 +65,16 @@ const ResendEmail = () => {
           <p className="ResendText-small">
             Didn’t receive the email? Check span folder or
           </p>
-          <Link to="/">
-            <button type="button" className="btn resend-btn-primary">
-              Back to Login
-            </button>
-          </Link>
-          <button
-            type="submit"
-            className="btn my-3 resendbtn"
-            onClick={handleResendbtn}
-          >
-            Resend Email
-          </button>
+          <div className="resend-email-btns">
+            <Link to="/">
+              <CustomButton type="default" className="back-to-login-btn">
+                Back to Login
+              </CustomButton>
+            </Link>
+            <CustomButton htmlType="submit" onClick={handleResendbtn}>
+              Resend Email
+            </CustomButton>
+          </div>
         </div>
       </div>
     </div>

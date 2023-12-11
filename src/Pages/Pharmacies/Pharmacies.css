@@ -32,7 +32,7 @@
 .filter-pharm-btn {
   font-family: "Poppins", sans-serif;
   font-size: 14px;
-  width: 200px;
+  width: 175px;
   text-align: left;
   justify-content: space-evenly;
   margin-right: -10px;
@@ -114,4 +114,21 @@
   height: 30px;
   color: #fff;
   border: transparent;
+}
+
+.filter-pharm-btn option {
+  padding: 8px;
+  background-color: #fff;
+
+  border-radius: 12px;
+  font-size: 12px;
+}
+.filter-pharm-btn option:hover {
+  background-color: #007bff;
+}
+/* Styles for the dropdown list when open (optional) */
+.filter-pharm-btn:focus {
+  border-color: #007bff; /* Change color on focus if needed */
+  outline: none; /* Remove default outline on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a box shadow on focus */
 }

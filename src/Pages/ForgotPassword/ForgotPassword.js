@@ -10,6 +10,7 @@ import { ArrowRightOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
+import CustomButton from "../../Components/CustomButton/CustomButton";
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(true);
@@ -129,20 +130,19 @@ const ForgotPassword = () => {
                 </p>
               )}
             </div>
-            <button
-              onClick={HandleBtnBacktoLogin}
-              type="button"
-              className="btn forget-btn-primary"
-            >
-              Back to Log in
-            </button>
-            <button
-              disabled={!email}
-              type="submit"
-              className="btn my-3 forgetbtn"
-            >
-              Request Reset Password
-            </button>
+            <div className="forgot-password-btns">
+              <CustomButton
+                onClick={HandleBtnBacktoLogin}
+                htmlType="button"
+                type="default"
+                className="forget-btn-primary"
+              >
+                Back to Log in
+              </CustomButton>
+              <CustomButton type="primary" disabled={!email} htmlType="submit">
+                Request Reset Password
+              </CustomButton>
+            </div>
           </form>
         </div>
       </div>

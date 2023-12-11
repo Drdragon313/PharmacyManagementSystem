@@ -42,3 +42,8 @@
   height: 80px;
   transition: all 0.2s;
 }
+.menu-items-sidebar {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}

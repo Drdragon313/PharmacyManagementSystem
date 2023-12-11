@@ -1,30 +1,34 @@
 // CustomBreadcrumb.js
 import React from "react";
-import { Breadcrumb } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import "./CustomBreadcrumb.css"; // Import your custom stylesheet for styling
 
-const CustomBreadcrumb = ({ items, currentFontColor, previousFontColor }) => {
+const CustomBreadcrumb = ({ items }) => {
+  const location = useLocation();
+
   return (
-    <Breadcrumb separator=">>">
+    <div className="custom-breadcrumb">
       {items &&
         items.map((item, index) => (
-          <Breadcrumb.Item
-            key={index}
-            style={{
-              color:
-                index === items.length - 1
-                  ? currentFontColor
-                  : previousFontColor,
-            }}
-          >
-            {item.link ? (
-              <Link to={item.link}>{item.label}</Link>
-            ) : (
-              <span>{item.label}</span>
+          <React.Fragment key={index}>
+            {index > 0 && (
+              <span className="breadcrumb-separator">{" >> "}</span>
             )}
-          </Breadcrumb.Item>
+            {item.link ? (
+              <Link
+                to={item.link}
+                className={`breadcrumb-link ${
+                  location.pathname === item.link ? "active-link" : ""
+                }`}
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <span className="breadcrumb-label">{item.label}</span>
+            )}
+          </React.Fragment>
         ))}
-    </Breadcrumb>
+    </div>
   );
 };
 

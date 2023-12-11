@@ -146,7 +146,7 @@ const Signin = () => {
                 Forget Password?
               </Link>
             </div>
-            <CustomButton type="button" onClick={handleLogin}>
+            <CustomButton type="primary" onClick={handleLogin}>
               Log In
             </CustomButton>
           </form>

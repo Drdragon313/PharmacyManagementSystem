@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Col, Image, Row, Space, message, Pagination } from "antd";
-import { Button } from "antd";
+import { Col, Image, Row, Space, message, Pagination, Modal } from "antd";
 import "./Pharmacies.css";
 import eyeIcon from "../../Assets/Icon feather-eye.svg";
 import deleteActionbtn from "../../Assets/deleteAction.svg";
@@ -14,22 +13,42 @@ import Spinner from "../../Components/Spinner/Spinner";
 import rightArrow from "../../Assets/rightarrow.svg";
 import leftArrow from "../../Assets/leftarrow.svg";
 import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";
+import CustomButton from "../../Components/CustomButton/CustomButton";
 const Pharmacies = () => {
   const [tableDataSource, setTableDataSource] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [pharmacyToDeleteId, setPharmacyToDeleteId] = useState(null);
+
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
   const [totalItems, setTotalItems] = useState(0);
   const [sortField, setSortField] = useState("rent");
   const [sortDirection, setSortDirection] = useState("asc");
+  const [availablePostalCodes, setAvailablePostalCodes] = useState([]);
   const authToken = localStorage.getItem("AuthorizationToken");
   const [modalVisible, setModalVisible] = useState(!authToken);
+  const [selectedPostalCode, setSelectedPostalCode] = useState("");
 
   useEffect(() => {
+    const fetchPostalCodes = async () => {
+      try {
+        const response = await axios.get(`${baseURL}/list-available-postcodes`);
+        const postCodeData = response.data;
+        console.log(postCodeData);
+
+        if (postCodeData && postCodeData.postCodes) {
+          setAvailablePostalCodes(postCodeData.postCodes);
+        }
+      } catch (error) {
+        console.error("Error fetching postal codes:", error);
+      }
+    };
+
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${baseURL}/list-pharmacies?page=${page}&limit=${limit}&sort_field=${sortField}&sort_direction=${sortDirection}`
+          `${baseURL}/list-pharmacies?page=${page}&limit=${limit}&post_code=${selectedPostalCode}&sort_field=${sortField}&sort_direction=${sortDirection}`
         );
         const data = response.data;
 
@@ -44,8 +63,13 @@ const Pharmacies = () => {
       }
     };
 
+    fetchPostalCodes();
     fetchData();
-  }, [page, limit, sortDirection, sortField]);
+  }, [page, limit, sortDirection, sortField, selectedPostalCode]);
+  const showDeleteModal = (pharmacyId) => {
+    setDeleteModalVisible(true);
+    setPharmacyToDeleteId(pharmacyId);
+  };
 
   const handlePageChange = (newPage) => {
     setPage(newPage);
@@ -66,21 +90,30 @@ const Pharmacies = () => {
     setPage(page);
   };
 
-  const handleDelete = async (pharmacyId) => {
+  const handleDelete = (pharmacyId) => {
+    showDeleteModal(pharmacyId);
+  };
+  const handleConfirmDelete = async () => {
     try {
       await axios.delete(
-        `${baseURL}/delete-pharmacy?pharmacy_id=${pharmacyId}`
+        `${baseURL}/delete-pharmacy?pharmacy_id=${pharmacyToDeleteId}`
       );
       const updatedData = tableDataSource.filter(
-        (item) => item.id !== pharmacyId
+        (item) => item.id !== pharmacyToDeleteId
       );
       setTableDataSource(updatedData);
       message.success("Record Deleted Successfully");
     } catch (error) {
       console.error("Error deleting pharmacy:", error);
       message.error("Error deleting pharmacy:", error);
+    } finally {
+      setDeleteModalVisible(false);
     }
   };
+  const handleCancelDelete = () => {
+    setDeleteModalVisible(false);
+  };
+
   const tableColumns = [
     {
       title: "Pharmacy Name",
@@ -209,19 +242,30 @@ const Pharmacies = () => {
           lg: 32,
         }}
       >
+        <Modal
+          title="Confirm Delete"
+          open={deleteModalVisible}
+          onOk={handleConfirmDelete}
+          onCancel={handleCancelDelete}
+          okText="Yes"
+          cancelText="Cancel"
+        >
+          Are you sure you want to delete this pharmacy?
+        </Modal>
+
         <Col className="gutter-row" span={4}>
           <p className="pharmacy-list-head-txt">Pharmacy list</p>
         </Col>
         <Col span={3.5}>
           <Link to="AddPharmacy">
-            <Button title="" type="primary" className="create-pharm-btn">
+            <CustomButton title="" type="primary">
               <Image
                 className="plus-outline-img"
                 preview={false}
                 src={plusOutline}
               ></Image>
               Create Pharmacy
-            </Button>
+            </CustomButton>
           </Link>
         </Col>
       </Row>
@@ -237,10 +281,24 @@ const Pharmacies = () => {
         <Col className="gutter-row" span={8}></Col>
         <Col className="filter-container-pharm" span={3.5}>
           <div className="custom-select-container">
-            <select className="filter-pharm-btn">
-              <option value="">Pharmacy postal code</option>
-              <option value="lucy">Lucy</option>
-              {/* Add other options as needed */}
+            <select
+              className="filter-pharm-btn"
+              value={selectedPostalCode}
+              onChange={(e) => setSelectedPostalCode(e.target.value)}
+              defaultValue="" // Set defaultValue to an empty string
+            >
+              <option value="" disabled>
+                Pharmacy postal code
+              </option>
+              {availablePostalCodes.map((postalCode) => (
+                <option
+                  className="select-options"
+                  key={postalCode}
+                  value={postalCode}
+                >
+                  {postalCode}
+                </option>
+              ))}
             </select>
           </div>
         </Col>

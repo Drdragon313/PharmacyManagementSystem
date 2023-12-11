@@ -1,4 +1,4 @@
-.pharm-detail-heading {
+.emp-detail-heading {
   font-family: "Poppins", sans-serif;
   font-size: 18px;
   font-weight: 500;
@@ -6,7 +6,9 @@
   letter-spacing: 0em;
   text-align: left;
   color: #425cda;
+  margin-left: 20px;
 }
+
 .primary-class {
   background-color: #425cda;
   font-family: "Poppins", sans-serif;

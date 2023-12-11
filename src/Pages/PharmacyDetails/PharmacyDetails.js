@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
@@ -13,14 +12,13 @@ import editIcon from "../../Assets/tabler_edit.svg";
 import editIconBlue from "../../Assets/editInBlue.svg";
 import Spinner from "../../Components/Spinner/Spinner";
 import "./PharmacyDetails.css";
+import { Link } from "react-router-dom";
 
 const PharmacyDetails = () => {
   const { pharmacy_id } = useParams();
-  const { employee_id } = useParams();
 
   const [pharmacyDetails, setPharmacyDetails] = useState(null);
   const [tableDataSource, setTableDataSource] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPharmacyDetails = async () => {
@@ -61,9 +59,6 @@ const PharmacyDetails = () => {
       console.error("Error deleting employee:", error);
     }
   };
-  const handleViewEmployeeDetails = () => {
-    navigate(`pharmacies/${pharmacy_id}/${employee_id}`);
-  };
 
   if (!pharmacyDetails) {
     return <Spinner />;
@@ -101,11 +96,9 @@ const PharmacyDetails = () => {
       fixed: "right",
       render: (text, record) => (
         <Space className="action-btns">
-          <Image
-            preview={false}
-            onClick={() => handleViewEmployeeDetails(record.id)}
-            src={eyeIcon}
-          ></Image>
+          <Link to={`${record.id}`}>
+            <Image preview={false} src={eyeIcon}></Image>
+          </Link>
 
           <Image
             preview={false}
@@ -125,11 +118,7 @@ const PharmacyDetails = () => {
     <div className="main-container-pharmacies">
       <Row className="pharmacy-list-breadcrumb">
         <Col className="breadcrumb-col" span={24}>
-          <CustomBreadcrumb
-            items={breadcrumbItems}
-            currentFontColor="black"
-            previousFontColor="blue"
-          ></CustomBreadcrumb>
+          <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
         </Col>
       </Row>
       <Row
