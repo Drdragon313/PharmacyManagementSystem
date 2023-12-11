@@ -3,7 +3,7 @@ import PasswordResetForm from "../../Components/PasswordResetForm/PasswordResetF
 const ResetPassword = () => {
   return (
     <div className="reset-password-body">
-      <PasswordResetForm heading="Reset Password" buttonText="Reset Password" />
+      <PasswordResetForm headingText="Reset" buttonText="Reset Password" />
     </div>
   );
 };

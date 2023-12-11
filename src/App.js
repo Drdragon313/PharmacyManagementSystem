@@ -32,6 +32,7 @@ import HomeIframe from "./Iframes/HomeIframe";
 import AddPharmacy from "./Pages/AddPharmacy/AddPharmacy";
 import PharmacyDetails from "./Pages/PharmacyDetails/PharmacyDetails";
 import PasswordUpdatedSuccess from "./Pages/PasswordUpdatedSuccess/PasswordUpdatedSuccess";
+import EmployeeDetails from "./Pages/EmployeeDetails/EmployeeDetails";
 
 const { Content } = Layout;
 
@@ -73,6 +74,10 @@ function MainContent() {
             element={<UploadSuccess />}
           />
           <Route path="employee" element={<Iframe />} />
+          <Route
+            path="pharmacies/:pharmacy_id/:employee_id"
+            element={<EmployeeDetails />}
+          />
           <Route path="pharmacy" element={<PharmacyIfame />} />
           <Route path="/schema/:schemaId" element={<SchemaDetail />} />
           <Route path="schema/autopopulate" element={<AutoPopulate />} />

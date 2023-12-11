@@ -18,14 +18,14 @@ import "./Signin.css";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addSigninData } from "../../redux/features/SigninSlice/SigninSlice";
+import CustomButton from "../../Components/CustomButton/CustomButton";
 const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const handleLogin = async () => {
     try {
       const response = await login(email, password);
       if (response.status === 200) {
@@ -89,7 +89,7 @@ const Signin = () => {
             <LoginOutlined className="LoginOutlined" />
             <strong>Log In</strong> to your account
           </h3>
-          <form onSubmit={handleLogin}>
+          <form>
             <div className="mb-3 mt-4">
               <label
                 htmlFor="exampleInputEmail1"
@@ -146,9 +146,9 @@ const Signin = () => {
                 Forget Password?
               </Link>
             </div>
-            <button type="submit" className="btn my-3 signinBtn">
+            <CustomButton type="button" onClick={handleLogin}>
               Log In
-            </button>
+            </CustomButton>
           </form>
         </div>
       </div>

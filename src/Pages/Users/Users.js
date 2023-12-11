@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Users.css";
 import { Link } from "react-router-dom";
 import { Button } from "antd";
+import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";
 
 const Users = () => {
+  const authToken = localStorage.getItem("AuthorizationToken");
+  const [modalVisible, setModalVisible] = useState(!authToken);
+
+  if (!authToken) {
+    const openModal = () => {
+      setModalVisible(true);
+    };
+    return <SignInFirstModal visible={modalVisible} open={openModal} />;
+  }
   return (
     <div className="cardscontainer">
       <div className="ContainerButtons">
