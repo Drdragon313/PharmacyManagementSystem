@@ -89,7 +89,7 @@ const SideMenuBar = (props) => {
         <Menu.Item key="4" onClick={() => handleMenuItemClick("4")}>
           <div className="menu-items-sidebar">
             <Image className="icons-sidenav" src={empIcon}></Image>
-            <Link to="/users">Employees</Link>
+            <Link to="/employeepage">Employees</Link>
           </div>
         </Menu.Item>
         <Menu.Item key="5" onClick={() => handleMenuItemClick("5")}>

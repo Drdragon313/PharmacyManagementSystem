@@ -13,12 +13,12 @@ const HomeIframe = () => {
   }
   return (
     <iframe
-      height="90%"
       style={{ marginTop: "10px" }}
-      width="100%"
-      title="Combined Report"
+      title="Combined_Report"
+      width="1280"
+      height="670"
       src="https://app.powerbi.com/view?r=eyJrIjoiMmEyZTBiMDItNWNmMC00N2I5LTliMTMtNWI2MzA5NWMyMmNjIiwidCI6ImEyNjUwODVjLTA2NjQtNGExNy1iYTlhLTBhZTcwMGY2YjVhYiJ9"
-      frameBorder="0"
+      frameborder="0"
       allowFullScreen="true"
     ></iframe>
   );

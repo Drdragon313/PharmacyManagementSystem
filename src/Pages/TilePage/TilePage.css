@@ -13,14 +13,16 @@
   height: 80%;
 }
 .tilecards {
-  border: 1px solid #dcdcdc;
+  border: 1px solid #2a44c1;
+  color: #2a44c1;
   border-radius: 10px;
   padding: 16px;
-  background: linear-gradient(to bottom, #009ee2, #001529);
+
+  background: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-left: 10px;
-  margin-top: 10px;
-  width: 300px;
+  margin-top: 5px;
+  width: 260px;
   text-align: center;
   height: 190px;
   transform: border-style 0.5s border-color 0.5s, box-shadow 1s;
@@ -29,12 +31,12 @@
   cursor: pointer;
   border-color: #fff;
   box-shadow: 2px 2px 4px rgba(0, 21, 41, 100);
-  color: aliceblue;
+  color: #2a44c1;
   border-style: solid;
 }
 .tile-avatar-img {
   background-color: transparent;
-  border: 1px solid #fff;
+
   height: 80px;
   width: 80px;
   align-items: center;
@@ -44,11 +46,10 @@
   height: 80px;
   width: 80px;
 }
-.tile-name {
-  color: #fff;
-}
+
 .tile-content {
   margin-top: 20px;
+  color: #2a44c1;
 }
 .card-title {
   font-size: 18px;
@@ -99,18 +100,16 @@
 }
 .schemacards {
   margin-left: 10px;
-  width: 300px;
-  background: linear-gradient(to bottom, #009ee2, #001529);
+  width: 260px;
+  text-align: center;
   height: 190px;
+  background: #fff;
+  justify-content: center;
   transform: border-style 0.5s border-color 0.5s box-shadow 1s;
+  color: #2a44c1;
+  border: 1px solid#2a44c1;
 }
-.schemacards:hover {
-  cursor: pointer;
-  border-color: #fff;
-  box-shadow: 2px 2px 4px rgba(0, 21, 41, 100);
-  color: aliceblue;
-  border-style: solid;
-}
+
 .add-button {
   margin-left: 50px;
   margin-top: 60px;
@@ -124,7 +123,8 @@
   flex-direction: row;
   margin-left: 10px;
   margin-top: 10px;
-  width: 300px;
+  width: 260px;
+  text-align: center;
   height: 190px;
   border-width: 3px;
   border-style: dashed;
@@ -139,15 +139,16 @@
   cursor: pointer;
   border-color: #001529;
   box-shadow: 2px 2px 4px rgba(0, 21, 41, 100);
-  background: linear-gradient(to bottom, #009ee2, #001529);
-  color: aliceblue;
+  background: #2a44c1;
+  color: #fff;
   border-style: solid;
 }
 .button-container-schema {
   display: flex;
   flex-direction: row;
   margin-left: 10px;
-  width: 300px;
+  width: 260px;
+  text-align: center;
   height: 190px;
   border-width: 3px;
   border-style: dashed;
@@ -162,7 +163,7 @@
   cursor: pointer;
   border-color: #001529;
   box-shadow: 2px 2px 4px rgba(0, 21, 41, 100);
-  background: linear-gradient(to bottom, #009ee2, #001529);
+  background: #2a44c1;
   color: aliceblue;
   border-style: solid;
 }
@@ -181,7 +182,7 @@
   margin-left: 30px;
 }
 .dropbtn {
-  color: white;
+  color: #2a44c1;
   padding: 1px;
   border-radius: 5px;
   margin-left: 5px;
@@ -194,7 +195,7 @@
 }
 
 .dropdown {
-  margin-left: 200px;
+  margin-left: 190px;
   margin-top: -20px;
 }
 
@@ -223,7 +224,7 @@
 }
 
 .schema-content {
-  text-align: left;
+  text-align: center;
   margin-left: 10px;
 }
 .dropbtn-schema {

@@ -39,11 +39,7 @@ const Topnav = () => {
   return (
     <Layout>
       <Header className="TopnavHeader">
-        <div>
-          <Space wrap className="TopnavSearch">
-            <Button icon={<SearchOutlined />}>Search</Button>
-          </Space>
-        </div>
+        <div></div>
         <div>
           <Space>
             <NotificationOutlined />

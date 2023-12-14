@@ -13,6 +13,8 @@ const CustomInput = (props) => {
         onChange={props.handleChange}
         onBlur={props.handleBlur}
         value={props.value}
+        style={props.style}
+        required={props.required}
       />
     </div>
   );
