@@ -12,17 +12,15 @@ const Iframe = () => {
     return <SignInFirstModal visible={modalVisible} open={openModal} />;
   }
   return (
-    <div className="iframe-container">
-      <iframe
-        className="exampleIframe"
-        title="Employee"
-        width="1100"
-        height="570"
-        src="https://app.powerbi.com/view?r=eyJrIjoiYTIwZDU3YTgtMjUyYy00MzRhLWJlOWUtZTM1ZWY2Yzc4MTdkIiwidCI6ImEyNjUwODVjLTA2NjQtNGExNy1iYTlhLTBhZTcwMGY2YjVhYiJ9"
-        frameborder="0"
-        allowFullScreen="true"
-      ></iframe>
-    </div>
+    <iframe
+      title="Employee_Report"
+      className="iframe-container"
+      width="600"
+      height="373.5"
+      src="https://app.powerbi.com/view?r=eyJrIjoiYTIwZDU3YTgtMjUyYy00MzRhLWJlOWUtZTM1ZWY2Yzc4MTdkIiwidCI6ImEyNjUwODVjLTA2NjQtNGExNy1iYTlhLTBhZTcwMGY2YjVhYiJ9"
+      frameborder="0"
+      allowFullScreen="true"
+    ></iframe>
   );
 };
 

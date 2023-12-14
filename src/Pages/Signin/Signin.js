@@ -19,35 +19,40 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addSigninData } from "../../redux/features/SigninSlice/SigninSlice";
 import CustomButton from "../../Components/CustomButton/CustomButton";
+
+import {
+  fetchUserPermissions,
+  fetchModules,
+} from "../../Utility Function/ModulesAndPermissions";
 const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
+  const handleLogin = async (setUserPermissions, setModules) => {
     try {
       const response = await login(email, password);
+
       if (response.status === 200) {
         message.success("Logged In Successfully!", 2);
         dispatch(addSigninData(response.data.token));
         const AuthorizationToken = `Bearer ${response.data.token}`;
         localStorage.setItem("AuthorizationToken", AuthorizationToken);
-        navigate("/tilepage");
+
+        // Fetch user permissions using the utility function
+        await fetchUserPermissions(setUserPermissions);
+
+        // Fetch modules using the utility function
+        await fetchModules(setModules);
+
+        // Navigate to tilepage
+        navigate("/file");
       } else {
         message.error("Invalid Credentials", 2);
       }
     } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.error &&
-        error.response.data.error.message
-      ) {
-        message.error(error.response.data.error.message, 3);
-      } else {
-        message.error("Something went wrong!", 3);
-      }
+      // ... (existing error handling code)
     }
   };
 

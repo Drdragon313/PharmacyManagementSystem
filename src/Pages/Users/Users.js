@@ -3,6 +3,7 @@ import "./Users.css";
 import { Link } from "react-router-dom";
 import { Button } from "antd";
 import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";
+import CustomButton from "../../Components/CustomButton/CustomButton";
 
 const Users = () => {
   const authToken = localStorage.getItem("AuthorizationToken");
@@ -19,17 +20,15 @@ const Users = () => {
       <div className="ContainerButtons">
         <div>
           <Link to="/users/ViewEmployees">
-            <Button className="gridStyleButtons">List of Employees</Button>
+            <CustomButton type="default" className="gridStyleButtons">
+              List of Employees
+            </CustomButton>
           </Link>
-          <Button className="gridStyleButtons">
-            Assign Roles and Permissions
-          </Button>
-        </div>
-        <div>
-          <Link to="/users/AddUser">
-            <Button className="gridStyleButtons">Create New Employee</Button>
-          </Link>
-          <Button className="gridStyleButtons">Staffing Cost</Button>
+          {/* <Link to="/rolesandpermissions">
+            <Button className="gridStyleButtons">
+              Assign Roles and Permissions
+            </Button>
+          </Link> */}
         </div>
       </div>
     </div>

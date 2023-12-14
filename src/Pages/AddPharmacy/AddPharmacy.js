@@ -116,82 +116,13 @@ const AddPharmacy = () => {
                 </label>
                 <br />
                 <Input
+                  required={true}
                   className="AddPharmacyDetailsInput"
                   name="PharmacyName"
                   onChange={handleChange}
                   value={data.pharmacyName}
                 />
               </div>
-              <div className="mb-3">
-                <label htmlFor="dateOfCreation" className="addPharmacyNotLabel">
-                  Date of creation
-                </label>
-                <br />
-                <DatePicker
-                  className="AddPharmacyDetailsInput"
-                  format="YYYY-MM-DD"
-                  name="dateOfCreation"
-                  onChange={handleDateChange}
-                />
-              </div>
-
-              <CustomInput
-                divclassName="mb-3"
-                labelclassName="adduserNotLabel"
-                labelText="Search your postcode"
-                inputclassName="AddUsersDetailsInput"
-                inputName="postCode"
-                handleChange={handleChange}
-                handleBlur={handleFindAddress}
-                value={data.postCode}
-              />
-              <CustomSelect
-                divclassName="mb-3"
-                labelclassName="adduserNotLabel"
-                labelText="Please Select your Address"
-                selectclassName="GenderInput ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
-                name="Address"
-                onChange={handleSelectChange}
-                options={
-                  pCodeResponse ? pCodeResponse.map((item) => item.address) : []
-                }
-                value={data.postTown}
-              />
-              <CustomInput
-                divclassName="mb-3"
-                labelclassName="adduserNotLabel"
-                labelText="Post Town"
-                inputclassName="AddUsersDetailsInput"
-                inputName="postTown"
-                handleChange={handleChange}
-                value={data.postTown}
-              />
-            </form>
-          </div>
-          <div className="AddPharmacyTwoDetails">
-            <form>
-              <div className="mb-3">
-                <label
-                  className="addPharmacyNotLabel"
-                  htmlFor="PharmacyManager"
-                >
-                  Pharmacy manager
-                </label>
-                <br />
-                <Select
-                  className="AddPharmacySelect ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
-                  name="PharmacyManager"
-                  onChange={handleSelectChange}
-                >
-                  <Option value="Male">manager1</Option>
-                  <Option value="Female">manager2</Option>
-                  <Option value="Other">manager3</Option>
-                  <Option value="Do Not Wish to Disclose">
-                    Do Not Wish to Disclose
-                  </Option>
-                </Select>
-              </div>
-
               <div className="mb-3">
                 <label htmlFor="rent" className="addPharmacyNotLabel">
                   Rent
@@ -205,24 +136,43 @@ const AddPharmacy = () => {
                   value={data.rent}
                 />
               </div>
+
               <CustomInput
                 divclassName="mb-3"
                 labelclassName="adduserNotLabel"
-                labelText="Address Line 1"
+                labelText="Postcode"
                 inputclassName="AddUsersDetailsInput"
-                inputName="Line1"
+                inputName="postCode"
                 handleChange={handleChange}
-                value={data.Line1}
+                handleBlur={handleFindAddress}
+                value={data.postCode}
               />
-              <CustomInput
-                divclassName="mb-3"
-                labelclassName="adduserNotLabel"
-                labelText="Address Line 2"
-                inputclassName="AddUsersDetailsInput"
-                inputName="Line2"
-                handleChange={handleChange}
-                value={data.Line2}
-              />
+              <div
+                direction="horizontal"
+                style={{ display: "flex", flexDirection: "row", gap: "47px" }}
+                className="mb-3 "
+              >
+                <CustomInput
+                  // divclassName="mb-3"
+                  style={{ width: "160px" }}
+                  labelclassName="adduserNotLabel"
+                  labelText="Building Name"
+                  inputclassName="AddUsersDetailsInput"
+                  inputName="Line1"
+                  handleChange={handleChange}
+                  value={data.Line1}
+                />
+                <CustomInput
+                  // divclassName="mb-3"
+                  style={{ width: "150px" }}
+                  labelclassName="addPharmacyNotLabel"
+                  labelText="Street Name"
+                  inputclassName="AddUsersDetailsInput"
+                  inputName="Line2"
+                  handleChange={handleChange}
+                  value={data.Line2}
+                />
+              </div>
               <div className="mb-3">
                 <label htmlFor="users" className="addPharmacyNotLabel">
                   Add users in pharmacy
@@ -256,6 +206,65 @@ const AddPharmacy = () => {
                   ))}
                 </Select>
               </div>
+            </form>
+          </div>
+          <div className="AddPharmacyTwoDetails">
+            <form>
+              <div className="mb-3">
+                <label htmlFor="dateOfCreation" className="dateOfCreationLabel">
+                  Date of creation
+                </label>
+                <br />
+                <DatePicker
+                  className="AddPharmacyDetailsInput"
+                  format="YYYY-MM-DD"
+                  name="dateOfCreation"
+                  onChange={handleDateChange}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label
+                  className="addPharmacyNotLabel"
+                  htmlFor="PharmacyManager"
+                >
+                  Pharmacy manager
+                </label>
+                <br />
+                <Select
+                  className="AddPharmacySelect ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
+                  name="PharmacyManager"
+                  onChange={handleSelectChange}
+                >
+                  <Option value="Male">manager1</Option>
+                  <Option value="Female">manager2</Option>
+                  <Option value="Other">manager3</Option>
+                  <Option value="Do Not Wish to Disclose">
+                    Do Not Wish to Disclose
+                  </Option>
+                </Select>
+              </div>
+              <CustomSelect
+                divclassName="mb-3"
+                labelclassName="adduserNotLabel"
+                labelText="Please Select your Address"
+                selectclassName="GenderInput ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
+                name="Address"
+                onChange={handleSelectChange}
+                options={
+                  pCodeResponse ? pCodeResponse.map((item) => item.address) : []
+                }
+                value={data.postTown}
+              />
+              <CustomInput
+                divclassName="mb-3"
+                labelclassName="adduserNotLabel"
+                labelText="Post Town"
+                inputclassName="AddUsersDetailsInput"
+                inputName="postTown"
+                handleChange={handleChange}
+                value={data.postTown}
+              />
             </form>
           </div>
           <div className="AddPharmacyThreeDetails"></div>

@@ -28,7 +28,7 @@ import SelectionModal from "../../Components/CreateSchemaSelectionModal/Selectio
 import CustomCard from "../../Components/Card/Card";
 import schemaImg from "../../Assets/Schemas.png";
 import { Link } from "react-router-dom";
-import tileImg from "../../Assets/tileimg.svg";
+import tileImg from "../../Assets/schemaImg.svg";
 import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";
 
 const TilePage = () => {
@@ -213,7 +213,7 @@ const TilePage = () => {
                   </Button>
                 </div>
                 <Space direction="vertical" size={8} className="tile-content">
-                  <Avatar className="tile-avatar-img" shape="square">
+                  <Avatar className="tile-avatar-img" shape="circle">
                     <Image
                       className="tile-img"
                       preview={false}
@@ -304,10 +304,10 @@ const TilePage = () => {
                     direction="vertical"
                     size={5}
                   >
-                    <Image preview={false} src={schemaImg}></Image>
+                    <Image preview={false} src={tileImg}></Image>
                     <h5 className="tile-name">{schema.schema_name}</h5>
                     <Link to={`/schema/${schema.id}`}>
-                      <Button>View Details</Button>
+                      <Button type="link">View Details</Button>
                     </Link>
                   </Space>
                 </CustomCard>

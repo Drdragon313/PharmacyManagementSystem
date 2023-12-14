@@ -1,6 +1,6 @@
 .Validation-container {
   margin-left: 20px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 .Validation-paragraph {
   color: #707477;
@@ -10,6 +10,38 @@
   border: 1px solid #d3d3d3;
   width: 75vw;
   height: 72vh;
+}
+.schema-file-upload-cards {
+  margin-left: 10px;
+  border-radius: 17px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 95%;
+  background: #fff;
+  height: 170px;
+  border: 1px solid #2a44c1;
+  color: #2a44c1;
+  transform: border-style 0.5s border-color 0.5s box-shadow 1s;
+}
+.schema-file-upload-cards:hover {
+  cursor: pointer;
+  border-color: #fff;
+  box-shadow: 2px 2px 4px #2a44c1;
+  color: #2a44c1;
+  border-style: solid;
+}
+.schema-file-upload-content {
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+  text-align: center;
+  margin-left: -20px;
+}
+
+.schema-file-upload-img {
+  height: 120px;
+  width: 120px;
 }
 .Options-containerElements {
   margin-top: 20px;
@@ -41,7 +73,7 @@
 }
 .Validation-button {
   margin-top: 10px;
-  background: linear-gradient(to right, #001529, #009de1);
+  background: #2a44c1;
   color: white;
 }
 .Validation-button-disabled {

@@ -10,14 +10,17 @@ import {
   Space,
   Image,
   Spin,
+  Avatar,
 } from "antd";
-import schemaImg from "../../Assets/Schemas.png";
+import schemaImg from "../../Assets/schemaImg.svg";
 import axios from "axios";
 import { addIndex } from "../../redux/features/SchemaSelectionSlice/SchemaSelectionSlice";
 import { Link } from "react-router-dom";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import CustomCard from "../../Components/Card/Card";
 import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";
+import CustomButton from "../../Components/CustomButton/CustomButton";
+import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 const ValidationOptions = () => {
   const schemaDataArray = useSelector((state) => state.schema.schemaDataArray);
   const [schemas, setSchemas] = useState([]);
@@ -92,12 +95,15 @@ const ValidationOptions = () => {
     };
     return <SignInFirstModal visible={modalVisible} open={openModal} />;
   }
+
+  const breadcrumbItems = [{ label: "Available Schemas", link: "/file" }];
   return (
     <div className="Validation-container">
-      <h2>Files and Assets</h2>
+      <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
+      <h2>Upload File</h2>
       <p className="Validation-paragraph">
-        Documents and Attachments that have been uploaded will be validated with
-        the already defined selected schema in order to upload to the database.
+        Default tiles for Pharmlytics are below. An example schema can be viewed
+        from below.
       </p>
       <div className="Options-container">
         {loading ? (
@@ -107,16 +113,16 @@ const ValidationOptions = () => {
           </div>
         ) : (
           <div className="Options-containerElements">
-            <h5>
+            <h6>
               Select the schema with which you want to validate this file's data
               with.
-            </h5>
+            </h6>
             <p className="Validation-paragraph">Available Schemas:</p>
             <Row gutter={16}>
               {schemas.map((schema, index) => (
                 <Col span={6} className="validation-col" key={index}>
                   <CustomCard
-                    className="schemacards"
+                    className="schema-file-upload-cards"
                     bordered={true}
                     onCheckboxChange={handleSelect}
                   >
@@ -127,17 +133,37 @@ const ValidationOptions = () => {
                         checked={schema.selected}
                       />
                     </div>
-                    <Space
-                      className="schema-content"
-                      direction="vertical"
-                      size={5}
-                    >
-                      <Image preview={false} src={schemaImg}></Image>
-                      <h5 className="tile-name">{schema.schema_name}</h5>
-                      <h6 className="tile-name">
-                        Tile Path: {schema.tile_path}
-                      </h6>
-                    </Space>
+                    <div className="schema-file-upload-content">
+                      <Space
+                        direction="vertical"
+                        size={8}
+                        className="schema-content"
+                      >
+                        <Image
+                          className="schema-file-upload-img"
+                          preview={false}
+                          src={schemaImg}
+                        ></Image>
+
+                        <h5 className="schema-file-upload-name">
+                          {" "}
+                          {schema.schema_name}
+                        </h5>
+                        <Link to={`/schema/${schema.schema_id}`}>
+                          <Button type="link">View Details</Button>
+                        </Link>
+                      </Space>
+
+                      <div></div>
+                      {/* <Image
+                        className="schema-img"
+                        preview={false}
+                        src={schemaImg}
+                      ></Image>
+                      <h5 className="tile-name" style={{ color: "#000" }}>
+                        {schema.schema_name}
+                      </h5> */}
+                    </div>
                   </CustomCard>
                 </Col>
               ))}
@@ -158,9 +184,12 @@ const ValidationOptions = () => {
                 <Button className="Validation-button">Next</Button>
               </Link>
             ) : (
-              <Button disabled={true} className="Validation-button-disabled">
+              <CustomButton
+                disabled={true}
+                className="Validation-button-disabled"
+              >
                 Next
-              </Button>
+              </CustomButton>
             )
           ) : null}
         </div>

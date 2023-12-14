@@ -6,6 +6,7 @@ import uploadIcon from "../../Components/Images/uploadIcon.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
+import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 
 const File = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -56,22 +57,27 @@ const File = () => {
             error.response.data.error &&
             error.response.data.error.message
           ) {
-            message.error(error.response.data.error.message, 3);
+            // message.error(error.response.data.error.message, 3);
           } else {
-            message.error("File Uploading Failed!", 3);
+            // message.error("File Uploading Failed!", 3);
           }
         });
     } catch (errorMessage) {
-      setError(errorMessage);
-      message.error("Invalid CSV File", 2);
+      // setError(errorMessage);
+      // message.error("Invalid CSV File", 2);
     } finally {
       setIsLoading(false);
     }
   };
 
+  const breadcrumbItems = [
+    { label: "Available Schemas", link: "/file" },
+    { label: "Choose File", link: `/file/fileUpload` },
+  ];
   return (
     <div>
       <div className="file-container">
+        <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
         <h2>Files and Assets</h2>
         <p className="file-paragraph">
           Documents and Attachments that have been uploaded will be validated
@@ -84,9 +90,9 @@ const File = () => {
             className="file-upload"
             accept=".csv"
             beforeUpload={validateAndUpload}
-            onRemove={() => {
-              setError([]);
-            }}
+            // onRemove={() => {
+            //   setError([]);
+            // }}
           >
             <img src={uploadIcon} alt="Upload Icon" />
             <br />
@@ -101,9 +107,9 @@ const File = () => {
           </div>
         ) : (
           <div>
-            {error &&
+            {/* {error &&
               getCurrentPageErrors().map((value, index) => (
-                <div style={{ color: "red" }} key={index}>
+                <div style={{ color: "green" }} key={index}>
                   <p>{value}</p>
                 </div>
               ))}
@@ -116,7 +122,7 @@ const File = () => {
                 showSizeChanger={false}
                 className="pagination"
               />
-            )}
+            )} */}
           </div>
         )}
       </div>

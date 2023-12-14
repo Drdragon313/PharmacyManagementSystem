@@ -30,7 +30,7 @@
 .AddPharmacyDetailsInput {
   height: 6vh;
   width: 24vw;
-  background: #f9f9f9;
+  background: #fdfdfd !important;
   border-radius: 12px;
 }
 
@@ -59,15 +59,14 @@
   border-radius: 12px;
   display: flex;
   align-items: center;
-
-  background: #f9f9f9 !important;
+  background: #fdfdfd !important;
 }
 div.ant-select-selector {
   min-height: 6vh;
   border-radius: 12px;
   display: flex;
   align-items: center;
-  background: #f9f9f9 !important;
+  background: #fdfdfd !important;
   padding-top: 1px;
 }
 .select-custom {
@@ -76,7 +75,7 @@ div.ant-select-selector {
   border-radius: 15px !important;
   display: flex;
   align-items: center;
-  background: #f9f9f9 !important;
+  background: #fdfdfd !important;
   padding-top: 1px;
   padding-bottom: 0;
 }
@@ -96,8 +95,18 @@ div.ant-select-selector {
   font-weight: bold;
   color: red;
 }
+.adduserNotLabel::after {
+  content: " *";
+  font-weight: bold;
+  color: red;
+}
 .addPharmacyNotLabel {
   margin-left: 3%;
+}
+.dateOfCreationLabel::after {
+  content: " *";
+  font-weight: bold;
+  color: red;
 }
 .Pharmacycreationtxt {
   color: #3a3475;
@@ -108,7 +117,7 @@ div.ant-select-selector {
 .add-user-in-pharm-select {
   height: 5vh;
   width: 24vw;
-  background: #f9f9f9;
+  background: #fdfdfd;
 }
 .ant-select-show-search:where(
     .css-dev-only-do-not-override-nnuwmp
@@ -118,10 +127,10 @@ div.ant-select-selector {
   width: 100%;
 }
 .ant-input.css-dev-only-do-not-override-nnuwmp.AddPharmacyDetailsInput {
-  background: #f9f9f9 !important;
+  background: #fdfdfd !important;
 }
 .ant-input.css-dev-only-do-not-override-nnuwmp.AddUsersDetailsInput {
-  background: #f9f9f9 !important;
+  background: #fdfdfd !important;
 }
 .AddPharmacyInformationUpdateBtn {
   font-family: "Poppins", sans-serif;

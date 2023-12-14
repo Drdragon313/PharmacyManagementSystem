@@ -33,7 +33,9 @@ import AddPharmacy from "./Pages/AddPharmacy/AddPharmacy";
 import PharmacyDetails from "./Pages/PharmacyDetails/PharmacyDetails";
 import PasswordUpdatedSuccess from "./Pages/PasswordUpdatedSuccess/PasswordUpdatedSuccess";
 import EmployeeDetails from "./Pages/EmployeeDetails/EmployeeDetails";
-
+import Roles from "./Components/RolesAndPermissions/Roles";
+import CreateRole from "./Components/RolesAndPermissions/CreateRole";
+import EmployeePage from "./Pages/EmployeePage/EmployeePage";
 const { Content } = Layout;
 
 function App() {
@@ -80,8 +82,15 @@ function MainContent() {
           />
           <Route path="pharmacy" element={<PharmacyIfame />} />
           <Route path="/schema/:schemaId" element={<SchemaDetail />} />
+          <Route path="/file/:schemaId" element={<SchemaDetail />} />
           <Route path="schema/autopopulate" element={<AutoPopulate />} />
           <Route path="/customschema" element={<CustomSchema />} />
+          <Route path="/employeepage" element={<EmployeePage />} />
+          <Route path="/rolesandpermissions" element={<Roles />} />
+          <Route
+            path="/rolesandpermissions/createrole"
+            element={<CreateRole />}
+          />
           <Route path="/profile" element={<Profile />}>
             <Route path="permissions" element={<Permissions />} />
             <Route path="updatePassword" element={<UpdatePassword />} />

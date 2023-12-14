@@ -1,0 +1,13 @@
+.toggle-btn-container {
+  border: 1px solid #425cda33;
+  border-radius: 12px;
+  padding: 2px;
+  width: 310px;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #f8fbff;
+  margin-top: 20px;
+  gap: 5px;
+}
