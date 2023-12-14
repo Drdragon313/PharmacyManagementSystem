@@ -44,7 +44,7 @@ const SelectionModal = ({ visible, setSelectionModalVisible, tilePath }) => {
                 src={databaseImg}
                 preview={false}
               ></Image>
-              <h6>Import from Database</h6>
+              <h6>Connect To Database</h6>
               <p>
                 This method will allow users to connect to their existence
                 database to import their desired schema.
