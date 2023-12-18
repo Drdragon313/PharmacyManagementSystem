@@ -10,7 +10,6 @@ import {
   Space,
   Image,
   Spin,
-  Avatar,
 } from "antd";
 import schemaImg from "../../Assets/schemaImg.svg";
 import axios from "axios";
@@ -126,17 +125,17 @@ const ValidationOptions = () => {
                     bordered={true}
                     onCheckboxChange={handleSelect}
                   >
-                    <div className="dropdown">
-                      <Checkbox
-                        className="checkbox"
-                        onChange={() => handleSelect(index)}
-                        checked={schema.selected}
-                      />
-                    </div>
                     <div className="schema-file-upload-content">
+                      <div className="checkbox-schema-file">
+                        <Checkbox
+                          className="checkbox"
+                          onChange={() => handleSelect(index)}
+                          checked={schema.selected}
+                        />
+                      </div>
                       <Space
                         direction="vertical"
-                        size={8}
+                        size={2}
                         className="schema-content"
                       >
                         <Image
