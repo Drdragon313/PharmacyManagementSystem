@@ -19,7 +19,7 @@ const Users = () => {
     <div className="cardscontainer">
       <div className="ContainerButtons">
         <div>
-          <Link to="/users/ViewEmployees">
+          <Link to="/users/AddUser">
             <CustomButton type="default" className="gridStyleButtons">
               List of Employees
             </CustomButton>

@@ -24,18 +24,20 @@ import {
   fetchUserPermissions,
   fetchModules,
 } from "../../Utility Function/ModulesAndPermissions";
+import Spinner from "../../Components/Spinner/Spinner";
 const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false); // Add loading state
 
   const handleLogin = async (setUserPermissions, setModules) => {
     try {
+      setLoading(true);
       const response = await login(email, password);
 
       if (response.status === 200) {
-        message.success("Logged In Successfully!", 2);
         dispatch(addSigninData(response.data.token));
         const AuthorizationToken = `Bearer ${response.data.token}`;
         localStorage.setItem("AuthorizationToken", AuthorizationToken);
@@ -48,14 +50,19 @@ const Signin = () => {
 
         // Navigate to tilepage
         navigate("/file");
+        message.success("Logged In Successfully!", 2);
       } else {
         message.error("Invalid Credentials", 2);
       }
     } catch (error) {
       // ... (existing error handling code)
+    } finally {
+      setLoading(false); // Set loading to false after login process completes
     }
   };
-
+  if (loading === true) {
+    return <Spinner />;
+  }
   return (
     <div className="siginContainer">
       <div className="signinLogoMainContainer">

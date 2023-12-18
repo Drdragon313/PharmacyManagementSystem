@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Image, Menu } from "antd";
 import { FileTextOutlined, LogoutOutlined } from "@ant-design/icons";
 import "./Style.css";
@@ -8,15 +8,54 @@ import HeartGrey from "../../Assets/heart grey.svg";
 import empIcon from "../../Assets/emp_icon.svg";
 import pharmIcon from "../../Assets/streamline_pharmacy.svg";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
+import {
+  fetchUserPermissions,
+  fetchModules,
+} from "../../Utility Function/ModulesAndPermissions";
 import axios from "axios";
 const { SubMenu } = Menu;
 const SideMenuBar = (props) => {
-  const [selectedKeys, setSelectedKeys] = useState(["2"]);
+  const [selectedKeys, setSelectedKeys] = useState(["5"]);
+
+  const [menuItems, setMenuItems] = useState([]);
 
   const handleMenuItemClick = (key) => {
     setSelectedKeys([key]);
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch user permissions
+        await fetchUserPermissions((userPermissions) => {
+          // Fetch modules based on user permissions
+          fetchModules((modules) => {
+            const modulesWithPermissions = modules
+              .filter((module) =>
+                userPermissions.some(
+                  (permission) => permission.module_id === module.module_id
+                )
+              )
+              .map((module) => {
+                const permissions = userPermissions.find(
+                  (permission) => permission.module_id === module.module_id
+                );
 
+                return {
+                  ...module,
+                  actions: permissions ? permissions.actions : {},
+                };
+              });
+
+            setMenuItems(modulesWithPermissions);
+          });
+        });
+      } catch (error) {
+        // Handle error, show a message, etc.
+      }
+    };
+
+    fetchData();
+  }, []);
   const handleSignout = async () => {
     try {
       const authToken = localStorage.getItem("AuthorizationToken");
@@ -48,62 +87,29 @@ const SideMenuBar = (props) => {
         defaultOpenKeys={["sub1"]}
         className="NavbarMenu"
       >
-        <Menu.Item key="1" onClick={() => handleMenuItemClick("1")}>
-          <div className="menu-items-sidebar">
-            <Image className="icons-sidenav" src={HeartGrey}></Image>
-            <Link to="/home">Dashboard</Link>
-          </div>
-        </Menu.Item>
-        <SubMenu
-          style={{ color: "white" }}
-          key="sub1"
-          icon={<FileTextOutlined />}
-          title="Reports"
-        >
-          <Menu.Item key="sub2" onClick={() => handleMenuItemClick("sub2")}>
+        {menuItems.map((menuItem) => (
+          <Menu.Item
+            key={menuItem.module_id}
+            onClick={() => handleMenuItemClick(`${menuItem.module_id}`)}
+          >
             <div className="menu-items-sidebar">
-              <Image className="icons-sidenav" src={empIcon}></Image>
-              <Link to="/employee">Employees</Link>
+              <Image
+                className="icons-sidenav"
+                src={getIconByModuleId(menuItem.module_id)}
+                alt="Icon"
+              />
+              <Link to={getRouteByModuleId(menuItem.module_id)}>
+                {menuItem.module_name}
+              </Link>
             </div>
           </Menu.Item>
-          <Menu.Item key="sub3" onClick={() => handleMenuItemClick("sub3")}>
-            <div className="menu-items-sidebar">
-              <Image className="icons-sidenav" src={pharmIcon}></Image>
-              <Link to="/pharmacy">Pharmacy</Link>
-            </div>
-          </Menu.Item>
-        </SubMenu>
-        <Menu.Item key="2" onClick={() => handleMenuItemClick("2")}>
-          <div className="menu-items-sidebar">
-            <Image className="icons-sidenav" src={dataLive}></Image>
-            <Link to="/tilepage">Data Live</Link>
-          </div>
-        </Menu.Item>
-        <Menu.Item key="3" onClick={() => handleMenuItemClick("3")}>
-          {" "}
-          <div className="menu-items-sidebar">
-            <FileTextOutlined></FileTextOutlined>{" "}
-            <Link to="/file">Import File</Link>
-          </div>
-        </Menu.Item>
-        <Menu.Item key="4" onClick={() => handleMenuItemClick("4")}>
-          <div className="menu-items-sidebar">
-            <Image className="icons-sidenav" src={empIcon}></Image>
-            <Link to="/employeepage">Employees</Link>
-          </div>
-        </Menu.Item>
-        <Menu.Item key="5" onClick={() => handleMenuItemClick("5")}>
-          <div className="menu-items-sidebar">
-            <Image className="icons-sidenav" src={pharmIcon}></Image>
-            <Link to="/pharmacies">Pharmacy</Link>
-          </div>
-        </Menu.Item>
+        ))}
 
         <Menu.Item
-          key="7"
+          key="signout"
           onClick={() => {
-            handleMenuItemClick("7");
-            handleSignout(); // Call the handleSignout function on menu item click
+            handleMenuItemClick("signout");
+            handleSignout();
           }}
         >
           <div className="menu-items-sidebar">
@@ -112,14 +118,37 @@ const SideMenuBar = (props) => {
           </div>
         </Menu.Item>
       </Menu>
-      {props.collapsed ? null : (
-        <div className="NavbarFooter">
-          {/* <p>copyRights @2023. All Rights Reserved</p>
-          <p>Powered by 31Green</p> */}
-        </div>
-      )}
+      {props.collapsed ? null : <div className="NavbarFooter"></div>}
     </div>
   );
+};
+
+// Define a function to get the route based on module ID
+const getRouteByModuleId = (moduleId) => {
+  const routeMappings = {
+    1: "users/AddUser",
+    2: "/employeepage",
+    3: "/pharmacies",
+    4: "/tilepage",
+    5: "/file",
+    6: "/pharmacy",
+  };
+
+  return routeMappings[moduleId] || "/";
+};
+const getIconByModuleId = (moduleId) => {
+  // Define your icon mappings here
+  const iconMappings = {
+    1: `${empIcon}`,
+    2: `${empIcon}`,
+    3: `${pharmIcon}`,
+    4: `${dataLive}`,
+    5: `${HeartGrey}`,
+    6: `${pharmIcon}`,
+    // Add more mappings as needed
+  };
+
+  return iconMappings[moduleId] || "default-icon-path";
 };
 
 export default SideMenuBar;

@@ -138,7 +138,7 @@ const PasswordResetForm = (props) => {
             <div className="reset-heading">
               <Image preview={false} src={Lockimg} className="lock-img"></Image>
               <h2>
-                <strong>{props.headingText}</strong> Your Password
+                <strong>Set</strong> Your Password
               </h2>
             </div>
             <ul className="conditions-signin">

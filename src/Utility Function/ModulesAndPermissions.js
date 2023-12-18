@@ -1,4 +1,3 @@
-// utils/api.js
 import axios from "axios";
 import { baseURL } from "../Components/BaseURLAPI/BaseURLAPI";
 

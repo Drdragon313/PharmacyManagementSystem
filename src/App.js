@@ -27,7 +27,7 @@ import ViewEmployees from "./Pages/ViewEmployees/ViewEmployees";
 import ResendEmail from "./Pages/ResendEmail/ResendEmail";
 import Pharmacies from "./Pages/Pharmacies/Pharmacies";
 import Reports from "./Pages/Reports/Reports";
-import SetPassword from "./Pages/SetPassword/SetPassword";
+import SetPassword from "./Pages/ResetPassword/ResetPassword";
 import HomeIframe from "./Iframes/HomeIframe";
 import AddPharmacy from "./Pages/AddPharmacy/AddPharmacy";
 import PharmacyDetails from "./Pages/PharmacyDetails/PharmacyDetails";
@@ -36,6 +36,7 @@ import EmployeeDetails from "./Pages/EmployeeDetails/EmployeeDetails";
 import Roles from "./Components/RolesAndPermissions/Roles";
 import CreateRole from "./Components/RolesAndPermissions/CreateRole";
 import EmployeePage from "./Pages/EmployeePage/EmployeePage";
+import RoleDetails from "./Components/RolesAndPermissions/RoleDetails";
 const { Content } = Layout;
 
 function App() {
@@ -60,12 +61,12 @@ function MainContent() {
           <Route path="/" element={<Signin />} />
           <Route path="forgotpassword" element={<ForgotPassword />} />
           <Route path="checkemail" element={<CheckEmail />} />
-          <Route path="resetpassword" element={<ResetPassword />} />
+          <Route path="/resetpassword" element={<ResetPassword />} />
           <Route
             path="passwordupdatesuccess"
             element={<PasswordUpdatedSuccess />}
           />
-          <Route path="setpassword" element={<SetPassword />} />
+          <Route path="/setpassword" element={<SetPassword />} />
           <Route path="home" element={<HomeIframe />} />
           <Route path="/tilepage" element={<TilePage />} />
           <Route path="schema" element={<Schema />} />
@@ -86,6 +87,7 @@ function MainContent() {
           <Route path="schema/autopopulate" element={<AutoPopulate />} />
           <Route path="/customschema" element={<CustomSchema />} />
           <Route path="/employeepage" element={<EmployeePage />} />
+          <Route path="/employeepage/:role_id" element={<RoleDetails />} />
           <Route path="/rolesandpermissions" element={<Roles />} />
           <Route
             path="/rolesandpermissions/createrole"
