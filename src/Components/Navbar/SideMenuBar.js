@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Image, Menu } from "antd";
+import { Image, Menu, Space } from "antd";
 import { FileTextOutlined, LogoutOutlined } from "@ant-design/icons";
 import "./Style.css";
 import { Link } from "react-router-dom";
@@ -7,6 +7,7 @@ import dataLive from "../../Assets/datalive.svg";
 import HeartGrey from "../../Assets/heart grey.svg";
 import empIcon from "../../Assets/emp_icon.svg";
 import pharmIcon from "../../Assets/streamline_pharmacy.svg";
+import reportsIcon from "../../Assets/reports.svg";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
 import {
   fetchUserPermissions,
@@ -25,9 +26,7 @@ const SideMenuBar = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch user permissions
         await fetchUserPermissions((userPermissions) => {
-          // Fetch modules based on user permissions
           fetchModules((modules) => {
             const modulesWithPermissions = modules
               .filter((module) =>
@@ -49,9 +48,7 @@ const SideMenuBar = (props) => {
             setMenuItems(modulesWithPermissions);
           });
         });
-      } catch (error) {
-        // Handle error, show a message, etc.
-      }
+      } catch (error) {}
     };
 
     fetchData();
@@ -92,8 +89,12 @@ const SideMenuBar = (props) => {
             key={menuItem.module_id}
             onClick={() => handleMenuItemClick(`${menuItem.module_id}`)}
           >
-            <div className="menu-items-sidebar">
-              <Image
+            <Space
+              direction="horizontal"
+              size={10}
+              className="menu-items-sidebar"
+            >
+              <img
                 className="icons-sidenav"
                 src={getIconByModuleId(menuItem.module_id)}
                 alt="Icon"
@@ -101,7 +102,7 @@ const SideMenuBar = (props) => {
               <Link to={getRouteByModuleId(menuItem.module_id)}>
                 {menuItem.module_name}
               </Link>
-            </div>
+            </Space>
           </Menu.Item>
         ))}
 
@@ -112,10 +113,14 @@ const SideMenuBar = (props) => {
             handleSignout();
           }}
         >
-          <div className="menu-items-sidebar">
-            <LogoutOutlined />
+          <Space
+            direction="horizontal"
+            size={10}
+            className="menu-items-sidebar"
+          >
+            <LogoutOutlined className="icons-sidenav" />
             <Link to="/">Signout</Link>
-          </div>
+          </Space>
         </Menu.Item>
       </Menu>
       {props.collapsed ? null : <div className="NavbarFooter"></div>}
@@ -123,29 +128,26 @@ const SideMenuBar = (props) => {
   );
 };
 
-// Define a function to get the route based on module ID
 const getRouteByModuleId = (moduleId) => {
   const routeMappings = {
-    1: "users/AddUser",
-    2: "/employeepage",
-    3: "/pharmacies",
-    4: "/tilepage",
+    1: "home",
+    2: "pharmacy",
+    3: "/tilepage",
+    4: "/pharmacies",
     5: "/file",
-    6: "/pharmacy",
+    6: "/employeepage",
   };
 
   return routeMappings[moduleId] || "/";
 };
 const getIconByModuleId = (moduleId) => {
-  // Define your icon mappings here
   const iconMappings = {
-    1: `${empIcon}`,
-    2: `${empIcon}`,
-    3: `${pharmIcon}`,
-    4: `${dataLive}`,
-    5: `${HeartGrey}`,
-    6: `${pharmIcon}`,
-    // Add more mappings as needed
+    1: `${HeartGrey}`,
+    2: `${reportsIcon}`,
+    3: `${dataLive}`,
+    4: `${pharmIcon}`,
+    5: `${reportsIcon}`,
+    6: `${empIcon}`,
   };
 
   return iconMappings[moduleId] || "default-icon-path";
