@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Image, Menu, Space } from "antd";
-import { FileTextOutlined, LogoutOutlined } from "@ant-design/icons";
+import { Menu, Space } from "antd";
+import { LogoutOutlined } from "@ant-design/icons";
 import "./Style.css";
 import { Link } from "react-router-dom";
 import dataLive from "../../Assets/datalive.svg";
 import HeartGrey from "../../Assets/heart grey.svg";
 import empIcon from "../../Assets/emp_icon.svg";
 import pharmIcon from "../../Assets/streamline_pharmacy.svg";
-import reportsIcon from "../../Assets/reports.svg";
+import reportsIcon from "../../Assets/reports_icon.svg";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
 import {
   fetchUserPermissions,
   fetchModules,
 } from "../../Utility Function/ModulesAndPermissions";
 import axios from "axios";
-const { SubMenu } = Menu;
+// const { SubMenu } = Menu;
 const SideMenuBar = (props) => {
   const [selectedKeys, setSelectedKeys] = useState(["5"]);
 
