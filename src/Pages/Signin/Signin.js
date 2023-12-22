@@ -41,14 +41,8 @@ const Signin = () => {
         dispatch(addSigninData(response.data.token));
         const AuthorizationToken = `Bearer ${response.data.token}`;
         localStorage.setItem("AuthorizationToken", AuthorizationToken);
-
-        // Fetch user permissions using the utility function
         await fetchUserPermissions(setUserPermissions);
-
-        // Fetch modules using the utility function
         await fetchModules(setModules);
-
-        // Navigate to tilepage
         navigate("/file");
         message.success("Logged In Successfully!", 2);
       } else {
