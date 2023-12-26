@@ -8,7 +8,6 @@ import CustomButton from "../CustomButton/CustomButton";
 import deleteActionbtn from "../../Assets/deleteAction.svg";
 import "./CreateRole.css";
 import editIconBlue from "../../Assets/editInBlue.svg";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
 

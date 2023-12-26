@@ -1,0 +1,175 @@
+.main-container-employees {
+  font-family: "Poppins", sans-serif;
+  margin: 10px;
+  margin-left: 1.5%;
+}
+.employee-list-head-txt {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 27px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #425cda;
+  font-family: "Poppins", sans-serif;
+}
+.employee-list-head {
+  justify-content: space-between;
+}
+.employee-list-search-filter-container {
+  justify-content: space-between;
+  border: 1px solid #ededed;
+  border-radius: 8px;
+  width: 100%;
+  margin-left: 1px !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  font-family: "Poppins", sans-serif;
+}
+.create-emp-btn {
+  justify-content: center;
+
+  font-family: "Poppins", sans-serif;
+}
+.filter-emp-btn {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  width: 175px;
+  text-align: left;
+  justify-content: space-evenly;
+  margin-right: -10px;
+  padding-left: 30px; /* Adjust the padding to make space for the image */
+  background-image: url("../../Assets/notebook.svg"); /* Replace with the correct path to your image */
+  background-repeat: no-repeat;
+  background-size: 15px; /* Adjust the size of the image */
+  background-position: 5px center; /* Adjust the position of the image */
+}
+.filter-role-btn {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  width: 100px;
+  text-align: left;
+  justify-content: space-evenly;
+  margin-right: -10px;
+  padding-left: 30px; /* Adjust the padding to make space for the image */
+  background-image: url("../../Assets/Role-vector.svg"); /* Replace with the correct path to your image */
+  background-repeat: no-repeat;
+  background-size: 15px; /* Adjust the size of the image */
+  background-position: 5px center; /* Adjust the position of the image */
+}
+.filter-container-emp .filter-emp-btn {
+  font-size: 12px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid #425cda;
+  color: #425cda;
+}
+.filter-container-emp .filter-role-btn {
+  font-size: 12px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid #425cda;
+  color: #425cda;
+}
+.filter-icon {
+  padding-right: 10px;
+}
+.filter-select-placeholder {
+  margin-top: 30px;
+  color: #425cda;
+  font-family: "Poppins", sans-serif;
+}
+.plus-outline-img {
+  height: 10px;
+  width: 10px;
+  margin-right: -10px;
+  padding-right: 10px;
+}
+.search-bar {
+  background: #fff !important;
+  border-radius: 12px;
+}
+.action-btns {
+  cursor: pointer;
+}
+.ant-input.css-dev-only-do-not-override-nnuwmp {
+  background: #fff !important;
+}
+.custom-table-header {
+  font-family: "Poppins", sans-serif;
+}
+.custom-table-content {
+  font-family: "Poppins", sans-serif;
+}
+.items-per-page-dropdown {
+  border: 1px solid #ededed;
+  border-radius: 10px;
+  width: 60px;
+  height: 35px !important;
+  padding: 5px;
+  margin-bottom: 17px;
+}
+.emp-table-footer {
+  background-color: #fff !important;
+  height: 60px;
+  border: 1px solid #ededed;
+  border-radius: 12px;
+  padding-top: 5px;
+  padding-left: 50px;
+}
+.ant-table-column-sorters .ant-tooltip {
+  display: none !important;
+}
+.ant-pagination .ant-pagination-item a {
+  font-size: 12px;
+  font-family: Roboto, sans-serif;
+}
+
+:where(.css-dev-only-do-not-override-nnuwmp).ant-pagination
+  .ant-pagination-item-active {
+  background-color: #425cda !important;
+  height: 30px;
+  color: #fff;
+  border: transparent;
+}
+
+.filter-emp-btn option {
+  padding: 8px;
+  background-color: #fff;
+
+  border-radius: 12px;
+  font-size: 12px;
+}
+.filter-role-btn option {
+  padding: 8px;
+  background-color: #fff;
+  border-radius: 12px;
+  font-size: 12px;
+}
+.filter-emp-btn option:hover {
+  background-color: #007bff;
+}
+.filter-role-btn option:hover {
+  background-color: #007bff;
+}
+/* Styles for the dropdown list when open (optional) */
+.filter-emp-btn:focus {
+  border-color: #007bff; /* Change color on focus if needed */
+  outline: none; /* Remove default outline on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a box shadow on focus */
+}
+.filter-role-btn:focus {
+  border-color: #007bff; /* Change color on focus if needed */
+  outline: none; /* Remove default outline on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a box shadow on focus */
+}
+.status-circle {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 5px; /* Adjust as needed for spacing */
+}
+.status-pointer {
+  cursor: pointer;
+}

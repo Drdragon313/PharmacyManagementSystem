@@ -8,6 +8,14 @@
   flex-direction: row;
   justify-content: space-between;
   background-color: #f8fbff;
-  margin-top: 20px;
+  margin-top: 2%;
   gap: 5px;
+}
+.full-width-line {
+  color: #808080;
+}
+.CreateEmpBtn {
+  height: 80%;
+  background: #425cda;
+  color: white;
 }
