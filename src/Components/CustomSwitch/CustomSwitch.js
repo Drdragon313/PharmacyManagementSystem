@@ -1,9 +1,11 @@
 // CustomSwitch.js
 import React from "react";
-import { Button, Col, Row } from "antd";
+import { Button, Col, Row, Image } from "antd";
+import plusOutline from "../../Assets/PlusOutlined.svg";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 import "./CustomSwitch.css"; // Ensure to import your styles
-
+import { Link } from "react-router-dom";
+import CustomButton from "../../Components/CustomButton/CustomButton";
 const generateButtonStyle = (checked, background, color) => ({
   width: 150,
   height: 40,
@@ -17,7 +19,7 @@ const generateButtonStyle = (checked, background, color) => ({
 const CustomSwitch = ({ checked, onChange }) => {
   const breadcrumbItems = [
     {
-      label: checked ? "Employee" : "Roles and Permission",
+      label: checked ? "Employees" : "Roles and Permission",
       link: "/employeepage",
     },
   ];
@@ -28,10 +30,11 @@ const CustomSwitch = ({ checked, onChange }) => {
         className="pharmacy-list-breadcrumb"
         gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
       >
-        <Col className="gutter-row" span={6}>
+        <Col className="gutter-row ms-2 mt-3" span={6}>
           <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
         </Col>
       </Row>
+      <hr className="full-width-line" />
       <Row className="toggle-btn" gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
         <Col className="gutter-row" span={7}>
           <div className="toggle-btn-container">
@@ -48,6 +51,19 @@ const CustomSwitch = ({ checked, onChange }) => {
               Roles & permissions
             </Button>
           </div>
+        </Col>
+        <Col className="gutter-row" span={12}></Col>
+        <Col className="gutter-row" span={4}>
+          <Link to="/users/AddUser">
+            <CustomButton title="" className="CreateEmpBtn mt-2">
+              <Image
+                className="plus-outline-img"
+                preview={false}
+                src={plusOutline}
+              ></Image>
+              Create Employee
+            </CustomButton>
+          </Link>
         </Col>
       </Row>
     </div>

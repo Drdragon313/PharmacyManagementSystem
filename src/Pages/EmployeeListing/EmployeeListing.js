@@ -1,0 +1,503 @@
+import React, { useState, useEffect } from "react";
+import "./EmployeeListing.css";
+import axios from "axios";
+import {
+  Col,
+  Image,
+  Row,
+  Space,
+  message,
+  Pagination,
+  Modal,
+  Input,
+} from "antd";
+import eyeIcon from "../../Assets/Icon feather-eye.svg";
+import deleteActionbtn from "../../Assets/deleteAction.svg";
+import { Link } from "react-router-dom";
+import CustomTable from "../../Components/CustomTable/CustomTable";
+import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
+import Spinner from "../../Components/Spinner/Spinner";
+import rightArrow from "../../Assets/rightarrow.svg";
+import leftArrow from "../../Assets/leftarrow.svg";
+import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";
+const { Search } = Input;
+
+const EmployeeListing = () => {
+  const [tableDataSource, setTableDataSource] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [statusModalVisible, setStatusModalVisible] = useState(false);
+  const [employeeToDeleteId, setEmployeeToDeleteId] = useState(null);
+  const [pharmacyToDeleteId, setPharmacyToDeleteId] = useState(null);
+
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(5);
+  const [totalItems, setTotalItems] = useState(0);
+  const [sortField, setSortField] = useState("salary");
+  const [sortDirection, setSortDirection] = useState("asc");
+  const [availablePostalCodes, setAvailablePostalCodes] = useState([]);
+  const [availableRoles, setAvailableRoles] = useState();
+  const authToken = localStorage.getItem("AuthorizationToken");
+  const [modalVisible, setModalVisible] = useState(!authToken);
+  const [selectedPostalCode, setSelectedPostalCode] = useState("");
+  const [selectedRole, setSelectedRole] = useState("");
+  const [statusEmail, setStatusEmail] = useState("");
+
+  useEffect(() => {
+    const fetchPostalCodes = async () => {
+      try {
+        const response = await axios.get(`${baseURL}/list-available-postcodes`);
+        const postCodeData = response.data;
+
+        if (postCodeData && postCodeData.postCodes) {
+          setAvailablePostalCodes(postCodeData.postCodes);
+        }
+      } catch (error) {
+        console.error("Error fetching postal codes:", error);
+      }
+    };
+    const fetchRoles = async () => {
+      try {
+        const response = await axios.get(`${baseURL}/list-available-roles`);
+        const roleData = response.data.Data.roles;
+        console.log("Available Roles:", roleData);
+
+        if (roleData) {
+          setAvailableRoles(roleData);
+        }
+      } catch (error) {
+        console.error("Error fetching roles:", error);
+      }
+    };
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${baseURL}/list-employees?page=${page}&limit=${limit}&post_code=${selectedPostalCode}&sort_field=${sortField}&sort_direction=${sortDirection}`
+        );
+        const data = response.data;
+
+        if (data && data.data) {
+          console.log("API Response", data);
+          setTableDataSource(data.data);
+          setTotalItems(data.totalItems);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPostalCodes();
+    fetchRoles();
+    fetchData();
+  }, [page, limit, sortDirection, sortField, selectedPostalCode, selectedRole]);
+  const showDeleteModal = (employeeId, pharmacyID) => {
+    setDeleteModalVisible(true);
+    setEmployeeToDeleteId(employeeId);
+    setPharmacyToDeleteId(pharmacyID);
+  };
+  const handleStatusClick = (status, record) => {
+    if (status === "Awaiting") {
+      setStatusModalVisible(true);
+      setStatusEmail(record.email);
+    }
+  };
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  };
+  const handleLimitChange = (newLimit) => {
+    setLimit(newLimit);
+    setPage(1);
+  };
+  const handleSortChange = (columnKey, order) => {
+    setSortField(columnKey);
+    setSortDirection((prevSortDirection) =>
+      columnKey === sortField
+        ? prevSortDirection === "asc"
+          ? "desc"
+          : "asc"
+        : "asc"
+    );
+    setPage(page);
+  };
+
+  const handleDelete = (employeeId, pharmacyID) => {
+    showDeleteModal(employeeId, pharmacyID);
+  };
+  const handleConfirmDelete = async () => {
+    try {
+      await axios.delete(
+        `${baseURL}/delete-user?user_id=${employeeToDeleteId}&pharmacy_id=${pharmacyToDeleteId}`
+      );
+      const updatedData = tableDataSource.filter(
+        (item) => item.userID !== employeeToDeleteId
+      );
+      setTableDataSource(updatedData);
+      message.success("Employee Deleted Successfully", 3);
+    } catch (error) {
+      message.error("Error deleting Employee", 3);
+      console.error(error);
+    } finally {
+      setDeleteModalVisible(false);
+    }
+  };
+  const handleConfirmResend = async () => {
+    try {
+      await axios.post(`${baseURL}/forget`, {
+        email: statusEmail,
+      });
+      message.success("Invite Resent Successfully", 3);
+    } catch (error) {
+      message.error("Invite Resending Failed", 3);
+    } finally {
+      setStatusModalVisible(false);
+    }
+  };
+  const handleCancelDelete = () => {
+    setDeleteModalVisible(false);
+  };
+  const handleCancelResend = () => {
+    setStatusModalVisible(false);
+  };
+
+  const tableColumns = [
+    {
+      title: "Employee Name",
+      dataIndex: "employeeName",
+      key: "employeeName",
+      width: "10%",
+      ellipsis: true,
+    },
+    {
+      title: "Gender",
+      dataIndex: "gender",
+      key: "gender",
+      width: "10%",
+    },
+    {
+      title: "Date of birth",
+      dataIndex: "dateOfBirth",
+      key: "dateOfBirth",
+      width: "10%",
+    },
+    {
+      title: "Contact",
+      dataIndex: "contact",
+      key: "contact",
+      width: "10%",
+      ellipsis: true,
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      width: "10%",
+      ellipsis: true,
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      width: "10%",
+      ellipsis: true,
+      render: (text, record) => (
+        <>
+          <span
+            className="status-circle"
+            style={{
+              backgroundColor:
+                text === "Active"
+                  ? "green"
+                  : text === "Inactive"
+                  ? "red"
+                  : text === "Awaiting" || text === "Request sent"
+                  ? "yellow"
+                  : "gray",
+            }}
+          ></span>
+          <span
+            onClick={() => handleStatusClick(text, record)}
+            className={`status-text ${
+              text === "Awaiting" ? "status-pointer" : ""
+            }`}
+          >
+            {text}
+          </span>
+        </>
+      ),
+      sorter: true,
+      showSorterTooltip: false,
+      sortOrder: sortField === "status" && sortDirection,
+      onHeaderCell: (column) => ({
+        onClick: () => handleSortChange(column.dataIndex, column.order),
+      }),
+    },
+    {
+      title: "Pharmacy Postal Code",
+      dataIndex: "pharmacyPostCode",
+      key: "pharmacyPostCode",
+      width: "10%",
+    },
+    {
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
+      width: "10%",
+    },
+    {
+      title: "Salary",
+      dataIndex: "salary",
+      key: "salary",
+      width: "10%",
+      sorter: true,
+      showSorterTooltip: false,
+      sortOrder: sortField === "salary" && sortDirection,
+      onHeaderCell: (column) => ({
+        onClick: () => handleSortChange(column.dataIndex, column.order),
+      }),
+    },
+    {
+      title: "Action(s)",
+      width: "10%",
+      fixed: "right",
+      render: (text, record) => (
+        <Space className="action-btns">
+          <Link to={`/pharmacies/${record.id}`}>
+            <Image preview={false} src={eyeIcon}></Image>
+          </Link>
+          <Image
+            preview={false}
+            src={deleteActionbtn}
+            onClick={() => handleDelete(record.userID, record.pharmacyID)}
+          ></Image>
+        </Space>
+      ),
+    },
+  ];
+
+  const itemRender = (_, type, originalElement) => {
+    if (type === "prev") {
+      return (
+        <Image
+          preview={false}
+          src={leftArrow}
+          disabled={page === 1}
+          onClick={() => handlePageChange(page - 1)}
+        ></Image>
+      );
+    }
+    if (type === "next") {
+      return (
+        <Image
+          preview={false}
+          src={rightArrow}
+          disabled={page * limit >= totalItems}
+          onClick={() => handlePageChange(page + 1)}
+        ></Image>
+      );
+    }
+    return originalElement;
+  };
+  if (loading === true) {
+    return <Spinner />;
+  }
+
+  if (!authToken) {
+    const openModal = () => {
+      setModalVisible(true);
+    };
+    return <SignInFirstModal visible={modalVisible} open={openModal} />;
+  }
+  return (
+    <>
+      <div className="main-container-employees">
+        <Row
+          className="employee-list-breadcrumb"
+          gutter={{
+            xs: 8,
+            sm: 16,
+            md: 24,
+            lg: 32,
+          }}
+        ></Row>
+        <Row
+          className="employee-list-head"
+          gutter={{
+            xs: 8,
+            sm: 16,
+            md: 24,
+            lg: 32,
+          }}
+        >
+          <Modal
+            title="Confirm Delete"
+            open={deleteModalVisible}
+            onOk={handleConfirmDelete}
+            onCancel={handleCancelDelete}
+            okText="Yes"
+            cancelText="Cancel"
+          >
+            Are you sure you want to delete this Employee?
+          </Modal>
+
+          <Modal
+            title="Resend Invite"
+            open={statusModalVisible}
+            onOk={handleConfirmResend}
+            onCancel={handleCancelResend}
+            okText="Send"
+            cancelText="Cancel"
+          >
+            Are you sure you want to resend invite to this user? <br /> This
+            action cannot be undone.
+          </Modal>
+
+          <Col className="gutter-row" span={4}>
+            <p className="employee-list-head-txt">Employees list</p>
+          </Col>
+        </Row>
+        <Row
+          className="employee-list-search-filter-container"
+          gutter={{
+            xs: 8,
+            sm: 16,
+            md: 24,
+            lg: 32,
+          }}
+        >
+          <Col className="gutter-row" span={17}>
+            <Col className="gutter-row" span={12}>
+              <Search
+                placeholder="Search Here..."
+                // onSearch={onSearch}
+                // size="large"
+                enterButton
+              />
+            </Col>
+          </Col>
+          <Col className="filter-container-emp" span={3.5}>
+            <div className="custom-select-container">
+              <select
+                className="filter-role-btn"
+                value={selectedRole}
+                onChange={(e) => setSelectedRole(e.target.value)}
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Role
+                </option>
+                {availableRoles &&
+                  availableRoles.map((role) => (
+                    <option
+                      className="select-options"
+                      key={role.id}
+                      value={role.name}
+                    >
+                      {role.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
+          </Col>
+          <Col className="filter-container-emp" span={3.5}>
+            <div className="custom-select-container">
+              <select
+                className="filter-emp-btn"
+                value={selectedPostalCode}
+                onChange={(e) => setSelectedPostalCode(e.target.value)}
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Pharmacy postal code
+                </option>
+                {availablePostalCodes.map((postalCode) => (
+                  <option
+                    className="select-options"
+                    key={postalCode}
+                    value={postalCode}
+                  >
+                    {postalCode}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </Col>
+        </Row>
+        <Row
+          className=""
+          gutter={{
+            xs: 8,
+            sm: 16,
+            md: 24,
+            lg: 32,
+          }}
+        >
+          <Col className="table-row" span={24}>
+            <CustomTable
+              className="employee-details-table"
+              dataSource={tableDataSource}
+              footer={false}
+              columns={tableColumns.map((column) => ({
+                ...column,
+                title: (
+                  <span className="custom-table-header">{column.title}</span>
+                ),
+                render: (text, record) => (
+                  <span className="custom-table-content">
+                    {typeof column.render === "function"
+                      ? column.render(text, record)
+                      : text}
+                  </span>
+                ),
+              }))}
+            />
+            <Row className="employee-table-footer" gutter={4}>
+              <Col span={4}>
+                <Space style={{ paddingTop: "7px" }} direction="horizontal">
+                  <p>Show per page</p>
+                  <select
+                    className="items-per-page-dropdown"
+                    value={limit}
+                    onChange={(e) => handleLimitChange(e.target.value)}
+                  >
+                    {[2, 5, 10].map((value) => (
+                      <option key={value} value={value}>
+                        {value}
+                      </option>
+                    ))}
+                  </select>
+                </Space>
+              </Col>
+              <Col span={7}></Col>
+              <Col span={7}></Col>
+              <Col span={6} style={{ paddingLeft: "40px" }}>
+                <Space direction="horizontal">
+                  Showing
+                  <p style={{ marginTop: "15px" }}>{page}</p>-
+                  <p style={{ marginTop: "15px" }}>
+                    {Math.ceil(totalItems / limit)}
+                  </p>
+                  of
+                  <p style={{ marginTop: "15px" }}>{totalItems}</p>
+                  <Pagination
+                    itemRender={itemRender}
+                    current={page}
+                    pageSize={limit}
+                    total={totalItems}
+                    onChange={handlePageChange}
+                    size="small"
+                  />
+                </Space>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </div>
+    </>
+  );
+};
+
+export default EmployeeListing;
