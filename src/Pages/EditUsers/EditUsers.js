@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./AddUsers.css";
+import "./EditUsers.css";
 import Input from "antd/es/input/Input";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import axios from "axios";
@@ -13,9 +13,10 @@ import {
 } from "../../Utility Function/PostCodeUtils";
 import CustomInput from "../../Components/CustomInput/CustomInput";
 import CustomSelect from "../../Components/CustomSelect/CustomSelect";
-import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
+import { useParams } from "react-router-dom";
 const { Option } = Select;
-const AddUsers = () => {
+
+const EditUsers = () => {
   const [data, setData] = useState({
     FName: "",
     Gender: "",
@@ -31,6 +32,7 @@ const AddUsers = () => {
     Line2: "",
     postTown: "",
     Line_Manager: "",
+    salary: "",
   });
   const [avaiableRoles, setAvailableRoles] = useState([]);
   const [selectedRole, setSelectedRole] = useState();
@@ -40,12 +42,29 @@ const AddUsers = () => {
   const [avaiablePharmacies, setAvailablePharmacies] = useState([]);
   const [pCodeResponse, setPCodeResponse] = useState([]);
   const [permissions, setPermissions] = useState([]);
+  const { userID } = useParams();
+  console.log("User id from params", userID);
+
+  useEffect(() => {
+    if (userID) {
+      axios
+        .get(`${baseURL}/get-user-data?user_id=${userID}`)
+        .then((response) => {
+          const data = response.data;
+          console.log("Get API", data);
+        })
+        .catch((error) => {
+          message.error("Failed to fetch employee details", 3);
+          console.log("Get API Failed", error);
+          console.error(error);
+        });
+    } else {
+      console.log("No user id");
+    }
+  }, [userID]);
   const handleFindAddress = () => {
     PostCodeHandler(data, setPCodeResponse);
   };
-  useEffect(() => {
-    console.log("Data Obj", data);
-  }, [data]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -154,21 +173,10 @@ const AddUsers = () => {
       [fieldName]: value,
     }));
   };
-  const breadcrumbItems = [
-    {
-      label: "Employees",
-      link: "/employeepage",
-    },
-    {
-      label: "Add Employee",
-      link: "/users/AddUser",
-    },
-  ];
   return (
     <div className="AddUsersBasicContainer">
-      <CustomBreadcrumb seperator=">>" items={breadcrumbItems} />
       <div className="AddUsersBasicInfoHeading">
-        <h5 className="usercreationtxt">New user creation</h5>
+        <h5 className="usercreationtxt">Edit Employee Details</h5>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="AddUsersDetails">
@@ -386,4 +394,4 @@ const AddUsers = () => {
   );
 };
 
-export default AddUsers;
+export default EditUsers;

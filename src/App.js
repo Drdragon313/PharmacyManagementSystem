@@ -36,6 +36,7 @@ import Roles from "./Components/RolesAndPermissions/Roles";
 import CreateRole from "./Components/RolesAndPermissions/CreateRole";
 import EmployeePage from "./Pages/EmployeePage/EmployeePage";
 import RoleDetails from "./Components/RolesAndPermissions/RoleDetails";
+import EditUsers from "./Pages/EditUsers/EditUsers";
 const { Content } = Layout;
 
 function App() {
@@ -86,7 +87,7 @@ function MainContent() {
           <Route path="schema/autopopulate" element={<AutoPopulate />} />
           <Route path="/customschema" element={<CustomSchema />} />
           <Route path="/employeepage" element={<EmployeePage />} />
-          <Route path="/employeepage/:role_id" element={<RoleDetails />} />
+          {/* <Route path="/employeepage/:role_id" element={<RoleDetails />} /> */}
           <Route path="/rolesandpermissions" element={<Roles />} />
           <Route
             path="/rolesandpermissions/createrole"
@@ -105,6 +106,7 @@ function MainContent() {
           <Route path="pharmacies" element={<Pharmacies />} />
           <Route path="pharmacies/AddPharmacy" element={<AddPharmacy />} />
           <Route path="pharmacies/:pharmacy_id" element={<PharmacyDetails />} />
+          <Route path="employeepage/:userID" element={<EditUsers />} />
           <Route path="reports" element={<Reports />} />
         </Routes>
       </Content>

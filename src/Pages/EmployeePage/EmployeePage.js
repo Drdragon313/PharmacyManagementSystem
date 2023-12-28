@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "./Employeepage.css";
 
 import Roles from "../../Components/RolesAndPermissions/Roles";
-import CustomSwitch from "../../Components/CustomSwitch/CustomSwitch"; // Adjust the import path based on your project structure
+import CustomSwitch from "../../Components/CustomSwitch/CustomSwitch";
 import EmployeeListing from "../EmployeeListing/EmployeeListing";
 
 const EmployeePage = () => {
