@@ -12,6 +12,7 @@ import {
   Input,
 } from "antd";
 import eyeIcon from "../../Assets/Icon feather-eye.svg";
+import editicon from "../../Assets/editInBlue.svg";
 import deleteActionbtn from "../../Assets/deleteAction.svg";
 import { Link } from "react-router-dom";
 import CustomTable from "../../Components/CustomTable/CustomTable";
@@ -42,6 +43,11 @@ const EmployeeListing = () => {
   const [selectedPostalCode, setSelectedPostalCode] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
   const [statusEmail, setStatusEmail] = useState("");
+  const [searchedName, setSearchedName] = useState("");
+
+  useEffect(() => {
+    console.log("Selected Role", selectedRole);
+  }, [selectedRole]);
 
   useEffect(() => {
     const fetchPostalCodes = async () => {
@@ -73,12 +79,11 @@ const EmployeeListing = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${baseURL}/list-employees?page=${page}&limit=${limit}&post_code=${selectedPostalCode}&sort_field=${sortField}&sort_direction=${sortDirection}`
+          `${baseURL}/list-employees?search_name=${searchedName}&page=${page}&limit=${limit}&role_id=${selectedRole}&post_code=${selectedPostalCode}&sort_field=${sortField}&sort_direction=${sortDirection}`
         );
         const data = response.data;
 
         if (data && data.data) {
-          console.log("API Response", data);
           setTableDataSource(data.data);
           setTotalItems(data.totalItems);
         }
@@ -92,7 +97,15 @@ const EmployeeListing = () => {
     fetchPostalCodes();
     fetchRoles();
     fetchData();
-  }, [page, limit, sortDirection, sortField, selectedPostalCode, selectedRole]);
+  }, [
+    page,
+    limit,
+    sortDirection,
+    sortField,
+    selectedPostalCode,
+    selectedRole,
+    searchedName,
+  ]);
   const showDeleteModal = (employeeId, pharmacyID) => {
     setDeleteModalVisible(true);
     setEmployeeToDeleteId(employeeId);
@@ -268,6 +281,9 @@ const EmployeeListing = () => {
           <Link to={`/pharmacies/${record.id}`}>
             <Image preview={false} src={eyeIcon}></Image>
           </Link>
+          <Link to={`/employeepage/${record.userID}`}>
+            <Image preview={false} src={editicon}></Image>
+          </Link>
           <Image
             preview={false}
             src={deleteActionbtn}
@@ -311,6 +327,9 @@ const EmployeeListing = () => {
     };
     return <SignInFirstModal visible={modalVisible} open={openModal} />;
   }
+  const handleSearch = (searchValue) => {
+    setSearchedName(searchValue);
+  };
   return (
     <>
       <div className="main-container-employees">
@@ -372,8 +391,7 @@ const EmployeeListing = () => {
             <Col className="gutter-row" span={12}>
               <Search
                 placeholder="Search Here..."
-                // onSearch={onSearch}
-                // size="large"
+                onSearch={handleSearch}
                 enterButton
               />
             </Col>
@@ -394,7 +412,7 @@ const EmployeeListing = () => {
                     <option
                       className="select-options"
                       key={role.id}
-                      value={role.name}
+                      value={role.id}
                     >
                       {role.name}
                     </option>
