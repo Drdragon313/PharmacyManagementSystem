@@ -7,6 +7,7 @@ import editIcon from "../../Assets/tabler_edit.svg";
 import "./RoleDetails.css";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import Spinner from "../../Components/Spinner/Spinner";
+import checkboxImg from "../../Assets/checkbox.svg";
 
 const RoleDetails = () => {
   const { role_id } = useParams();
@@ -40,11 +41,20 @@ const RoleDetails = () => {
       link: `/employeepage/${role_id}`,
     },
   ];
+  const moduleMapping = {
+    1: "Dashboard",
+    2: "Reports",
+    3: "Data live",
+    4: "Pharmacy",
+    5: "Data Tiles",
+    6: "Employees",
+    // Add more mappings as needed
+  };
   if (loading === true) {
     return <Spinner />;
   }
   return (
-    <div className="main-container-pharmacies">
+    <div className="main-container-role-details">
       <Row className="pharmacy-list-breadcrumb">
         <Col className="breadcrumb-col" span={24}>
           <CustomBreadcrumb
@@ -55,7 +65,12 @@ const RoleDetails = () => {
         </Col>
       </Row>
       <Row
-        style={{ margin: "5px", marginTop: "20px", marginLeft: "10px" }}
+        style={{
+          margin: "5px",
+          marginTop: "20px",
+          marginLeft: "10px",
+          justifyContent: "space-between",
+        }}
         gutter={{
           xs: 8,
           sm: 16,
@@ -63,13 +78,15 @@ const RoleDetails = () => {
           lg: 32,
         }}
       >
-        <Col className="emp-detail-heading" span={6}>
+        <Col className="emp-detail-heading" span={4}>
           <p>{roleDetails.name} Details</p>
         </Col>
-        <Col className="primary-btns" span={6}></Col>
+        {/* <Col className="primary-btns" span={6}></Col>
+
+        <Col className="gutter-row" span={6}></Col> */}
         <Col className="emp-detail-heading-btn" span={6}>
-          <Button
-            style={{ marginLeft: "90px" }}
+          {/* <Button
+            style={{ marginLeft: "70px" }}
             type="primary"
             className="primary-class"
           >
@@ -79,9 +96,8 @@ const RoleDetails = () => {
               src={editIcon}
             ></Image>
             Edit details
-          </Button>
+          </Button> */}
         </Col>
-        <Col className="gutter-row" span={4}></Col>
       </Row>
       <Row
         style={{ margin: "5px", marginTop: "10px" }}
@@ -92,7 +108,7 @@ const RoleDetails = () => {
           lg: 32,
         }}
       >
-        <Col span={22} style={{ marginLeft: "20px" }}>
+        <Col span={24} style={{ marginLeft: "20px" }}>
           <div className="labels-values-container">
             <div className="labels">
               <p>Number of Assigned Users</p>
@@ -117,17 +133,40 @@ const RoleDetails = () => {
             <div className="values2">
               {roleDetails.role_permissions.map((permission, index) => (
                 <div key={index}>
-                  <p>Module ID: {permission.module_id}</p>
-                  <p>Actions:</p>
-                  <ul>
-                    {Object.entries(permission.actions).map(
-                      ([action, value]) => (
-                        <li key={action}>
-                          {action}: {value.toString()}
-                        </li>
-                      )
-                    )}
-                  </ul>
+                  {permission.actions.read && (
+                    <p>
+                      <Image
+                        className="bullet-image"
+                        preview={false}
+                        src={checkboxImg}
+                      />
+                      {` View ${moduleMapping[permission.module_id]}`}
+                    </p>
+                  )}
+                  {permission.actions.write && (
+                    <p>
+                      <Image
+                        className="bullet-image"
+                        preview={false}
+                        src={checkboxImg}
+                      />
+                      {` Write Data Against Available Schemas within ${
+                        moduleMapping[permission.module_id]
+                      }`}
+                    </p>
+                  )}
+                  {permission.actions.update && (
+                    <p>
+                      <Image
+                        className="bullet-image"
+                        preview={false}
+                        src={checkboxImg}
+                      />
+                      {` Update Services Offered by Each ${
+                        moduleMapping[permission.module_id]
+                      }`}
+                    </p>
+                  )}
                 </div>
               ))}
             </div>

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import isEqual from "lodash/isEqual";
 import "./CreateRole.css";
-import { Col, Input, Row, Checkbox, message } from "antd";
+import { Col, Input, Row, Checkbox, message, Table } from "antd";
 import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 import axios from "axios";
@@ -8,6 +9,7 @@ import CustomTable from "../CustomTable/CustomTable";
 import CustomButton from "../CustomButton/CustomButton";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
 import { useNavigate } from "react-router-dom";
+
 const CreateRole = () => {
   const authToken = localStorage.getItem("AuthorizationToken");
   const [modalVisible, setModalVisible] = useState(!authToken);
@@ -15,11 +17,14 @@ const CreateRole = () => {
   const [checkedCheckboxes, setCheckedCheckboxes] = useState([]);
   const [dataSource, setDataSource] = useState([]);
   const [roleName, setRoleName] = useState("");
+  const previousModulesRef = useRef();
+
   useEffect(() => {
     const fetchModules = async () => {
       try {
-        const response = await fetch(`${baseURL}/list-available-modules`);
-        const data = await response.json();
+        const response = await axios.get(`${baseURL}/list-available-modules`);
+        const data = response.data;
+
         if (data.status === "success") {
           setModules(data.Data.modules);
           const initialDataSource = data.Data.modules.map((module) => ({
@@ -29,6 +34,14 @@ const CreateRole = () => {
             write: false,
             update: false,
             delete: false,
+            subModules: (module.sub_modules || []).map((subModule) => ({
+              key: subModule.schema_id,
+              module: subModule.schema_name,
+              read: false,
+              write: false,
+              update: false,
+              delete: false,
+            })),
           }));
           setDataSource(initialDataSource);
         } else {
@@ -39,8 +52,18 @@ const CreateRole = () => {
       }
     };
 
-    fetchModules();
-  }, []);
+    // Check if modules have changed before fetching
+    if (
+      !previousModulesRef.current ||
+      !isEqual(previousModulesRef.current, modules)
+    ) {
+      fetchModules();
+    }
+
+    // Update the previousModulesRef after fetching
+    previousModulesRef.current = modules;
+  }, [modules]);
+
   const resetState = () => {
     setRoleName("");
     setCheckedCheckboxes([]);
@@ -56,7 +79,6 @@ const CreateRole = () => {
     };
     return <SignInFirstModal visible={modalVisible} open={openModal} />;
   }
-
   const columns = [
     {
       title: "Modules",
@@ -70,7 +92,7 @@ const CreateRole = () => {
       render: (_, record) => (
         <Checkbox
           checked={record.write}
-          onChange={(e) => handleCheckboxChange(e, record, "write")}
+          onChange={(e) => handleModuleCheckboxChange(e, record, "write")}
         />
       ),
     },
@@ -81,7 +103,7 @@ const CreateRole = () => {
       render: (_, record) => (
         <Checkbox
           checked={record.read}
-          onChange={(e) => handleCheckboxChange(e, record, "read")}
+          onChange={(e) => handleModuleCheckboxChange(e, record, "read")}
         />
       ),
     },
@@ -92,7 +114,7 @@ const CreateRole = () => {
       render: (_, record) => (
         <Checkbox
           checked={record.update}
-          onChange={(e) => handleCheckboxChange(e, record, "update")}
+          onChange={(e) => handleModuleCheckboxChange(e, record, "update")}
         />
       ),
     },
@@ -103,86 +125,250 @@ const CreateRole = () => {
       render: (_, record) => (
         <Checkbox
           checked={record.delete}
-          onChange={(e) => handleCheckboxChange(e, record, "delete")}
+          onChange={(e) => handleModuleCheckboxChange(e, record, "delete")}
         />
       ),
     },
   ];
-
-  const handleCheckboxChange = (e, record, columnName) => {
-    const updatedData = dataSource.map((item) => {
-      if (item.key === record.key) {
-        return { ...item, [columnName]: e.target.checked };
-      }
-      return item;
-    });
-    setDataSource(updatedData);
-
-    // Update the checked checkboxes array
-    const updatedCheckedCheckboxes = checkedCheckboxes.map((item) => {
-      if (item.key === record.key) {
-        return {
-          ...item,
-          permissions: item.permissions.map((permission) => {
-            if (permission.module_id === record.key) {
-              return {
-                ...permission,
-                actions: {
-                  ...permission.actions,
-                  [columnName]: e.target.checked,
-                },
-              };
-            }
-            return permission;
-          }),
-        };
-      }
-      return item;
-    });
-
-    // If the checkbox is checked, add it to the array, otherwise remove it
-    if (e.target.checked) {
-      const existingRole = updatedCheckedCheckboxes.find(
-        (item) => item.key === record.key
+  // Function to handle module checkbox changes
+  const handleModuleCheckboxChange = (e, record, columnName) => {
+    setDataSource((prevDataSource) => {
+      const updatedData = prevDataSource.map((item) =>
+        item.key === record.key
+          ? { ...item, [columnName]: e.target.checked }
+          : item
       );
 
-      if (!existingRole) {
-        updatedCheckedCheckboxes.push({
-          key: record.key,
-          role_name: record.module, // Assuming module name is the role name
-          permissions: [
-            {
-              module_id: record.key,
-              actions: {
-                [columnName]: e.target.checked,
-              },
-            },
-          ],
-        });
-      }
-    }
+      // Update checkedCheckboxes state
+      setCheckedCheckboxes((prevChecked) => {
+        const existingModuleIndex = prevChecked.findIndex(
+          (item) => item.module_id === record.key
+        );
 
-    setCheckedCheckboxes(updatedCheckedCheckboxes);
+        if (existingModuleIndex !== -1) {
+          // If module exists, update the permissions
+          const updatedCheckedModules = [...prevChecked];
+          updatedCheckedModules[existingModuleIndex].actions[columnName] =
+            e.target.checked;
+
+          return updatedCheckedModules;
+        } else {
+          // If module doesn't exist, create a new module entry
+          const newModule = {
+            module_id: record.key,
+            module_name: record.module,
+            actions: {
+              [columnName]: e.target.checked,
+            },
+            sub_modules: [],
+          };
+
+          return [...prevChecked, newModule];
+        }
+      });
+
+      return updatedData;
+    });
   };
-  console.log(checkedCheckboxes);
+  // Function to handle sub-module checkbox changes
+  const handleSubModuleCheckboxChange = (
+    e,
+    subModule,
+    columnName,
+    parentKey
+  ) => {
+    setDataSource((prevDataSource) => {
+      const updatedData = prevDataSource.map((item) =>
+        item.key === parentKey
+          ? {
+              ...item,
+              subModules: item.subModules.map((sModule) =>
+                sModule.key === subModule.key
+                  ? { ...sModule, [columnName]: e.target.checked }
+                  : sModule
+              ),
+            }
+          : item
+      );
+
+      setCheckedCheckboxes((prevChecked) => {
+        const updatedCheckedModules = prevChecked.map((item) =>
+          item.key === parentKey
+            ? {
+                ...item,
+                permissions: [
+                  {
+                    module_id: parentKey,
+                    actions: {
+                      ...item.actions,
+                    },
+                    sub_modules: updatedData
+                      .filter((module) => module.key === parentKey)
+                      .map((module) =>
+                        module.subModules.map((sModule) => ({
+                          schema_id: sModule.key,
+                          actions: {
+                            // Include only the desired properties in actions
+                            read: sModule.read,
+                            write: sModule.write,
+                            update: sModule.update,
+                            delete: sModule.delete,
+                          },
+                        }))
+                      )[0],
+                  },
+                ],
+              }
+            : item
+        );
+
+        if (!updatedCheckedModules.find((item) => item.key === parentKey)) {
+          const parentModule = updatedData.find(
+            (item) => item.key === parentKey
+          );
+
+          const updatedSubModules = updatedData
+            .filter((module) => module.key === parentKey)
+            .map((module) =>
+              module.subModules.map((sModule) => ({
+                schema_id: sModule.key,
+                actions: {
+                  // Include only the desired properties in actions
+                  read: sModule.read,
+                  write: sModule.write,
+                  update: sModule.update,
+                  delete: sModule.delete,
+                },
+              }))
+            )[0];
+
+          updatedCheckedModules.push({
+            module_name: parentModule.module,
+            module_id: parentKey,
+            actions: {
+              read: false,
+              write: false,
+              update: false,
+              delete: false,
+            },
+            sub_modules: updatedSubModules,
+          });
+        }
+
+        console.log(updatedCheckedModules);
+
+        return updatedCheckedModules;
+      });
+
+      return updatedData;
+    });
+  };
+
+  const expandedRowRender = (record) => {
+    const subModuleColumns = [
+      {
+        title: "Sub Module Name",
+        dataIndex: "module",
+        key: "module",
+      },
+      {
+        title: "Read",
+        dataIndex: "read",
+        key: "read",
+        render: (_, subModule) => (
+          <Checkbox
+            checked={subModule.read}
+            onChange={(e) =>
+              handleSubModuleCheckboxChange(e, subModule, "read", record.key)
+            }
+          />
+        ),
+      },
+      {
+        title: "Write",
+        dataIndex: "write",
+        key: "write",
+        render: (_, subModule) => (
+          <Checkbox
+            checked={subModule.write}
+            onChange={(e) =>
+              handleSubModuleCheckboxChange(e, subModule, "write", record.key)
+            }
+          />
+        ),
+      },
+      {
+        title: "Update",
+        dataIndex: "update",
+        key: "update",
+        render: (_, subModule) => (
+          <Checkbox
+            checked={subModule.update}
+            onChange={(e) =>
+              handleSubModuleCheckboxChange(e, subModule, "update", record.key)
+            }
+          />
+        ),
+      },
+      {
+        title: "Delete",
+        dataIndex: "delete",
+        key: "delete",
+        render: (_, subModule) => (
+          <Checkbox
+            checked={subModule.delete}
+            onChange={(e) =>
+              handleSubModuleCheckboxChange(e, subModule, "delete", record.key)
+            }
+          />
+        ),
+      },
+    ];
+
+    return (
+      <Table
+        columns={subModuleColumns}
+        dataSource={record.subModules}
+        pagination={false}
+        showHeader={false}
+      />
+    );
+  };
 
   const handleCreateRole = async () => {
-    const payload = {
-      role_name: roleName, // Assuming the role_name is the same for all modules
-      vendor_id: 1,
-      permissions: checkedCheckboxes.map((checkbox) => ({
-        module_id: checkbox.key,
-        actions: {
-          read: checkbox.permissions[0].actions.read,
-          write: checkbox.permissions[0].actions.write,
-          delete: checkbox.permissions[0].actions.delete,
-          update: checkbox.permissions[0].actions.update,
-        },
-      })),
-    };
+    console.log("Checked Checkboxes:", checkedCheckboxes);
 
     try {
-      const response = await axios.post(`${baseURL}/create-role`, payload);
+      const formattedPermissions = checkedCheckboxes.map(
+        ({ module_id, actions, sub_modules }) => {
+          console.log("Mapping:", module_id, actions, sub_modules);
+
+          return {
+            module_id,
+            actions,
+            sub_modules: sub_modules
+              ? sub_modules.map(({ schema_id, actions }) => {
+                  console.log("Sub Mapping:", schema_id, actions);
+
+                  return {
+                    schema_id,
+                    actions,
+                  };
+                })
+              : [],
+          };
+        }
+      );
+
+      console.log("Formatted Permissions:", formattedPermissions);
+
+      const response = await axios.post(`${baseURL}/create-role`, {
+        role_name: roleName,
+        role_description: "Testing Role, not a finalized one.",
+        vendor_id: 1,
+        permissions: formattedPermissions,
+      });
+
       console.log("Role created successfully:", response.data);
       message.success("Role created successfully");
       resetState();
@@ -245,7 +431,12 @@ const CreateRole = () => {
           <label htmlFor="RolesInput" className="addRoleNameLabel">
             Select Role Permissions
           </label>
-          <CustomTable columns={columns} dataSource={dataSource}></CustomTable>
+          <CustomTable
+            columns={columns}
+            dataSource={dataSource}
+            expandable={{ expandedRowRender }}
+          />
+
           <div className="btns-class">
             <CustomButton className="cancel-btn">Cancel</CustomButton>
             <CustomButton

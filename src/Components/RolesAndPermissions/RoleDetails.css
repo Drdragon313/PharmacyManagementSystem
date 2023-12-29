@@ -31,7 +31,7 @@
   font-family: "Poppins", sans-serif;
 }
 .ant-spin-container {
-  border: 1px solid #ededed;
+  /* border: 1px solid #ededed; */
   border-radius: 5px;
   font-family: "Poppins", sans-serif;
   width: 100%;
@@ -43,9 +43,11 @@
   border: 1px solid #ededed;
   border-radius: 5px;
   padding: 10px;
-  width: 75%;
+  width: 91%;
   font-family: "Poppins", sans-serif;
   padding-left: 20px;
+  padding-right: 10px;
+  margin-bottom: 20px;
 }
 
 .labels {
@@ -55,7 +57,7 @@
 }
 
 .values {
-  flex: 2;
+  flex: 1;
 }
 .values2 {
   flex: 1;
@@ -70,4 +72,15 @@
 }
 .custom-table-content {
   font-family: "Poppins", sans-serif;
+}
+.permission-heading {
+  font-family: Poppins, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0em;
+  text-align: center;
+}
+.main-container-role-details {
+  overflow-y: hidden;
+  overflow-block: hidden;
 }

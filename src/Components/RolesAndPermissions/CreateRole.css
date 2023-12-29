@@ -50,3 +50,6 @@
   flex-direction: row;
   justify-content: space-between;
 }
+.table-module-permissions {
+  border: none;
+}

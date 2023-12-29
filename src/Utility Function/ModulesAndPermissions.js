@@ -10,24 +10,18 @@ export const fetchUserPermissions = async (setUserPermissions) => {
     });
 
     if (response.data.status === "success") {
-      setUserPermissions(response.data.Data.permissions); // Access permissions under Data key
+      setUserPermissions(response.data.Data.permissions);
     } else {
-      // Handle error, show a message, etc.
     }
-  } catch (error) {
-    // Handle error, show a message, etc.
-  }
+  } catch (error) {}
 };
 export const fetchModules = async (setModules) => {
   try {
     const response = await axios.get(`${baseURL}/list-available-modules`);
 
     if (response.data.status === "success") {
-      setModules(response.data.Data.modules); // Access modules under Data key
+      setModules(response.data.Data.modules);
     } else {
-      // Handle error, show a message, etc.
     }
-  } catch (error) {
-    // Handle error, show a message, etc.
-  }
+  } catch (error) {}
 };

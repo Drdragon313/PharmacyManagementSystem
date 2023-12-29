@@ -10,11 +10,17 @@ import "./CreateRole.css";
 import editIconBlue from "../../Assets/editInBlue.svg";
 import { Link } from "react-router-dom";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
+import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
+import axios from "axios";
 
 const Roles = () => {
   const authToken = localStorage.getItem("AuthorizationToken");
   const [modalVisible, setModalVisible] = useState(!authToken);
   const [rolesData, setRolesData] = useState(null);
+  const [ConfirmationModalVisible, setConfirmationModalVisible] =
+    useState(false);
+  const [roleIdToDelete, setRoleIdToDelete] = useState(null);
+
   //   const breadcrumbItems = [{ label: "Roles and Permission", link: "/users" }];
   useEffect(() => {
     // Fetch roles data from the API
@@ -30,6 +36,29 @@ const Roles = () => {
 
     fetchRolesData();
   }, []);
+  const handleDelete = (roleId) => {
+    setRoleIdToDelete(roleId);
+    setConfirmationModalVisible(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      await axios.delete(`${baseURL}/delete-role?role_id=${roleIdToDelete}`);
+      const updatedRolesData = rolesData.filter(
+        (role) => role.id !== roleIdToDelete
+      );
+      setRolesData(updatedRolesData);
+      setConfirmationModalVisible(false);
+      setRoleIdToDelete(null);
+    } catch (error) {
+      console.error("Error deleting role:", error);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setConfirmationModalVisible(false);
+    setRoleIdToDelete(null);
+  };
   if (!authToken) {
     const openModal = () => {
       setModalVisible(true);
@@ -75,7 +104,7 @@ const Roles = () => {
           <Image
             preview={false}
             src={deleteActionbtn}
-            // onClick={() => handleDelete(record.id)}
+            onClick={() => handleDelete(record.id)}
           ></Image>
         </Space>
       ),
@@ -121,6 +150,13 @@ const Roles = () => {
         </Col>
         <Col className="gutter-row" span={6}></Col>
       </Row>
+      {roleIdToDelete && (
+        <ConfirmationModal
+          open={ConfirmationModalVisible}
+          onConfirm={handleConfirmDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
     </div>
   );
 };
