@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Topnav.css";
-import { SearchOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Space, message } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import { Avatar, Space, message } from "antd";
 import { Layout } from "antd";
-import { NotificationOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
@@ -14,7 +13,7 @@ const Topnav = () => {
   const [userData, setUserData] = useState({
     FName: "",
     LName: "",
-    Designation: "",
+    Role: "",
   });
   useEffect(() => {
     const localHeader = localStorage.getItem("AuthorizationToken");
@@ -27,7 +26,7 @@ const Topnav = () => {
         const apiUserData = response.data.data;
         setUserData((prevUserData) => ({
           ...prevUserData,
-          Designation: apiUserData.Designation,
+          Role: apiUserData.role[0],
           FName: apiUserData.FName,
           LName: apiUserData.LName,
         }));
@@ -41,22 +40,20 @@ const Topnav = () => {
       <Header className="TopnavHeader">
         <div></div>
         <div>
-          <Space>
-            <NotificationOutlined />
+          <div size={10} className="nav-itmes-contianer">
+            <Link to="/profile">
+              <Avatar size="large" icon={<UserOutlined />} />
+            </Link>
             <span></span>
             <div className="TopnavUser">
               <span className="TopnavUserName">
                 {userData.FName} {userData.LName}
               </span>
 
-              <span className="TopnavJobTitle">{userData.Designation}</span>
+              <span className="TopnavJobTitle">{userData.Role}</span>
             </div>
             <span></span>
-
-            <Link to="/profile">
-              <UserOutlined className="TopnavProfileLogo" />
-            </Link>
-          </Space>
+          </div>
         </div>
       </Header>
     </Layout>

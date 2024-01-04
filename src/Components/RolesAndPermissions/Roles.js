@@ -10,19 +10,27 @@ import "./CreateRole.css";
 import editIconBlue from "../../Assets/editInBlue.svg";
 import { Link } from "react-router-dom";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
+import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
+import axios from "axios";
 
 const Roles = () => {
   const authToken = localStorage.getItem("AuthorizationToken");
   const [modalVisible, setModalVisible] = useState(!authToken);
   const [rolesData, setRolesData] = useState(null);
-  //   const breadcrumbItems = [{ label: "Roles and Permission", link: "/users" }];
+  const [ConfirmationModalVisible, setConfirmationModalVisible] =
+    useState(false);
+  const [roleIdToDelete, setRoleIdToDelete] = useState(null);
   useEffect(() => {
-    // Fetch roles data from the API
     const fetchRolesData = async () => {
       try {
-        const response = await fetch(`${baseURL}/list-available-roles`); // Replace with your API endpoint
-        const data = await response.json();
-        setRolesData(data.Data.roles);
+        const response = await axios.get(`${baseURL}/list-available-roles`);
+        const data = response.data;
+
+        if (data && data.Data && data.Data.roles) {
+          setRolesData(data.Data.roles);
+        } else {
+          console.error("Invalid response format:", data);
+        }
       } catch (error) {
         console.error("Error fetching roles data:", error);
       }
@@ -30,6 +38,29 @@ const Roles = () => {
 
     fetchRolesData();
   }, []);
+  const handleDelete = (roleId) => {
+    setRoleIdToDelete(roleId);
+    setConfirmationModalVisible(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      await axios.delete(`${baseURL}/delete-role?role_id=${roleIdToDelete}`);
+      const updatedRolesData = rolesData.filter(
+        (role) => role.id !== roleIdToDelete
+      );
+      setRolesData(updatedRolesData);
+      setConfirmationModalVisible(false);
+      setRoleIdToDelete(null);
+    } catch (error) {
+      console.error("Error deleting role:", error);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setConfirmationModalVisible(false);
+    setRoleIdToDelete(null);
+  };
   if (!authToken) {
     const openModal = () => {
       setModalVisible(true);
@@ -47,11 +78,7 @@ const Roles = () => {
       dataIndex: "name",
       key: "name",
     },
-    {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-    },
+
     {
       title: "Created at",
       dataIndex: "created_at",
@@ -63,19 +90,20 @@ const Roles = () => {
       fixed: "right",
       render: (text, record) => (
         <Space className="action-btns">
-          <Link to={`${record.id}`}>
+          <Link to={`${record.id}/details`}>
             <Image preview={false} src={eyeIcon}></Image>
           </Link>
-
-          <Image
-            preview={false}
-            src={editIconBlue}
-            style={{ fill: "#3A3475" }}
-          ></Image>
+          <Link to={`${record.id}/update`}>
+            <Image
+              preview={false}
+              src={editIconBlue}
+              style={{ fill: "#3A3475" }}
+            ></Image>
+          </Link>
           <Image
             preview={false}
             src={deleteActionbtn}
-            // onClick={() => handleDelete(record.id)}
+            onClick={() => handleDelete(record.id)}
           ></Image>
         </Space>
       ),
@@ -121,6 +149,13 @@ const Roles = () => {
         </Col>
         <Col className="gutter-row" span={6}></Col>
       </Row>
+      {roleIdToDelete && (
+        <ConfirmationModal
+          open={ConfirmationModalVisible}
+          onConfirm={handleConfirmDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
     </div>
   );
 };

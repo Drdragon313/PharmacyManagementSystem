@@ -37,6 +37,7 @@ import CreateRole from "./Components/RolesAndPermissions/CreateRole";
 import EmployeePage from "./Pages/EmployeePage/EmployeePage";
 import RoleDetails from "./Components/RolesAndPermissions/RoleDetails";
 import EditUsers from "./Pages/EditUsers/EditUsers";
+import UpdateRole from "./Components/RolesAndPermissions/UpdateRole";
 const { Content } = Layout;
 
 function App() {
@@ -87,7 +88,14 @@ function MainContent() {
           <Route path="schema/autopopulate" element={<AutoPopulate />} />
           <Route path="/customschema" element={<CustomSchema />} />
           <Route path="/employeepage" element={<EmployeePage />} />
-          {/* <Route path="/employeepage/:role_id" element={<RoleDetails />} /> */}
+          <Route
+            path="/employeepage/:role_id/details"
+            element={<RoleDetails />}
+          />
+          <Route
+            path="/employeepage/:role_id/update"
+            element={<UpdateRole />}
+          />
           <Route path="/rolesandpermissions" element={<Roles />} />
           <Route
             path="/rolesandpermissions/createrole"

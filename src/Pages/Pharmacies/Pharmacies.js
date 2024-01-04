@@ -14,6 +14,7 @@ import rightArrow from "../../Assets/rightarrow.svg";
 import leftArrow from "../../Assets/leftarrow.svg";
 import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";
 import CustomButton from "../../Components/CustomButton/CustomButton";
+import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationModal";
 const Pharmacies = () => {
   const [tableDataSource, setTableDataSource] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -219,7 +220,7 @@ const Pharmacies = () => {
     return <SignInFirstModal visible={modalVisible} open={openModal} />;
   }
   return (
-    <div className="main-container-pharmacies" style={{ margin: "10px" }}>
+    <div className="main-container-pharmacies">
       <Row
         className="pharmacy-list-breadcrumb"
         gutter={{
@@ -229,7 +230,7 @@ const Pharmacies = () => {
           lg: 32,
         }}
       >
-        <Col className="gutter-row" span={4}>
+        <Col className="breadcrumb-border" span={24}>
           <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
         </Col>
       </Row>
@@ -242,16 +243,16 @@ const Pharmacies = () => {
           lg: 32,
         }}
       >
-        <Modal
+        <ConfirmationModal
           title="Confirm Delete"
           open={deleteModalVisible}
-          onOk={handleConfirmDelete}
+          onConfirm={handleConfirmDelete}
           onCancel={handleCancelDelete}
           okText="Yes"
           cancelText="Cancel"
         >
           Are you sure you want to delete this pharmacy?
-        </Modal>
+        </ConfirmationModal>
 
         <Col className="gutter-row" span={4}>
           <p className="pharmacy-list-head-txt">Pharmacy list</p>
@@ -285,10 +286,9 @@ const Pharmacies = () => {
               className="filter-pharm-btn"
               value={selectedPostalCode}
               onChange={(e) => setSelectedPostalCode(e.target.value)}
-              defaultValue="" // Set defaultValue to an empty string
             >
-              <option value="" disabled>
-                Pharmacy postal code
+              <option value="" key="empty">
+                Select Postal Code
               </option>
               {availablePostalCodes.map((postalCode) => (
                 <option
@@ -332,7 +332,7 @@ const Pharmacies = () => {
             }))}
           />
           <Row className="pharm-table-footer" gutter={4}>
-            <Col span={4}>
+            <Col span={8}>
               <Space style={{ paddingTop: "7px" }} direction="horizontal">
                 <p>Show per page</p>
                 <select
@@ -348,10 +348,9 @@ const Pharmacies = () => {
                 </select>
               </Space>
             </Col>
-            <Col span={6}></Col>
-            <Col span={6}></Col>
-            <Col span={8} style={{ paddingLeft: "40px" }}>
-              <Space direction="horizontal">
+
+            <Col span={8}>
+              <Space direction="horizontal" style={{ marginLeft: "70px" }}>
                 Showing
                 <p style={{ marginTop: "15px" }}>{page}</p>-
                 <p style={{ marginTop: "15px" }}>

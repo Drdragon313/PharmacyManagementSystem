@@ -1,7 +1,6 @@
 // CustomSwitch.js
 import React from "react";
 import { Button, Col, Row, Image } from "antd";
-import plusOutline from "../../Assets/PlusOutlined.svg";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 import "./CustomSwitch.css"; // Ensure to import your styles
 import { Link } from "react-router-dom";
@@ -53,18 +52,7 @@ const CustomSwitch = ({ checked, onChange }) => {
           </div>
         </Col>
         <Col className="gutter-row" span={12}></Col>
-        <Col className="gutter-row" span={4}>
-          <Link to="/users/AddUser">
-            <CustomButton title="" className="CreateEmpBtn mt-2">
-              <Image
-                className="plus-outline-img"
-                preview={false}
-                src={plusOutline}
-              ></Image>
-              Create Employee
-            </CustomButton>
-          </Link>
-        </Col>
+        <Col className="gutter-row" span={4}></Col>
       </Row>
     </div>
   );

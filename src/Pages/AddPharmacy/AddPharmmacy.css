@@ -1,5 +1,6 @@
 .AddPharmacyBasicContainer {
   height: 95vh;
+  font-family: Poppins, sans-serif;
 }
 .AddPharmacyBasicInfoHeading {
   padding-top: 2%;
@@ -146,4 +147,8 @@ div.ant-select-selector {
 
 .AddPharmacyInformationUpdateBtn:focus {
   box-shadow: 0 0 0 2px #425cda;
+}
+.breadcrumb-border-add-pharmacy {
+  border: 1px solid #ededed;
+  padding-left: 10px;
 }
