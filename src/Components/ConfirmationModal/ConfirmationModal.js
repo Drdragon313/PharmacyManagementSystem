@@ -1,23 +1,41 @@
 import React from "react";
-import { Modal, Button } from "antd";
-
+import { Modal, Button, Image } from "antd";
+import deleteImg from "../../Assets/deleteexclaim.svg";
+import "./ConfirmationModal.css";
 const ConfirmationModal = ({ open, onConfirm, onCancel }) => {
   return (
     <Modal
       open={open}
-      title="Confirm Delete"
       onOk={onConfirm}
+      title={<Image src={deleteImg} preview={false}></Image>}
       onCancel={onCancel}
+      className="delete-modal-body"
       footer={[
-        <Button key="cancel" onClick={onCancel}>
-          Cancel
-        </Button>,
-        <Button key="confirm" type="primary" onClick={onConfirm}>
-          Confirm
-        </Button>,
+        <div className="delete-modal-btns-container">
+          <Button
+            key="cancel"
+            onClick={onCancel}
+            className="delete-modal-cancel-btn"
+          >
+            Cancel
+          </Button>
+
+          <Button
+            key="confirm"
+            type="primary"
+            onClick={onConfirm}
+            className="delete-modal-ok-btn"
+          >
+            Delete
+          </Button>
+        </div>,
       ]}
     >
-      <p>Are you sure you want to delete this role?</p>
+      <p className="delete-pharm-modal-heading-txt">Delete pharmacy</p>
+      <p className="delete-pharm-modal-body-txt">
+        Are you sure you want to delete this pharmacy? This action cannot be
+        undone.
+      </p>
     </Modal>
   );
 };

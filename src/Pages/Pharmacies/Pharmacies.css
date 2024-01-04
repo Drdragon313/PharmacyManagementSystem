@@ -1,5 +1,6 @@
 .main-container-pharmacies {
-  font-family: "Poppins", sans-serif;
+  font-family: Poppins, sans-serif;
+  margin: 10px;
 }
 .pharmacy-list-head-txt {
   font-size: 18px;
@@ -30,7 +31,7 @@
   font-family: "Poppins", sans-serif;
 }
 .filter-pharm-btn {
-  font-family: "Poppins", sans-serif;
+  font-family: Poppins, sans-serif;
   font-size: 14px;
   width: 175px;
   text-align: left;
@@ -48,6 +49,8 @@
   border-radius: 8px;
   border: 1px solid #425cda;
   color: #425cda;
+
+  font-family: Poppins, sans-serif;
 }
 
 .filter-icon {
@@ -95,6 +98,9 @@
   border-radius: 12px;
   padding-top: 5px;
   padding-left: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 /* :where(.css-dev-only-do-not-override-nnuwmp).ant-table-wrapper
   .ant-table-footer {
@@ -131,4 +137,11 @@
   border-color: #007bff; /* Change color on focus if needed */
   outline: none; /* Remove default outline on focus */
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a box shadow on focus */
+}
+.breadcrumb-border {
+  border: 1px solid #ededed;
+  padding-left: 10px;
+  margin-bottom: 5px;
+  margin-top: -10px;
+  font-family: Poppins, sans-serif;
 }

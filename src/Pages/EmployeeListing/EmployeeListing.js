@@ -21,6 +21,10 @@ import Spinner from "../../Components/Spinner/Spinner";
 import rightArrow from "../../Assets/rightarrow.svg";
 import leftArrow from "../../Assets/leftarrow.svg";
 import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";
+import CustomButton from "../../Components/CustomButton/CustomButton";
+import plusOutline from "../../Assets/PlusOutlined.svg";
+import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationModal";
+
 const { Search } = Input;
 
 const EmployeeListing = () => {
@@ -52,7 +56,14 @@ const EmployeeListing = () => {
   useEffect(() => {
     const fetchPostalCodes = async () => {
       try {
-        const response = await axios.get(`${baseURL}/list-available-postcodes`);
+        const response = await axios.get(
+          `${baseURL}/list-available-postcodes`,
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
         const postCodeData = response.data;
 
         if (postCodeData && postCodeData.postCodes) {
@@ -62,9 +73,14 @@ const EmployeeListing = () => {
         console.error("Error fetching postal codes:", error);
       }
     };
+
     const fetchRoles = async () => {
       try {
-        const response = await axios.get(`${baseURL}/list-available-roles`);
+        const response = await axios.get(`${baseURL}/list-available-roles`, {
+          headers: {
+            Authorization: `${authToken}`,
+          },
+        });
         const roleData = response.data.Data.roles;
         console.log("Available Roles:", roleData);
 
@@ -79,7 +95,12 @@ const EmployeeListing = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${baseURL}/list-employees?search_name=${searchedName}&page=${page}&limit=${limit}&role_id=${selectedRole}&post_code=${selectedPostalCode}&sort_field=${sortField}&sort_direction=${sortDirection}`
+          `${baseURL}/list-employees?search_name=${searchedName}&page=${page}&limit=${limit}&role_id=${selectedRole}&post_code=${selectedPostalCode}&sort_field=${sortField}&sort_direction=${sortDirection}`,
+          {
+            headers: {
+              Authorization: ` ${authToken}`,
+            },
+          }
         );
         const data = response.data;
 
@@ -281,9 +302,9 @@ const EmployeeListing = () => {
           <Link to={`/pharmacies/${record.id}`}>
             <Image preview={false} src={eyeIcon}></Image>
           </Link>
-          <Link to={`/employeepage/${record.userID}`}>
-            <Image preview={false} src={editicon}></Image>
-          </Link>
+          {/* <Link to={`${record.userID}`}> */}
+          <Image preview={false} src={editicon}></Image>
+          {/* </Link> */}
           <Image
             preview={false}
             src={deleteActionbtn}
@@ -351,17 +372,16 @@ const EmployeeListing = () => {
             lg: 32,
           }}
         >
-          <Modal
+          <ConfirmationModal
             title="Confirm Delete"
             open={deleteModalVisible}
-            onOk={handleConfirmDelete}
+            onConfirm={handleConfirmDelete}
             onCancel={handleCancelDelete}
             okText="Yes"
             cancelText="Cancel"
           >
             Are you sure you want to delete this Employee?
-          </Modal>
-
+          </ConfirmationModal>
           <Modal
             title="Resend Invite"
             open={statusModalVisible}
@@ -373,9 +393,22 @@ const EmployeeListing = () => {
             Are you sure you want to resend invite to this user? <br /> This
             action cannot be undone.
           </Modal>
-
-          <Col className="gutter-row" span={4}>
+          <Col className="gutter-row" span={6}>
             <p className="employee-list-head-txt">Employees list</p>
+          </Col>
+
+          <Col className="gutter-row" span={6}>
+            {" "}
+            <Link to="/users/AddUser">
+              <CustomButton type="primary" title="" className="CreateEmpBtn">
+                <Image
+                  className="plus-outline-img"
+                  preview={false}
+                  src={plusOutline}
+                ></Image>
+                Create Employee
+              </CustomButton>
+            </Link>
           </Col>
         </Row>
         <Row

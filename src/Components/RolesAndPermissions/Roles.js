@@ -20,15 +20,17 @@ const Roles = () => {
   const [ConfirmationModalVisible, setConfirmationModalVisible] =
     useState(false);
   const [roleIdToDelete, setRoleIdToDelete] = useState(null);
-
-  //   const breadcrumbItems = [{ label: "Roles and Permission", link: "/users" }];
   useEffect(() => {
-    // Fetch roles data from the API
     const fetchRolesData = async () => {
       try {
-        const response = await fetch(`${baseURL}/list-available-roles`); // Replace with your API endpoint
-        const data = await response.json();
-        setRolesData(data.Data.roles);
+        const response = await axios.get(`${baseURL}/list-available-roles`);
+        const data = response.data;
+
+        if (data && data.Data && data.Data.roles) {
+          setRolesData(data.Data.roles);
+        } else {
+          console.error("Invalid response format:", data);
+        }
       } catch (error) {
         console.error("Error fetching roles data:", error);
       }
@@ -76,11 +78,7 @@ const Roles = () => {
       dataIndex: "name",
       key: "name",
     },
-    {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-    },
+
     {
       title: "Created at",
       dataIndex: "created_at",
@@ -92,15 +90,16 @@ const Roles = () => {
       fixed: "right",
       render: (text, record) => (
         <Space className="action-btns">
-          <Link to={`${record.id}`}>
+          <Link to={`${record.id}/details`}>
             <Image preview={false} src={eyeIcon}></Image>
           </Link>
-
-          <Image
-            preview={false}
-            src={editIconBlue}
-            style={{ fill: "#3A3475" }}
-          ></Image>
+          <Link to={`${record.id}/update`}>
+            <Image
+              preview={false}
+              src={editIconBlue}
+              style={{ fill: "#3A3475" }}
+            ></Image>
+          </Link>
           <Image
             preview={false}
             src={deleteActionbtn}

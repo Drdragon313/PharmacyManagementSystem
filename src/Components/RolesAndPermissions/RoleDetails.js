@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Row, Col, Button, Image } from "antd";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
-import editIcon from "../../Assets/tabler_edit.svg";
+
 import "./RoleDetails.css";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import Spinner from "../../Components/Spinner/Spinner";
@@ -26,6 +26,7 @@ const RoleDetails = () => {
       .get(apiUrl, { headers })
       .then((response) => {
         setRoleDetails(response.data.Data);
+        console.log(response.data.Data);
       })
       .catch((error) => {
         console.error("Error fetching role details:", error);
@@ -38,7 +39,7 @@ const RoleDetails = () => {
     { label: "Pharmacy", link: "/employeepage" },
     {
       label: "Role Details",
-      link: `/employeepage/${role_id}`,
+      link: `/employeepage/${role_id}/details`,
     },
   ];
   const moduleMapping = {
@@ -81,23 +82,8 @@ const RoleDetails = () => {
         <Col className="emp-detail-heading" span={4}>
           <p>{roleDetails.name} Details</p>
         </Col>
-        {/* <Col className="primary-btns" span={6}></Col>
 
-        <Col className="gutter-row" span={6}></Col> */}
-        <Col className="emp-detail-heading-btn" span={6}>
-          {/* <Button
-            style={{ marginLeft: "70px" }}
-            type="primary"
-            className="primary-class"
-          >
-            <Image
-              className="plus-outline-img"
-              preview={false}
-              src={editIcon}
-            ></Image>
-            Edit details
-          </Button> */}
-        </Col>
+        <Col className="emp-detail-heading-btn" span={6}></Col>
       </Row>
       <Row
         style={{ margin: "5px", marginTop: "10px" }}
@@ -124,11 +110,12 @@ const RoleDetails = () => {
               <p> {roleDetails.description}</p>
               <p> {roleDetails.id}</p>
               <p> {roleDetails.name}</p>
-              {roleDetails.users.map((user, index) => (
-                <p key={index}>
-                  {user.name} - {user.email}
-                </p>
-              ))}
+              {roleDetails.users &&
+                roleDetails.users.map((user, index) => (
+                  <p key={index}>
+                    {user.name} - {user.email}
+                  </p>
+                ))}
             </div>
             <div className="values2">
               {roleDetails.role_permissions.map((permission, index) => (

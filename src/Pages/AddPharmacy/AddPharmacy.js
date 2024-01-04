@@ -5,13 +5,14 @@ import axios from "axios";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import CustomInput from "../../Components/CustomInput/CustomInput";
 import CustomSelect from "../../Components/CustomSelect/CustomSelect";
-
+import moment from "moment";
 import {
   AddressHandler,
   PostCodeHandler,
 } from "../../Utility Function/PostCodeUtils";
 import { Link, useNavigate } from "react-router-dom";
 import CustomButton from "../../Components/CustomButton/CustomButton";
+import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 const { Option } = Select;
 const AddPharmacy = () => {
   const [user, setUsers] = useState([]);
@@ -48,18 +49,32 @@ const AddPharmacy = () => {
     PostCodeHandler(data, setPCodeResponse);
   };
   const handleDateChange = (date, dateString) => {
-    setData((prevUserData) => ({
-      ...prevUserData,
-      dateOfCreation: dateString,
-    }));
-    console.log(date);
+    const currentDate = new Date();
+    const selectedDate = new Date(dateString);
+
+    if (selectedDate > currentDate) {
+      message.error("Date of creation cannot be in the future");
+    } else if (currentDate.getFullYear() - selectedDate.getFullYear() > 100) {
+      message.error("Date of creation cannot be more than 100 years ago");
+    } else {
+      setData((prevUserData) => ({
+        ...prevUserData,
+        dateOfCreation: dateString,
+      }));
+    }
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setData((prevUserData) => ({
-      ...prevUserData,
-      [name]: name === "rent" ? parseInt(value) : value,
-    }));
+
+    if (name === "rent" && parseInt(value) < 0) {
+      message.error("Rent cannot be less than 0");
+    } else {
+      setData((prevUserData) => ({
+        ...prevUserData,
+        [name]: name === "rent" ? parseInt(value) : value,
+      }));
+    }
   };
   const handleSelectChange = (fieldName, value) => {
     setData((prevData) => ({
@@ -100,9 +115,16 @@ const AddPharmacy = () => {
         console.error("Error creating pharmacy:", error);
       });
   };
-
+  const breadcrumbItems = [
+    { label: "Pharmacy", link: "/pharmacies" },
+    { label: "Add Pharmacy", link: "/pharmacies/AddPharmacy" },
+  ];
   return (
     <div className="AddPharmacyBasicContainer">
+      <div className="breadcrumb-border-add-pharmacy">
+        <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
+      </div>
+
       <div className="AddPharmacyBasicInfoHeading">
         <h5 className="Pharmacycreationtxt">New pharmacy creation</h5>
       </div>
@@ -220,6 +242,11 @@ const AddPharmacy = () => {
                   format="YYYY-MM-DD"
                   name="dateOfCreation"
                   onChange={handleDateChange}
+                  disabledDate={(current) =>
+                    current &&
+                    (current > moment().endOf("day") ||
+                      current < moment().subtract(100, "years"))
+                  }
                 />
               </div>
 
