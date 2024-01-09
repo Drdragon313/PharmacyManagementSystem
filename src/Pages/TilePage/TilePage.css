@@ -2,12 +2,12 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 20px;
+  margin: 10px;
 }
 .allSchemas {
   display: flex;
   flex-direction: row;
-  margin: 20px;
+  margin: 10px;
 }
 .tilepage-container {
   height: 80%;
@@ -37,10 +37,14 @@
 .tile-avatar-img {
   background-color: transparent;
 
-  height: 80px;
-  width: 80px;
+  height: 90px;
+  width: 90px;
   align-items: center;
   justify-content: center;
+}
+.schema-content .schema-img {
+  height: 80px;
+  width: 80px;
 }
 .tile-avatar-img .tile-img {
   height: 80px;
@@ -60,7 +64,7 @@
   margin-top: 16px;
 }
 .title-description {
-  margin-left: 30px;
+  margin-left: 10px;
   margin-top: 20px;
 }
 .add-new-tile {
@@ -78,8 +82,9 @@
 }
 
 .breadcrumb {
-  margin-left: 30px;
-  margin-top: 10px;
+  padding-left: 20px;
+  margin-top: 1px;
+  border: 1px solid #ededed;
 }
 .breadcrumb-item {
   cursor: pointer;
@@ -210,33 +215,40 @@
 }
 .dropdown-content a {
   color: black;
-  padding: 12px 16px;
+
   text-decoration: none;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
 }
 
 .dropdown-content a:hover {
   background-color: #f1f1f1;
 }
-
+.available-tiles-txt {
+  margin-left: 20px;
+}
 .dropdown:hover .dropdown-content {
-  display: block;
+  display: flex;
+  flex-direction: column;
 }
 
 .schema-content {
   text-align: center;
   margin-left: 10px;
+  margin-top: 30px;
 }
 .dropbtn-schema {
-  color: white;
+  color: #2a44c1;
   padding: 1px;
   border-radius: 5px;
-  margin-left: 28px;
-  margin-top: -30px;
+  margin-left: 10px;
+  margin-top: -10px;
   font-size: 25px;
   border: none;
   cursor: pointer;
   background-color: transparent;
+  position: absolute;
 }
 .tiles-modal-list {
   display: flex;
@@ -251,12 +263,7 @@
 }
 
 .move-tile-name-btn.clicked {
-  background: linear-gradient(
-    to bottom,
-    #009ee2,
-    #001529
-  ); /* Change background color when clicked */
-  /* Other button styles for the clicked state */
+  background: linear-gradient(to bottom, #009ee2, #001529);
 }
 .icons {
   background: linear-gradient(to bottom, #009ee2, #001529);

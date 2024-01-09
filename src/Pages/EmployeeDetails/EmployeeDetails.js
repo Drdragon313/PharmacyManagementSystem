@@ -8,7 +8,7 @@ import "./EmployeeDetails.css";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import Spinner from "../../Components/Spinner/Spinner";
 
-const PharmacyDetails = () => {
+const EmployeeDetails = () => {
   const { employee_id, pharmacy_id } = useParams();
   const [employeeDetails, setEmployeeDetails] = useState({});
   const [loading, setLoading] = useState(true);
@@ -30,7 +30,7 @@ const PharmacyDetails = () => {
         console.error("Error fetching employee details:", error);
       })
       .finally(() => {
-        setLoading(false); // Set loading to false regardless of success or failure
+        setLoading(false);
       });
   }, [employee_id, authToken]);
   const breadcrumbItems = [
@@ -38,14 +38,14 @@ const PharmacyDetails = () => {
     { label: "Pharmacy Details", link: `/pharmacies/${pharmacy_id}` },
     {
       label: "Employee Details",
-      link: `/pharmacies/${pharmacy_id}/${employee_id}`,
+      link: `/pharmacies/${pharmacy_id}/pharmacydetails/${employee_id}`,
     },
   ];
   if (loading === true) {
     return <Spinner />;
   }
   return (
-    <div className="main-container-pharmacies">
+    <div className="main-container-pharmacy-details">
       <Row className="pharmacy-list-breadcrumb">
         <Col className="breadcrumb-col" span={24}>
           <CustomBreadcrumb
@@ -121,4 +121,4 @@ const PharmacyDetails = () => {
   );
 };
 
-export default PharmacyDetails;
+export default EmployeeDetails;

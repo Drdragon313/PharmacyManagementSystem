@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "./AddPharmmacy.css";
-import { Input, Select, DatePicker, message } from "antd";
+import "./EditPharmacy.css";
+import { useParams } from "react-router-dom";
+import { Input, Select, DatePicker, message, Image, Button } from "antd";
 import axios from "axios";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import CustomInput from "../../Components/CustomInput/CustomInput";
@@ -13,8 +14,10 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
+import AddEmployeeModal from "../../Components/AddEmployeeModal/AddEmployeeModal";
+import plusOutline from "../../Assets/add-circle-line-blue.svg";
 const { Option } = Select;
-const AddPharmacy = () => {
+const EditPharmacy = () => {
   const [user, setUsers] = useState([]);
   const navigate = useNavigate();
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -30,7 +33,10 @@ const AddPharmacy = () => {
     postTown: "",
     users: [],
   });
-
+  const [isAddEmployeeModalVisible, setIsAddEmployeeModalVisible] =
+    useState(false);
+  const [selectedUsersFromModal, setSelectedUsersFromModal] = useState([]);
+  const { pharmacy_id } = useParams();
   useEffect(() => {
     axios
       .get(`${baseURL}/list-users`)
@@ -115,9 +121,30 @@ const AddPharmacy = () => {
         console.error("Error creating pharmacy:", error);
       });
   };
+  const showAddEmployeeModal = () => {
+    setIsAddEmployeeModalVisible(true);
+  };
+
+  const handleCancelAddEmployeeModal = () => {
+    setIsAddEmployeeModalVisible(false);
+  };
+  const handleAddEmployee = async (employeeData) => {
+    try {
+      // Add logic to send data to the server and update state
+      console.log("Adding employee:", employeeData);
+
+      // Update the selected users array
+      setSelectedUsersFromModal(employeeData);
+
+      // Close the modal after adding employee
+      setIsAddEmployeeModalVisible(false);
+    } catch (error) {
+      console.error("Error adding employee:", error);
+    }
+  };
   const breadcrumbItems = [
     { label: "Pharmacy", link: "/pharmacies" },
-    { label: "Add Pharmacy", link: "/pharmacies/AddPharmacy" },
+    { label: "Edit Pharmacy", link: `/pharmacies/${pharmacy_id}/pharmacyedit` },
   ];
   return (
     <div className="AddPharmacyBasicContainer">
@@ -126,7 +153,7 @@ const AddPharmacy = () => {
       </div>
 
       <div className="AddPharmacyBasicInfoHeading">
-        <h5 className="Pharmacycreationtxt">New pharmacy creation</h5>
+        <h5 className="Pharmacycreationtxt">Edit pharmacy</h5>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="AddPharmacyDetails">
@@ -195,39 +222,19 @@ const AddPharmacy = () => {
                   value={data.Line2}
                 />
               </div>
-              <div className="mb-3">
-                <label htmlFor="users" className="addPharmacyNotLabel">
-                  Add users in pharmacy
-                </label>
-                <br />
-                <Select
-                  mode="multiple"
-                  className="select-custom"
-                  style={{ width: "100%", height: "100%" }}
-                  name="users"
-                  onChange={(values) => {
-                    const selectedUsersArray = user.filter((user) =>
-                      values.includes(user.id.toString())
-                    );
-                    setSelectedUsers(selectedUsersArray);
 
-                    setData((prevData) => ({
-                      ...prevData,
-                      users: selectedUsersArray,
-                    }));
-                  }}
-                >
-                  {user.map((user) => (
-                    <Option
-                      className="add-user-in-pharm-select"
-                      key={user.id}
-                      value={user.id.toString()}
-                    >
-                      {user.name} - {user.email}
-                    </Option>
-                  ))}
-                </Select>
-              </div>
+              <Button
+                type="dashed"
+                className="plus-btn-edit-pharm"
+                onClick={showAddEmployeeModal}
+              >
+                <Image
+                  className="plus-outline-img"
+                  preview={false}
+                  src={plusOutline}
+                ></Image>
+                Add employee to pharmacy
+              </Button>
             </form>
           </div>
           <div className="AddPharmacyTwoDetails">
@@ -314,8 +321,14 @@ const AddPharmacy = () => {
           </CustomButton>
         </div>
       </form>
+      <AddEmployeeModal
+        open={isAddEmployeeModalVisible}
+        onCancel={handleCancelAddEmployeeModal}
+        onAddEmployee={handleAddEmployee}
+        selectedUsers={selectedUsersFromModal}
+      />
     </div>
   );
 };
 
-export default AddPharmacy;
+export default EditPharmacy;

@@ -22,6 +22,7 @@ import {
   deleteSchema,
   moveSchemaToTile,
   fetchMoveTileData,
+  updateTileNameApi,
 } from "../../Utility Function/tilePageUtils";
 import "./TilePage.css";
 import SelectionModal from "../../Components/CreateSchemaSelectionModal/SelectionModal";
@@ -48,6 +49,10 @@ const TilePage = () => {
   const [selectedTileId, setSelectedTileId] = useState(null);
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(-1);
   const [iconsData, setIconsData] = useState();
+  const [isEditModalVisible, setEditModalVisible] = useState(false);
+  const [editedTileName, setEditedTileName] = useState("");
+  const [selectedTileIdForEdit, setSelectedTileIdForEdit] = useState(null);
+
   const [form] = Form.useForm();
   const handleMoveButtonClick = (schemaId) => {
     setSelectedSchemaId(schemaId);
@@ -133,6 +138,28 @@ const TilePage = () => {
       fetchDataTiles(getPath());
     }
   };
+  const handleEditTileClick = (tileId, event) => {
+    event.stopPropagation();
+    const selectedTile = tiles.find((tile) => tile.ID === tileId);
+    setEditedTileName(selectedTile.TileName);
+    setSelectedTileIdForEdit(tileId);
+    setEditModalVisible(true);
+  };
+
+  // ... (rest of your code)
+
+  const handleEditTile = async () => {
+    try {
+      // Call the utility function to update the tile name
+      await updateTileNameApi(selectedTileIdForEdit, editedTileName);
+      message.success("Tile updated successfully");
+      setEditModalVisible(false);
+      fetchDataTiles(getPath());
+    } catch (error) {
+      message.error("Error updating tile name");
+      console.error(error);
+    }
+  };
 
   const openCardModal = (modalType) => {
     setSelectionModalVisible(modalType);
@@ -180,13 +207,6 @@ const TilePage = () => {
       </Breadcrumb>
 
       <Row gutter={24}>
-        <div className="title-description">
-          <h3>Available Options</h3>
-          <p>
-            You can choose from the options given below for which you want to
-            upload data.
-          </p>
-        </div>
         <Col span={22} md={12} lg={16} xl={22}>
           <h4 className="available-tiles-txt">Available Tiles</h4>
           <div className="allcards">
@@ -208,6 +228,12 @@ const TilePage = () => {
                         }
                       >
                         Delete
+                      </Button>
+                      <Button
+                        type="link"
+                        onClick={(event) => handleEditTileClick(tile.ID, event)}
+                      >
+                        Edit Tile
                       </Button>
                     </div>
                   </Button>
@@ -265,6 +291,9 @@ const TilePage = () => {
                       >
                         Move
                       </Button>
+                      <Link to={`/schema/${schema.id}`}>
+                        <Button type="link">View Details</Button>
+                      </Link>
                       <Modal
                         open={isMoveModalVisible}
                         title="Move Tile"
@@ -304,11 +333,12 @@ const TilePage = () => {
                     direction="vertical"
                     size={5}
                   >
-                    <Image preview={false} src={tileImg}></Image>
+                    <Image
+                      className="schema-img"
+                      preview={false}
+                      src={tileImg}
+                    ></Image>
                     <h5 className="tile-name">{schema.schema_name}</h5>
-                    <Link to={`/schema/${schema.id}`}>
-                      <Button type="link">View Details</Button>
-                    </Link>
                   </Space>
                 </CustomCard>
               ))
@@ -371,6 +401,18 @@ const TilePage = () => {
             </div>
           </Form.Item>
         </Form>
+      </Modal>
+      <Modal
+        visible={isEditModalVisible}
+        title="Edit Tile"
+        onCancel={() => setEditModalVisible(false)}
+        onOk={handleEditTile}
+      >
+        <Input
+          placeholder="Enter new tile name"
+          value={editedTileName}
+          onChange={(e) => setEditedTileName(e.target.value)}
+        />
       </Modal>
     </div>
   );

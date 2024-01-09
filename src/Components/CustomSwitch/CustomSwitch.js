@@ -1,10 +1,9 @@
 // CustomSwitch.js
 import React from "react";
-import { Button, Col, Row, Image } from "antd";
+import { Button, Col, Row } from "antd";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 import "./CustomSwitch.css"; // Ensure to import your styles
-import { Link } from "react-router-dom";
-import CustomButton from "../../Components/CustomButton/CustomButton";
+
 const generateButtonStyle = (checked, background, color) => ({
   width: 150,
   height: 40,

@@ -76,8 +76,10 @@ const File = () => {
   ];
   return (
     <div>
-      <div className="file-container">
+      <div className="breadcrumb-file-upload">
         <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
+      </div>
+      <div className="file-container">
         <h2>Files and Assets</h2>
         <p className="file-paragraph">
           Documents and Attachments that have been uploaded will be validated

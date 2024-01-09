@@ -99,7 +99,10 @@ const SideMenuBar = (props) => {
                 src={getIconByModuleId(menuItem.module_id)}
                 alt="Icon"
               />
-              <Link to={getRouteByModuleId(menuItem.module_id)}>
+              <Link
+                className="side-bar-links"
+                to={getRouteByModuleId(menuItem.module_id)}
+              >
                 {menuItem.module_name}
               </Link>
             </Space>
@@ -119,7 +122,9 @@ const SideMenuBar = (props) => {
             className="menu-items-sidebar"
           >
             <LogoutOutlined className="icons-sidenav" />
-            <Link to="/">Signout</Link>
+            <Link className="side-bar-links" to="/">
+              Signout
+            </Link>
           </Space>
         </Menu.Item>
       </Menu>

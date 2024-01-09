@@ -44,7 +44,6 @@
   padding: 10px;
   width: 75%;
   font-family: "Poppins", sans-serif;
-  padding-left: 20px;
 }
 
 .labels {
@@ -66,4 +65,7 @@
 }
 .custom-table-content {
   font-family: "Poppins", sans-serif;
+}
+.pharmacy-list-breadcrumb {
+  margin-left: 1px;
 }
