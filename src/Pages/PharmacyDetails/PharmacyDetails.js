@@ -13,12 +13,15 @@ import editIconBlue from "../../Assets/editInBlue.svg";
 import Spinner from "../../Components/Spinner/Spinner";
 import "./PharmacyDetails.css";
 import { Link } from "react-router-dom";
+import AddEmployeeModal from "../../Components/AddEmployeeModal/AddEmployeeModal";
 
 const PharmacyDetails = () => {
   const { pharmacy_id } = useParams();
 
   const [pharmacyDetails, setPharmacyDetails] = useState(null);
   const [tableDataSource, setTableDataSource] = useState([]);
+  const [isAddEmployeeModalVisible, setIsAddEmployeeModalVisible] =
+    useState(false);
 
   useEffect(() => {
     const fetchPharmacyDetails = async () => {
@@ -65,7 +68,10 @@ const PharmacyDetails = () => {
   }
   const breadcrumbItems = [
     { label: "Pharmacy", link: "/pharmacies" },
-    { label: "Pharmacy Details", link: `/pharmacies/${pharmacy_id}` },
+    {
+      label: "Pharmacy Details",
+      link: `/pharmacies/${pharmacy_id}/pharmacydetails`,
+    },
   ];
   const tableColumns = [
     {
@@ -114,8 +120,28 @@ const PharmacyDetails = () => {
       ),
     },
   ];
+
+  const showAddEmployeeModal = () => {
+    setIsAddEmployeeModalVisible(true);
+  };
+
+  const handleCancelAddEmployeeModal = () => {
+    setIsAddEmployeeModalVisible(false);
+  };
+
+  const handleAddEmployee = async (employeeData) => {
+    try {
+      // Add logic to send data to the server and update state
+      console.log("Adding employee:", employeeData);
+
+      // Close the modal after adding employee
+      setIsAddEmployeeModalVisible(false);
+    } catch (error) {
+      console.error("Error adding employee:", error);
+    }
+  };
   return (
-    <div className="main-container-pharmacies">
+    <div>
       <Row className="pharmacy-list-breadcrumb">
         <Col className="breadcrumb-col" span={24}>
           <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
@@ -143,17 +169,21 @@ const PharmacyDetails = () => {
             Edit details
           </Button>
         </Col>
-        <Col className="pharm-detail-heading" span={8}>
+        <Col className="pharm-detail-heading" span={6}>
           <p>Pharmacy employees</p>
         </Col>
-        <Col className="gutter-row" span={2}>
-          <Button type="primary" className="plus-btn">
+        <Col className="gutter-row" span={4}>
+          <Button
+            type="primary"
+            className="plus-btn-add-emp"
+            onClick={showAddEmployeeModal}
+          >
             <Image
               className="plus-outline-img"
               preview={false}
               src={plusOutline}
             ></Image>
-            Create employee
+            Add employee to pharmacy
           </Button>
         </Col>
       </Row>
@@ -211,6 +241,11 @@ const PharmacyDetails = () => {
           />
         </Col>
       </Row>
+      <AddEmployeeModal
+        open={isAddEmployeeModalVisible}
+        onCancel={handleCancelAddEmployeeModal}
+        onAddEmployee={handleAddEmployee}
+      />
     </div>
   );
 };

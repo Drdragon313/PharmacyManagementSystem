@@ -38,6 +38,7 @@ import EmployeePage from "./Pages/EmployeePage/EmployeePage";
 import RoleDetails from "./Components/RolesAndPermissions/RoleDetails";
 import EditUsers from "./Pages/EditUsers/EditUsers";
 import UpdateRole from "./Components/RolesAndPermissions/UpdateRole";
+import EditPharmacy from "./Pages/EditPharmacy/EditPharmacy";
 const { Content } = Layout;
 
 function App() {
@@ -79,7 +80,7 @@ function MainContent() {
           />
           <Route path="employee" element={<Iframe />} />
           <Route
-            path="pharmacies/:pharmacy_id/:employee_id"
+            path="pharmacies/:pharmacy_id/pharmacydetails/:employee_id"
             element={<EmployeeDetails />}
           />
           <Route path="pharmacy" element={<PharmacyIfame />} />
@@ -113,7 +114,15 @@ function MainContent() {
           <Route path="resendemail" element={<ResendEmail />} />
           <Route path="pharmacies" element={<Pharmacies />} />
           <Route path="pharmacies/AddPharmacy" element={<AddPharmacy />} />
-          <Route path="pharmacies/:pharmacy_id" element={<PharmacyDetails />} />
+          <Route
+            path="pharmacies/:pharmacy_id/pharmacydetails"
+            element={<PharmacyDetails />}
+          />
+
+          <Route
+            path="pharmacies/:pharmacy_id/pharmacyedit"
+            element={<EditPharmacy />}
+          />
           <Route path="employeepage/:userID" element={<EditUsers />} />
           <Route path="reports" element={<Reports />} />
         </Routes>

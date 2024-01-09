@@ -10,6 +10,7 @@
 .primary-class {
   background-color: #425cda;
   font-family: "Poppins", sans-serif;
+  margin-left: 110px;
 }
 .gutter-row-labels {
   margin-left: 20px;
@@ -22,11 +23,12 @@
   padding-right: 10px;
   margin-bottom: 3px;
 }
-.plus-btn {
+.plus-btn-add-emp {
   background-color: #425cda;
-  width: 220%;
+  width: 130% !important;
   justify-content: center;
   font-family: "Poppins", sans-serif;
+  margin-left: 50px;
 }
 .ant-spin-container {
   border: 1px solid #ededed;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Col, Image, Row, Space, message, Pagination, Modal } from "antd";
+import { Col, Image, Row, Space, message } from "antd";
 import "./Pharmacies.css";
 import eyeIcon from "../../Assets/Icon feather-eye.svg";
 import deleteActionbtn from "../../Assets/deleteAction.svg";
@@ -15,6 +15,9 @@ import leftArrow from "../../Assets/leftarrow.svg";
 import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationModal";
+import editIcon from "../../Assets/editInBlue.svg";
+import PaginationComponent from "../../Components/PaginationComponent/PaginationComponent";
+
 const Pharmacies = () => {
   const [tableDataSource, setTableDataSource] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -171,8 +174,11 @@ const Pharmacies = () => {
       fixed: "right",
       render: (text, record) => (
         <Space className="action-btns">
-          <Link to={`/pharmacies/${record.id}`}>
+          <Link to={`/pharmacies/${record.id}/pharmacydetails`}>
             <Image preview={false} src={eyeIcon}></Image>
+          </Link>
+          <Link to={`/pharmacies/${record.id}/pharmacyedit`}>
+            <Image preview={false} src={editIcon}></Image>
           </Link>
           <Image
             preview={false}
@@ -331,44 +337,14 @@ const Pharmacies = () => {
               ),
             }))}
           />
-          <Row className="pharm-table-footer" gutter={4}>
-            <Col span={8}>
-              <Space style={{ paddingTop: "7px" }} direction="horizontal">
-                <p>Show per page</p>
-                <select
-                  className="items-per-page-dropdown"
-                  value={limit}
-                  onChange={(e) => handleLimitChange(e.target.value)}
-                >
-                  {[2, 5, 10].map((value) => (
-                    <option key={value} value={value}>
-                      {value}
-                    </option>
-                  ))}
-                </select>
-              </Space>
-            </Col>
-
-            <Col span={8}>
-              <Space direction="horizontal" style={{ marginLeft: "70px" }}>
-                Showing
-                <p style={{ marginTop: "15px" }}>{page}</p>-
-                <p style={{ marginTop: "15px" }}>
-                  {Math.ceil(totalItems / limit)}
-                </p>
-                of
-                <p style={{ marginTop: "15px" }}>{totalItems}</p>
-                <Pagination
-                  itemRender={itemRender}
-                  current={page}
-                  pageSize={limit}
-                  total={totalItems}
-                  onChange={handlePageChange}
-                  size="small"
-                />
-              </Space>
-            </Col>
-          </Row>
+          <PaginationComponent
+            limit={limit}
+            handleLimitChange={handleLimitChange}
+            page={page}
+            totalItems={totalItems}
+            handlePageChange={handlePageChange}
+            itemRender={itemRender}
+          />
         </Col>
       </Row>
     </div>

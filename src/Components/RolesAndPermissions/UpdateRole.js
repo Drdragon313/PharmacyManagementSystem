@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import isEqual from "lodash/isEqual";
+import React, { useState, useEffect } from "react";
 import "./CreateRole.css";
 import { Col, Input, Row, Checkbox, message, Table } from "antd";
 import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";
@@ -13,11 +12,9 @@ import { useNavigate, useParams } from "react-router-dom";
 const UpdateRole = () => {
   const authToken = localStorage.getItem("AuthorizationToken");
   const [modalVisible, setModalVisible] = useState(!authToken);
-  const [modules, setModules] = useState([]);
   const [checkedCheckboxes, setCheckedCheckboxes] = useState([]);
   const [dataSource, setDataSource] = useState([]);
   const [roleName, setRoleName] = useState("");
-  const previousModulesRef = useRef();
   const { role_id } = useParams();
   useEffect(() => {
     const fetchRoleData = async () => {

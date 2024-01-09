@@ -16,6 +16,9 @@
   background-color: #3a3475;
   margin-top: 30px;
 }
+.side-bar-links {
+  text-decoration: none !important;
+}
 .menu-items-sidebar {
   display: flex;
   flex-direction: row;
