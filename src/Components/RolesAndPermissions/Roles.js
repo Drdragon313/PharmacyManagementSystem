@@ -12,22 +12,30 @@ import { Link } from "react-router-dom";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import axios from "axios";
+import PaginationComponent from "../PaginationComponent/PaginationComponent";
 
 const Roles = () => {
   const authToken = localStorage.getItem("AuthorizationToken");
   const [modalVisible, setModalVisible] = useState(!authToken);
   const [rolesData, setRolesData] = useState(null);
+  const [totalItems, setTotalItems] = useState();
   const [ConfirmationModalVisible, setConfirmationModalVisible] =
     useState(false);
   const [roleIdToDelete, setRoleIdToDelete] = useState(null);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(5);
+
   useEffect(() => {
     const fetchRolesData = async () => {
       try {
-        const response = await axios.get(`${baseURL}/list-available-roles`);
+        const response = await axios.get(
+          `${baseURL}/list-available-roles?page=${page}&limit=${limit}`
+        );
         const data = response.data;
 
         if (data && data.Data && data.Data.roles) {
           setRolesData(data.Data.roles);
+          setTotalItems(data.Data);
         } else {
           console.error("Invalid response format:", data);
         }
@@ -37,7 +45,7 @@ const Roles = () => {
     };
 
     fetchRolesData();
-  }, []);
+  }, [page, limit]);
   const handleDelete = (roleId) => {
     setRoleIdToDelete(roleId);
     setConfirmationModalVisible(true);
@@ -60,6 +68,27 @@ const Roles = () => {
   const handleCancelDelete = () => {
     setConfirmationModalVisible(false);
     setRoleIdToDelete(null);
+  };
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  };
+
+  const handleLimitChange = (newLimit) => {
+    setLimit(newLimit);
+  };
+  const renderPagination = () => {
+    if (rolesData) {
+      return (
+        <PaginationComponent
+          limit={limit}
+          handleLimitChange={handleLimitChange}
+          page={page}
+          totalItems={totalItems.totalItems}
+          handlePageChange={handlePageChange}
+        />
+      );
+    }
+    return null;
   };
   if (!authToken) {
     const openModal = () => {
@@ -146,6 +175,7 @@ const Roles = () => {
           {rolesData && (
             <CustomTable dataSource={rolesData} columns={columns} />
           )}
+          {renderPagination()}
         </Col>
         <Col className="gutter-row" span={6}></Col>
       </Row>

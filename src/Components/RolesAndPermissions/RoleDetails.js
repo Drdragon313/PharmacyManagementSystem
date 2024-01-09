@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { Row, Col, Button, Image } from "antd";
+import { Row, Col, Image } from "antd";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 
 import "./RoleDetails.css";
