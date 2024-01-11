@@ -60,8 +60,8 @@ const AddEmployeeModalEditPharm = ({
         name: employeeName,
         email: email,
       }));
-
-    // Pass the selectedEmployeesData back to the parent component
+    console.log("selected employee data", selectedEmployeesData);
+    // Pass the selectedEmployeesData back to the parent component using onAddEmployee
     onAddEmployee(selectedEmployeesData);
 
     // Close the modal

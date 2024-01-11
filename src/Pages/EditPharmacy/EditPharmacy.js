@@ -28,8 +28,8 @@ const EditPharmacy = () => {
     pharmacyName: "",
     dateOfCreation: "",
     rent: null,
-    Line1: "",
-    Line2: "",
+    line1: "",
+    line2: "",
     postCode: "",
     postTown: "",
     users: [],
@@ -48,15 +48,14 @@ const EditPharmacy = () => {
             pharmacyName: pharmacyData.pharmacyName,
             dateOfCreation: pharmacyData.dateOfCreation,
             rent: pharmacyData.rent,
-            Line1: pharmacyData.line1,
-            Line2: pharmacyData.line2,
+            line1: pharmacyData.line1,
+            line2: pharmacyData.line2,
             managerID: pharmacyData.managerID,
             managerName: pharmacyData.managerName,
             postCode: pharmacyData.postCode,
             postTown: pharmacyData.postTown,
             users: pharmacyData.users,
           });
-          setSelectedUsers(pharmacyData.users);
         }
       })
       .catch((error) => {
@@ -125,26 +124,34 @@ const EditPharmacy = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Update the 'users' field in the 'data' object with the selected users
+    const updatedData = {
+      ...data,
+      users: users, // Use the updated users array here
+    };
+
     axios
-      .post(`${baseURL}/update-pharmacy?pharmacy_id=${pharmacy_id}`, data)
+      .post(
+        `${baseURL}/update-pharmacy?pharmacy_id=${pharmacy_id}`,
+        updatedData
+      )
       .then((response) => {
-        console.log("Pharmacy created successfully:", response.data);
-        message.success("Pharmacy Created Successfully");
+        console.log("Pharmacy updated successfully:", response.data);
+        message.success("Pharmacy Updated Successfully");
         navigate("/pharmacies");
         setData({
           pharmacyName: "",
           dateOfCreation: "",
           rent: null,
-          Line1: "",
-          Line2: "",
+          line1: "",
+          line2: "",
           postCode: "",
           postTown: "",
           users: [],
         });
-        setSelectedUsers([]);
       })
       .catch((error) => {
-        console.error("Error creating pharmacy:", error);
+        console.error("Error updating pharmacy:", error);
       });
   };
   const [isAddEmployeeModalVisible, setAddEmployeeModalVisible] =
@@ -160,22 +167,11 @@ const EditPharmacy = () => {
     setAddEmployeeModalVisible(false);
   };
 
-  // Function to update the users array
-  const onAddEmployee = (selectedEmployeeData) => {
-    // Combine the existing users and the newly selected employees
-    const updatedUsers = [...selectedUsers, ...selectedEmployeeData];
-
-    // Remove duplicates based on employee id
-    const uniqueUsers = updatedUsers.reduce((acc, user) => {
-      if (!acc.find((u) => u.id === user.id)) {
-        acc.push(user);
-      }
-      return acc;
-    }, []);
-
-    // Update the state with the unique user array
-    setSelectedUsers(uniqueUsers);
+  const updateUsersArray = (selectedUsers) => {
+    setSelectedUsers(selectedUsers); // <-- Use setSelectedUsers to update the state
+    console.log("selected user", selectedUsers);
   };
+
   const breadcrumbItems = [
     { label: "Pharmacy", link: "/pharmacies" },
     { label: "Edit Pharmacy", link: `/pharmacies/${pharmacy_id}/pharmacyedit` },
@@ -241,9 +237,9 @@ const EditPharmacy = () => {
                   labelclassName="adduserNotLabel"
                   labelText="Building Name"
                   inputclassName="AddUsersDetailsInput"
-                  inputName="Line1"
+                  inputName="line1"
                   handleChange={handleChange}
-                  value={data.Line1}
+                  value={data.line1}
                 />
                 <CustomInput
                   // divclassName="mb-3"
@@ -251,9 +247,9 @@ const EditPharmacy = () => {
                   labelclassName="addPharmacyNotLabel"
                   labelText="Street Name"
                   inputclassName="AddUsersDetailsInput"
-                  inputName="Line2"
+                  inputName="line2"
                   handleChange={handleChange}
-                  value={data.Line2}
+                  value={data.line2}
                 />
               </div>
 
@@ -356,7 +352,7 @@ const EditPharmacy = () => {
         open={isAddEmployeeModalVisible}
         onClose={closeAddEmployeeModal}
         pharmacyId={pharmacy_id}
-        onAddEmployee={onAddEmployee}
+        onAddEmployee={updateUsersArray}
       />
     </div>
   );
