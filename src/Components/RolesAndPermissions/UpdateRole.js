@@ -8,6 +8,7 @@ import CustomTable from "../CustomTable/CustomTable";
 import CustomButton from "../CustomButton/CustomButton";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
 import { useNavigate, useParams } from "react-router-dom";
+import { CaretDownOutlined, CaretUpOutlined } from "@ant-design/icons";
 
 const UpdateRole = () => {
   const authToken = localStorage.getItem("AuthorizationToken");
@@ -78,11 +79,13 @@ const UpdateRole = () => {
       title: "Modules",
       dataIndex: "module",
       key: "module",
+      width: 194,
     },
     {
       title: "Add",
       dataIndex: "write",
       key: "write",
+      width: 100,
       render: (_, record) => (
         <Checkbox
           checked={record.write}
@@ -94,6 +97,7 @@ const UpdateRole = () => {
       title: "View",
       dataIndex: "read",
       key: "read",
+      width: 100,
       render: (_, record) => (
         <Checkbox
           checked={record.read}
@@ -105,6 +109,7 @@ const UpdateRole = () => {
       title: "Update",
       dataIndex: "update",
       key: "update",
+      width: 100,
       render: (_, record) => (
         <Checkbox
           checked={record.update}
@@ -116,6 +121,7 @@ const UpdateRole = () => {
       title: "Delete",
       dataIndex: "delete",
       key: "delete",
+      width: 100,
       render: (_, record) => (
         <Checkbox
           checked={record.delete}
@@ -422,7 +428,18 @@ const UpdateRole = () => {
           <CustomTable
             columns={columns}
             dataSource={dataSource}
-            expandable={{ expandedRowRender }}
+            expandable={{
+              expandedRowRender,
+              expandIcon: ({ expanded, onExpand, record }) =>
+                record.subModules.length > 0 && (
+                  <span
+                    onClick={(e) => onExpand(record, e)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {expanded ? <CaretUpOutlined /> : <CaretDownOutlined />}
+                  </span>
+                ),
+            }}
           />
 
           <div className="btns-class">

@@ -13,6 +13,8 @@ import editIconBlue from "../../Assets/editInBlue.svg";
 import Spinner from "../../Components/Spinner/Spinner";
 import "./PharmacyDetails.css";
 import { Link } from "react-router-dom";
+import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationModal";
+
 import AddEmployeeModal from "../../Components/AddEmployeeModal/AddEmployeeModal";
 
 const PharmacyDetails = () => {
@@ -20,6 +22,9 @@ const PharmacyDetails = () => {
 
   const [pharmacyDetails, setPharmacyDetails] = useState(null);
   const [tableDataSource, setTableDataSource] = useState([]);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [selectedUserIdToDelete, setSelectedUserIdToDelete] = useState(null);
+
   const [isAddEmployeeModalVisible, setIsAddEmployeeModalVisible] =
     useState(false);
 
@@ -44,15 +49,15 @@ const PharmacyDetails = () => {
 
     fetchPharmacyDetails();
   }, [pharmacy_id]);
-  const handleDelete = async (userId) => {
+  const handleConfirmDelete = async () => {
     try {
       const response = await axios.delete(
-        `${baseURL}/delete-pharmacy-user?pharmacy_id=${pharmacy_id}&user_id=${userId}`
+        `${baseURL}/delete-pharmacy-user?pharmacy_id=${pharmacy_id}&user_id=${selectedUserIdToDelete}`
       );
 
       if (response.data && response.data.status === "success") {
         const updatedTableData = tableDataSource.filter(
-          (employee) => employee.id !== userId
+          (employee) => employee.id !== selectedUserIdToDelete
         );
         setTableDataSource(updatedTableData);
       } else {
@@ -61,6 +66,9 @@ const PharmacyDetails = () => {
     } catch (error) {
       console.error("Error deleting employee:", error);
     }
+
+    // Close the delete confirmation modal
+    setIsDeleteModalVisible(false);
   };
 
   if (!pharmacyDetails) {
@@ -128,7 +136,14 @@ const PharmacyDetails = () => {
   const handleCancelAddEmployeeModal = () => {
     setIsAddEmployeeModalVisible(false);
   };
-
+  const handleDelete = (userId) => {
+    setSelectedUserIdToDelete(userId);
+    setIsDeleteModalVisible(true);
+  };
+  const handleCancelDelete = () => {
+    // Close the delete confirmation modal
+    setIsDeleteModalVisible(false);
+  };
   const handleAddEmployee = async (employeeData) => {
     try {
       // Add logic to send data to the server and update state
@@ -160,14 +175,16 @@ const PharmacyDetails = () => {
           <p>Pharmacy detail view</p>
         </Col>
         <Col className="primary-btns" span={6}>
-          <Button type="primary" className="primary-class">
-            <Image
-              className="plus-outline-img"
-              preview={false}
-              src={editIcon}
-            ></Image>
-            Edit details
-          </Button>
+          <Link to={`/pharmacies/${pharmacy_id}/pharmacyedit`}>
+            <Button type="primary" className="primary-class">
+              <Image
+                className="plus-outline-img"
+                preview={false}
+                src={editIcon}
+              ></Image>
+              Edit details
+            </Button>
+          </Link>
         </Col>
         <Col className="pharm-detail-heading" span={6}>
           <p>Pharmacy employees</p>
@@ -245,6 +262,12 @@ const PharmacyDetails = () => {
         open={isAddEmployeeModalVisible}
         onCancel={handleCancelAddEmployeeModal}
         onAddEmployee={handleAddEmployee}
+        pharmacy_id={pharmacy_id}
+      />
+      <ConfirmationModal
+        open={isDeleteModalVisible}
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
       />
     </div>
   );

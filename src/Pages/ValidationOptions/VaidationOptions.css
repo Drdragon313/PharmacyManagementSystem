@@ -30,6 +30,7 @@
   width: 100%;
   background: #fff;
   height: 180px;
+  margin-top: 10px;
   border: 1px solid #2a44c1;
   color: #2a44c1;
   transform: border-style 0.5s border-color 0.5s box-shadow 1s;

@@ -57,14 +57,14 @@ const File = () => {
             error.response.data.error &&
             error.response.data.error.message
           ) {
-            // message.error(error.response.data.error.message, 3);
+            message.error(error.response.data.error.message, 3);
           } else {
-            // message.error("File Uploading Failed!", 3);
+            message.error("File Uploading Failed!", 3);
           }
         });
     } catch (errorMessage) {
-      // setError(errorMessage);
-      // message.error("Invalid CSV File", 2);
+      setError(errorMessage);
+      message.error("Invalid CSV File", 2);
     } finally {
       setIsLoading(false);
     }
@@ -92,9 +92,9 @@ const File = () => {
             className="file-upload"
             accept=".csv"
             beforeUpload={validateAndUpload}
-            // onRemove={() => {
-            //   setError([]);
-            // }}
+            onRemove={() => {
+              setError([]);
+            }}
           >
             <img src={uploadIcon} alt="Upload Icon" />
             <br />
@@ -109,7 +109,7 @@ const File = () => {
           </div>
         ) : (
           <div>
-            {/* {error &&
+            {error &&
               getCurrentPageErrors().map((value, index) => (
                 <div style={{ color: "green" }} key={index}>
                   <p>{value}</p>
@@ -124,7 +124,7 @@ const File = () => {
                 showSizeChanger={false}
                 className="pagination"
               />
-            )} */}
+            )}
           </div>
         )}
       </div>
