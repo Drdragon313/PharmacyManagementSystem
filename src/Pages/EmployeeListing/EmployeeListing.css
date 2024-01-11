@@ -173,3 +173,17 @@
 .status-pointer {
   cursor: pointer;
 }
+.delete-modal-ok-btn {
+  background-color: #d92d20 !important;
+  width: 50%;
+  height: 5vh;
+
+  transition: background-color 1ms, color 1ms;
+}
+.resend-modal-ok-btn {
+  background-color: #425cda !important;
+  width: 50%;
+  height: 5vh;
+
+  transition: background-color 1ms, color 1ms;
+}

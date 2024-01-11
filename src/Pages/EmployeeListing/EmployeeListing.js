@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./EmployeeListing.css";
 import axios from "axios";
-import {
-  Col,
-  Image,
-  Row,
-  Space,
-  message,
-  Pagination,
-  Modal,
-  Input,
-} from "antd";
+import { Col, Image, Row, Space, message, Input } from "antd";
 import eyeIcon from "../../Assets/Icon feather-eye.svg";
 import editicon from "../../Assets/editInBlue.svg";
 import deleteActionbtn from "../../Assets/deleteAction.svg";
@@ -24,7 +15,9 @@ import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import plusOutline from "../../Assets/PlusOutlined.svg";
 import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationModal";
-
+import PaginationComponent from "../../Components/PaginationComponent/PaginationComponent";
+import deleteImg from "../../Assets/deleteexclaim.svg";
+import resendInviteIcon from "../../Assets/resendInviteIcon.svg";
 const { Search } = Input;
 
 const EmployeeListing = () => {
@@ -49,9 +42,12 @@ const EmployeeListing = () => {
   const [statusEmail, setStatusEmail] = useState("");
   const [searchedName, setSearchedName] = useState("");
 
-  useEffect(() => {
-    console.log("Selected Role", selectedRole);
-  }, [selectedRole]);
+  const handlePostalCodeChange = (value) => {
+    setSelectedPostalCode(value === "" ? "" : value);
+  };
+  const handleRoleChange = (value) => {
+    setSelectedRole(value === "" ? "" : value);
+  };
 
   useEffect(() => {
     const fetchPostalCodes = async () => {
@@ -82,7 +78,6 @@ const EmployeeListing = () => {
           },
         });
         const roleData = response.data.Data.roles;
-        console.log("Available Roles:", roleData);
 
         if (roleData) {
           setAvailableRoles(roleData);
@@ -126,6 +121,7 @@ const EmployeeListing = () => {
     selectedPostalCode,
     selectedRole,
     searchedName,
+    authToken,
   ]);
   const showDeleteModal = (employeeId, pharmacyID) => {
     setDeleteModalVisible(true);
@@ -280,6 +276,7 @@ const EmployeeListing = () => {
       dataIndex: "role",
       key: "role",
       width: "10%",
+      ellipsis: true,
     },
     {
       title: "Salary",
@@ -299,12 +296,12 @@ const EmployeeListing = () => {
       fixed: "right",
       render: (text, record) => (
         <Space className="action-btns">
-          <Link to={`/pharmacies/${record.id}`}>
+          <Link to={`${record.userID}/viewUser`}>
             <Image preview={false} src={eyeIcon}></Image>
           </Link>
-          {/* <Link to={`${record.userID}`}> */}
-          <Image preview={false} src={editicon}></Image>
-          {/* </Link> */}
+          <Link to={`${record.userID}/editUser`}>
+            <Image preview={false} src={editicon}></Image>
+          </Link>
           <Image
             preview={false}
             src={deleteActionbtn}
@@ -377,12 +374,29 @@ const EmployeeListing = () => {
             open={deleteModalVisible}
             onConfirm={handleConfirmDelete}
             onCancel={handleCancelDelete}
+            titleImage={<Image src={deleteImg} preview={false}></Image>}
             okText="Yes"
+            btnTxt="Delete"
+            btnclassName="delete-modal-ok-btn"
             cancelText="Cancel"
-          >
-            Are you sure you want to delete this Employee?
-          </ConfirmationModal>
-          <Modal
+            confirmationHeading="Remove Employee"
+            confirmationText="Are you sure you want to remove this employee from this pharmacy? The employee will not be deleted from system but will be removed from pharmacy"
+          ></ConfirmationModal>
+          <ConfirmationModal
+            title="Resend Invite"
+            open={statusModalVisible}
+            onConfirm={handleConfirmResend}
+            onCancel={handleCancelResend}
+            titleImage={<Image src={resendInviteIcon} preview={false}></Image>}
+            okText="Yes"
+            btnTxt="Send"
+            btnclassName="resend-modal-ok-btn"
+            cancelText="Cancel"
+            confirmationHeading="Resend Invite"
+            confirmationText=" Are you sure you want to resend invite to this user? This
+            action cannot be undone."
+          ></ConfirmationModal>
+          {/* <Modal
             title="Resend Invite"
             open={statusModalVisible}
             onOk={handleConfirmResend}
@@ -392,7 +406,7 @@ const EmployeeListing = () => {
           >
             Are you sure you want to resend invite to this user? <br /> This
             action cannot be undone.
-          </Modal>
+          </Modal> */}
           <Col className="gutter-row" span={6}>
             <p className="employee-list-head-txt">Employees list</p>
           </Col>
@@ -434,12 +448,14 @@ const EmployeeListing = () => {
               <select
                 className="filter-role-btn"
                 value={selectedRole}
-                onChange={(e) => setSelectedRole(e.target.value)}
+                // onChange={(e) => setSelectedRole(e.target.value)}
+                onChange={(e) => handleRoleChange(e.target.value)}
                 defaultValue=""
               >
                 <option value="" disabled>
                   Role
                 </option>
+                {selectedRole && <option value="">Clear Filter</option>}
                 {availableRoles &&
                   availableRoles.map((role) => (
                     <option
@@ -458,12 +474,15 @@ const EmployeeListing = () => {
               <select
                 className="filter-emp-btn"
                 value={selectedPostalCode}
-                onChange={(e) => setSelectedPostalCode(e.target.value)}
+                // onChange={(e) => setSelectedPostalCode(e.target.value)}
+                onChange={(e) => handlePostalCodeChange(e.target.value)}
                 defaultValue=""
               >
                 <option value="" disabled>
                   Pharmacy postal code
                 </option>
+                {selectedPostalCode && <option value="">Clear Filter</option>}
+
                 {availablePostalCodes.map((postalCode) => (
                   <option
                     className="select-options"
@@ -505,45 +524,14 @@ const EmployeeListing = () => {
                 ),
               }))}
             />
-            <Row className="employee-table-footer" gutter={4}>
-              <Col span={4}>
-                <Space style={{ paddingTop: "7px" }} direction="horizontal">
-                  <p>Show per page</p>
-                  <select
-                    className="items-per-page-dropdown"
-                    value={limit}
-                    onChange={(e) => handleLimitChange(e.target.value)}
-                  >
-                    {[2, 5, 10].map((value) => (
-                      <option key={value} value={value}>
-                        {value}
-                      </option>
-                    ))}
-                  </select>
-                </Space>
-              </Col>
-              <Col span={7}></Col>
-              <Col span={7}></Col>
-              <Col span={6} style={{ paddingLeft: "40px" }}>
-                <Space direction="horizontal">
-                  Showing
-                  <p style={{ marginTop: "15px" }}>{page}</p>-
-                  <p style={{ marginTop: "15px" }}>
-                    {Math.ceil(totalItems / limit)}
-                  </p>
-                  of
-                  <p style={{ marginTop: "15px" }}>{totalItems}</p>
-                  <Pagination
-                    itemRender={itemRender}
-                    current={page}
-                    pageSize={limit}
-                    total={totalItems}
-                    onChange={handlePageChange}
-                    size="small"
-                  />
-                </Space>
-              </Col>
-            </Row>
+            <PaginationComponent
+              limit={limit}
+              handleLimitChange={handleLimitChange}
+              page={page}
+              totalItems={totalItems}
+              handlePageChange={handlePageChange}
+              itemRender={itemRender}
+            />
           </Col>
         </Row>
       </div>

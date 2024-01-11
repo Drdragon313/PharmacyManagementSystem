@@ -1,5 +1,5 @@
 .AddUsersBasicContainer {
-  height: 105vh;
+  height: 110vh !important;
 }
 .AddUsersBasicInfoHeading {
   padding-top: 2%;
