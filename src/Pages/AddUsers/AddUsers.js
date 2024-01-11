@@ -43,10 +43,6 @@ const AddUsers = () => {
   const handleFindAddress = () => {
     PostCodeHandler(data, setPCodeResponse);
   };
-  useEffect(() => {
-    console.log("Data Obj", data);
-  }, [data]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!data.FName || !data.LName || !data.Email || !data.Role) {
@@ -129,9 +125,14 @@ const AddUsers = () => {
       })
       .catch(() => {});
   }, [selectedPharmacy]);
+  // const ukTelephoneNumberRegex = /^\+44\d{3,12}$/;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    // if (name === "Contact" && !ukTelephoneNumberRegex.test(value)) {
+    //   message.error("Please enter a valid UK telephone number.", 3);
+    //   return;
+    // }
     setData((prevUserData) => ({
       ...prevUserData,
       [name]: value,

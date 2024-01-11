@@ -110,7 +110,10 @@ function MainContent() {
           <Route path="schema/autopopulate" element={<AutoPopulate />} />
           <Route path="users/AddUser" element={<AddUsers />} />
 
-          <Route path="users/ViewEmployees" element={<ViewEmployees />} />
+          <Route
+            path="employeepage/:userID/viewUser"
+            element={<ViewEmployees />}
+          />
           <Route path="resendemail" element={<ResendEmail />} />
           <Route path="pharmacies" element={<Pharmacies />} />
           <Route path="pharmacies/AddPharmacy" element={<AddPharmacy />} />
@@ -118,12 +121,11 @@ function MainContent() {
             path="pharmacies/:pharmacy_id/pharmacydetails"
             element={<PharmacyDetails />}
           />
-
           <Route
             path="pharmacies/:pharmacy_id/pharmacyedit"
             element={<EditPharmacy />}
           />
-          <Route path="employeepage/:userID" element={<EditUsers />} />
+          <Route path="employeepage/:userID/editUser" element={<EditUsers />} />
           <Route path="reports" element={<Reports />} />
         </Routes>
       </Content>

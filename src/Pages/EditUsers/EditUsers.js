@@ -14,6 +14,7 @@ import {
 import CustomInput from "../../Components/CustomInput/CustomInput";
 import CustomSelect from "../../Components/CustomSelect/CustomSelect";
 import { useParams } from "react-router-dom";
+import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 const { Option } = Select;
 
 const EditUsers = () => {
@@ -21,54 +22,64 @@ const EditUsers = () => {
     FName: "",
     Gender: "",
     LName: "",
-    Role: "",
+    Selected_Role: "",
     Email: "",
     Contact: "",
     DateOfBirth: "",
-    Pharmacy: "",
-    postCode: "",
+    Pharmacy: [],
+    PostCode: "",
     Address: "",
+    Line_Manager: "",
+    Line_Manager_id: "",
     Line1: "",
     Line2: "",
-    postTown: "",
-    Line_Manager: "",
+    PostTown: "",
     salary: "",
+    Available_Roles: [],
+    AvailablePharmacies: [],
+    Role_Permissions: [],
   });
-  const [avaiableRoles, setAvailableRoles] = useState([]);
-  const [selectedRole, setSelectedRole] = useState();
-  const [selectedPharmacy, setSelectedPharmacy] = useState();
-  const [manager, setManager] = useState();
-
-  const [avaiablePharmacies, setAvailablePharmacies] = useState([]);
+  // const [selectedRole, setSelectedRole] = useState();
+  // const [selectedPharmacy, setSelectedPharmacy] = useState();
   const [pCodeResponse, setPCodeResponse] = useState([]);
   const [permissions, setPermissions] = useState([]);
   const { userID } = useParams();
-  console.log("User id from params", userID);
+  const breadcrumbItems = [
+    { label: "Employees", link: "/employeepage" },
+    {
+      label: "Update Employee Details",
+      link: `/employeepage/${userID}/editUser`,
+    },
+  ];
 
   useEffect(() => {
     if (userID) {
       axios
         .get(`${baseURL}/get-user-data?user_id=${userID}`)
         .then((response) => {
-          const data = response.data;
-          console.log("Get API", data);
+          const datafromAPI = response.data.data;
+          setData((prevData) => ({
+            ...prevData,
+            ...datafromAPI,
+          }));
         })
         .catch((error) => {
           message.error("Failed to fetch employee details", 3);
-          console.log("Get API Failed", error);
           console.error(error);
         });
     } else {
-      console.log("No user id");
     }
   }, [userID]);
+  useEffect(() => {
+    console.log("Data object after API call,", data);
+  }, [data]);
   const handleFindAddress = () => {
     PostCodeHandler(data, setPCodeResponse);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!data.FName || !data.LName || !data.Email || !data.Role) {
+    if (!data.FName || !data.LName || !data.Email || !data.Selected_Role) {
       message.error("Please fill in necessary fields.", 3);
       return;
     }
@@ -78,26 +89,9 @@ const EditUsers = () => {
     };
 
     axios
-      .post(`${baseURL}/register-user`, data, { headers })
+      .put(`${baseURL}/update-profile?user_id=${userID}`, data, { headers })
       .then(() => {
-        message.success("User Created Successfully!", 3);
-        setData({
-          FName: "",
-          Gender: "",
-          LName: "",
-          Role: "",
-          Email: "",
-          Contact: "",
-          DateOfBirth: "",
-          Pharmacy: "",
-          postCode: "",
-          Address: "",
-          Line_Manager: "",
-          Line1: "",
-          Line2: "",
-          postTown: "",
-          salary: "",
-        });
+        message.success("User Updated Successfully!", 3);
       })
       .catch((error) => {
         if (
@@ -108,46 +102,36 @@ const EditUsers = () => {
         ) {
           message.error(error.response.data.error.message, 3);
         } else {
-          message.error("User Creation Failed!", 3);
+          message.error("User Updation Failed!", 3);
+          console.error(error);
         }
       });
   };
   useEffect(() => {
     axios
-      .get(`${baseURL}/list-available-roles`)
-      .then((response) => {
-        const data = response.data.Data.roles;
-        setAvailableRoles(data);
-      })
-      .catch(() => {});
-    axios.get(`${baseURL}/list-pharmacies`).then((response) => {
-      const pharmData = response.data.data;
-      setAvailablePharmacies(pharmData);
-    });
-  }, []);
-  useEffect(() => {
-    axios
-      .get(`${baseURL}/role-permissions?role_id=${selectedRole}`)
+      .get(`${baseURL}/role-permissions?role_id=${data.Selected_Role}`)
       .then((response) => {
         const permissionsData = response.data.Data.role_permissions;
+        console.log("Permissions against selected role", permissionsData);
         setPermissions(permissionsData);
       })
       .catch(() => {});
-  }, [selectedRole]);
+  }, [data.Selected_Role]);
 
   useEffect(() => {
     axios
-      .get(`${baseURL}/pharmacy-manager?pharmacy_id=${selectedPharmacy}`)
+      .get(`${baseURL}/pharmacy-manager?pharmacy_id=${data.Pharmacy}`)
       .then((response) => {
         const managerData = response.data.data;
-        setManager(managerData);
+
         setData((prevData) => ({
           ...prevData,
-          Line_Manager: managerData.manager_id,
+          Line_Manager: managerData.manager_name,
+          Line_Manager_id: managerData.manager_id,
         }));
       })
       .catch(() => {});
-  }, [selectedPharmacy]);
+  }, [data.Pharmacy]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -157,11 +141,12 @@ const EditUsers = () => {
     }));
   };
   const handleSelectChange = (fieldName, value) => {
-    if (fieldName === "Role") {
-      setSelectedRole(value);
-    } else if (fieldName === "Pharmacy") {
-      setSelectedPharmacy(value);
-    } else if (fieldName === "Address") {
+    // if (fieldName === "Selected_Role") {
+    //   setSelectedRole(value);
+    // } else if (fieldName === "Pharmacy") {
+    //   setSelectedPharmacy(value);
+    // }
+    if (fieldName === "Address") {
       const selectedAddress = pCodeResponse.find(
         (item) => item.address === value
       );
@@ -175,6 +160,10 @@ const EditUsers = () => {
   };
   return (
     <div className="AddUsersBasicContainer">
+      <CustomBreadcrumb
+        seperator=">>"
+        items={breadcrumbItems}
+      ></CustomBreadcrumb>
       <div className="AddUsersBasicInfoHeading">
         <h5 className="usercreationtxt">Edit Employee Details</h5>
       </div>
@@ -210,6 +199,7 @@ const EditUsers = () => {
                   className="AddUsersDetailsInput"
                   name="Contact"
                   onChange={handleChange}
+                  value={data.Contact}
                 />
               </div>
               <div className="mb-3">
@@ -217,12 +207,15 @@ const EditUsers = () => {
                 <br />
                 <Select
                   className="GenderInput ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
-                  name="Role"
-                  onChange={(value) => handleSelectChange("Role", value)}
+                  name="Selected_Role"
+                  value={data.Selected_Role}
+                  onChange={(value) =>
+                    handleSelectChange("Selected_Role", value)
+                  }
                 >
-                  {avaiableRoles.map((option) => (
+                  {data.Available_Roles.map((option) => (
                     <Option key={option.id} value={option.id}>
-                      {option.name}
+                      {option.role_name}
                     </Option>
                   ))}
                 </Select>
@@ -233,12 +226,13 @@ const EditUsers = () => {
                 <br />
                 <Select
                   className="GenderInput ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
-                  name="Role"
+                  name="Pharmacy"
+                  value={data.Pharmacy}
                   onChange={(value) => handleSelectChange("Pharmacy", value)}
                 >
-                  {avaiablePharmacies.map((option) => (
+                  {data.AvailablePharmacies.map((option) => (
                     <Option key={option.id} value={option.id}>
-                      {option.pharmacyName}
+                      {option.pharmacy_name}
                     </Option>
                   ))}
                 </Select>
@@ -248,10 +242,10 @@ const EditUsers = () => {
                 labelclassName="addUserNotLabel"
                 labelText="Postcode"
                 inputclassName="AddUsersDetailsInput"
-                inputName="postCode"
+                inputName="PostCode"
                 handleChange={handleChange}
                 handleBlur={handleFindAddress}
-                value={data.postCode}
+                value={data.PostCode}
               />
               <Row>
                 <Col span={10}>
@@ -300,6 +294,7 @@ const EditUsers = () => {
                   className="AddUsersDetailsInput"
                   type="date"
                   name="DateOfBirth"
+                  value={data.DateOfBirth}
                   onChange={handleChange}
                   onBlur={(e) =>
                     handleBlur("DateOfBirth", e.target.value, data, setData)
@@ -323,8 +318,11 @@ const EditUsers = () => {
                 <br />
                 <Select
                   className="GenderInput ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
-                  name="Role"
-                  onChange={(value) => handleSelectChange("Permissions", value)}
+                  name="Role_Permissions"
+                  value={data.Role_Permissions}
+                  onChange={(value) =>
+                    handleSelectChange("Role_Permissions", value)
+                  }
                 >
                   {permissions.map((option) => (
                     <Option key={option} value={option}>
@@ -354,8 +352,7 @@ const EditUsers = () => {
                     inputclassName="DetailsInput"
                     inputName="Line_Manager"
                     handleChange={handleChange}
-                    // value={manager.manager_name}
-                    value={manager?.manager_name || ""}
+                    value={data.Line_Manager}
                   />
                 </Col>
               </Row>
@@ -365,6 +362,7 @@ const EditUsers = () => {
                 labelText="Select address"
                 selectclassName="GenderInput ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
                 name="Address"
+                value={data.Address}
                 onChange={handleSelectChange}
                 options={
                   pCodeResponse ? pCodeResponse.map((item) => item.address) : []
@@ -375,9 +373,9 @@ const EditUsers = () => {
                 labelclassName="addUserNotLabel"
                 labelText="Town"
                 inputclassName="AddUsersDetailsInput"
-                inputName="postTown"
+                inputName="PostTown"
                 handleChange={handleChange}
-                value={data.postTown}
+                value={data.PostTown}
               />
             </div>
           </div>
@@ -386,7 +384,7 @@ const EditUsers = () => {
         <div className="AddUsersInformationUpdateBtnContainer">
           <button className="btn AddUsersInformationCancelBtn">Cancel</button>
           <button type="submit" className="btn AddUsersInformationUpdateBtn">
-            Create User
+            Update User
           </button>
         </div>
       </form>

@@ -1,13 +1,21 @@
 import React from "react";
-import { Modal, Button, Image } from "antd";
-import deleteImg from "../../Assets/deleteexclaim.svg";
+import { Modal, Button } from "antd";
 import "./ConfirmationModal.css";
-const ConfirmationModal = ({ open, onConfirm, onCancel }) => {
+const ConfirmationModal = ({
+  open,
+  onConfirm,
+  onCancel,
+  confirmationHeading,
+  confirmationText,
+  titleImage,
+  btnclassName,
+  btnTxt,
+}) => {
   return (
     <Modal
       open={open}
       onOk={onConfirm}
-      title={<Image src={deleteImg} preview={false}></Image>}
+      title={titleImage}
       onCancel={onCancel}
       className="delete-modal-body"
       footer={[
@@ -24,18 +32,15 @@ const ConfirmationModal = ({ open, onConfirm, onCancel }) => {
             key="confirm"
             type="primary"
             onClick={onConfirm}
-            className="delete-modal-ok-btn"
+            className={btnclassName}
           >
-            Delete
+            {btnTxt}
           </Button>
         </div>,
       ]}
     >
-      <p className="delete-pharm-modal-heading-txt">Delete pharmacy</p>
-      <p className="delete-pharm-modal-body-txt">
-        Are you sure you want to delete this pharmacy? This action cannot be
-        undone.
-      </p>
+      <p className="delete-pharm-modal-heading-txt">{confirmationHeading}</p>
+      <p className="delete-pharm-modal-body-txt">{confirmationText}</p>
     </Modal>
   );
 };
