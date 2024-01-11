@@ -10,15 +10,18 @@ import {
   AddressHandler,
   PostCodeHandler,
 } from "../../Utility Function/PostCodeUtils";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
-const { Option } = Select;
+
 const AddPharmacy = () => {
   const [user, setUsers] = useState([]);
   const navigate = useNavigate();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const users = selectedUsers;
+  const { Option } = Select;
+
+  const { pharmacyId } = useParams();
   console.log(users);
   const [data, setData] = useState({
     pharmacyName: "",
@@ -81,6 +84,15 @@ const AddPharmacy = () => {
       ...prevData,
       [fieldName]: value,
     }));
+    if (fieldName === "PharmacyManager") {
+      // Assuming that the manager ID is stored in the value directly
+      const managerId = value;
+
+      setData((prevData) => ({
+        ...prevData,
+        manager_id: managerId,
+      }));
+    }
     if (fieldName === "Address") {
       const selectedAddress = pCodeResponse.find(
         (item) => item.address === value
@@ -94,7 +106,7 @@ const AddPharmacy = () => {
     e.preventDefault();
 
     axios
-      .post(`${baseURL}/create-pharmacy`, data)
+      .post(`${baseURL}/update-pharmacy?pharmacy_id=${pharmacyId}`, data)
       .then((response) => {
         console.log("Pharmacy created successfully:", response.data);
         message.success("Pharmacy Created Successfully");
@@ -107,6 +119,7 @@ const AddPharmacy = () => {
           Line2: "",
           postCode: "",
           postTown: "",
+          manager_id: null,
           users: [],
         });
         setSelectedUsers([]);
@@ -263,12 +276,15 @@ const AddPharmacy = () => {
                   name="PharmacyManager"
                   onChange={handleSelectChange}
                 >
-                  <Option value="Male">manager1</Option>
-                  <Option value="Female">manager2</Option>
-                  <Option value="Other">manager3</Option>
-                  <Option value="Do Not Wish to Disclose">
-                    Do Not Wish to Disclose
-                  </Option>
+                  {user.map((user) => (
+                    <Option
+                      className="add-user-in-pharm-select"
+                      key={user.id}
+                      value={user.id.toString()}
+                    >
+                      {user.name} - {user.email}
+                    </Option>
+                  ))}
                 </Select>
               </div>
               <CustomSelect

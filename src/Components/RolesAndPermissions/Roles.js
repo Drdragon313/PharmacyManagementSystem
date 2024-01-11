@@ -10,9 +10,10 @@ import "./CreateRole.css";
 import editIconBlue from "../../Assets/editInBlue.svg";
 import { Link } from "react-router-dom";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
-import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
+
 import axios from "axios";
 import PaginationComponent from "../PaginationComponent/PaginationComponent";
+import ReAssignModal from "../ReAssignModal/ReAssignModal";
 
 const Roles = () => {
   const authToken = localStorage.getItem("AuthorizationToken");
@@ -53,13 +54,8 @@ const Roles = () => {
 
   const handleConfirmDelete = async () => {
     try {
-      await axios.delete(`${baseURL}/delete-role?role_id=${roleIdToDelete}`);
-      const updatedRolesData = rolesData.filter(
-        (role) => role.id !== roleIdToDelete
-      );
-      setRolesData(updatedRolesData);
       setConfirmationModalVisible(false);
-      setRoleIdToDelete(null);
+      setRoleIdToDelete(roleIdToDelete);
     } catch (error) {
       console.error("Error deleting role:", error);
     }
@@ -180,10 +176,11 @@ const Roles = () => {
         <Col className="gutter-row" span={6}></Col>
       </Row>
       {roleIdToDelete && (
-        <ConfirmationModal
+        <ReAssignModal
           open={ConfirmationModalVisible}
           onConfirm={handleConfirmDelete}
           onCancel={handleCancelDelete}
+          roleId={roleIdToDelete} // Pass roleId to ReAssignModal
         />
       )}
     </div>

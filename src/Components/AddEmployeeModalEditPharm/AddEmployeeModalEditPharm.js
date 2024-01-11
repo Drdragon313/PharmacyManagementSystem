@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Form, Button, Checkbox, message } from "antd";
+import { Modal, Form, Checkbox } from "antd";
 import axios from "axios";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
-import "./AddEmployeeModal.css";
+import "./AddEmployeeModalEditPharm.css";
 import CustomButton from "../../Components/CustomButton/CustomButton";
-const AddEmployeeModal = ({ open, onCancel, onAddEmployee, pharmacy_id }) => {
+
+const AddEmployeeModalEditPharm = ({
+  open,
+  onClose,
+  onAddEmployee,
+  pharmacy_id,
+}) => {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedEmployees, setSelectedEmployees] = useState([]);
 
   const authToken = localStorage.getItem("AuthorizationToken");
+
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
@@ -44,46 +51,33 @@ const AddEmployeeModal = ({ open, onCancel, onAddEmployee, pharmacy_id }) => {
     });
   };
 
-  const onFinish = async () => {
-    try {
-      const response = await axios.post(
-        `${baseURL}/assign-pharmacy-to-users`,
-        {
-          pharmacy_id: parseInt(pharmacy_id, 10),
-          users: employees
-            .filter((employee) => selectedEmployees.includes(employee.userID))
-            .map((selectedEmployee) => ({
-              email: selectedEmployee.email,
-              id: selectedEmployee.userID,
-              name: selectedEmployee.employeeName,
-            })),
-        },
-        {
-          headers: {
-            Authorization: ` ${authToken}`,
-          },
-        }
-      );
+  const handleSubmit = async () => {
+    // Fetch data of selected employees based on their IDs
+    const selectedEmployeesData = employees
+      .filter((employee) => selectedEmployees.includes(employee.userID))
+      .map(({ userID, employeeName, email }) => ({
+        id: userID,
+        name: employeeName,
+        email: email,
+      }));
 
-      if (response.data && response.data.status === "success") {
-        console.log("Employees assigned successfully:", response.data);
-        onAddEmployee(response.data.users);
-      }
-    } catch (error) {
-      console.error("Error assigning employees to pharmacy:", error);
-    }
+    // Pass the selectedEmployeesData back to the parent component
+    onAddEmployee(selectedEmployeesData);
+
+    // Close the modal
+    onClose();
   };
 
   return (
     <Modal
       title="Add Employee to Pharmacy"
       open={open}
-      onCancel={onCancel}
+      onClose={onClose}
       footer={null}
       className="add-emp-modal"
       header={false}
     >
-      <Form name="addEmployeeForm" onFinish={onFinish}>
+      <Form name="addEmployeeForm" onFinish={handleSubmit}>
         {employees.map((employee) => (
           <Form.Item key={employee.userID} valuePropName="checked">
             <Checkbox
@@ -104,7 +98,10 @@ const AddEmployeeModal = ({ open, onCancel, onAddEmployee, pharmacy_id }) => {
             >
               Add Employee
             </CustomButton>
-            <CustomButton className="add-emp-modal-cancel-btn">
+            <CustomButton
+              className="add-emp-modal-cancel-btn"
+              onClick={onClose}
+            >
               Cancel
             </CustomButton>
           </div>
@@ -114,4 +111,4 @@ const AddEmployeeModal = ({ open, onCancel, onAddEmployee, pharmacy_id }) => {
   );
 };
 
-export default AddEmployeeModal;
+export default AddEmployeeModalEditPharm;

@@ -14,8 +14,9 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
-import AddEmployeeModal from "../../Components/AddEmployeeModal/AddEmployeeModal";
+import AddEmployeeModalEditPharm from "../../Components/AddEmployeeModalEditPharm/AddEmployeeModalEditPharm";
 import plusOutline from "../../Assets/add-circle-line-blue.svg";
+
 const { Option } = Select;
 const EditPharmacy = () => {
   const [user, setUsers] = useState([]);
@@ -33,11 +34,36 @@ const EditPharmacy = () => {
     postTown: "",
     users: [],
   });
-  const [isAddEmployeeModalVisible, setIsAddEmployeeModalVisible] =
-    useState(false);
-  const [selectedUsersFromModal, setSelectedUsersFromModal] = useState([]);
+
   const { pharmacy_id } = useParams();
   useEffect(() => {
+    // Fetch pharmacy details for pre-population
+    axios
+      .get(`${baseURL}/pharmacy-details?pharmacy_id=${pharmacy_id}`)
+      .then((response) => {
+        if (response.data.status === "success") {
+          const pharmacyData = response.data.data;
+          console.log(pharmacyData);
+          setData({
+            pharmacyName: pharmacyData.pharmacyName,
+            dateOfCreation: pharmacyData.dateOfCreation,
+            rent: pharmacyData.rent,
+            Line1: pharmacyData.line1,
+            Line2: pharmacyData.line2,
+            managerID: pharmacyData.managerID,
+            managerName: pharmacyData.managerName,
+            postCode: pharmacyData.postCode,
+            postTown: pharmacyData.postTown,
+            users: pharmacyData.users,
+          });
+          setSelectedUsers(pharmacyData.users);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching pharmacy details:", error);
+      });
+
+    // Fetch list of users for the Select dropdown
     axios
       .get(`${baseURL}/list-users`)
       .then((response) => {
@@ -48,7 +74,7 @@ const EditPharmacy = () => {
       .catch((error) => {
         console.error("Error fetching users:", error);
       });
-  }, []);
+  }, [pharmacy_id]);
 
   const [pCodeResponse, setPCodeResponse] = useState([]);
   const handleFindAddress = () => {
@@ -100,7 +126,7 @@ const EditPharmacy = () => {
     e.preventDefault();
 
     axios
-      .post(`${baseURL}/create-pharmacy`, data)
+      .post(`${baseURL}/update-pharmacy?pharmacy_id=${pharmacy_id}`, data)
       .then((response) => {
         console.log("Pharmacy created successfully:", response.data);
         message.success("Pharmacy Created Successfully");
@@ -121,26 +147,34 @@ const EditPharmacy = () => {
         console.error("Error creating pharmacy:", error);
       });
   };
-  const showAddEmployeeModal = () => {
-    setIsAddEmployeeModalVisible(true);
+  const [isAddEmployeeModalVisible, setAddEmployeeModalVisible] =
+    useState(false);
+
+  // Function to open the modal
+  const openAddEmployeeModal = () => {
+    setAddEmployeeModalVisible(true);
   };
 
-  const handleCancelAddEmployeeModal = () => {
-    setIsAddEmployeeModalVisible(false);
+  // Function to close the modal
+  const closeAddEmployeeModal = () => {
+    setAddEmployeeModalVisible(false);
   };
-  const handleAddEmployee = async (employeeData) => {
-    try {
-      // Add logic to send data to the server and update state
-      console.log("Adding employee:", employeeData);
 
-      // Update the selected users array
-      setSelectedUsersFromModal(employeeData);
+  // Function to update the users array
+  const onAddEmployee = (selectedEmployeeData) => {
+    // Combine the existing users and the newly selected employees
+    const updatedUsers = [...selectedUsers, ...selectedEmployeeData];
 
-      // Close the modal after adding employee
-      setIsAddEmployeeModalVisible(false);
-    } catch (error) {
-      console.error("Error adding employee:", error);
-    }
+    // Remove duplicates based on employee id
+    const uniqueUsers = updatedUsers.reduce((acc, user) => {
+      if (!acc.find((u) => u.id === user.id)) {
+        acc.push(user);
+      }
+      return acc;
+    }, []);
+
+    // Update the state with the unique user array
+    setSelectedUsers(uniqueUsers);
   };
   const breadcrumbItems = [
     { label: "Pharmacy", link: "/pharmacies" },
@@ -226,7 +260,7 @@ const EditPharmacy = () => {
               <Button
                 type="dashed"
                 className="plus-btn-edit-pharm"
-                onClick={showAddEmployeeModal}
+                onClick={openAddEmployeeModal}
               >
                 <Image
                   className="plus-outline-img"
@@ -258,16 +292,13 @@ const EditPharmacy = () => {
               </div>
 
               <div className="mb-3">
-                <label
-                  className="addPharmacyNotLabel"
-                  htmlFor="PharmacyManager"
-                >
+                <label className="addPharmacyNotLabel" htmlFor="managerName">
                   Pharmacy manager
                 </label>
                 <br />
                 <Select
                   className="AddPharmacySelect ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
-                  name="PharmacyManager"
+                  name="managerName"
                   onChange={handleSelectChange}
                 >
                   <Option value="Male">manager1</Option>
@@ -321,11 +352,11 @@ const EditPharmacy = () => {
           </CustomButton>
         </div>
       </form>
-      <AddEmployeeModal
+      <AddEmployeeModalEditPharm
         open={isAddEmployeeModalVisible}
-        onCancel={handleCancelAddEmployeeModal}
-        onAddEmployee={handleAddEmployee}
-        selectedUsers={selectedUsersFromModal}
+        onClose={closeAddEmployeeModal}
+        pharmacyId={pharmacy_id}
+        onAddEmployee={onAddEmployee}
       />
     </div>
   );

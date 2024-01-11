@@ -80,14 +80,14 @@ const ValidationOptions = () => {
     return <SignInFirstModal visible={modalVisible} open={openModal} />;
   }
 
-  const breadcrumbItems = [{ label: "Available Schemas", link: "/file" }];
+  const breadcrumbItems = [{ label: "Upload Files", link: "/file" }];
   return (
     <div className="Validation-container">
       <div className="breadcrumb-validation-page">
         <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
       </div>
 
-      <p className="validation-page-heading-txt">Data Tiles</p>
+      <p className="validation-page-heading-txt">Upload Files</p>
 
       <div className="Options-container">
         {loading ? (
