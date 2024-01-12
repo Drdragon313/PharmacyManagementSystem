@@ -14,8 +14,10 @@ import {
 import CustomInput from "../../Components/CustomInput/CustomInput";
 import CustomSelect from "../../Components/CustomSelect/CustomSelect";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
+import { useNavigate } from "react-router-dom";
 const { Option } = Select;
 const AddUsers = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState({
     FName: "",
     Gender: "",
@@ -58,23 +60,7 @@ const AddUsers = () => {
       .post(`${baseURL}/register-user`, data, { headers })
       .then(() => {
         message.success("User Created Successfully!", 3);
-        setData({
-          FName: "",
-          Gender: "",
-          LName: "",
-          Role: "",
-          Email: "",
-          Contact: "",
-          DateOfBirth: "",
-          Pharmacy: "",
-          postCode: "",
-          Address: "",
-          Line_Manager: "",
-          Line1: "",
-          Line2: "",
-          postTown: "",
-          salary: "",
-        });
+        navigate("/employeepage");
       })
       .catch((error) => {
         if (

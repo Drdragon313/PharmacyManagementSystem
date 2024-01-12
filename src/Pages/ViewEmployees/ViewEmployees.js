@@ -7,6 +7,7 @@ import { Row, Col, Button, Image, message } from "antd";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 import editIcon from "../../Assets/tabler_edit.svg";
 import "./ViewEmployees.css";
+import checkboxImg from "../../Assets/checkbox.svg";
 import { Link } from "react-router-dom";
 const ViewEmployees = () => {
   const { userID } = useParams();
@@ -43,6 +44,7 @@ const ViewEmployees = () => {
   if (loading === true) {
     return <Spinner />;
   }
+
   return (
     <div className="main-container-pharmacy-details">
       <Row className="pharmacy-list-breadcrumb">
@@ -65,14 +67,10 @@ const ViewEmployees = () => {
         <Col className="emp-detail-heading" span={6}>
           <p>{employeeDetails.FName} details</p>
         </Col>
-        <Col className="primary-btns" span={6}></Col>
+        <Col className="primary-btns" span={11}></Col>
         <Col className="emp-detail-heading-btn" span={6}>
           <Link to={`/employeepage/${userID}/editUser`}>
-            <Button
-              style={{ marginLeft: "90px" }}
-              type="primary"
-              className="primary-class"
-            >
+            <Button type="primary" className="primary-Class">
               <Image
                 className="plus-outline-img"
                 preview={false}
@@ -110,39 +108,61 @@ const ViewEmployees = () => {
               <p>Pharmacy</p>
             </div>
             <div className="values">
-              <p>{employeeDetails.FName}</p>
-              <p> {employeeDetails.LName}</p>
-              <p> {employeeDetails.Gender}</p>
-              <p> {employeeDetails.DateOfBirth}</p>
-              <p> {employeeDetails.Contact}</p>
-              <p> {employeeDetails.Email}</p>
-              <p> {employeeDetails.roleName}</p>
-              <p> {employeeDetails.roleName}</p>
+              <p>{employeeDetails.FName || "None"}</p>
+              <p> {employeeDetails.LName || "None"}</p>
+              <p> {employeeDetails.Gender || "None"}</p>
+              <p> {employeeDetails.DateOfBirth || "None"}</p>
+              <p> {employeeDetails.Contact || "None"}</p>
+              <p> {employeeDetails.Email || "None"}</p>
+              <p> {employeeDetails.roleName || "None"}</p>
+              <p> {employeeDetails.Salary || "None"}</p>
               <p>
-                {employeeDetails.pharmacies.map((value, index) => (
-                  <span key={value.id}>
-                    {value.postCode}
-                    {index < employeeDetails.pharmacies.length - 1 ? ", " : ""}
-                  </span>
-                ))}
+                {employeeDetails.pharmacies &&
+                  (employeeDetails.pharmacies.length > 0
+                    ? employeeDetails.pharmacies
+                        .map((value) => value.postCode)
+                        .join(", ")
+                    : "None")}
               </p>
               <p>
-                {employeeDetails.pharmacies.map((value, index) => (
-                  <span key={value.id}>
-                    {value.managerName}
-                    {index < employeeDetails.pharmacies.length - 1 ? ", " : ""}
-                  </span>
-                ))}
+                {employeeDetails.pharmacies &&
+                  (employeeDetails.pharmacies.some(
+                    (value) => value.managerName !== ""
+                  )
+                    ? employeeDetails.pharmacies
+                        .filter((value) => value.managerName !== "")
+                        .map((value) => value.managerName)
+                        .join(", ")
+                    : "None")}
               </p>
-              <p> {employeeDetails.Address}</p>
+              <p> {employeeDetails.Address || "None"}</p>
               <p>
-                {employeeDetails.pharmacies.map((value, index) => (
-                  <span key={value.id}>
-                    {value.name}
-                    {index < employeeDetails.pharmacies.length - 1 ? ", " : ""}
-                  </span>
-                ))}
+                {employeeDetails.pharmacies &&
+                  (employeeDetails.pharmacies.some((value) => value.name !== "")
+                    ? employeeDetails.pharmacies
+                        .filter((value) => value.name !== "")
+                        .map((value) => value.name)
+                        .join(", ")
+                    : "None")}
               </p>
+            </div>
+            <div className="values2">
+              <h5>Employee permissions</h5>
+              {employeeDetails.permissions &&
+              employeeDetails.permissions.length > 0 ? (
+                employeeDetails.permissions.map((permission, index) => (
+                  <p key={index}>
+                    <Image
+                      className="bullet-image"
+                      preview={false}
+                      src={checkboxImg}
+                    />{" "}
+                    {permission}
+                  </p>
+                ))
+              ) : (
+                <p className="Nonetxt">None</p>
+              )}
             </div>
           </div>
         </Col>

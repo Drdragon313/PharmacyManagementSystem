@@ -15,9 +15,11 @@ import CustomInput from "../../Components/CustomInput/CustomInput";
 import CustomSelect from "../../Components/CustomSelect/CustomSelect";
 import { useParams } from "react-router-dom";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
+import { useNavigate } from "react-router-dom";
 const { Option } = Select;
 
 const EditUsers = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState({
     FName: "",
     Gender: "",
@@ -70,9 +72,6 @@ const EditUsers = () => {
     } else {
     }
   }, [userID]);
-  useEffect(() => {
-    console.log("Data object after API call,", data);
-  }, [data]);
   const handleFindAddress = () => {
     PostCodeHandler(data, setPCodeResponse);
   };
@@ -92,6 +91,7 @@ const EditUsers = () => {
       .put(`${baseURL}/update-profile?user_id=${userID}`, data, { headers })
       .then(() => {
         message.success("User Updated Successfully!", 3);
+        navigate("/employeepage");
       })
       .catch((error) => {
         if (
@@ -112,7 +112,6 @@ const EditUsers = () => {
       .get(`${baseURL}/role-permissions?role_id=${data.Selected_Role}`)
       .then((response) => {
         const permissionsData = response.data.Data.role_permissions;
-        console.log("Permissions against selected role", permissionsData);
         setPermissions(permissionsData);
       })
       .catch(() => {});
