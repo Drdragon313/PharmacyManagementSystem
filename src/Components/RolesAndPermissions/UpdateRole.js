@@ -260,11 +260,13 @@ const UpdateRole = () => {
         title: "Sub Module Name",
         dataIndex: "module",
         key: "module",
+        width: 190,
       },
       {
         title: "Read",
         dataIndex: "read",
         key: "read",
+        width: 100,
         render: (_, subModule) => (
           <Checkbox
             checked={subModule.read}
@@ -278,6 +280,7 @@ const UpdateRole = () => {
         title: "Write",
         dataIndex: "write",
         key: "write",
+        width: 100,
         render: (_, subModule) => (
           <Checkbox
             checked={subModule.write}
@@ -291,6 +294,7 @@ const UpdateRole = () => {
         title: "Update",
         dataIndex: "update",
         key: "update",
+        width: 100,
         render: (_, subModule) => (
           <Checkbox
             checked={subModule.update}
@@ -304,6 +308,7 @@ const UpdateRole = () => {
         title: "Delete",
         dataIndex: "delete",
         key: "delete",
+        width: 100,
         render: (_, subModule) => (
           <Checkbox
             checked={subModule.delete}

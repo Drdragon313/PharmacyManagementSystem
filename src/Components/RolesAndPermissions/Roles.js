@@ -52,13 +52,15 @@ const Roles = () => {
     setConfirmationModalVisible(true);
   };
 
-  const handleConfirmDelete = async () => {
-    try {
-      setConfirmationModalVisible(false);
-      setRoleIdToDelete(roleIdToDelete);
-    } catch (error) {
-      console.error("Error deleting role:", error);
-    }
+  const handleConfirmDelete = () => {
+    // Update rolesData state based on the newRoleId
+    const updatedRolesData = rolesData.filter(
+      (role) => role.id !== roleIdToDelete
+    );
+    setRolesData(updatedRolesData);
+
+    // Reset roleIdToDelete state
+    setRoleIdToDelete(null);
   };
 
   const handleCancelDelete = () => {

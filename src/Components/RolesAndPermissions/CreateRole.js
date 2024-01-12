@@ -332,14 +332,22 @@ const CreateRole = () => {
 
           return {
             module_id,
-            actions,
+            actions: {
+              read: actions.read || false,
+              write: actions.write || false,
+              update: actions.update || false,
+              delete: actions.delete || false,
+            },
             sub_modules: sub_modules
               ? sub_modules.map(({ schema_id, actions }) => {
-                  console.log("Sub Mapping:", schema_id, actions);
-
                   return {
                     schema_id,
-                    actions,
+                    actions: {
+                      read: actions.read || false,
+                      write: actions.write || false,
+                      update: actions.update || false,
+                      delete: actions.delete || false,
+                    },
                   };
                 })
               : [],

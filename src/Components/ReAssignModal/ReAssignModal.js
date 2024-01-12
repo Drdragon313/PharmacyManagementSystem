@@ -43,25 +43,23 @@ const ReAssignModal = ({ open, onConfirm, onCancel, roleId }) => {
         return;
       }
 
-      // Delete the existing role and replace it with the new one
       await axios.post(`${baseURL}/delete-role`, {
         role_id_to_delete: roleId,
         new_role_id: selectedRoleId,
       });
 
-      // Call the parent onConfirm with the newRoleId
+      // Callback to update rolesData after successful delete
       onConfirm(selectedRoleId);
 
-      // Reset the selected role ID and close the modal
       setSelectedRoleId(null);
       onCancel();
-      setTimeout(() => {
-        message.success("Role Deleted Successfylly");
-      }, 2000);
+
+      message.success("Role Deleted Successfully");
     } catch (error) {
       console.error("Error deleting and creating role:", error);
     }
   };
+
   console.log("selected role id", selectedRoleId);
   return (
     <Modal
