@@ -14,7 +14,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 import AddEmployeeModalEditPharm from "../../Components/AddEmployeeModalEditPharm/AddEmployeeModalEditPharm";
-import plusOutline from "../../Assets/PlusOutlined.svg";
+import plusOutline from "../../Assets/add-circle-line-blue.svg";
 const AddPharmacy = () => {
   const [user, setUsers] = useState([]);
   const navigate = useNavigate();
@@ -207,7 +207,6 @@ const AddPharmacy = () => {
                 className="mb-3 "
               >
                 <CustomInput
-                  // divclassName="mb-3"
                   style={{ width: "160px" }}
                   labelclassName="adduserNotLabel"
                   labelText="Building Name"
@@ -217,7 +216,6 @@ const AddPharmacy = () => {
                   value={data.line1}
                 />
                 <CustomInput
-                  // divclassName="mb-3"
                   style={{ width: "150px" }}
                   labelclassName="addPharmacyNotLabel"
                   labelText="Street Name"
