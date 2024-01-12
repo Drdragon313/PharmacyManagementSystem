@@ -9,7 +9,7 @@
   margin-left: 20px;
 }
 
-.primary-class {
+.primary-Class {
   background-color: #425cda;
   font-family: "Poppins", sans-serif;
 }
@@ -53,7 +53,7 @@
 }
 
 .values {
-  flex: 2;
+  flex: 1;
 }
 .breadcrumb-col {
   border: 1px solid #ededed;
@@ -68,4 +68,11 @@
 }
 .pharmacy-list-breadcrumb {
   margin-left: 1px;
+}
+.values2 {
+  flex: 1;
+}
+.Nonetxt {
+  color: grey;
+  margin-top: 5%;
 }
