@@ -10,19 +10,18 @@ import {
   AddressHandler,
   PostCodeHandler,
 } from "../../Utility Function/PostCodeUtils";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 import AddEmployeeModalEditPharm from "../../Components/AddEmployeeModalEditPharm/AddEmployeeModalEditPharm";
 import plusOutline from "../../Assets/add-circle-line-blue.svg";
 const AddPharmacy = () => {
-  const [user, setUsers] = useState([]);
+  const [managers, setManagers] = useState([]);
   const navigate = useNavigate();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const users = selectedUsers;
   const { Option } = Select;
 
-  const { pharmacyId } = useParams();
   console.log(users);
   const [data, setData] = useState({
     pharmacyName: "",
@@ -37,14 +36,14 @@ const AddPharmacy = () => {
 
   useEffect(() => {
     axios
-      .get(`${baseURL}/list-users`)
+      .get(`${baseURL}/list-pharmacy-managers`)
       .then((response) => {
         if (response.data.status === "success") {
-          setUsers(response.data.data);
+          setManagers(response.data.data);
         }
       })
       .catch((error) => {
-        console.error("Error fetching users:", error);
+        console.error("Error fetching pharmacy managers:", error);
       });
   }, []);
 
@@ -105,9 +104,14 @@ const AddPharmacy = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    const updatedData = {
+      ...data,
+
+      users: users,
+    };
 
     axios
-      .post(`${baseURL}/create-pharmacy`, data)
+      .post(`${baseURL}/create-pharmacy`, updatedData)
       .then((response) => {
         console.log("Pharmacy created successfully:", response.data);
         message.success("Pharmacy Created Successfully");
@@ -266,29 +270,24 @@ const AddPharmacy = () => {
               </div>
 
               <div className="mb-3">
-                <label
-                  className="addPharmacyNotLabel"
-                  htmlFor="PharmacyManager"
-                >
+                <label className="addPharmacyNotLabel" htmlFor="managerName">
                   Pharmacy manager
                 </label>
                 <br />
                 <Select
                   className="AddPharmacySelect ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
-                  name="PharmacyManager"
-                  onChange={handleSelectChange}
+                  name="managerName"
+                  onChange={(value) => handleSelectChange("managerName", value)}
+                  value={data.managerID} // Set the selected manager's ID as the default value
                 >
-                  {user.map((user) => (
-                    <Option
-                      className="add-user-in-pharm-select"
-                      key={user.id}
-                      value={user.id.toString()}
-                    >
-                      {user.name} - {user.email}
+                  {managers.map((manager) => (
+                    <Option key={manager.id} value={manager.id}>
+                      {manager.name}
                     </Option>
                   ))}
                 </Select>
               </div>
+
               <CustomSelect
                 divclassName="mb-3"
                 labelclassName="adduserNotLabel"

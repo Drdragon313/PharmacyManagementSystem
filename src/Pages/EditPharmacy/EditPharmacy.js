@@ -19,9 +19,9 @@ import plusOutline from "../../Assets/add-circle-line-blue.svg";
 
 const { Option } = Select;
 const EditPharmacy = () => {
-  const [user, setUsers] = useState([]);
   const navigate = useNavigate();
   const [selectedUsers, setSelectedUsers] = useState([]);
+  const [managers, setManagers] = useState([]);
   const users = selectedUsers;
   console.log(users);
   const [data, setData] = useState({
@@ -37,6 +37,17 @@ const EditPharmacy = () => {
 
   const { pharmacy_id } = useParams();
   useEffect(() => {
+    axios
+      .get(`${baseURL}/list-pharmacy-managers`)
+      .then((response) => {
+        if (response.data.status === "success") {
+          setManagers(response.data.data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching pharmacy managers:", error);
+      });
+
     // Fetch pharmacy details for pre-population
     axios
       .get(`${baseURL}/pharmacy-details?pharmacy_id=${pharmacy_id}`)
@@ -60,18 +71,6 @@ const EditPharmacy = () => {
       })
       .catch((error) => {
         console.error("Error fetching pharmacy details:", error);
-      });
-
-    // Fetch list of users for the Select dropdown
-    axios
-      .get(`${baseURL}/list-users`)
-      .then((response) => {
-        if (response.data.status === "success") {
-          setUsers(response.data.data);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching users:", error);
       });
   }, [pharmacy_id]);
 
@@ -120,14 +119,20 @@ const EditPharmacy = () => {
       console.log("Selected udpRN:", selectedUdprn);
       AddressHandler(setData, selectedUdprn);
     }
+    if (fieldName === "managerName") {
+      setData((prevData) => ({
+        ...prevData,
+        managerID: value,
+      }));
+    }
   };
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Update the 'users' field in the 'data' object with the selected users
     const updatedData = {
       ...data,
-      users: users, // Use the updated users array here
+
+      users: users,
     };
 
     axios
@@ -143,6 +148,7 @@ const EditPharmacy = () => {
           pharmacyName: "",
           dateOfCreation: "",
           rent: null,
+          manager_id: null,
           line1: "",
           line2: "",
           postCode: "",
@@ -157,7 +163,6 @@ const EditPharmacy = () => {
   const [isAddEmployeeModalVisible, setAddEmployeeModalVisible] =
     useState(false);
 
-  // Function to open the modal
   const openAddEmployeeModal = () => {
     setAddEmployeeModalVisible(true);
   };
@@ -168,7 +173,7 @@ const EditPharmacy = () => {
   };
 
   const updateUsersArray = (selectedUsers) => {
-    setSelectedUsers(selectedUsers); // <-- Use setSelectedUsers to update the state
+    setSelectedUsers(selectedUsers);
     console.log("selected user", selectedUsers);
   };
 
@@ -295,16 +300,17 @@ const EditPharmacy = () => {
                 <Select
                   className="AddPharmacySelect ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
                   name="managerName"
-                  onChange={handleSelectChange}
+                  onChange={(value) => handleSelectChange("managerName", value)}
+                  value={data.managerID} // Set the selected manager's ID as the default value
                 >
-                  <Option value="Male">manager1</Option>
-                  <Option value="Female">manager2</Option>
-                  <Option value="Other">manager3</Option>
-                  <Option value="Do Not Wish to Disclose">
-                    Do Not Wish to Disclose
-                  </Option>
+                  {managers.map((manager) => (
+                    <Option key={manager.id} value={manager.id}>
+                      {manager.name}
+                    </Option>
+                  ))}
                 </Select>
               </div>
+
               <CustomSelect
                 divclassName="mb-3"
                 labelclassName="adduserNotLabel"
@@ -344,7 +350,7 @@ const EditPharmacy = () => {
             htmlType="submit"
             className="AddPharmacyInformationUpdateBtn"
           >
-            Create Pharmacy
+            Update Pharmacy
           </CustomButton>
         </div>
       </form>
