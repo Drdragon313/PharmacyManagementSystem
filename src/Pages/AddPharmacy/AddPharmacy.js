@@ -90,7 +90,7 @@ const AddPharmacy = () => {
 
       setData((prevData) => ({
         ...prevData,
-        manager_id: managerId,
+        managerID: managerId,
       }));
     }
     if (fieldName === "Address") {
@@ -124,7 +124,7 @@ const AddPharmacy = () => {
           line2: "",
           postCode: "",
           postTown: "",
-          manager_id: null,
+          managerID: null,
           users: [],
         });
         setSelectedUsers([]);
@@ -277,8 +277,10 @@ const AddPharmacy = () => {
                 <Select
                   className="AddPharmacySelect ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
                   name="managerName"
-                  onChange={(value) => handleSelectChange("managerName", value)}
-                  value={data.managerID} // Set the selected manager's ID as the default value
+                  onChange={(value) =>
+                    handleSelectChange("PharmacyManager", value)
+                  } // Correct the field name
+                  value={data.manager_id} // Correct the state property name
                 >
                   {managers.map((manager) => (
                     <Option key={manager.id} value={manager.id}>

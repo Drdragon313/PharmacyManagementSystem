@@ -31,10 +31,9 @@ const PaginationComponent = ({
       <Col span={10}>
         <Space direction="horizontal" style={{ marginLeft: "70px" }}>
           Showing
-          <p style={{ marginTop: "15px" }}>{page}</p>-
-          <p style={{ marginTop: "15px" }}>{Math.ceil(totalItems / limit)}</p>
-          of
-          <p style={{ marginTop: "15px" }}>{totalItems}</p>
+          <p style={{ marginTop: "20px" }}>{page}</p>-
+          <p style={{ marginTop: "20px" }}>{Math.ceil(totalItems / limit)}</p>
+          <p style={{ marginTop: "20px" }}>of {totalItems}</p>
           <Pagination
             itemRender={itemRender}
             current={page}

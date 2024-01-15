@@ -35,7 +35,10 @@ const EmployeeDetails = () => {
   }, [employee_id, authToken]);
   const breadcrumbItems = [
     { label: "Pharmacy", link: "/pharmacies" },
-    { label: "Pharmacy Details", link: `/pharmacies/${pharmacy_id}` },
+    {
+      label: "Pharmacy Details",
+      link: `/pharmacies/${pharmacy_id}/pharmacydetails`,
+    },
     {
       label: "Employee Details",
       link: `/pharmacies/${pharmacy_id}/pharmacydetails/${employee_id}`,
