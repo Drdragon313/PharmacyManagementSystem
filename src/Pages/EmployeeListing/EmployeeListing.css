@@ -187,3 +187,6 @@
 
   transition: background-color 1ms, color 1ms;
 }
+.CreateEmpBtn {
+  margin-left: 45%;
+}

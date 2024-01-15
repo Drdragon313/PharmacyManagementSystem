@@ -202,18 +202,6 @@ const EmployeeListing = () => {
       ellipsis: true,
     },
     {
-      title: "Gender",
-      dataIndex: "gender",
-      key: "gender",
-      width: "10%",
-    },
-    {
-      title: "Date of birth",
-      dataIndex: "dateOfBirth",
-      key: "dateOfBirth",
-      width: "10%",
-    },
-    {
       title: "Contact",
       dataIndex: "contact",
       key: "contact",
@@ -269,7 +257,17 @@ const EmployeeListing = () => {
       title: "Pharmacy Postal Code",
       dataIndex: "pharmacyPostCode",
       key: "pharmacyPostCode",
-      width: "10%",
+      width: "20%",
+      ellipsis: true,
+      render: (text, record) => {
+        if (record.PharmacyDetails && record.PharmacyDetails.length > 0) {
+          const postalCodes = record.PharmacyDetails.map(
+            (pharmacy) => pharmacy.post_code
+          );
+          return <span>{postalCodes.join(", ")}</span>;
+        }
+        return <span></span>;
+      },
     },
     {
       title: "Role",
@@ -396,17 +394,6 @@ const EmployeeListing = () => {
             confirmationText=" Are you sure you want to resend invite to this user? This
             action cannot be undone."
           ></ConfirmationModal>
-          {/* <Modal
-            title="Resend Invite"
-            open={statusModalVisible}
-            onOk={handleConfirmResend}
-            onCancel={handleCancelResend}
-            okText="Send"
-            cancelText="Cancel"
-          >
-            Are you sure you want to resend invite to this user? <br /> This
-            action cannot be undone.
-          </Modal> */}
           <Col className="gutter-row" span={6}>
             <p className="employee-list-head-txt">Employees list</p>
           </Col>
@@ -448,7 +435,6 @@ const EmployeeListing = () => {
               <select
                 className="filter-role-btn"
                 value={selectedRole}
-                // onChange={(e) => setSelectedRole(e.target.value)}
                 onChange={(e) => handleRoleChange(e.target.value)}
                 defaultValue=""
               >
