@@ -44,6 +44,14 @@ const ViewEmployees = () => {
   if (loading === true) {
     return <Spinner />;
   }
+  const moduleMapping = {
+    1: "Dashboard",
+    2: "Reports",
+    3: "Data live",
+    4: "Pharmacy",
+    5: "Data Tiles",
+    6: "Employees",
+  };
 
   return (
     <div className="main-container-pharmacy-details">
@@ -56,19 +64,18 @@ const ViewEmployees = () => {
         </Col>
       </Row>
       <Row
-        style={{ margin: "5px", marginTop: "20px", marginLeft: "10px" }}
-        gutter={{
-          xs: 8,
-          sm: 16,
-          md: 24,
-          lg: 32,
+        style={{
+          margin: "5px",
+          marginTop: "20px",
+          marginLeft: "10px",
+          marginRight: "50px",
         }}
+        justify="space-between"
       >
-        <Col className="emp-detail-heading" span={6}>
+        <Col className="emp-detail-heading">
           <p>{employeeDetails.FName} details</p>
         </Col>
-        <Col className="primary-btns" span={11}></Col>
-        <Col className="emp-detail-heading-btn" span={6}>
+        <Col className="emp-detail-heading-btn">
           <Link to={`/employeepage/${userID}/editUser`}>
             <Button type="primary" className="primary-Class">
               <Image
@@ -80,7 +87,6 @@ const ViewEmployees = () => {
             </Button>
           </Link>
         </Col>
-        <Col className="gutter-row" span={4}></Col>
       </Row>
       <Row
         style={{ margin: "5px", marginTop: "10px" }}
@@ -149,6 +155,48 @@ const ViewEmployees = () => {
             <div className="values2">
               <h5>Employee permissions</h5>
               {employeeDetails.permissions &&
+                employeeDetails.permissions.map((permission, index) => (
+                  <div key={index}>
+                    {permission.actions.read && (
+                      <p>
+                        <Image
+                          className="bullet-image"
+                          preview={false}
+                          src={checkboxImg}
+                        />
+                        {` View ${moduleMapping[permission.module_id]}`}
+                      </p>
+                    )}
+                    {permission.actions.write && (
+                      <p>
+                        <Image
+                          className="bullet-image"
+                          preview={false}
+                          src={checkboxImg}
+                        />
+                        {` Write Data Against Available Schemas within ${
+                          moduleMapping[permission.module_id]
+                        }`}
+                      </p>
+                    )}
+                    {permission.actions.update && (
+                      <p>
+                        <Image
+                          className="bullet-image"
+                          preview={false}
+                          src={checkboxImg}
+                        />
+                        {` Update Services Offered by Each ${
+                          moduleMapping[permission.module_id]
+                        }`}
+                      </p>
+                    )}
+                  </div>
+                ))}
+            </div>
+            {/* <div className="values2">
+              <h5>Employee permissions</h5>
+              {employeeDetails.permissions &&
               employeeDetails.permissions.length > 0 ? (
                 employeeDetails.permissions.map((permission, index) => (
                   <p key={index}>
@@ -163,7 +211,7 @@ const ViewEmployees = () => {
               ) : (
                 <p className="Nonetxt">None</p>
               )}
-            </div>
+            </div> */}
           </div>
         </Col>
       </Row>
