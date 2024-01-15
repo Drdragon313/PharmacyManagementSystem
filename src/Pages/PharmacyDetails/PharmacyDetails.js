@@ -235,6 +235,7 @@ const PharmacyDetails = () => {
               <p>{pharmacyDetails.dateOfCreation}</p>
               <p>{pharmacyDetails.rent}</p>
               <p>{pharmacyDetails.numberOfEmployees}</p>
+              <p>{pharmacyDetails.managerName}</p>
             </div>
           </div>
         </Col>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, Button } from "antd";
 import "./ConfirmationModal.css";
+import CustomButton from "../CustomButton/CustomButton";
 const ConfirmationModal = ({
   open,
   onConfirm,
@@ -28,14 +29,14 @@ const ConfirmationModal = ({
             Cancel
           </Button>
 
-          <Button
+          <CustomButton
             key="confirm"
             type="primary"
             onClick={onConfirm}
             className={btnclassName}
           >
             {btnTxt}
-          </Button>
+          </CustomButton>
         </div>,
       ]}
     >

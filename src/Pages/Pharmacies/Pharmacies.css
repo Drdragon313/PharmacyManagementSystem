@@ -145,3 +145,14 @@
   margin-top: -10px;
   font-family: Poppins, sans-serif;
 }
+.delete-btn-modal {
+  width: 50%;
+  height: 5vh;
+  background-color: #d92d20;
+  translate: background-color 1s;
+}
+.delete-btn-modal:hover {
+  background-color: #fff !important;
+  border: 1px solid #d92d20 !important;
+  color: #d92d20 !important;
+}

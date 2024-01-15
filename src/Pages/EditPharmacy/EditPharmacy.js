@@ -28,6 +28,7 @@ const EditPharmacy = () => {
     pharmacyName: "",
     dateOfCreation: "",
     rent: null,
+    managerName: "",
     line1: "",
     line2: "",
     postCode: "",
@@ -48,7 +49,6 @@ const EditPharmacy = () => {
         console.error("Error fetching pharmacy managers:", error);
       });
 
-    // Fetch pharmacy details for pre-population
     axios
       .get(`${baseURL}/pharmacy-details?pharmacy_id=${pharmacy_id}`)
       .then((response) => {
@@ -301,8 +301,9 @@ const EditPharmacy = () => {
                   className="AddPharmacySelect ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
                   name="managerName"
                   onChange={(value) => handleSelectChange("managerName", value)}
-                  value={data.managerID} // Set the selected manager's ID as the default value
+                  value={data.managerID}
                 >
+                  <Option value={data.managerID}>{data.managerName}</Option>
                   {managers.map((manager) => (
                     <Option key={manager.id} value={manager.id}>
                       {manager.name}

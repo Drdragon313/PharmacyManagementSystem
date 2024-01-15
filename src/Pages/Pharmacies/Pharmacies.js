@@ -254,8 +254,11 @@ const Pharmacies = () => {
           open={deleteModalVisible}
           onConfirm={handleConfirmDelete}
           onCancel={handleCancelDelete}
-          okText="Yes"
+          confirmationHeading="Delete pharmacy"
+          confirmationText="Are you sure you want to delete this pharmacy? This action cannot be undone."
+          btnTxt="Delete"
           cancelText="Cancel"
+          btnclassName="delete-btn-modal"
         >
           Are you sure you want to delete this pharmacy?
         </ConfirmationModal>
