@@ -4,12 +4,13 @@ import axios from "axios";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
 import "./AddEmployeeModalEditPharm.css";
 import CustomButton from "../../Components/CustomButton/CustomButton";
+import Spinner from "../Spinner/Spinner";
 
 const AddEmployeeModalEditPharm = ({
   open,
   onClose,
   onAddEmployee,
-  pharmacy_id,
+  initialSelectedUsers,
 }) => {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -39,32 +40,41 @@ const AddEmployeeModalEditPharm = ({
     };
 
     fetchEmployees();
-  }, []);
+    setSelectedEmployees(initialSelectedUsers);
+  }, [authToken, initialSelectedUsers]);
 
   const handleCheckboxChange = (employeeID) => {
     setSelectedEmployees((prevSelectedEmployees) => {
-      if (prevSelectedEmployees.includes(employeeID)) {
-        return prevSelectedEmployees.filter((id) => id !== employeeID);
+      const updatedSelectedEmployees = Array.isArray(prevSelectedEmployees)
+        ? [...prevSelectedEmployees]
+        : [];
+
+      if (updatedSelectedEmployees.includes(employeeID)) {
+        return updatedSelectedEmployees.filter((id) => id !== employeeID);
       } else {
-        return [...prevSelectedEmployees, employeeID];
+        return [...updatedSelectedEmployees, employeeID];
       }
     });
   };
 
   const handleSubmit = async () => {
-    // Fetch data of selected employees based on their IDs
+    const newSelectedEmployees = selectedEmployees.filter(
+      (employeeID) =>
+        !initialSelectedUsers || !initialSelectedUsers.includes(employeeID)
+    );
+
     const selectedEmployeesData = employees
-      .filter((employee) => selectedEmployees.includes(employee.userID))
+      .filter((employee) => newSelectedEmployees.includes(employee.userID))
       .map(({ userID, employeeName, email }) => ({
         id: userID,
         name: employeeName,
         email: email,
       }));
+
     console.log("selected employee data", selectedEmployeesData);
-    // Pass the selectedEmployeesData back to the parent component using onAddEmployee
+
     onAddEmployee(selectedEmployeesData);
 
-    // Close the modal
     onClose();
   };
 
@@ -76,37 +86,49 @@ const AddEmployeeModalEditPharm = ({
       footer={null}
       className="add-emp-modal"
       header={false}
+      onCancel={onClose}
     >
-      <Form name="addEmployeeForm" onFinish={handleSubmit}>
-        {employees.map((employee) => (
-          <Form.Item key={employee.userID} valuePropName="checked">
-            <Checkbox
-              value={employee.userID}
-              onChange={() => handleCheckboxChange(employee.userID)}
-            >
-              {employee.employeeName} - {employee.email}
-            </Checkbox>
-          </Form.Item>
-        ))}
+      {loading ? (
+        <div className="loader">
+          <Spinner size={"large"}></Spinner>
+          loading...
+        </div>
+      ) : (
+        <Form name="addEmployeeForm" onFinish={handleSubmit}>
+          {employees.map((employee) => (
+            <Form.Item key={employee.userID} valuePropName="checked">
+              <Checkbox
+                value={employee.userID}
+                onChange={() => handleCheckboxChange(employee.userID)}
+                checked={
+                  selectedEmployees &&
+                  selectedEmployees.includes(employee.userID)
+                }
+              >
+                {employee.employeeName} - {employee.email}
+              </Checkbox>
+            </Form.Item>
+          ))}
 
-        <Form.Item>
-          <div className="add-emp-modal-btns">
-            <CustomButton
-              style={{ width: "40%" }}
-              type="primary"
-              htmlType="submit"
-            >
-              Add Employee
-            </CustomButton>
-            <CustomButton
-              className="add-emp-modal-cancel-btn"
-              onClick={onClose}
-            >
-              Cancel
-            </CustomButton>
-          </div>
-        </Form.Item>
-      </Form>
+          <Form.Item>
+            <div className="add-emp-modal-btns">
+              <CustomButton
+                style={{ width: "40%" }}
+                type="primary"
+                htmlType="submit"
+              >
+                Add Employee
+              </CustomButton>
+              <CustomButton
+                className="add-emp-modal-cancel-btn"
+                onClick={onClose}
+              >
+                Cancel
+              </CustomButton>
+            </div>
+          </Form.Item>
+        </Form>
+      )}
     </Modal>
   );
 };
