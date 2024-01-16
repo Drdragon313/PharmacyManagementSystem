@@ -19,6 +19,7 @@ const AddPharmacy = () => {
   const [managers, setManagers] = useState([]);
   const navigate = useNavigate();
   const [selectedUsers, setSelectedUsers] = useState([]);
+  const [isAddressSelected, setIsAddressSelected] = useState(false);
   const users = selectedUsers;
   const { Option } = Select;
 
@@ -27,8 +28,8 @@ const AddPharmacy = () => {
     pharmacyName: "",
     dateOfCreation: "",
     rent: null,
-    line1: "",
-    line2: "",
+    Line1: "",
+    Line2: "",
     postCode: "",
     postTown: "",
     users: [],
@@ -69,6 +70,10 @@ const AddPharmacy = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "postCode" && data.postCode !== value) {
+      setIsAddressSelected(false);
+      message.warning("Please update the address according to the postcode");
+    }
 
     if (name === "rent" && parseInt(value) < 0) {
       message.error("Rent cannot be less than 0");
@@ -100,13 +105,29 @@ const AddPharmacy = () => {
       const selectedUdprn = selectedAddress.udprn;
       console.log("Selected udpRN:", selectedUdprn);
       AddressHandler(setData, selectedUdprn);
+
+      // Set address selection status to true when an address is selected
+      setIsAddressSelected(true);
     }
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Check if the address is selected
+    if (!data.postCode || !data.postTown) {
+      message.error("Please select the appropriate address");
+      return;
+    }
+    if (!isAddressSelected) {
+      message.error("Please select the appropriate address");
+      return;
+    }
+    if (!data.dateOfCreation) {
+      message.error("Please select the date of creation");
+      return;
+    }
     const updatedData = {
       ...data,
-
       users: users,
     };
 
@@ -120,8 +141,8 @@ const AddPharmacy = () => {
           pharmacyName: "",
           dateOfCreation: "",
           rent: null,
-          line1: "",
-          line2: "",
+          Line1: "",
+          Line2: "",
           postCode: "",
           postTown: "",
           managerID: null,
@@ -131,8 +152,10 @@ const AddPharmacy = () => {
       })
       .catch((error) => {
         console.error("Error creating pharmacy:", error);
+        message.error("Error creating pharmacy", 3);
       });
   };
+
   const [isAddEmployeeModalVisible, setAddEmployeeModalVisible] =
     useState(false);
 
@@ -204,6 +227,7 @@ const AddPharmacy = () => {
                 handleChange={handleChange}
                 handleBlur={handleFindAddress}
                 value={data.postCode}
+                required={true}
               />
               <div
                 direction="horizontal"
@@ -215,18 +239,19 @@ const AddPharmacy = () => {
                   labelclassName="adduserNotLabel"
                   labelText="Building Name"
                   inputclassName="AddUsersDetailsInput"
-                  inputName="line1"
+                  inputName="Line1"
                   handleChange={handleChange}
-                  value={data.line1}
+                  value={data.Line1}
+                  required={true}
                 />
                 <CustomInput
                   style={{ width: "150px" }}
                   labelclassName="addPharmacyNotLabel"
                   labelText="Street Name"
                   inputclassName="AddUsersDetailsInput"
-                  inputName="line2"
+                  inputName="Line2"
                   handleChange={handleChange}
-                  value={data.line2}
+                  value={data.Line2}
                 />
               </div>
               <div className="mb-3">
@@ -258,6 +283,7 @@ const AddPharmacy = () => {
                 <br />
                 <DatePicker
                   className="AddPharmacyDetailsInput"
+                  required={true}
                   format="YYYY-MM-DD"
                   name="dateOfCreation"
                   onChange={handleDateChange}
@@ -270,7 +296,7 @@ const AddPharmacy = () => {
               </div>
 
               <div className="mb-3">
-                <label className="addPharmacyNotLabel" htmlFor="managerName">
+                <label className="addPharmacyManager" htmlFor="managerName">
                   Pharmacy manager
                 </label>
                 <br />
@@ -279,8 +305,9 @@ const AddPharmacy = () => {
                   name="managerName"
                   onChange={(value) =>
                     handleSelectChange("PharmacyManager", value)
-                  } // Correct the field name
-                  value={data.manager_id} // Correct the state property name
+                  }
+                  value={data.manager_id}
+                  required={true}
                 >
                   {managers.map((manager) => (
                     <Option key={manager.id} value={manager.id}>
@@ -310,6 +337,7 @@ const AddPharmacy = () => {
                 inputName="postTown"
                 handleChange={handleChange}
                 value={data.postTown}
+                required={true}
               />
             </form>
           </div>

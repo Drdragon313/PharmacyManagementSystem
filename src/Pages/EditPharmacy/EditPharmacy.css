@@ -109,6 +109,11 @@ div.ant-select-selector {
   font-weight: bold;
   color: red;
 }
+.addPharmacyManager::after {
+  content: " *";
+  font-weight: bold;
+  color: red;
+}
 .Pharmacycreationtxt {
   color: #3a3475;
 }

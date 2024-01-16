@@ -43,7 +43,7 @@ const Signin = () => {
         localStorage.setItem("AuthorizationToken", AuthorizationToken);
         await fetchUserPermissions(setUserPermissions);
         await fetchModules(setModules);
-        navigate("/file");
+        navigate("/pharmacies");
         message.success("Logged In Successfully!", 2);
       } else {
         message.error("Invalid Credentials", 2);

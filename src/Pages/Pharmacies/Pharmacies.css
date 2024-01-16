@@ -82,6 +82,7 @@
 }
 .custom-table-content {
   font-family: "Poppins", sans-serif;
+  text-align: center !important;
 }
 .items-per-page-dropdown {
   border: 1px solid #ededed;
@@ -112,6 +113,7 @@
 .ant-pagination .ant-pagination-item a {
   font-size: 12px;
   font-family: Roboto, sans-serif;
+  text-align: center;
 }
 
 :where(.css-dev-only-do-not-override-nnuwmp).ant-pagination
@@ -155,4 +157,7 @@
   background-color: #fff !important;
   border: 1px solid #d92d20 !important;
   color: #d92d20 !important;
+}
+.pharmacy-details-table {
+  text-align: center !important;
 }

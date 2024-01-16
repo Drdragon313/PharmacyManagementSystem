@@ -32,7 +32,7 @@ const Pharmacies = () => {
   const [availablePostalCodes, setAvailablePostalCodes] = useState([]);
   const authToken = localStorage.getItem("AuthorizationToken");
   const [modalVisible, setModalVisible] = useState(!authToken);
-  const [selectedPostalCode, setSelectedPostalCode] = useState("");
+  const [selectedPostalCode, setSelectedPostalCode] = useState([]);
 
   useEffect(() => {
     const fetchPostalCodes = async () => {
@@ -162,11 +162,12 @@ const Pharmacies = () => {
       onHeaderCell: (column) => ({
         onClick: () => handleSortChange(column.dataIndex, column.order),
       }),
+      width: 200,
     },
     {
       title: "Manager",
-      dataIndex: "manager",
-      key: "manager",
+      dataIndex: "managerName",
+      key: "managerName",
     },
     {
       title: "Action(s)",
@@ -347,6 +348,7 @@ const Pharmacies = () => {
             totalItems={totalItems}
             handlePageChange={handlePageChange}
             itemRender={itemRender}
+            showLessItems
           />
         </Col>
       </Row>

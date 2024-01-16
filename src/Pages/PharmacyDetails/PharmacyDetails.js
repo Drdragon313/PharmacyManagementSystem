@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
-import { Row, Col, Button, Space, Image } from "antd";
+import { Row, Col, Button, Space, Image, message } from "antd";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 import CustomTable from "../../Components/CustomTable/CustomTable";
 import eyeIcon from "../../Assets/Icon feather-eye.svg";
@@ -71,6 +71,10 @@ const PharmacyDetails = () => {
           (employee) => employee.id !== selectedUserIdToDelete
         );
         setTableDataSource(updatedTableData);
+        message.success(
+          "User's Association with the pharmacy has been removed ",
+          3
+        );
       } else {
         console.error("Error deleting employee:", response.data.message);
       }
@@ -157,13 +161,27 @@ const PharmacyDetails = () => {
   };
   const handleAddEmployee = async (employeeData) => {
     try {
-      console.log("Adding employee:", employeeData);
+      // Ensure that employeeData is a valid array before mapping
+      if (Array.isArray(employeeData)) {
+        setTableDataSource((prevTableData) => [
+          ...prevTableData,
+          ...employeeData,
+        ]);
+
+        // Update initialSelectedUsers if needed
+        setInitialSelectedUsers((prevSelectedUsers) => [
+          ...prevSelectedUsers,
+          ...employeeData.map((employee) => employee.id),
+        ]);
+      }
 
       setIsAddEmployeeModalVisible(false);
+      window.location.reload();
     } catch (error) {
       console.error("Error adding employee:", error);
     }
   };
+
   return (
     <div>
       <Row className="pharmacy-list-breadcrumb">
@@ -281,8 +299,8 @@ const PharmacyDetails = () => {
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
         onClose={handleCancelDelete}
-        confirmationHeading="Delete pharmacy"
-        confirmationText="Are you sure you want to delete this pharmacy? This action cannot be undone."
+        confirmationHeading="Delete User"
+        confirmationText="Are you sure you want to disassociate this user from the pharmacy? This action cannot be undone."
         btnTxt="Delete"
         cancelText="Cancel"
         btnclassName="delete-btn-modal"

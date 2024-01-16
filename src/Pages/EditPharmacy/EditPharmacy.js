@@ -22,6 +22,7 @@ const EditPharmacy = () => {
   const navigate = useNavigate();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [initialSelectedUsers, setInitialSelectedUsers] = useState([]);
+  const [isAddressSelected, setIsAddressSelected] = useState(false);
   const [managers, setManagers] = useState([]);
   const users = selectedUsers;
   console.log(users);
@@ -30,8 +31,8 @@ const EditPharmacy = () => {
     dateOfCreation: "",
     rent: null,
     managerName: "",
-    line1: "",
-    line2: "",
+    Line1: "",
+    Line2: "",
     postCode: "",
     postTown: "",
     users: [],
@@ -60,8 +61,8 @@ const EditPharmacy = () => {
             pharmacyName: pharmacyData.pharmacyName,
             dateOfCreation: pharmacyData.dateOfCreation,
             rent: pharmacyData.rent,
-            line1: pharmacyData.line1,
-            line2: pharmacyData.line2,
+            Line1: pharmacyData.Line1,
+            Line2: pharmacyData.Line2,
             managerID: pharmacyData.managerID,
             managerName: pharmacyData.managerName,
             postCode: pharmacyData.postCode,
@@ -101,6 +102,10 @@ const EditPharmacy = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "postCode" && data.postCode !== value) {
+      setIsAddressSelected(false);
+      message.warning("Please update the address according to the postcode");
+    }
 
     if (name === "rent" && parseInt(value) < 0) {
       message.error("Rent cannot be less than 0");
@@ -123,7 +128,11 @@ const EditPharmacy = () => {
       const selectedUdprn = selectedAddress.udprn;
       console.log("Selected udpRN:", selectedUdprn);
       AddressHandler(setData, selectedUdprn);
+
+      // Set address selection status to true when an address is selected
+      setIsAddressSelected(true);
     }
+
     if (fieldName === "managerName") {
       setData((prevData) => ({
         ...prevData,
@@ -133,6 +142,10 @@ const EditPharmacy = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!isAddressSelected) {
+      message.error("Please select the appropriate address");
+      return;
+    }
 
     const updatedData = {
       ...data,
@@ -154,8 +167,8 @@ const EditPharmacy = () => {
           dateOfCreation: "",
           rent: null,
           manager_id: null,
-          line1: "",
-          line2: "",
+          Line1: "",
+          Line2: "",
           postCode: "",
           postTown: "",
           users: [],
@@ -247,9 +260,9 @@ const EditPharmacy = () => {
                   labelclassName="adduserNotLabel"
                   labelText="Building Name"
                   inputclassName="AddUsersDetailsInput"
-                  inputName="line1"
+                  inputName="Line1"
                   handleChange={handleChange}
-                  value={data.line1}
+                  value={data.Line1}
                 />
                 <CustomInput
                   // divclassName="mb-3"
@@ -257,9 +270,9 @@ const EditPharmacy = () => {
                   labelclassName="addPharmacyNotLabel"
                   labelText="Street Name"
                   inputclassName="AddUsersDetailsInput"
-                  inputName="line2"
+                  inputName="Line2"
                   handleChange={handleChange}
-                  value={data.line2}
+                  value={data.Line2}
                 />
               </div>
 
@@ -286,10 +299,10 @@ const EditPharmacy = () => {
                 <br />
                 <DatePicker
                   className="AddPharmacyDetailsInput"
+                  required={true}
                   format="YYYY-MM-DD"
                   name="dateOfCreation"
                   onChange={handleDateChange}
-                  value={moment(data.dateOfCreation)}
                   disabledDate={(current) =>
                     current &&
                     (current > moment().endOf("day") ||
@@ -299,7 +312,7 @@ const EditPharmacy = () => {
               </div>
 
               <div className="mb-3">
-                <label className="addPharmacyNotLabel" htmlFor="managerName">
+                <label className="addPharmacyManager" htmlFor="managerName">
                   Pharmacy manager
                 </label>
                 <br />
