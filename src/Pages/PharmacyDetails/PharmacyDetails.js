@@ -19,7 +19,7 @@ import AddEmployeeModal from "../../Components/AddEmployeeModal/AddEmployeeModal
 
 const PharmacyDetails = () => {
   const { pharmacy_id } = useParams();
-
+  const [initialSelectedUsers, setInitialSelectedUsers] = useState([]);
   const [pharmacyDetails, setPharmacyDetails] = useState(null);
   const [tableDataSource, setTableDataSource] = useState([]);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
@@ -46,7 +46,18 @@ const PharmacyDetails = () => {
         console.error("Error fetching pharmacy details:", error);
       }
     };
-
+    axios
+      .get(`${baseURL}/pharmacy-details?pharmacy_id=${pharmacy_id}`)
+      .then((response) => {
+        if (response.data.status === "success") {
+          const pharmacyData = response.data.data;
+          console.log(pharmacyData);
+          setInitialSelectedUsers(pharmacyData.users.map((user) => user.id));
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching pharmacy details:", error);
+      });
     fetchPharmacyDetails();
   }, [pharmacy_id]);
   const handleConfirmDelete = async () => {
@@ -146,10 +157,8 @@ const PharmacyDetails = () => {
   };
   const handleAddEmployee = async (employeeData) => {
     try {
-      // Add logic to send data to the server and update state
       console.log("Adding employee:", employeeData);
 
-      // Close the modal after adding employee
       setIsAddEmployeeModalVisible(false);
     } catch (error) {
       console.error("Error adding employee:", error);
@@ -264,12 +273,22 @@ const PharmacyDetails = () => {
         onCancel={handleCancelAddEmployeeModal}
         onAddEmployee={handleAddEmployee}
         pharmacy_id={pharmacy_id}
+        initialSelectedUsers={initialSelectedUsers}
       />
       <ConfirmationModal
+        title="Confirm Delete"
         open={isDeleteModalVisible}
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
-      />
+        onClose={handleCancelDelete}
+        confirmationHeading="Delete pharmacy"
+        confirmationText="Are you sure you want to delete this pharmacy? This action cannot be undone."
+        btnTxt="Delete"
+        cancelText="Cancel"
+        btnclassName="delete-btn-modal"
+      >
+        Are you sure you want to delete this pharmacy?
+      </ConfirmationModal>
     </div>
   );
 };

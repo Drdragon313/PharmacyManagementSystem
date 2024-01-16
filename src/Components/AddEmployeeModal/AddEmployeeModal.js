@@ -1,25 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Form, Button, Checkbox, message } from "antd";
+import { Modal, Form, Checkbox, message } from "antd";
 import axios from "axios";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
 import "./AddEmployeeModal.css";
 import CustomButton from "../../Components/CustomButton/CustomButton";
-const AddEmployeeModal = ({ open, onCancel, onAddEmployee, pharmacy_id }) => {
+const AddEmployeeModal = ({
+  open,
+  onCancel,
+  onAddEmployee,
+  pharmacy_id,
+  initialSelectedUsers,
+}) => {
   const [employees, setEmployees] = useState([]);
-  const [loading, setLoading] = useState(false);
+
   const [selectedEmployees, setSelectedEmployees] = useState([]);
 
   const authToken = localStorage.getItem("AuthorizationToken");
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        setLoading(true);
-
-        const response = await axios.get(`${baseURL}/list-all-users`, {
-          headers: {
-            Authorization: ` ${authToken}`,
-          },
-        });
+        const response = await axios.get(
+          `${baseURL}/list-users-not-in-pharmacy?pharmacy_id=${pharmacy_id}`,
+          {
+            headers: {
+              Authorization: ` ${authToken}`,
+            },
+          }
+        );
 
         if (response.data && response.data.status === "success") {
           setEmployees(response.data.data);
@@ -27,12 +34,12 @@ const AddEmployeeModal = ({ open, onCancel, onAddEmployee, pharmacy_id }) => {
       } catch (error) {
         console.error("Error fetching employees:", error);
       } finally {
-        setLoading(false);
       }
     };
 
     fetchEmployees();
-  }, []);
+    setSelectedEmployees(initialSelectedUsers);
+  }, [initialSelectedUsers, authToken, pharmacy_id]);
 
   const handleCheckboxChange = (employeeID) => {
     setSelectedEmployees((prevSelectedEmployees) => {
@@ -68,12 +75,17 @@ const AddEmployeeModal = ({ open, onCancel, onAddEmployee, pharmacy_id }) => {
       if (response.data && response.data.status === "success") {
         console.log("Employees assigned successfully:", response.data);
         onAddEmployee(response.data.users);
+
+        // Show success message
+        message.success("Employees assigned successfully");
       }
     } catch (error) {
       console.error("Error assigning employees to pharmacy:", error);
+
+      // Show error message
+      message.error("Error assigning employees to pharmacy.");
     }
   };
-
   return (
     <Modal
       title="Add Employee to Pharmacy"
@@ -89,6 +101,7 @@ const AddEmployeeModal = ({ open, onCancel, onAddEmployee, pharmacy_id }) => {
             <Checkbox
               value={employee.userID}
               onChange={() => handleCheckboxChange(employee.userID)}
+              checked={selectedEmployees.includes(employee.userID)}
             >
               {employee.employeeName} - {employee.email}
             </Checkbox>
@@ -104,7 +117,10 @@ const AddEmployeeModal = ({ open, onCancel, onAddEmployee, pharmacy_id }) => {
             >
               Add Employee
             </CustomButton>
-            <CustomButton className="add-emp-modal-cancel-btn">
+            <CustomButton
+              className="add-emp-modal-cancel-btn"
+              onClick={onCancel}
+            >
               Cancel
             </CustomButton>
           </div>

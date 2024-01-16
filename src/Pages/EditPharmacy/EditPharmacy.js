@@ -21,6 +21,7 @@ const { Option } = Select;
 const EditPharmacy = () => {
   const navigate = useNavigate();
   const [selectedUsers, setSelectedUsers] = useState([]);
+  const [initialSelectedUsers, setInitialSelectedUsers] = useState([]);
   const [managers, setManagers] = useState([]);
   const users = selectedUsers;
   console.log(users);
@@ -68,7 +69,11 @@ const EditPharmacy = () => {
             users: pharmacyData.users,
           });
         }
+        setInitialSelectedUsers(
+          response.data.data.users.map((user) => user.id)
+        );
       })
+
       .catch((error) => {
         console.error("Error fetching pharmacy details:", error);
       });
@@ -284,6 +289,7 @@ const EditPharmacy = () => {
                   format="YYYY-MM-DD"
                   name="dateOfCreation"
                   onChange={handleDateChange}
+                  value={moment(data.dateOfCreation)}
                   disabledDate={(current) =>
                     current &&
                     (current > moment().endOf("day") ||
@@ -360,6 +366,7 @@ const EditPharmacy = () => {
         onClose={closeAddEmployeeModal}
         pharmacyId={pharmacy_id}
         onAddEmployee={updateUsersArray}
+        initialSelectedUsers={initialSelectedUsers}
       />
     </div>
   );
