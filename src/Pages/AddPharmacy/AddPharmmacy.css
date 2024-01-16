@@ -96,6 +96,12 @@ div.ant-select-selector {
   font-weight: bold;
   color: red;
 }
+
+.addPharmacyManager::after {
+  content: " *";
+  font-weight: bold;
+  color: red;
+}
 .adduserNotLabel::after {
   content: " *";
   font-weight: bold;
