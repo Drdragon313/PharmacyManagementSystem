@@ -46,3 +46,9 @@
     margin-right: 30px;
   }
 }
+.ProfileDropdown {
+  cursor: pointer;
+}
+.ProfileNavlink {
+  text-decoration: none;
+}

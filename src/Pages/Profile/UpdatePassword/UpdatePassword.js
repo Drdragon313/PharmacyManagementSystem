@@ -5,11 +5,19 @@ import { message } from "antd";
 import PasswordInput from "../../../Components/Input/PasswordInput";
 import axios from "axios";
 import { PasswordRegex } from "../../../Utility Function/PasswordRegex";
+import { handleInputChangeUtil } from "../../../Utility Function/ResetPasswordUtils";
+import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
 const UpdatePassword = () => {
   const [formData, setFormData] = useState({
     PreviousPassword: "",
     NewPassword: "",
     ConfirmNewPassword: "",
+  });
+  const [conditions, setConditions] = useState({
+    minLength: false,
+    upperCase: false,
+    lowerCase: false,
+    numberOrSpecialChar: false,
   });
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -57,19 +65,28 @@ const UpdatePassword = () => {
     }
   };
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevUserData) => ({
-      ...prevUserData,
-      [name]: value,
-    }));
+    // const { name, value } = e.target;
+    // setFormData((prevUserData) => ({
+    //   ...prevUserData,
+    //   [name]: value,
+    // }));
+    if (e.target.name === "PreviousPassword") {
+      const { name, value } = e.target;
+      setFormData((prevUserData) => ({
+        ...prevUserData,
+        [name]: value,
+      }));
+    } else {
+      handleInputChangeUtil(e, setFormData, setConditions);
+    }
   };
   return (
     <div className="UpdatePasswordContainer">
       <div className="UpdatePasswordInnerContainer">
-        <h5>Password and Security</h5>
+        <h5 className="ChangePasswordText">Change Password</h5>
         <form onSubmit={handleSubmit}>
           <PasswordInput
-            label="Password"
+            label="Current Password"
             name="PreviousPassword"
             onChange={handleChange}
           />
@@ -78,19 +95,54 @@ const UpdatePassword = () => {
             name="NewPassword"
             onChange={handleChange}
           />
-          <p>
+          <ul className="conditions-signin">
+            <li>
+              {conditions.minLength ? (
+                <CheckCircleTwoTone twoToneColor="#06C552" />
+              ) : (
+                <CloseCircleTwoTone twoToneColor="#EE0004" />
+              )}
+              Password should be at least 8 characters long.
+            </li>
+            <li>
+              {conditions.upperCase ? (
+                <CheckCircleTwoTone twoToneColor="#06C552" />
+              ) : (
+                <CloseCircleTwoTone twoToneColor="#EE0004" />
+              )}
+              Password must contain at least one upper case.
+            </li>
+            <li>
+              {conditions.lowerCase ? (
+                <CheckCircleTwoTone twoToneColor="#06C552" />
+              ) : (
+                <CloseCircleTwoTone twoToneColor="#EE0004" />
+              )}
+              One lower case letter.
+            </li>
+            <li>
+              {conditions.numberOrSpecialChar ? (
+                <CheckCircleTwoTone twoToneColor="#06C552" />
+              ) : (
+                <CloseCircleTwoTone twoToneColor="#EE0004" />
+              )}
+              Password must contain at least one number or special character.
+            </li>
+          </ul>
+          {/* <p>
             Password should be atleats 8 characters with 1 Capital letter, 1
             <br />
             number and 1 special character.
-          </p>
+          </p> */}
           <PasswordInput
-            label="Confirm New Password"
+            label="Confirm Password"
             name="ConfirmNewPassword"
             onChange={handleChange}
           />
           <div className="updatePasswordBtnContainer">
-            <button type="submit" className="btn btn-light PasswordUpdateBtn">
-              Update
+            <button className="btn CancelBtn">Cancel</button>
+            <button type="submit" className="btn PasswordUpdateBtn">
+              Save Password
             </button>
           </div>
         </form>

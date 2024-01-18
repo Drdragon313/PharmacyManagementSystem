@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./Topnav.css";
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Space, message } from "antd";
+import { Avatar, Dropdown, message } from "antd";
 import { Layout } from "antd";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
-
+import ProfileSettings from "../../Assets/ProfileSettings.svg";
+import ProfileSecurity from "../../Assets/ProfileSecurity.svg";
+import ProfileLogout from "../../Assets/ProfileLogout.svg";
+import { useNavigate } from "react-router-dom";
 const { Header } = Layout;
 
 const Topnav = () => {
@@ -15,6 +18,65 @@ const Topnav = () => {
     LName: "",
     Role: "",
   });
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      const authToken = localStorage.getItem("AuthorizationToken");
+
+      if (!authToken) {
+        console.error("Auth token not found");
+        return;
+      }
+      const response = await axios.post(
+        `${baseURL}/signout`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+      localStorage.removeItem("AuthorizationToken");
+      console.log(response.data);
+      navigate("/");
+    } catch (error) {
+      console.error("Error during signout:", error);
+    }
+  };
+  const items = [
+    {
+      label: (
+        <Link to="/Profile/Settings" className="ProfileNavlink">
+          Account Settings
+        </Link>
+      ),
+      key: "0",
+      icon: <img src={ProfileSettings} alt="Account Settings" />,
+      // link: "/Profile/Settings",
+    },
+    {
+      label: (
+        <Link to="/Profile/Security" className="ProfileNavlink">
+          Security
+        </Link>
+      ),
+      key: "1",
+      icon: <img src={ProfileSecurity} alt="Account Security" />,
+    },
+    {
+      label: (
+        // <Link to="/" className="ProfileNavlink">
+        //   Logout
+        // </Link>
+        <span className="ProfileNavlink" onClick={handleLogout}>
+          Logout
+        </span>
+      ),
+      key: "2",
+      icon: <img src={ProfileLogout} alt="Account Logout" />,
+    },
+  ];
+
   useEffect(() => {
     const localHeader = localStorage.getItem("AuthorizationToken");
     const headers = {
@@ -39,21 +101,30 @@ const Topnav = () => {
     <Layout>
       <Header className="TopnavHeader">
         <div></div>
-        <div>
-          <div size={10} className="nav-itmes-contianer">
-            <Link to="/profile">
-              <Avatar size="large" icon={<UserOutlined />} />
-            </Link>
-            <span></span>
-            <div className="TopnavUser">
-              <span className="TopnavUserName">
-                {userData.FName} {userData.LName}
-              </span>
 
-              <span className="TopnavJobTitle">{userData.Role}</span>
+        <div className="ProfileDropdown">
+          <Dropdown
+            menu={{
+              items,
+            }}
+            trigger={["click"]}
+            arrow
+            // placement="topRight"
+          >
+            <div size={10} className="nav-itmes-contianer">
+              <Avatar size="large" icon={<UserOutlined />} />
+
+              <span></span>
+              <div className="TopnavUser">
+                <span className="TopnavUserName">
+                  {userData.FName} {userData.LName}
+                </span>
+
+                <span className="TopnavJobTitle">{userData.Role}</span>
+              </div>
+              <span></span>
             </div>
-            <span></span>
-          </div>
+          </Dropdown>
         </div>
       </Header>
     </Layout>

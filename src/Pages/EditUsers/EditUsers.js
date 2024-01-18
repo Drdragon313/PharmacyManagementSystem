@@ -25,6 +25,7 @@ const EditUsers = () => {
     Gender: "",
     LName: "",
     Selected_Role: "",
+    Selected_Role_Name: "",
     Email: "",
     Contact: "",
     DateOfBirth: "",
@@ -41,6 +42,10 @@ const EditUsers = () => {
     AvailablePharmacies: [],
     Role_Permissions: [],
   });
+  const [responseID, setResponseID] = useState();
+  const authToken = localStorage.getItem("AuthorizationToken");
+  const [validContact, setValidContact] = useState(false);
+
   // const [selectedRole, setSelectedRole] = useState();
   // const [selectedPharmacy, setSelectedPharmacy] = useState();
   const [pCodeResponse, setPCodeResponse] = useState([]);
@@ -56,8 +61,11 @@ const EditUsers = () => {
 
   useEffect(() => {
     if (userID) {
+      const headers = {
+        Authorization: `${authToken}`,
+      };
       axios
-        .get(`${baseURL}/get-user-data?user_id=${userID}`)
+        .get(`${baseURL}/get-user-data?user_id=${userID}`, { headers })
         .then((response) => {
           const datafromAPI = response.data.data;
           setData((prevData) => ({
@@ -70,8 +78,27 @@ const EditUsers = () => {
           console.error(error);
         });
     } else {
+      const headers = {
+        Authorization: `${authToken}`,
+      };
+      axios
+        .get(`${baseURL}/get-user-data`, { headers })
+        .then((response) => {
+          const datafromAPI = response.data.data;
+          setData((prevData) => ({
+            ...prevData,
+            ...datafromAPI,
+          }));
+          const id = response.data.data.ID;
+          setResponseID(id);
+        })
+
+        .catch((error) => {
+          message.error("Failed to fetch employee details", 3);
+          console.error(error);
+        });
     }
-  }, [userID]);
+  }, [userID, authToken]);
   const handleFindAddress = () => {
     PostCodeHandler(data, setPCodeResponse);
   };
@@ -86,51 +113,82 @@ const EditUsers = () => {
     const headers = {
       Authorization: localHeader,
     };
-
-    axios
-      .put(`${baseURL}/update-profile?user_id=${userID}`, data, { headers })
-      .then(() => {
-        message.success("User Updated Successfully!", 3);
-        navigate("/employeepage");
-      })
-      .catch((error) => {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.error &&
-          error.response.data.error.message
-        ) {
-          message.error(error.response.data.error.message, 3);
-        } else {
-          message.error("User Updation Failed!", 3);
-          console.error(error);
-        }
-      });
+    if (validContact) {
+      if (userID) {
+        axios
+          .put(`${baseURL}/update-profile?user_id=${userID}`, data, { headers })
+          .then(() => {
+            message.success("User Updated Successfully!", 3);
+            navigate("/employeepage");
+          })
+          .catch((error) => {
+            if (
+              error.response &&
+              error.response.data &&
+              error.response.data.error &&
+              error.response.data.error.message
+            ) {
+              message.error(error.response.data.error.message, 3);
+            } else {
+              message.error("User Updation Failed!", 3);
+              console.error(error);
+            }
+          });
+      } else {
+        axios
+          .put(`${baseURL}/update-profile?user_id=${responseID}`, data, {
+            headers,
+          })
+          .then(() => {
+            message.success("User Updated Successfully!", 3);
+            navigate("/employeepage");
+          })
+          .catch((error) => {
+            if (
+              error.response &&
+              error.response.data &&
+              error.response.data.error &&
+              error.response.data.error.message
+            ) {
+              message.error(error.response.data.error.message, 3);
+            } else {
+              message.error("User Updation Failed!", 3);
+              console.error(error);
+            }
+          });
+      }
+    } else {
+      message.error("Please enter a valid UK telephone number.", 3);
+    }
   };
   useEffect(() => {
-    axios
-      .get(`${baseURL}/role-permissions?role_id=${data.Selected_Role}`)
-      .then((response) => {
-        const permissionsData = response.data.Data.role_permissions;
-        setPermissions(permissionsData);
-      })
-      .catch(() => {});
-  }, [data.Selected_Role]);
+    if (userID) {
+      axios
+        .get(`${baseURL}/role-permissions?role_id=${data.Selected_Role}`)
+        .then((response) => {
+          const permissionsData = response.data.Data.role_permissions;
+          setPermissions(permissionsData);
+        })
+        .catch(() => {});
+    }
+  }, [data.Selected_Role, userID]);
 
   useEffect(() => {
-    axios
-      .get(`${baseURL}/pharmacy-manager?pharmacy_id=${data.Pharmacy}`)
-      .then((response) => {
-        const managerData = response.data.data;
+    if (userID) {
+      axios
+        .get(`${baseURL}/pharmacy-manager?pharmacy_id=${data.Pharmacy}`)
+        .then((response) => {
+          const managerData = response.data.data;
 
-        setData((prevData) => ({
-          ...prevData,
-          Line_Manager: managerData.manager_name,
-          Line_Manager_id: managerData.manager_id,
-        }));
-      })
-      .catch(() => {});
-  }, [data.Pharmacy]);
+          setData((prevData) => ({
+            ...prevData,
+            Line_Manager: managerData.manager_name,
+            Line_Manager_id: managerData.manager_id,
+          }));
+        })
+        .catch(() => {});
+    }
+  }, [data.Pharmacy, userID]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -139,12 +197,19 @@ const EditUsers = () => {
       [name]: value,
     }));
   };
+  const ukTelephoneNumberRegex = /^\+44\s?\d{3}\s?\d{7}$/;
+
+  const handleContactBlur = (e) => {
+    if (ukTelephoneNumberRegex.test(data.Contact)) {
+      setValidContact(true);
+    } else {
+      setValidContact(false);
+    }
+  };
+  useEffect(() => {
+    handleContactBlur();
+  }, [data.Contact]);
   const handleSelectChange = (fieldName, value) => {
-    // if (fieldName === "Selected_Role") {
-    //   setSelectedRole(value);
-    // } else if (fieldName === "Pharmacy") {
-    //   setSelectedPharmacy(value);
-    // }
     if (fieldName === "Address") {
       const selectedAddress = pCodeResponse.find(
         (item) => item.address === value
@@ -159,12 +224,18 @@ const EditUsers = () => {
   };
   return (
     <div className="AddUsersBasicContainer">
-      <CustomBreadcrumb
-        seperator=">>"
-        items={breadcrumbItems}
-      ></CustomBreadcrumb>
+      {userID && (
+        <CustomBreadcrumb
+          seperator=">>"
+          items={breadcrumbItems}
+        ></CustomBreadcrumb>
+      )}
       <div className="AddUsersBasicInfoHeading">
-        <h5 className="usercreationtxt">Edit Employee Details</h5>
+        {userID ? (
+          <h5 className="usercreationtxt">Edit Employee Details</h5>
+        ) : (
+          <h5>Update Profile</h5>
+        )}
       </div>
       <form onSubmit={handleSubmit}>
         <div className="AddUsersDetails">
@@ -172,7 +243,7 @@ const EditUsers = () => {
             <div>
               <CustomInput
                 divclassName="mb-3"
-                labelclassName="adduserLabel"
+                labelclassName={userID ? "adduserLabel" : "addUserNotLabel"}
                 labelText="First Name"
                 inputclassName="AddUsersDetailsInput"
                 inputName="FName"
@@ -199,18 +270,25 @@ const EditUsers = () => {
                   name="Contact"
                   onChange={handleChange}
                   value={data.Contact}
+                  onBlur={handleContactBlur}
                 />
+                {data.Contact.length > 0 && !validContact && (
+                  <p className="InvalidContactTxt">Invalid Contact</p>
+                )}
               </div>
               <div className="mb-3">
-                <label className="adduserLabel">Role</label>
+                <label className={userID ? "adduserLabel" : "addUserNotLabel"}>
+                  Role
+                </label>
                 <br />
                 <Select
                   className="GenderInput ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
-                  name="Selected_Role"
-                  value={data.Selected_Role}
+                  name="Selected_Role_Name"
+                  value={data.Selected_Role_Name}
                   onChange={(value) =>
-                    handleSelectChange("Selected_Role", value)
+                    handleSelectChange("Selected_Role_Name", value)
                   }
+                  disabled={userID ? false : true}
                 >
                   {data.Available_Roles.map((option) => (
                     <Option key={option.id} value={option.id}>
@@ -228,6 +306,7 @@ const EditUsers = () => {
                   name="Pharmacy"
                   value={data.Pharmacy}
                   onChange={(value) => handleSelectChange("Pharmacy", value)}
+                  disabled={userID ? false : true}
                 >
                   {data.AvailablePharmacies.map((option) => (
                     <Option key={option.id} value={option.id}>
@@ -247,7 +326,7 @@ const EditUsers = () => {
                 value={data.PostCode}
               />
               <Row>
-                <Col span={10}>
+                <Col span={11}>
                   <CustomInput
                     divclassName="mb-3"
                     labelclassName="addUserNotLabel"
@@ -259,7 +338,7 @@ const EditUsers = () => {
                   />
                 </Col>
                 <Col span={1}></Col>
-                <Col span={10}>
+                <Col span={11}>
                   <CustomInput
                     divclassName="mb-3"
                     labelclassName="addUserNotLabel"
@@ -277,7 +356,7 @@ const EditUsers = () => {
             <div>
               <CustomInput
                 divclassName="mb-3"
-                labelclassName="adduserLabel"
+                labelclassName={userID ? "adduserLabel" : "addUserNotLabel"}
                 labelText="Last Name"
                 inputclassName="AddUsersDetailsInput"
                 inputName="LName"
@@ -304,13 +383,14 @@ const EditUsers = () => {
               </div>
               <CustomInput
                 divclassName="mb-3"
-                labelclassName="adduserLabel"
+                labelclassName={userID ? "adduserLabel" : "addUserNotLabel"}
                 labelText="Email"
                 type="email"
                 inputclassName="AddUsersDetailsInput"
                 inputName="Email"
                 handleChange={handleChange}
                 value={data.Email}
+                disabled={userID ? false : true}
               />
               <div className="mb-3">
                 <label className="addUserNotLabel">Permissions</label>
@@ -322,6 +402,7 @@ const EditUsers = () => {
                   onChange={(value) =>
                     handleSelectChange("Role_Permissions", value)
                   }
+                  disabled={userID ? false : true}
                 >
                   {permissions.map((option) => (
                     <Option key={option} value={option}>
@@ -331,7 +412,7 @@ const EditUsers = () => {
                 </Select>
               </div>
               <Row>
-                <Col span={10}>
+                <Col span={11}>
                   <CustomInput
                     divclassName="mb-3"
                     labelclassName="addUserNotLabel"
@@ -340,10 +421,11 @@ const EditUsers = () => {
                     inputName="salary"
                     handleChange={handleChange}
                     value={data.salary}
+                    disabled={userID ? false : true}
                   />
                 </Col>
                 <Col span={1}></Col>
-                <Col span={10}>
+                <Col span={11}>
                   <CustomInput
                     divclassName="mb-3"
                     labelclassName="addUserNotLabel"
@@ -352,6 +434,7 @@ const EditUsers = () => {
                     inputName="Line_Manager"
                     handleChange={handleChange}
                     value={data.Line_Manager}
+                    disabled={userID ? false : true}
                   />
                 </Col>
               </Row>
@@ -383,7 +466,7 @@ const EditUsers = () => {
         <div className="AddUsersInformationUpdateBtnContainer">
           <button className="btn AddUsersInformationCancelBtn">Cancel</button>
           <button type="submit" className="btn AddUsersInformationUpdateBtn">
-            Update User
+            {userID ? "Update User" : "Update Profile"}
           </button>
         </div>
       </form>

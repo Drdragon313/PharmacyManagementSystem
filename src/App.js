@@ -17,8 +17,8 @@ import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword";
 import CheckEmail from "./Pages/CheckEmail/CheckEmail";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import TilePage from "./Pages/TilePage/TilePage";
-import Profile from "./Pages/Profile/Profile";
-import Permissions from "./Pages/Profile/Permissions/Permissions";
+// import Profile from "./Pages/Profile/Profile";
+// import Permissions from "./Pages/Profile/Permissions/Permissions";
 import "./App.css";
 import UpdatePassword from "./Pages/Profile/UpdatePassword/UpdatePassword";
 import AddUsers from "./Pages/AddUsers/AddUsers";
@@ -102,10 +102,10 @@ function MainContent() {
             path="/rolesandpermissions/createrole"
             element={<CreateRole />}
           />
-          <Route path="/profile" element={<Profile />}>
+          {/* <Route path="/profile" element={<Profile />}>
             <Route path="permissions" element={<Permissions />} />
             <Route path="updatePassword" element={<UpdatePassword />} />
-          </Route>
+          </Route> */}
 
           <Route path="schema/autopopulate" element={<AutoPopulate />} />
           <Route path="users/AddUser" element={<AddUsers />} />
@@ -126,6 +126,8 @@ function MainContent() {
             element={<EditPharmacy />}
           />
           <Route path="employeepage/:userID/editUser" element={<EditUsers />} />
+          <Route path="/Profile/Settings" element={<EditUsers />}></Route>
+          <Route path="/Profile/Security" element={<UpdatePassword />}></Route>
           <Route path="reports" element={<Reports />} />
         </Routes>
       </Content>
