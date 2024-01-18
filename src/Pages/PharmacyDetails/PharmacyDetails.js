@@ -9,7 +9,7 @@ import eyeIcon from "../../Assets/Icon feather-eye.svg";
 import deleteActionbtn from "../../Assets/deleteAction.svg";
 import plusOutline from "../../Assets/PlusOutlined.svg";
 import editIcon from "../../Assets/tabler_edit.svg";
-import editIconBlue from "../../Assets/editInBlue.svg";
+
 import Spinner from "../../Components/Spinner/Spinner";
 import "./PharmacyDetails.css";
 import { Link } from "react-router-dom";
@@ -82,7 +82,6 @@ const PharmacyDetails = () => {
       console.error("Error deleting employee:", error);
     }
 
-    // Close the delete confirmation modal
     setIsDeleteModalVisible(false);
   };
 
@@ -104,13 +103,13 @@ const PharmacyDetails = () => {
     },
     {
       title: "Employee Role",
-      dataIndex: "role",
-      key: "role",
+      dataIndex: "role_name",
+      key: "role_name",
     },
     {
       title: "Joining date",
-      dataIndex: "dateOfCreation",
-      key: "dateOfCreation",
+      dataIndex: "joining_date",
+      key: "joining_date",
     },
 
     {
@@ -129,11 +128,6 @@ const PharmacyDetails = () => {
             <Image preview={false} src={eyeIcon}></Image>
           </Link>
 
-          <Image
-            preview={false}
-            src={editIconBlue}
-            style={{ fill: "#3A3475" }}
-          ></Image>
           <Image
             preview={false}
             src={deleteActionbtn}
@@ -156,19 +150,16 @@ const PharmacyDetails = () => {
     setIsDeleteModalVisible(true);
   };
   const handleCancelDelete = () => {
-    // Close the delete confirmation modal
     setIsDeleteModalVisible(false);
   };
   const handleAddEmployee = async (employeeData) => {
     try {
-      // Ensure that employeeData is a valid array before mapping
       if (Array.isArray(employeeData)) {
         setTableDataSource((prevTableData) => [
           ...prevTableData,
           ...employeeData,
         ]);
 
-        // Update initialSelectedUsers if needed
         setInitialSelectedUsers((prevSelectedUsers) => [
           ...prevSelectedUsers,
           ...employeeData.map((employee) => employee.id),
@@ -241,28 +232,39 @@ const PharmacyDetails = () => {
         }}
       >
         <Col span={12}>
-          <div className="labels-values-container">
-            <div className="labels">
-              <p>Pharmacy Name</p>
-              <p>Post code</p>
-              <p>Building Name</p>
-              <p>Street Name</p>
-              <p>Town</p>
-              <p>Creation Date</p>
-              <p>Rent</p>
-              <p>No of employees</p>
-              <p>Manager</p>
-            </div>
-            <div className="values">
-              <p>{pharmacyDetails.pharmacyName}</p>
-              <p>{pharmacyDetails.postCode}</p>
-              <p>{pharmacyDetails.line1}</p>
-              <p>{pharmacyDetails.line2}</p>
-              <p>{pharmacyDetails.postTown}</p>
-              <p>{pharmacyDetails.dateOfCreation}</p>
-              <p>{pharmacyDetails.rent}</p>
-              <p>{pharmacyDetails.numberOfEmployees}</p>
-              <p>{pharmacyDetails.managerName}</p>
+          <div className="labels-values-container-pharm">
+            <div>
+              <div className="pharm-labels-values">
+                <strong>Pharmacy Name </strong>{" "}
+                <p>{pharmacyDetails.pharmacyName}</p>
+              </div>
+
+              <div className="pharm-labels-values">
+                <strong>Creation Date </strong>{" "}
+                <p>{pharmacyDetails.dateOfCreation}</p>
+              </div>
+              <div className="pharm-labels-values">
+                <strong>Rent</strong> <p> {pharmacyDetails.rent}</p>
+              </div>
+              <div className="pharm-labels-values">
+                <strong>No of employees</strong>{" "}
+                <p> {pharmacyDetails.numberOfEmployees}</p>
+              </div>
+              <div className="pharm-labels-values">
+                <strong>Manager</strong> <p> {pharmacyDetails.managerName}</p>
+              </div>
+              <div className="pharm-labels-values">
+                <strong>Post code </strong> <p>{pharmacyDetails.postCode}</p>
+              </div>
+              <div className="pharm-labels-values">
+                <strong>Building Name</strong> <p> {pharmacyDetails.line1}</p>
+              </div>
+              <div className="pharm-labels-values">
+                <strong>Town</strong> <p> {pharmacyDetails.postTown}</p>
+              </div>
+              <div className="pharm-labels-values">
+                <strong>Street Name</strong> <p> {pharmacyDetails.line2}</p>
+              </div>
             </div>
           </div>
         </Col>

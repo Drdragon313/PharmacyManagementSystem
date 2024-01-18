@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Col, Image, Row, Space, message } from "antd";
+import { Col, Image, Row, Select, Space, message } from "antd";
 import "./Pharmacies.css";
 import eyeIcon from "../../Assets/Icon feather-eye.svg";
 import deleteActionbtn from "../../Assets/deleteAction.svg";
@@ -17,15 +17,16 @@ import CustomButton from "../../Components/CustomButton/CustomButton";
 import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationModal";
 import editIcon from "../../Assets/editInBlue.svg";
 import PaginationComponent from "../../Components/PaginationComponent/PaginationComponent";
-
+import bookImg from "../../Assets/notebook.svg";
 const Pharmacies = () => {
   const [tableDataSource, setTableDataSource] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [pharmacyToDeleteId, setPharmacyToDeleteId] = useState(null);
+  const { Option } = Select;
 
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(10);
   const [totalItems, setTotalItems] = useState(0);
   const [sortField, setSortField] = useState("rent");
   const [sortDirection, setSortDirection] = useState("asc");
@@ -291,26 +292,28 @@ const Pharmacies = () => {
       >
         <Col className="gutter-row" span={8}></Col>
         <Col className="filter-container-pharm" span={3.5}>
-          <div className="custom-select-container">
-            <select
-              className="filter-pharm-btn"
-              value={selectedPostalCode}
-              onChange={(e) => setSelectedPostalCode(e.target.value)}
-            >
-              <option value="" key="empty">
-                Select Postal Code
-              </option>
-              {availablePostalCodes.map((postalCode) => (
-                <option
-                  className="select-options"
-                  key={postalCode}
-                  value={postalCode}
-                >
-                  {postalCode}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Select
+            className="filter-pharm-btn"
+            mode="multiple"
+            value={selectedPostalCode}
+            onChange={(values) => setSelectedPostalCode(values)}
+            placeholder="Filter Using Postcodes"
+            showSearch={false}
+            prefix={<Image src={bookImg} preview={false} />}
+          >
+            <Option value="" key="empty">
+              Select Postal Code
+            </Option>
+            {availablePostalCodes.map((postalCode) => (
+              <Option
+                className="select-options"
+                key={postalCode}
+                value={postalCode}
+              >
+                {postalCode}
+              </Option>
+            ))}
+          </Select>
         </Col>
       </Row>
       <Row
@@ -348,7 +351,6 @@ const Pharmacies = () => {
             totalItems={totalItems}
             handlePageChange={handlePageChange}
             itemRender={itemRender}
-            showLessItems
           />
         </Col>
       </Row>

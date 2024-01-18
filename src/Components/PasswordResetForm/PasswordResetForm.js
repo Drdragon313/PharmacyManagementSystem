@@ -18,13 +18,11 @@ import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
 import {
   handleInputChangeUtil,
   handleSubmitUtil,
-  resendEmail,
   validateVerificationLink,
 } from "../../Utility Function/ResetPasswordUtils";
 import "./PasswordResetForm.css";
-import CustomButton from "../CustomButton/CustomButton";
 
-const PasswordResetForm = (props) => {
+const PasswordResetForm = (headingText, buttonText) => {
   const [apiStatus, setApiStatus] = useState(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -62,11 +60,6 @@ const PasswordResetForm = (props) => {
   const email = searchParams.get("email");
   console.log("Params Email:", email);
   const forgetPasswordKey = searchParams.get("passwordKey");
-  const handleResendEmail = () => {
-    resendEmail(email)
-      .then(() => {})
-      .catch(() => {});
-  };
 
   useEffect(() => {
     validateVerificationLink(
@@ -123,14 +116,6 @@ const PasswordResetForm = (props) => {
                   Back to Login
                 </Button>
               </Link>
-
-              <CustomButton
-                htmlType="submit"
-                className="btn my-3 signinbtn"
-                onClick={handleResendEmail}
-              >
-                Resend Email
-              </CustomButton>
             </div>
           </div>
         ) : (
@@ -138,7 +123,7 @@ const PasswordResetForm = (props) => {
             <div className="reset-heading">
               <Image preview={false} src={Lockimg} className="lock-img"></Image>
               <h2>
-                <strong>{props.headingText}</strong> Your Password
+                <strong>{headingText}</strong> Your Password
               </h2>
             </div>
             <ul className="conditions-signin">
@@ -236,7 +221,7 @@ const PasswordResetForm = (props) => {
                   className="btn my-3 signinbtn"
                   onClick={handleSubmit}
                 >
-                  {props.buttonText}
+                  {buttonText}
                 </Button>
               </div>
             </form>

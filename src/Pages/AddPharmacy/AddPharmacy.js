@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./AddPharmmacy.css";
+import { debounce } from "lodash";
+
 import { Input, Select, DatePicker, message, Button, Image } from "antd";
 import axios from "axios";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
@@ -34,7 +36,7 @@ const AddPharmacy = () => {
     postTown: "",
     users: [],
   });
-
+  const pharmacy_id = "";
   useEffect(() => {
     axios
       .get(`${baseURL}/list-pharmacy-managers`)
@@ -49,9 +51,16 @@ const AddPharmacy = () => {
   }, []);
 
   const [pCodeResponse, setPCodeResponse] = useState([]);
-  const handleFindAddress = () => {
+  const handleFindAddress = debounce(() => {
+    const { postCode, value } = data;
+
     PostCodeHandler(data, setPCodeResponse);
-  };
+
+    if (postCode !== value) {
+      setIsAddressSelected(false);
+      message.warning("Please update the address according to the postcode");
+    }
+  }, 200);
   const handleDateChange = (date, dateString) => {
     const currentDate = new Date();
     const selectedDate = new Date(dateString);
@@ -70,10 +79,6 @@ const AddPharmacy = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "postCode" && data.postCode !== value) {
-      setIsAddressSelected(false);
-      message.warning("Please update the address according to the postcode");
-    }
 
     if (name === "rent" && parseInt(value) < 0) {
       message.error("Rent cannot be less than 0");
@@ -90,7 +95,6 @@ const AddPharmacy = () => {
       [fieldName]: value,
     }));
     if (fieldName === "PharmacyManager") {
-      // Assuming that the manager ID is stored in the value directly
       const managerId = value;
 
       setData((prevData) => ({
@@ -106,7 +110,6 @@ const AddPharmacy = () => {
       console.log("Selected udpRN:", selectedUdprn);
       AddressHandler(setData, selectedUdprn);
 
-      // Set address selection status to true when an address is selected
       setIsAddressSelected(true);
     }
   };
@@ -365,6 +368,7 @@ const AddPharmacy = () => {
         open={isAddEmployeeModalVisible}
         onClose={closeAddEmployeeModal}
         onAddEmployee={updateUsersArray}
+        pharmacy_id={pharmacy_id}
       />
     </div>
   );

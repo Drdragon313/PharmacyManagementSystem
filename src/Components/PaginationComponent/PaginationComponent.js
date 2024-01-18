@@ -10,8 +10,8 @@ const PaginationComponent = ({
   itemRender,
 }) => {
   return (
-    <Row className="pharm-table-footer" gutter={4}>
-      <Col span={6}>
+    <Row className="pharm-table-footer" gutter={2}>
+      <Col span={8}>
         <Space style={{ paddingTop: "7px" }} direction="horizontal">
           <p>Show per page</p>
           <select
@@ -19,7 +19,7 @@ const PaginationComponent = ({
             value={limit}
             onChange={(e) => handleLimitChange(e.target.value)}
           >
-            {[5, 10, 15].map((value) => (
+            {[10, 15, 20].map((value) => (
               <option key={value} value={value}>
                 {value}
               </option>
@@ -28,12 +28,12 @@ const PaginationComponent = ({
         </Space>
       </Col>
 
-      <Col span={6}>
-        <Space direction="horizontal">
-          Showing
-          <p style={{ marginTop: "20px" }}>{page}</p>-
-          <p style={{ marginTop: "20px" }}>{Math.ceil(totalItems / limit)}</p>
-          <p style={{ marginTop: "20px" }}> of {totalItems}</p>
+      <Col className="pagination-col-right-txt" span={14}>
+        <div className="pagination-col-right">
+          <p className="pagination-txt">
+            Showing {page} - {Math.ceil(totalItems / limit)} of {totalItems}
+          </p>
+
           <Pagination
             itemRender={itemRender}
             current={page}
@@ -43,7 +43,7 @@ const PaginationComponent = ({
             size="small"
             showLessItems
           />
-        </Space>
+        </div>
       </Col>
     </Row>
   );

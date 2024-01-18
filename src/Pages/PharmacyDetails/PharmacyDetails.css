@@ -37,24 +37,21 @@
   width: 100%;
   text-align: center;
 }
-.labels-values-container {
-  display: flex;
+.labels-values-container-pharm {
   border: 1px solid #ededed;
   border-radius: 5px;
   padding: 10px;
-  width: 75%;
+  width: 90%;
   font-family: "Poppins", sans-serif;
   padding-left: 20px;
+  padding-right: 20px;
+  text-align: left;
 }
-
-.labels {
-  flex: 1;
-  padding-right: 1px;
-  font-weight: bold; /* Adjust the spacing between labels and values as needed */
-}
-
-.values {
-  flex: 2;
+.pharm-labels-values {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: left;
 }
 .breadcrumb-col {
   border: 1px solid #ededed;
