@@ -34,6 +34,7 @@ const AddUsers = () => {
     postTown: "",
     Line_Manager: "",
   });
+  const [validContact, setValidContact] = useState(false);
   const [avaiableRoles, setAvailableRoles] = useState([]);
   const [selectedRole, setSelectedRole] = useState();
   const [selectedPharmacy, setSelectedPharmacy] = useState();
@@ -55,11 +56,12 @@ const AddUsers = () => {
     const headers = {
       Authorization: localHeader,
     };
-
-    axios
+    if(validContact){
+      axios
       .post(`${baseURL}/register-user`, data, { headers })
       .then(() => {
         message.success("User Created Successfully!", 3);
+      
         navigate("/employeepage");
       })
       .catch((error) => {
@@ -74,6 +76,13 @@ const AddUsers = () => {
           message.error("User Creation Failed!", 3);
         }
       });
+    }
+    else{
+      message.error("Please enter a valid UK telephone number.", 3);
+
+    }
+
+   
   };
   useEffect(() => {
     axios
@@ -111,14 +120,21 @@ const AddUsers = () => {
       })
       .catch(() => {});
   }, [selectedPharmacy]);
-  // const ukTelephoneNumberRegex = /^\+44\d{3,12}$/;
+  const ukTelephoneNumberRegex = /^\+44\s?\d{3}\s?\d{7}$/;
+
+  const handleContactBlur = (e) => {
+    const contactValue = e.target.value;
+    console.log("blur called");
+    if (ukTelephoneNumberRegex.test(contactValue)) {
+      setValidContact(true);
+    } else {
+     
+      setValidContact(false);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // if (name === "Contact" && !ukTelephoneNumberRegex.test(value)) {
-    //   message.error("Please enter a valid UK telephone number.", 3);
-    //   return;
-    // }
     setData((prevUserData) => ({
       ...prevUserData,
       [name]: value,
@@ -189,7 +205,11 @@ const AddUsers = () => {
                   className="AddUsersDetailsInput"
                   name="Contact"
                   onChange={handleChange}
+                  onBlur={handleContactBlur}
                 />
+                {data.Contact.length > 0 && !validContact && (
+                  <p className="InvalidContactTxt">Invalid Contact</p>
+                )}
               </div>
               <div className="mb-3">
                 <label className="adduserLabel">Role</label>
@@ -233,7 +253,7 @@ const AddUsers = () => {
                 value={data.postCode}
               />
               <Row>
-                <Col span={10}>
+                <Col span={11}>
                   <CustomInput
                     divclassName="mb-3"
                     labelclassName="addUserNotLabel"
@@ -245,7 +265,7 @@ const AddUsers = () => {
                   />
                 </Col>
                 <Col span={1}></Col>
-                <Col span={10}>
+                <Col span={11}>
                   <CustomInput
                     divclassName="mb-3"
                     labelclassName="addUserNotLabel"
@@ -313,7 +333,7 @@ const AddUsers = () => {
                 </Select>
               </div>
               <Row>
-                <Col span={10}>
+                <Col span={11}>
                   <CustomInput
                     divclassName="mb-3"
                     labelclassName="addUserNotLabel"
@@ -325,7 +345,7 @@ const AddUsers = () => {
                   />
                 </Col>
                 <Col span={1}></Col>
-                <Col span={10}>
+                <Col span={11}>
                   <CustomInput
                     divclassName="mb-3"
                     labelclassName="addUserNotLabel"

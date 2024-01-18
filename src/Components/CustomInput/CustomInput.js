@@ -15,6 +15,7 @@ const CustomInput = (props) => {
         value={props.value}
         style={props.style}
         required={props.required}
+        disabled={props.disabled}
       />
     </div>
   );

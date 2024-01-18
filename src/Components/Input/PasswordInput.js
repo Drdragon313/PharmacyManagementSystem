@@ -1,11 +1,8 @@
 import React from "react";
 import { Input } from "antd";
-import {
-  EyeTwoTone,
-  EyeInvisibleOutlined,
-  LockOutlined,
-} from "@ant-design/icons";
+import { EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
 import "./PasswordInput.css";
+import PasswordIcon from "../../Assets/Password_icon.svg";
 const PasswordInput = (props) => {
   return (
     <div className="mb-3 my-4">
@@ -18,7 +15,7 @@ const PasswordInput = (props) => {
       <br />
       <Input.Password
         className="UpdatePasswordInput"
-        prefix={<LockOutlined />}
+        prefix={<img src={PasswordIcon} alt="Password Icon"></img>}
         name={props.name}
         required={true}
         iconRender={(visible) =>
