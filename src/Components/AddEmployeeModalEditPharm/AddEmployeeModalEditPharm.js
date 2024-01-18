@@ -11,6 +11,7 @@ const AddEmployeeModalEditPharm = ({
   onClose,
   onAddEmployee,
   initialSelectedUsers,
+  pharmacy_id,
 }) => {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -23,11 +24,14 @@ const AddEmployeeModalEditPharm = ({
       try {
         setLoading(true);
 
-        const response = await axios.get(`${baseURL}/list-all-users`, {
-          headers: {
-            Authorization: ` ${authToken}`,
-          },
-        });
+        const response = await axios.get(
+          `${baseURL}/list-users-not-in-pharmacy?pharmacy_id=${pharmacy_id}`,
+          {
+            headers: {
+              Authorization: ` ${authToken}`,
+            },
+          }
+        );
 
         if (response.data && response.data.status === "success") {
           setEmployees(response.data.data);
@@ -41,7 +45,7 @@ const AddEmployeeModalEditPharm = ({
 
     fetchEmployees();
     setSelectedEmployees(initialSelectedUsers);
-  }, [authToken, initialSelectedUsers]);
+  }, [authToken, initialSelectedUsers, pharmacy_id]);
 
   const handleCheckboxChange = (employeeID) => {
     setSelectedEmployees((prevSelectedEmployees) => {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./EditPharmacy.css";
+import { debounce } from "lodash";
 import { useParams } from "react-router-dom";
 import { Input, Select, DatePicker, message, Image, Button } from "antd";
 import axios from "axios";
@@ -31,8 +32,8 @@ const EditPharmacy = () => {
     dateOfCreation: "",
     rent: null,
     managerName: "",
-    Line1: "",
-    Line2: "",
+    line1: "",
+    line2: "",
     postCode: "",
     postTown: "",
     users: [],
@@ -61,8 +62,8 @@ const EditPharmacy = () => {
             pharmacyName: pharmacyData.pharmacyName,
             dateOfCreation: pharmacyData.dateOfCreation,
             rent: pharmacyData.rent,
-            Line1: pharmacyData.Line1,
-            Line2: pharmacyData.Line2,
+            line1: pharmacyData.line1,
+            line2: pharmacyData.line2,
             managerID: pharmacyData.managerID,
             managerName: pharmacyData.managerName,
             postCode: pharmacyData.postCode,
@@ -81,9 +82,16 @@ const EditPharmacy = () => {
   }, [pharmacy_id]);
 
   const [pCodeResponse, setPCodeResponse] = useState([]);
-  const handleFindAddress = () => {
+  const handleFindAddress = debounce(() => {
+    const { postCode, value } = data;
+
     PostCodeHandler(data, setPCodeResponse);
-  };
+
+    if (postCode !== value) {
+      setIsAddressSelected(false);
+      message.warning("Please update the address according to the postcode");
+    }
+  }, 200);
   const handleDateChange = (date, dateString) => {
     const currentDate = new Date();
     const selectedDate = new Date(dateString);
@@ -102,10 +110,6 @@ const EditPharmacy = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "postCode" && data.postCode !== value) {
-      setIsAddressSelected(false);
-      message.warning("Please update the address according to the postcode");
-    }
 
     if (name === "rent" && parseInt(value) < 0) {
       message.error("Rent cannot be less than 0");
@@ -167,8 +171,8 @@ const EditPharmacy = () => {
           dateOfCreation: "",
           rent: null,
           manager_id: null,
-          Line1: "",
-          Line2: "",
+          line1: "",
+          line2: "",
           postCode: "",
           postTown: "",
           users: [],
@@ -260,9 +264,9 @@ const EditPharmacy = () => {
                   labelclassName="adduserNotLabel"
                   labelText="Building Name"
                   inputclassName="AddUsersDetailsInput"
-                  inputName="Line1"
+                  inputName="line1"
                   handleChange={handleChange}
-                  value={data.Line1}
+                  value={data.line1}
                 />
                 <CustomInput
                   // divclassName="mb-3"
@@ -270,9 +274,9 @@ const EditPharmacy = () => {
                   labelclassName="addPharmacyNotLabel"
                   labelText="Street Name"
                   inputclassName="AddUsersDetailsInput"
-                  inputName="Line2"
+                  inputName="line2"
                   handleChange={handleChange}
-                  value={data.Line2}
+                  value={data.line2}
                 />
               </div>
 
@@ -300,6 +304,7 @@ const EditPharmacy = () => {
                 <DatePicker
                   className="AddPharmacyDetailsInput"
                   required={true}
+                  value={moment(data.dateOfCreation)}
                   format="YYYY-MM-DD"
                   name="dateOfCreation"
                   onChange={handleDateChange}
@@ -377,7 +382,7 @@ const EditPharmacy = () => {
       <AddEmployeeModalEditPharm
         open={isAddEmployeeModalVisible}
         onClose={closeAddEmployeeModal}
-        pharmacyId={pharmacy_id}
+        pharmacy_id={pharmacy_id}
         onAddEmployee={updateUsersArray}
         initialSelectedUsers={initialSelectedUsers}
       />
