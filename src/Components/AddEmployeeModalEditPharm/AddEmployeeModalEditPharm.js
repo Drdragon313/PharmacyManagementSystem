@@ -117,17 +117,17 @@ const AddEmployeeModalEditPharm = ({
           <Form.Item>
             <div className="add-emp-modal-btns">
               <CustomButton
+                className="add-emp-modal-cancel-btn"
+                onClick={onClose}
+              >
+                Cancel
+              </CustomButton>
+              <CustomButton
                 style={{ width: "40%" }}
                 type="primary"
                 htmlType="submit"
               >
                 Add Employee
-              </CustomButton>
-              <CustomButton
-                className="add-emp-modal-cancel-btn"
-                onClick={onClose}
-              >
-                Cancel
               </CustomButton>
             </div>
           </Form.Item>

@@ -22,7 +22,7 @@ import {
 } from "../../Utility Function/ResetPasswordUtils";
 import "./PasswordResetForm.css";
 
-const PasswordResetForm = (headingText, buttonText) => {
+const PasswordResetForm = (props) => {
   const [apiStatus, setApiStatus] = useState(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -123,7 +123,7 @@ const PasswordResetForm = (headingText, buttonText) => {
             <div className="reset-heading">
               <Image preview={false} src={Lockimg} className="lock-img"></Image>
               <h2>
-                <strong>{headingText}</strong> Your Password
+                <strong>{props.headingText}</strong> Your Password
               </h2>
             </div>
             <ul className="conditions-signin">
@@ -221,7 +221,7 @@ const PasswordResetForm = (headingText, buttonText) => {
                   className="btn my-3 signinbtn"
                   onClick={handleSubmit}
                 >
-                  {buttonText}
+                  {props.buttonText}
                 </Button>
               </div>
             </form>
