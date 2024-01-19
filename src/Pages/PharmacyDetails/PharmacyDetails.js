@@ -46,18 +46,6 @@ const PharmacyDetails = () => {
         console.error("Error fetching pharmacy details:", error);
       }
     };
-    axios
-      .get(`${baseURL}/pharmacy-details?pharmacy_id=${pharmacy_id}`)
-      .then((response) => {
-        if (response.data.status === "success") {
-          const pharmacyData = response.data.data;
-          console.log(pharmacyData);
-          setInitialSelectedUsers(pharmacyData.users.map((user) => user.id));
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching pharmacy details:", error);
-      });
     fetchPharmacyDetails();
   }, [pharmacy_id]);
   const handleConfirmDelete = async () => {
@@ -71,6 +59,17 @@ const PharmacyDetails = () => {
           (employee) => employee.id !== selectedUserIdToDelete
         );
         setTableDataSource(updatedTableData);
+
+        // Fetch updated pharmacy details after deleting the user
+        const pharmacyDetailsResponse = await axios.get(
+          `${baseURL}/pharmacy-details?pharmacy_id=${pharmacy_id}`
+        );
+        const pharmacyDetailsData = pharmacyDetailsResponse.data;
+
+        if (pharmacyDetailsData && pharmacyDetailsData.status === "success") {
+          setPharmacyDetails(pharmacyDetailsData.data);
+        }
+
         message.success(
           "User's Association with the pharmacy has been removed ",
           3

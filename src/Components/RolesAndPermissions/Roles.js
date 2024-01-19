@@ -147,7 +147,7 @@ const Roles = () => {
         }}
         style={{ marginTop: "10px", marginLeft: "1px" }}
       >
-        <Col className="roles-txt" span={18}>
+        <Col className="roles-txt" span={23}>
           <p>Roles</p>
           <Link to="/rolesandpermissions/createrole">
             <CustomButton
@@ -158,7 +158,7 @@ const Roles = () => {
             </CustomButton>
           </Link>
         </Col>
-        <Col span={6}></Col>
+        <Col span={2}></Col>
       </Row>
       <Row
         gutter={{
@@ -169,13 +169,12 @@ const Roles = () => {
         }}
         style={{ marginTop: "10px", marginLeft: "1px" }}
       >
-        <Col className="gutter-row" span={18}>
+        <Col className="gutter-row" span={23}>
           {rolesData && (
             <CustomTable dataSource={rolesData} columns={columns} />
           )}
           {renderPagination()}
         </Col>
-        <Col className="gutter-row" span={6}></Col>
       </Row>
       {roleIdToDelete && (
         <ReAssignModal

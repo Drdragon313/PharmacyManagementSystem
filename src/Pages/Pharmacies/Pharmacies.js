@@ -23,7 +23,6 @@ const Pharmacies = () => {
   const [loading, setLoading] = useState(true);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [pharmacyToDeleteId, setPharmacyToDeleteId] = useState(null);
-  const { Option } = Select;
 
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
@@ -227,6 +226,18 @@ const Pharmacies = () => {
     };
     return <SignInFirstModal visible={modalVisible} open={openModal} />;
   }
+
+  const placeholderSelect = () => {
+    return (
+      <div className="placeholder-for-select-postcodes">
+        <div>
+          <Image className="filter-icon" src={bookImg} preview={false} />
+          <span> Select Postcode</span>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="main-container-pharmacies">
       <Row
@@ -293,25 +304,24 @@ const Pharmacies = () => {
         <Col className="gutter-row" span={8}></Col>
         <Col className="filter-container-pharm" span={3.5}>
           <Select
+            allowClear={true}
             className="filter-pharm-btn"
             mode="multiple"
             value={selectedPostalCode}
             onChange={(values) => setSelectedPostalCode(values)}
-            placeholder="Filter Using Postcodes"
+            placeholder={placeholderSelect()}
             showSearch={false}
-            prefix={<Image src={bookImg} preview={false} />}
+            optionLabelProp="label" // Set the optionLabelProp to "label"
           >
-            <Option value="" key="empty">
-              Select Postal Code
-            </Option>
             {availablePostalCodes.map((postalCode) => (
-              <Option
+              <Select.Option
                 className="select-options"
                 key={postalCode}
                 value={postalCode}
+                label={postalCode} // Render the custom label with checkbox
               >
                 {postalCode}
-              </Option>
+              </Select.Option>
             ))}
           </Select>
         </Col>

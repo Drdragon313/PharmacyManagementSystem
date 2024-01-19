@@ -34,17 +34,19 @@
   font-family: Poppins, sans-serif;
   font-size: 14px;
   min-width: 30vb;
+
   text-align: left;
   justify-content: space-evenly;
-  border-radius: 15px !important;
+
   /* margin-right: -10px;
   padding-left: 30px; Adjust the padding to make space for the image */
-  background-image: url("../../Assets/notebook.svg"); /* Replace with the correct path to your image */
-  background-repeat: no-repeat;
-  background-size: 15px; /* Adjust the size of the image */
-  background-position: 5px center; /* Adjust the position of the image */
 }
-
+:where(.css-dev-only-do-not-override-nnuwmp).ant-select-multiple
+  .ant-select-selector {
+  border-radius: 12px !important;
+  border: 1px solid #425cda !important;
+  min-height: 5vh;
+}
 .filter-icon {
   padding-right: 0px;
 }
@@ -58,6 +60,11 @@
   width: 10px;
   margin-right: -10px;
   padding-right: 10px;
+}
+.placeholder-for-select-postcodes {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .search-bar {
   background: #fff !important;

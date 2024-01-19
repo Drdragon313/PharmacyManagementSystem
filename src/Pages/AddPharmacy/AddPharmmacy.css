@@ -37,8 +37,8 @@
 
 .AddPharmacyInformationUpdateBtnContainer {
   display: flex;
-  width: 23vw;
-  margin-left: 2.4%;
+  width: 24vw !important;
+  margin-left: 2.8% !important;
   justify-content: space-between;
   margin-top: 1%;
 }
@@ -173,5 +173,15 @@ div.ant-select-selector {
   color: #425cda;
   border-color: #425cda;
   height: 8%;
+  border-radius: 8px;
+}
+.dashed-btn-add-emp {
+  background-color: #fff;
+  width: 100% !important;
+  font-family: "Poppins", sans-serif;
+  margin-right: 20px !important;
+  color: #425cda;
+  border-color: #425cda;
+  height: 6vh !important;
   border-radius: 8px;
 }
