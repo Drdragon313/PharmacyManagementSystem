@@ -49,5 +49,5 @@ pipelines:
   branches:
     '{develop}':
      - step: *build_and_push_docker_image
-     #- step: *deploy_to_ecs
+     - step: *deploy_to_ecs
 
