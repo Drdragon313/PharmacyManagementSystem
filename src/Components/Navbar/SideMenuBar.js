@@ -39,16 +39,24 @@ const SideMenuBar = (props) => {
                   (permission) => permission.module_id === module.module_id
                 );
 
-                return {
-                  ...module,
-                  actions: permissions ? permissions.actions : {},
-                };
-              });
+                // Include only modules where read permission is true
+                if (permissions && permissions.actions.read) {
+                  return {
+                    ...module,
+                    actions: permissions.actions,
+                  };
+                }
+
+                return null; // Exclude modules without read permission
+              })
+              .filter(Boolean); // Remove null entries
 
             setMenuItems(modulesWithPermissions);
           });
         });
-      } catch (error) {}
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
 
     fetchData();

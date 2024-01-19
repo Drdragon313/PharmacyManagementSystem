@@ -21,8 +21,8 @@ export const AddressHandler = (setData, selectedUdprn) => {
       setData((prevData) => ({
         ...prevData,
         postCode: response.data.postCode,
-        Line1: response.data.Line1,
-        Line2: response.data.Line2,
+        line1: response.data.Line1,
+        line2: response.data.Line2,
         postTown: response.data.postTown,
       }));
     })

@@ -7,8 +7,8 @@ import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb"
 import "./RoleDetails.css";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import Spinner from "../../Components/Spinner/Spinner";
-import checkboxImg from "../../Assets/checkbox.svg";
-
+import checkboxImg from "../../Assets/tickbullet.svg";
+import usersImg from "../../Assets/assigneusersicon.svg";
 const RoleDetails = () => {
   const { role_id } = useParams();
   const [roleDetails, setRoleDetails] = useState({});
@@ -112,9 +112,16 @@ const RoleDetails = () => {
               <p> {roleDetails.name}</p>
               {roleDetails.users &&
                 roleDetails.users.map((user, index) => (
-                  <p key={index}>
-                    {user.name} - {user.email}
-                  </p>
+                  <div className="assigned-users-list">
+                    <Image
+                      className="bullet-image"
+                      preview={false}
+                      src={usersImg}
+                    />
+                    <span style={{ marginLeft: "5px" }} key={index}>
+                      {user.name} - {user.email}
+                    </span>
+                  </div>
                 ))}
             </div>
             <div className="values2">

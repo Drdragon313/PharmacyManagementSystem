@@ -80,3 +80,7 @@
   letter-spacing: 0em;
   text-align: center;
 }
+.assigned-users-list {
+  display: flex;
+  flex-direction: row;
+}

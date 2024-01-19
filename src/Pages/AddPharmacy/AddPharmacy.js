@@ -30,8 +30,8 @@ const AddPharmacy = () => {
     pharmacyName: "",
     dateOfCreation: "",
     rent: null,
-    Line1: "",
-    Line2: "",
+    line1: "",
+    line2: "",
     postCode: "",
     postTown: "",
     users: [],
@@ -59,6 +59,13 @@ const AddPharmacy = () => {
     if (postCode !== value) {
       setIsAddressSelected(false);
       message.warning("Please update the address according to the postcode");
+      // Clear the states of the address, line, and line2 when PostCode is changed
+      setData((prevUserData) => ({
+        ...prevUserData,
+        line1: "",
+        line2: "",
+        postTown: "",
+      }));
     }
   }, 200);
   const handleDateChange = (date, dateString) => {
@@ -121,12 +128,13 @@ const AddPharmacy = () => {
       message.error("Please select the appropriate address");
       return;
     }
-    if (!isAddressSelected) {
-      message.error("Please select the appropriate address");
-      return;
-    }
+
     if (!data.dateOfCreation) {
       message.error("Please select the date of creation");
+      return;
+    }
+    if (!data.pharmacyName) {
+      message.error("Please Enter a Name for your pharmacy");
       return;
     }
     const updatedData = {
@@ -144,8 +152,8 @@ const AddPharmacy = () => {
           pharmacyName: "",
           dateOfCreation: "",
           rent: null,
-          Line1: "",
-          Line2: "",
+          line1: "",
+          line2: "",
           postCode: "",
           postTown: "",
           managerID: null,
@@ -232,31 +240,27 @@ const AddPharmacy = () => {
                 value={data.postCode}
                 required={true}
               />
-              <div
-                direction="horizontal"
-                style={{ display: "flex", flexDirection: "row", gap: "47px" }}
-                className="mb-3 "
-              >
-                <CustomInput
-                  style={{ width: "160px" }}
-                  labelclassName="adduserNotLabel"
-                  labelText="Building Name"
-                  inputclassName="AddUsersDetailsInput"
-                  inputName="Line1"
-                  handleChange={handleChange}
-                  value={data.Line1}
-                  required={true}
-                />
-                <CustomInput
-                  style={{ width: "150px" }}
-                  labelclassName="addPharmacyNotLabel"
-                  labelText="Street Name"
-                  inputclassName="AddUsersDetailsInput"
-                  inputName="Line2"
-                  handleChange={handleChange}
-                  value={data.Line2}
-                />
-              </div>
+
+              <CustomInput
+                divclassName="mb-3"
+                labelclassName="adduserNotLabel"
+                labelText="Building Name"
+                inputclassName="AddUsersDetailsInput"
+                inputName="line1"
+                handleChange={handleChange}
+                value={data.line1}
+                required={true}
+              />
+              <CustomInput
+                divclassName="mb-3"
+                labelclassName="addPharmacyNotLabel"
+                labelText="Street Name"
+                inputclassName="AddUsersDetailsInput"
+                inputName="line2"
+                handleChange={handleChange}
+                value={data.line2}
+              />
+
               <div className="mb-3">
                 <label htmlFor="users" className="addPharmacyNotLabel">
                   Add users in pharmacy
@@ -264,7 +268,7 @@ const AddPharmacy = () => {
                 <br />
                 <Button
                   type="dashed"
-                  className="plus-btn-edit-pharm"
+                  className="dashed-btn-add-emp"
                   onClick={openAddEmployeeModal}
                 >
                   <Image

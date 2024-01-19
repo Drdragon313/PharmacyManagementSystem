@@ -90,8 +90,16 @@ const EditPharmacy = () => {
     if (postCode !== value) {
       setIsAddressSelected(false);
       message.warning("Please update the address according to the postcode");
+      // Clear the states of the address, line, and line2 when PostCode is changed
+      setData((prevUserData) => ({
+        ...prevUserData,
+        line1: "",
+        line2: "",
+        postTown: "",
+      }));
     }
   }, 200);
+
   const handleDateChange = (date, dateString) => {
     const currentDate = new Date();
     const selectedDate = new Date(dateString);
@@ -146,10 +154,6 @@ const EditPharmacy = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!isAddressSelected) {
-      message.error("Please select the appropriate address");
-      return;
-    }
 
     const updatedData = {
       ...data,
@@ -253,32 +257,30 @@ const EditPharmacy = () => {
                 handleBlur={handleFindAddress}
                 value={data.postCode}
               />
-              <div
+              {/* <div
                 direction="horizontal"
                 style={{ display: "flex", flexDirection: "row", gap: "47px" }}
                 className="mb-3 "
-              >
-                <CustomInput
-                  // divclassName="mb-3"
-                  style={{ width: "160px" }}
-                  labelclassName="adduserNotLabel"
-                  labelText="Building Name"
-                  inputclassName="AddUsersDetailsInput"
-                  inputName="line1"
-                  handleChange={handleChange}
-                  value={data.line1}
-                />
-                <CustomInput
-                  // divclassName="mb-3"
-                  style={{ width: "150px" }}
-                  labelclassName="addPharmacyNotLabel"
-                  labelText="Street Name"
-                  inputclassName="AddUsersDetailsInput"
-                  inputName="line2"
-                  handleChange={handleChange}
-                  value={data.line2}
-                />
-              </div>
+              > */}
+              <CustomInput
+                divclassName="mb-3"
+                labelclassName="adduserNotLabel"
+                labelText="Building Name"
+                inputclassName="AddUsersDetailsInput"
+                inputName="line1"
+                handleChange={handleChange}
+                value={data.line1}
+              />
+              <CustomInput
+                divclassName="mb-3"
+                labelclassName="addPharmacyNotLabel"
+                labelText="Street Name"
+                inputclassName="AddUsersDetailsInput"
+                inputName="line2"
+                handleChange={handleChange}
+                value={data.line2}
+              />
+              {/* </div> */}
 
               <Button
                 type="dashed"
@@ -327,7 +329,7 @@ const EditPharmacy = () => {
                   onChange={(value) => handleSelectChange("managerName", value)}
                   value={data.managerID}
                 >
-                  <Option value={data.managerID}>{data.managerName}</Option>
+                  {/* <Option value={data.managerID}>{data.managerName}</Option> */}
                   {managers.map((manager) => (
                     <Option key={manager.id} value={manager.id}>
                       {manager.name}
