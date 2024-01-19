@@ -1,0 +1,49 @@
+image: node:18.16.1-slim
+definitions:
+  steps:
+    - step: &build_and_push_docker_image
+        services:
+           - docker 
+        name: Build and Push Docker Image
+        script:
+          - apt update
+          - apt install curl -y
+          - apt install zip -y
+          - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          - unzip awscliv2.zip
+          - ./aws/install
+          - IMAGE="365330253536.dkr.ecr.eu-west-2.amazonaws.com/pharmlytics-frontend"
+          - NAME="pharmlytics-frontend"
+          - ENV="${BITBUCKET_BRANCH}"
+          - TAG1="${ENV}-${BITBUCKET_BUILD_NUMBER}"
+          - TAG2="${ENV}-latest"
+          - aws configure set aws_access_key_id "${AWS_KEY}"
+          - aws configure set aws_secret_access_key "${AWS_SECRET}"
+          - aws ecr get-login-password --region "${AWS_REGION}" | docker login -u AWS --password-stdin $IMAGE
+          - ls -al
+          - docker build -t $NAME:$TAG1 .
+          - docker tag $NAME:$TAG1 $IMAGE:$TAG1
+          - docker tag $IMAGE:$TAG1 $IMAGE:$TAG2
+          - docker push $IMAGE:$TAG1
+          - docker push $IMAGE:$TAG2
+
+    - step: &deploy_to_ecs
+        name: Deploy to ECS
+        script:
+          - pipe: atlassian/aws-ecs-deploy:1.11.0
+            variables:
+              AWS_ACCESS_KEY_ID: $AWS_KEY
+              AWS_SECRET_ACCESS_KEY: $AWS_SECRET
+              AWS_DEFAULT_REGION: $AWS_REGION
+              CLUSTER_NAME: $DEV_ECS_CLUSTER_NAME
+              SERVICE_NAME: $DEV_ECS_SERVICE_NAME
+              FORCE_NEW_DEPLOYMENT: 'true'
+
+pipelines:
+  #pull-requests:
+  #  '**':
+  branches:
+    '{develop}':
+     - step: *build_and_push_docker_image
+     #- step: *deploy_to_ecs
+
