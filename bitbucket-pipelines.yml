@@ -1,7 +1,11 @@
 image: node:18.16.1-slim
 definitions:
+  services:
+    docker:
+      memory: 4096
   steps:
     - step: &build_and_push_docker_image
+        size: 2x
         services:
            - docker 
         name: Build and Push Docker Image
