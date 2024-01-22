@@ -66,16 +66,11 @@
   flex-direction: column;
   justify-content: center;
 }
-.search-bar {
-  background: #fff !important;
-  border-radius: 12px;
-}
+
 .action-btns {
   cursor: pointer;
 }
-.ant-input.css-dev-only-do-not-override-nnuwmp {
-  background: #fff !important;
-}
+
 .custom-table-header {
   font-family: "Poppins", sans-serif;
 }

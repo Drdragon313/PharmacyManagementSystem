@@ -21,7 +21,7 @@ const AddPharmacy = () => {
   const [managers, setManagers] = useState([]);
   const navigate = useNavigate();
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [isAddressSelected, setIsAddressSelected] = useState(false);
+
   const users = selectedUsers;
   const { Option } = Select;
 
@@ -57,7 +57,6 @@ const AddPharmacy = () => {
     PostCodeHandler(data, setPCodeResponse);
 
     if (postCode !== value) {
-      setIsAddressSelected(false);
       message.warning("Please update the address according to the postcode");
       // Clear the states of the address, line, and line2 when PostCode is changed
       setData((prevUserData) => ({
@@ -116,8 +115,6 @@ const AddPharmacy = () => {
       const selectedUdprn = selectedAddress.udprn;
       console.log("Selected udpRN:", selectedUdprn);
       AddressHandler(setData, selectedUdprn);
-
-      setIsAddressSelected(true);
     }
   };
   const handleSubmit = (e) => {

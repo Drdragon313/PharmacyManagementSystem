@@ -97,33 +97,30 @@ const RoleDetails = () => {
         <Col span={24} style={{ marginLeft: "20px" }}>
           <div className="labels-values-container">
             <div className="labels">
-              <p>Number of Assigned Users</p>
-              <p>Created on </p>
-              <p>Description</p>
-              <p>Module ID</p>
               <p>Role Name</p>
-              <p>Name(s) of Assigned Users</p>
+              <p>Created on </p>
+              <p>Number of Assigned Users</p>
+              <p>Assigned Users</p>
             </div>
             <div className="values">
-              <p>{roleDetails.assigned_users}</p>
-              <p> {roleDetails.created_at}</p>
-              <p> {roleDetails.description}</p>
-              <p> {roleDetails.id}</p>
               <p> {roleDetails.name}</p>
+              <p> {roleDetails.created_at}</p>
+              <p>{roleDetails.assigned_users}</p>
               {roleDetails.users &&
                 roleDetails.users.map((user, index) => (
-                  <div className="assigned-users-list">
-                    <Image
-                      className="bullet-image"
-                      preview={false}
-                      src={usersImg}
-                    />
-                    <span style={{ marginLeft: "5px" }} key={index}>
+                  <div>
+                    <span className="assigned-users-list" key={index}>
+                      <Image
+                        className="bullet-image"
+                        preview={false}
+                        src={usersImg}
+                      />
                       {user.name} - {user.email}
                     </span>
                   </div>
                 ))}
             </div>
+
             <div className="values2">
               {roleDetails.role_permissions.map((permission, index) => (
                 <div key={index}>
