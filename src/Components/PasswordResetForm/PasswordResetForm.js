@@ -21,6 +21,7 @@ import {
   validateVerificationLink,
 } from "../../Utility Function/ResetPasswordUtils";
 import "./PasswordResetForm.css";
+import Spinner from "../Spinner/Spinner";
 
 const PasswordResetForm = (props) => {
   const [apiStatus, setApiStatus] = useState(null);
@@ -70,7 +71,7 @@ const PasswordResetForm = (props) => {
     );
   }, [email, forgetPasswordKey]);
   if (loading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
   return (
     <div className="siginContainer">
@@ -213,7 +214,7 @@ const PasswordResetForm = (props) => {
               <div className="reset-password-btns">
                 <Link to="/">
                   <Button type="button" className="btn btn-primary backbtn">
-                    Back to Login
+                    Cancel
                   </Button>
                 </Link>
                 <Button

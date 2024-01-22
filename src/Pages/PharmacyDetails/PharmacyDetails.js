@@ -8,7 +8,7 @@ import CustomTable from "../../Components/CustomTable/CustomTable";
 import eyeIcon from "../../Assets/Icon feather-eye.svg";
 import deleteActionbtn from "../../Assets/deleteAction.svg";
 import plusOutline from "../../Assets/PlusOutlined.svg";
-import editIcon from "../../Assets/tabler_edit.svg";
+import editIcon from "../../Assets/editInBlue.svg";
 
 import Spinner from "../../Components/Spinner/Spinner";
 import "./PharmacyDetails.css";
@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationModal";
 
 import AddEmployeeModal from "../../Components/AddEmployeeModal/AddEmployeeModal";
+import CustomButton from "../../Components/CustomButton/CustomButton";
 
 const PharmacyDetails = () => {
   const { pharmacy_id } = useParams();
@@ -193,14 +194,14 @@ const PharmacyDetails = () => {
         </Col>
         <Col className="primary-btns" span={6}>
           <Link to={`/pharmacies/${pharmacy_id}/pharmacyedit`}>
-            <Button type="primary" className="primary-class">
+            <CustomButton type="default" className="edit-btn-pharmacy-details">
               <Image
-                className="plus-outline-img"
+                className="edit-outline-img"
                 preview={false}
                 src={editIcon}
               ></Image>
               Edit details
-            </Button>
+            </CustomButton>
           </Link>
         </Col>
         <Col className="pharm-detail-heading" span={6}>

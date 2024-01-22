@@ -19,3 +19,6 @@
   background: #425cda;
   color: white;
 }
+.breadcrumb-col {
+  padding: 0px !important;
+}

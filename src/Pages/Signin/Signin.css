@@ -173,17 +173,15 @@
   border-radius: 12px;
   height: 40px;
   border: 1px solid #dddddf;
-  background: #f9f9f9;
+  background-color: #f9f9f9 !important;
   color: #f9f9f9;
 }
-.ant-input {
-  background: #f9f9f9;
-}
+
 .Email_icon {
   height: 80%;
   width: 80%;
 }
-:where(.css-dev-only-do-not-override-nnuwmp).ant-input-affix-wrapper
+/* :where(.css-dev-only-do-not-override-nnuwmp).ant-input-affix-wrapper
   > input.ant-input {
   background-color: #f9f9f9 !important;
-}
+} */
