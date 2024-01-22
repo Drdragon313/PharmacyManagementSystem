@@ -47,6 +47,7 @@ const EditUsers = () => {
   const [validContact, setValidContact] = useState(false);
   const [pCodeResponse, setPCodeResponse] = useState([]);
   const [permissions, setPermissions] = useState([]);
+  const [selectedRole, setSelectedRole] = useState();
   const { userID } = useParams();
   const breadcrumbItems = [
     { label: "Employees", link: "/employeepage" },
@@ -161,14 +162,14 @@ const EditUsers = () => {
   useEffect(() => {
     if (userID) {
       axios
-        .get(`${baseURL}/role-permissions?role_id=${data.Selected_Role}`)
+        .get(`${baseURL}/role-permissions?role_id=${selectedRole}`)
         .then((response) => {
           const permissionsData = response.data.Data.role_permissions;
           setPermissions(permissionsData);
         })
         .catch(() => {});
     }
-  }, [data.Selected_Role, userID]);
+  }, [data.Selected_Role_Name]);
 
   useEffect(() => {
     if (userID) {
@@ -207,7 +208,13 @@ const EditUsers = () => {
     handleContactBlur();
   }, [data.Contact]);
   const handleSelectChange = (fieldName, value) => {
-    if (fieldName === "Address") {
+    if (fieldName === "Selected_Role_Name") {
+      setSelectedRole(value);
+      setData((prevData) => ({
+        ...prevData,
+        Selected_Role: value,
+      }));
+    } else if (fieldName === "Address") {
       const selectedAddress = pCodeResponse.find(
         (item) => item.address === value
       );
