@@ -29,7 +29,7 @@ const EmployeeListing = () => {
   const [pharmacyToDeleteId, setPharmacyToDeleteId] = useState(null);
 
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(10);
   const [totalItems, setTotalItems] = useState(0);
   const [sortField, setSortField] = useState("salary");
   const [sortDirection, setSortDirection] = useState("asc");
@@ -378,7 +378,7 @@ const EmployeeListing = () => {
             btnclassName="delete-modal-ok-btn"
             cancelText="Cancel"
             confirmationHeading="Remove Employee"
-            confirmationText="Are you sure you want to remove this employee from this pharmacy? The employee will not be deleted from system but will be removed from pharmacy"
+            confirmationText="Are you sure you want to remove this employee? The employee will be deleted from system parmanently."
           ></ConfirmationModal>
           <ConfirmationModal
             title="Resend Invite"
@@ -441,7 +441,7 @@ const EmployeeListing = () => {
                 <option value="" disabled>
                   Role
                 </option>
-                {selectedRole && <option value="">Clear Filter</option>}
+                {selectedRole && <option value="">All roles</option>}
                 {availableRoles &&
                   availableRoles.map((role) => (
                     <option
@@ -467,7 +467,9 @@ const EmployeeListing = () => {
                 <option value="" disabled>
                   Pharmacy postal code
                 </option>
-                {selectedPostalCode && <option value="">Clear Filter</option>}
+                {selectedPostalCode && (
+                  <option value="">All postal codes</option>
+                )}
 
                 {availablePostalCodes.map((postalCode) => (
                   <option

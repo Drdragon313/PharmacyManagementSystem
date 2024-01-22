@@ -45,9 +45,6 @@ const EditUsers = () => {
   const [responseID, setResponseID] = useState();
   const authToken = localStorage.getItem("AuthorizationToken");
   const [validContact, setValidContact] = useState(false);
-
-  // const [selectedRole, setSelectedRole] = useState();
-  // const [selectedPharmacy, setSelectedPharmacy] = useState();
   const [pCodeResponse, setPCodeResponse] = useState([]);
   const [permissions, setPermissions] = useState([]);
   const { userID } = useParams();
