@@ -214,7 +214,14 @@ const EditUsers = () => {
         ...prevData,
         Selected_Role: value,
       }));
-    } else if (fieldName === "Address") {
+    }
+    if (fieldName === "Pharmacy") {
+      setData((prevData) => ({
+        ...prevData,
+        Pharmacy_id: value,
+      }));
+    }
+    if (fieldName === "Address") {
       const selectedAddress = pCodeResponse.find(
         (item) => item.address === value
       );
