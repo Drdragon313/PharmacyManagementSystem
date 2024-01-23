@@ -20,7 +20,7 @@ import TilePage from "./Pages/TilePage/TilePage";
 // import Profile from "./Pages/Profile/Profile";
 // import Permissions from "./Pages/Profile/Permissions/Permissions";
 import "./App.css";
-import UpdatePassword from "./Pages/Profile/UpdatePassword/UpdatePassword";
+import UpdatePassword from "./Pages/UpdatePassword/UpdatePassword";
 import AddUsers from "./Pages/AddUsers/AddUsers";
 import ViewEmployees from "./Pages/ViewEmployees/ViewEmployees";
 import ResendEmail from "./Pages/ResendEmail/ResendEmail";

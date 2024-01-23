@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "./UpdatePassword.css";
-import { baseURL } from "../../../Components/BaseURLAPI/BaseURLAPI";
+import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import { message } from "antd";
-import PasswordInput from "../../../Components/Input/PasswordInput";
+import PasswordInput from "../../Components/Input/PasswordInput";
 import axios from "axios";
-import { PasswordRegex } from "../../../Utility Function/PasswordRegex";
-import { handleInputChangeUtil } from "../../../Utility Function/ResetPasswordUtils";
+import { PasswordRegex } from "../../Utility Function/PasswordRegex";
+import { handleInputChangeUtil } from "../../Utility Function/ResetPasswordUtils";
 import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
 const UpdatePassword = () => {
   const [formData, setFormData] = useState({
@@ -129,11 +129,6 @@ const UpdatePassword = () => {
               Password must contain at least one number or special character.
             </li>
           </ul>
-          {/* <p>
-            Password should be atleats 8 characters with 1 Capital letter, 1
-            <br />
-            number and 1 special character.
-          </p> */}
           <PasswordInput
             label="Confirm Password"
             name="ConfirmNewPassword"
@@ -150,5 +145,4 @@ const UpdatePassword = () => {
     </div>
   );
 };
-
 export default UpdatePassword;
