@@ -3,7 +3,7 @@ import "./AddUsers.css";
 import Input from "antd/es/input/Input";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import axios from "axios";
-import { Col, Row, Select, message } from "antd";
+import { Col, DatePicker, Row, Select, message } from "antd";
 import { getMaxDate } from "../../Utility Function/DateUtils";
 import { getMinDate } from "../../Utility Function/DateUtils";
 import { handleBlur } from "../../Utility Function/DateUtils";
@@ -15,6 +15,7 @@ import CustomInput from "../../Components/CustomInput/CustomInput";
 import CustomSelect from "../../Components/CustomSelect/CustomSelect";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 const { Option } = Select;
 const AddUsers = () => {
   const navigate = useNavigate();
@@ -39,7 +40,6 @@ const AddUsers = () => {
   const [selectedRole, setSelectedRole] = useState();
   const [selectedPharmacy, setSelectedPharmacy] = useState();
   const [manager, setManager] = useState();
-
   const [avaiablePharmacies, setAvailablePharmacies] = useState([]);
   const [pCodeResponse, setPCodeResponse] = useState([]);
   const [permissions, setPermissions] = useState([]);
@@ -56,33 +56,29 @@ const AddUsers = () => {
     const headers = {
       Authorization: localHeader,
     };
-    if(validContact){
+    if (validContact) {
       axios
-      .post(`${baseURL}/register-user`, data, { headers })
-      .then(() => {
-        message.success("User Created Successfully!", 3);
-      
-        navigate("/employeepage");
-      })
-      .catch((error) => {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.error &&
-          error.response.data.error.message
-        ) {
-          message.error(error.response.data.error.message, 3);
-        } else {
-          message.error("User Creation Failed!", 3);
-        }
-      });
-    }
-    else{
+        .post(`${baseURL}/register-user`, data, { headers })
+        .then(() => {
+          message.success("User Created Successfully!", 3);
+
+          navigate("/employeepage");
+        })
+        .catch((error) => {
+          if (
+            error.response &&
+            error.response.data &&
+            error.response.data.error &&
+            error.response.data.error.message
+          ) {
+            message.error(error.response.data.error.message, 3);
+          } else {
+            message.error("User Creation Failed!", 3);
+          }
+        });
+    } else {
       message.error("Please enter a valid UK telephone number.", 3);
-
     }
-
-   
   };
   useEffect(() => {
     axios
@@ -128,7 +124,6 @@ const AddUsers = () => {
     if (ukTelephoneNumberRegex.test(contactValue)) {
       setValidContact(true);
     } else {
-     
       setValidContact(false);
     }
   };
@@ -139,6 +134,21 @@ const AddUsers = () => {
       ...prevUserData,
       [name]: value,
     }));
+  };
+  const handleDateChange = (date, dateString) => {
+    const currentDate = moment();
+    const selectedDate = moment(dateString, "DD-MM-YYYY");
+
+    if (selectedDate.isAfter(currentDate, "day")) {
+      message.error("Date of creation cannot be in the future");
+    } else if (currentDate.diff(selectedDate, "years") > 100) {
+      message.error("Date of creation cannot be more than 100 years ago");
+    } else {
+      setData((prevUserData) => ({
+        ...prevUserData,
+        DateOfBirth: dateString,
+      }));
+    }
   };
   const handleSelectChange = (fieldName, value) => {
     if (fieldName === "Role") {
@@ -295,16 +305,14 @@ const AddUsers = () => {
                   Date of birth
                 </label>
                 <br />
-                <Input
+                <DatePicker
                   className="AddUsersDetailsInput"
-                  type="date"
                   name="DateOfBirth"
-                  onChange={handleChange}
-                  onBlur={(e) =>
-                    handleBlur("DateOfBirth", e.target.value, data, setData)
+                  onChange={handleDateChange}
+                  format="DD-MM-YYYY"
+                  disabledDate={(current) =>
+                    current && current > moment().endOf("day")
                   }
-                  max={getMaxDate()}
-                  min={getMinDate()}
                 />
               </div>
               <CustomInput
@@ -353,7 +361,6 @@ const AddUsers = () => {
                     inputclassName="DetailsInput"
                     inputName="Line_Manager"
                     handleChange={handleChange}
-                    // value={manager.manager_name}
                     value={manager?.manager_name || ""}
                   />
                 </Col>

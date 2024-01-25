@@ -24,7 +24,7 @@ const Roles = () => {
     useState(false);
   const [roleIdToDelete, setRoleIdToDelete] = useState(null);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(10);
 
   useEffect(() => {
     const fetchRolesData = async () => {
@@ -59,7 +59,6 @@ const Roles = () => {
     );
     setRolesData(updatedRolesData);
 
-    // Reset roleIdToDelete state
     setRoleIdToDelete(null);
   };
 
@@ -96,12 +95,7 @@ const Roles = () => {
   }
   const columns = [
     {
-      title: "Role ID",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
-      title: "Role Name",
+      title: "Role",
       dataIndex: "name",
       key: "name",
     },
@@ -112,9 +106,14 @@ const Roles = () => {
       key: "created_at",
     },
     {
+      title: "Number of Assigned Users",
+      dataIndex: "assigned_users",
+      key: "assigned_users",
+    },
+    {
       title: "Action(s)",
-      width: 150,
       fixed: "right",
+      width: 150,
       render: (text, record) => (
         <Space className="action-btns">
           <Link to={`${record.id}/details`}>
@@ -147,18 +146,18 @@ const Roles = () => {
         }}
         style={{ marginTop: "10px", marginLeft: "1px" }}
       >
+        <Col span={2}></Col>
         <Col className="roles-txt" span={23}>
           <p>Roles</p>
           <Link to="/rolesandpermissions/createrole">
             <CustomButton
               type="primary"
-              style={{ width: "100%", height: "40px" }}
+              style={{ width: "100%", height: "40px", marginLeft: "40px" }}
             >
               Create Role
             </CustomButton>
           </Link>
         </Col>
-        <Col span={2}></Col>
       </Row>
       <Row
         gutter={{
@@ -169,7 +168,7 @@ const Roles = () => {
         }}
         style={{ marginTop: "10px", marginLeft: "1px" }}
       >
-        <Col className="gutter-row" span={23}>
+        <Col className="gutter-row" style={{ width: "99%" }}>
           {rolesData && (
             <CustomTable dataSource={rolesData} columns={columns} />
           )}
@@ -181,7 +180,7 @@ const Roles = () => {
           open={ConfirmationModalVisible}
           onConfirm={handleConfirmDelete}
           onCancel={handleCancelDelete}
-          roleId={roleIdToDelete} // Pass roleId to ReAssignModal
+          roleId={roleIdToDelete}
         />
       )}
     </div>

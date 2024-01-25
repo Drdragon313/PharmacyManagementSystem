@@ -9,14 +9,13 @@ import eyeIcon from "../../Assets/Icon feather-eye.svg";
 import deleteActionbtn from "../../Assets/deleteAction.svg";
 import plusOutline from "../../Assets/PlusOutlined.svg";
 import editIcon from "../../Assets/editInBlue.svg";
-
 import Spinner from "../../Components/Spinner/Spinner";
 import "./PharmacyDetails.css";
 import { Link } from "react-router-dom";
 import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationModal";
-
 import AddEmployeeModal from "../../Components/AddEmployeeModal/AddEmployeeModal";
 import CustomButton from "../../Components/CustomButton/CustomButton";
+import { fetchUserPermissions } from "../../Utility Function/ModulesAndPermissions";
 
 const PharmacyDetails = () => {
   const { pharmacy_id } = useParams();
@@ -25,9 +24,9 @@ const PharmacyDetails = () => {
   const [tableDataSource, setTableDataSource] = useState([]);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [selectedUserIdToDelete, setSelectedUserIdToDelete] = useState(null);
-
   const [isAddEmployeeModalVisible, setIsAddEmployeeModalVisible] =
     useState(false);
+  const [userPermissions, setUserPermissions] = useState(null);
 
   useEffect(() => {
     const fetchPharmacyDetails = async () => {
@@ -49,6 +48,17 @@ const PharmacyDetails = () => {
     };
     fetchPharmacyDetails();
   }, [pharmacy_id]);
+  useEffect(() => {
+    const fetchUserPermissionData = async () => {
+      try {
+        await fetchUserPermissions(setUserPermissions);
+      } catch (error) {
+        console.error("Error fetching user permissions:", error);
+      }
+    };
+
+    fetchUserPermissionData();
+  }, []);
   const handleConfirmDelete = async () => {
     try {
       const response = await axios.delete(
@@ -61,7 +71,6 @@ const PharmacyDetails = () => {
         );
         setTableDataSource(updatedTableData);
 
-        // Fetch updated pharmacy details after deleting the user
         const pharmacyDetailsResponse = await axios.get(
           `${baseURL}/pharmacy-details?pharmacy_id=${pharmacy_id}`
         );
@@ -128,11 +137,13 @@ const PharmacyDetails = () => {
             <Image preview={false} src={eyeIcon}></Image>
           </Link>
 
-          <Image
-            preview={false}
-            src={deleteActionbtn}
-            onClick={() => handleDelete(record.id)}
-          ></Image>
+          {canDeletePharmacy && (
+            <Image
+              preview={false}
+              src={deleteActionbtn}
+              onClick={() => handleDelete(record.id)}
+            ></Image>
+          )}
         </Space>
       ),
     },
@@ -172,7 +183,15 @@ const PharmacyDetails = () => {
       console.error("Error adding employee:", error);
     }
   };
-
+  const canCreatePharmacy =
+    userPermissions?.find((module) => module.module_name === "Pharmacy")
+      ?.actions?.write || false;
+  const canDeletePharmacy =
+    userPermissions?.find((module) => module.module_name === "Pharmacy")
+      ?.actions?.delete || false;
+  const canEditPharmacy =
+    userPermissions?.find((module) => module.module_name === "Pharmacy")
+      ?.actions?.update || false;
   return (
     <div>
       <Row className="pharmacy-list-breadcrumb">
@@ -193,33 +212,40 @@ const PharmacyDetails = () => {
           <p>Pharmacy detail view</p>
         </Col>
         <Col className="primary-btns" span={6}>
-          <Link to={`/pharmacies/${pharmacy_id}/pharmacyedit`}>
-            <CustomButton type="default" className="edit-btn-pharmacy-details">
-              <Image
-                className="edit-outline-img"
-                preview={false}
-                src={editIcon}
-              ></Image>
-              Edit details
-            </CustomButton>
-          </Link>
+          {canEditPharmacy && (
+            <Link to={`/pharmacies/${pharmacy_id}/pharmacyedit`}>
+              <CustomButton
+                type="default"
+                className="edit-btn-pharmacy-details"
+              >
+                <Image
+                  className="edit-outline-img"
+                  preview={false}
+                  src={editIcon}
+                ></Image>
+                Edit details
+              </CustomButton>
+            </Link>
+          )}
         </Col>
         <Col className="pharm-detail-heading" span={6}>
           <p>Pharmacy employees</p>
         </Col>
         <Col className="gutter-row" span={4}>
-          <Button
-            type="primary"
-            className="plus-btn-add-emp"
-            onClick={showAddEmployeeModal}
-          >
-            <Image
-              className="plus-outline-img"
-              preview={false}
-              src={plusOutline}
-            ></Image>
-            Add employee to pharmacy
-          </Button>
+          {canCreatePharmacy && (
+            <Button
+              type="primary"
+              className="plus-btn-add-emp"
+              onClick={showAddEmployeeModal}
+            >
+              <Image
+                className="plus-outline-img"
+                preview={false}
+                src={plusOutline}
+              ></Image>
+              Add employee to pharmacy
+            </Button>
+          )}
         </Col>
       </Row>
       <Row

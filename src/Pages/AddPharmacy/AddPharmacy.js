@@ -58,7 +58,7 @@ const AddPharmacy = () => {
 
     if (postCode !== value) {
       message.warning("Please update the address according to the postcode");
-      // Clear the states of the address, line, and line2 when PostCode is changed
+
       setData((prevUserData) => ({
         ...prevUserData,
         line1: "",
@@ -68,12 +68,12 @@ const AddPharmacy = () => {
     }
   }, 200);
   const handleDateChange = (date, dateString) => {
-    const currentDate = new Date();
-    const selectedDate = new Date(dateString);
+    const currentDate = moment();
+    const selectedDate = moment(dateString, "DD-MM-YYYY");
 
-    if (selectedDate > currentDate) {
+    if (selectedDate.isAfter(currentDate, "day")) {
       message.error("Date of creation cannot be in the future");
-    } else if (currentDate.getFullYear() - selectedDate.getFullYear() > 100) {
+    } else if (currentDate.diff(selectedDate, "years") > 100) {
       message.error("Date of creation cannot be more than 100 years ago");
     } else {
       setData((prevUserData) => ({
@@ -120,7 +120,6 @@ const AddPharmacy = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Check if the address is selected
     if (!data.postCode || !data.postTown) {
       message.error("Please select the appropriate address");
       return;
@@ -167,18 +166,16 @@ const AddPharmacy = () => {
   const [isAddEmployeeModalVisible, setAddEmployeeModalVisible] =
     useState(false);
 
-  // Function to open the modal
   const openAddEmployeeModal = () => {
     setAddEmployeeModalVisible(true);
   };
 
-  // Function to close the modal
   const closeAddEmployeeModal = () => {
     setAddEmployeeModalVisible(false);
   };
 
   const updateUsersArray = (selectedUsers) => {
-    setSelectedUsers(selectedUsers); // <-- Use setSelectedUsers to update the state
+    setSelectedUsers(selectedUsers);
     console.log("selected user", selectedUsers);
   };
 
@@ -288,13 +285,11 @@ const AddPharmacy = () => {
                 <DatePicker
                   className="AddPharmacyDetailsInput"
                   required={true}
-                  format="YYYY-MM-DD"
+                  format="DD-MM-YYYY"
                   name="dateOfCreation"
                   onChange={handleDateChange}
                   disabledDate={(current) =>
-                    current &&
-                    (current > moment().endOf("day") ||
-                      current < moment().subtract(100, "years"))
+                    current && current.isAfter(moment().endOf("day"))
                   }
                 />
               </div>
