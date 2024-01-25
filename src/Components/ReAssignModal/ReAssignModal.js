@@ -38,17 +38,10 @@ const ReAssignModal = ({ open, onConfirm, onCancel, roleId }) => {
 
   const handleConfirmDelete = async () => {
     try {
-      if (!selectedRoleId) {
-        console.error("Please select a new role.");
-        return;
-      }
-
       await axios.post(`${baseURL}/delete-role`, {
         role_id_to_delete: roleId,
         new_role_id: selectedRoleId,
       });
-
-      // Callback to update rolesData after successful delete
       onConfirm(selectedRoleId);
 
       setSelectedRoleId(null);
@@ -62,43 +55,82 @@ const ReAssignModal = ({ open, onConfirm, onCancel, roleId }) => {
 
   console.log("selected role id", selectedRoleId);
   return (
-    <Modal
-      open={open}
-      onOk={handleConfirmDelete}
-      title={<Image src={deleteImg} preview={false}></Image>}
-      onCancel={onCancel}
-      className="delete-modal-body"
-      footer={[
-        <div className="delete-modal-btns-container" key="footer">
-          <Button
-            key="cancel"
-            onClick={onCancel}
-            className="delete-modal-cancel-btn"
-          >
-            Cancel
-          </Button>
+    <>
+      {numberOfEmployees !== 0 ? (
+        <Modal
+          open={open}
+          onOk={handleConfirmDelete}
+          title={<Image src={deleteImg} preview={false}></Image>}
+          onCancel={onCancel}
+          className="delete-modal-body"
+          footer={[
+            <div className="delete-modal-btns-container" key="footer">
+              <Button
+                key="cancel"
+                onClick={onCancel}
+                className="delete-modal-cancel-btn"
+              >
+                Cancel
+              </Button>
 
-          <Button
-            key="confirm"
-            type="primary"
-            onClick={handleConfirmDelete}
-            className="delete-modal-ok-btn"
-            disabled={!selectedRoleId}
-          >
-            Reassign Role
-          </Button>
-        </div>,
-      ]}
-    >
-      <p className="delete-pharm-modal-heading-txt">Delete Role</p>
-      <p className="delete-pharm-modal-body-txt">
-        {numberOfEmployees} employee(s) are assigned to the role you are
-        removing. To remove the role, select a role to which the employees
-        should be reassigned.
-      </p>
-      <p className="label-roles-dropdown">Reassign Role to Employees</p>
-      <RolesDropdown onSelect={handleRoleSelect} excludedRoleId={roleId} />
-    </Modal>
+              <Button
+                key="confirm"
+                type="primary"
+                onClick={handleConfirmDelete}
+                className="delete-modal-ok-btn"
+                disabled={!selectedRoleId}
+              >
+                Reassign Role
+              </Button>
+            </div>,
+          ]}
+        >
+          <p className="delete-pharm-modal-heading-txt">Delete Role</p>
+          <p className="delete-pharm-modal-body-txt">
+            {numberOfEmployees} employee(s) are assigned to the role you are
+            removing. To remove the role, select a role to which the employees
+            should be reassigned.
+          </p>
+          <p className="label-roles-dropdown">Reassign Role to Employees</p>
+          <RolesDropdown onSelect={handleRoleSelect} excludedRoleId={roleId} />
+        </Modal>
+      ) : (
+        <Modal
+          open={open}
+          onOk={handleConfirmDelete}
+          title={<Image src={deleteImg} preview={false}></Image>}
+          onCancel={onCancel}
+          className="delete-modal-body"
+          footer={[
+            <div className="delete-modal-btns-container" key="footer">
+              <Button
+                key="cancel"
+                onClick={onCancel}
+                className="delete-modal-cancel-btn"
+              >
+                Cancel
+              </Button>
+
+              <Button
+                key="confirm"
+                type="primary"
+                onClick={handleConfirmDelete}
+                className="delete-modal-ok-btn"
+              >
+                Delete Role
+              </Button>
+            </div>,
+          ]}
+        >
+          <p className="delete-pharm-modal-heading-txt">Delete Role</p>
+          <p className="delete-pharm-modal-body-txt">
+            {numberOfEmployees} employee(s) are assigned to the role you are
+            removing. This action cannot be reverted.
+            <br /> Are you sure you want to delete this role
+          </p>
+        </Modal>
+      )}
+    </>
   );
 };
 

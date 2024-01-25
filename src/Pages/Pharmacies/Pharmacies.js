@@ -18,12 +18,14 @@ import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationMo
 import editIcon from "../../Assets/editInBlue.svg";
 import PaginationComponent from "../../Components/PaginationComponent/PaginationComponent";
 import bookImg from "../../Assets/notebook.svg";
+import { fetchUserPermissions } from "../../Utility Function/ModulesAndPermissions";
+
 const Pharmacies = () => {
   const [tableDataSource, setTableDataSource] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [pharmacyToDeleteId, setPharmacyToDeleteId] = useState(null);
-
+  const [userPermissions, setUserPermissions] = useState(null);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [totalItems, setTotalItems] = useState(0);
@@ -70,6 +72,19 @@ const Pharmacies = () => {
     fetchPostalCodes();
     fetchData();
   }, [page, limit, sortDirection, sortField, selectedPostalCode]);
+  useEffect(() => {
+    const fetchUserPermissionData = async () => {
+      try {
+        await fetchUserPermissions(setUserPermissions);
+      } catch (error) {
+        console.error("Error fetching user permissions:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserPermissionData();
+  }, []);
   const showDeleteModal = (pharmacyId) => {
     setDeleteModalVisible(true);
     setPharmacyToDeleteId(pharmacyId);
@@ -117,6 +132,21 @@ const Pharmacies = () => {
   const handleCancelDelete = () => {
     setDeleteModalVisible(false);
   };
+  const canCreatePharmacy =
+    userPermissions?.find((module) => module.module_name === "Pharmacy")
+      ?.actions?.write || false;
+  const canDeletePharmacy =
+    userPermissions?.find((module) => module.module_name === "Pharmacy")
+      ?.actions?.delete || false;
+  const canEditPharmacy =
+    userPermissions?.find((module) => module.module_name === "Pharmacy")
+      ?.actions?.update || false;
+  if (!authToken) {
+    const openModal = () => {
+      setModalVisible(true);
+    };
+    return <SignInFirstModal visible={modalVisible} open={openModal} />;
+  }
 
   const tableColumns = [
     {
@@ -178,14 +208,18 @@ const Pharmacies = () => {
           <Link to={`/pharmacies/${record.id}/pharmacydetails`}>
             <Image preview={false} src={eyeIcon}></Image>
           </Link>
-          <Link to={`/pharmacies/${record.id}/pharmacyedit`}>
-            <Image preview={false} src={editIcon}></Image>
-          </Link>
-          <Image
-            preview={false}
-            src={deleteActionbtn}
-            onClick={() => handleDelete(record.id)}
-          ></Image>
+          {canEditPharmacy && (
+            <Link to={`/pharmacies/${record.id}/pharmacyedit`}>
+              <Image preview={false} src={editIcon}></Image>
+            </Link>
+          )}
+          {canDeletePharmacy && (
+            <Image
+              preview={false}
+              src={deleteActionbtn}
+              onClick={() => handleDelete(record.id)}
+            ></Image>
+          )}{" "}
         </Space>
       ),
     },
@@ -281,14 +315,16 @@ const Pharmacies = () => {
         </Col>
         <Col span={3.5}>
           <Link to="AddPharmacy">
-            <CustomButton title="" type="primary">
-              <Image
-                className="plus-outline-img"
-                preview={false}
-                src={plusOutline}
-              ></Image>
-              Create Pharmacy
-            </CustomButton>
+            {canCreatePharmacy && (
+              <CustomButton type="primary">
+                <Image
+                  className="plus-outline-img"
+                  preview={false}
+                  src={plusOutline}
+                ></Image>
+                Create Pharmacy
+              </CustomButton>
+            )}
           </Link>
         </Col>
       </Row>
@@ -311,14 +347,14 @@ const Pharmacies = () => {
             onChange={(values) => setSelectedPostalCode(values)}
             placeholder={placeholderSelect()}
             showSearch={false}
-            optionLabelProp="label" // Set the optionLabelProp to "label"
+            optionLabelProp="label"
           >
             {availablePostalCodes.map((postalCode) => (
               <Select.Option
                 className="select-options"
                 key={postalCode}
                 value={postalCode}
-                label={postalCode} // Render the custom label with checkbox
+                label={postalCode}
               >
                 {postalCode}
               </Select.Option>

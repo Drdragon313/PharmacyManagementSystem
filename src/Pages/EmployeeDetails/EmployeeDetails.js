@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { Row, Col, Button, Image } from "antd";
+import { Row, Col } from "antd";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
-import editIcon from "../../Assets/tabler_edit.svg";
 import "./EmployeeDetails.css";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import Spinner from "../../Components/Spinner/Spinner";
@@ -71,20 +70,7 @@ const EmployeeDetails = () => {
           <p>{employeeDetails.FName} details</p>
         </Col>
         <Col className="primary-btns" span={6}></Col>
-        <Col className="emp-detail-heading-btn" span={6}>
-          <Button
-            style={{ marginLeft: "90px" }}
-            type="primary"
-            className="primary-class"
-          >
-            <Image
-              className="plus-outline-img"
-              preview={false}
-              src={editIcon}
-            ></Image>
-            Edit details
-          </Button>
-        </Col>
+        <Col className="emp-detail-heading-btn" span={6}></Col>
         <Col className="gutter-row" span={4}></Col>
       </Row>
       <Row
@@ -105,8 +91,6 @@ const EmployeeDetails = () => {
               <p>Date of birth</p>
               <p>Contact #</p>
               <p>E-mail</p>
-
-              <p>Pharmacy postal code</p>
             </div>
             <div className="values">
               <p>{employeeDetails.FName}</p>
@@ -115,7 +99,6 @@ const EmployeeDetails = () => {
               <p> {employeeDetails.DateOfBirth}</p>
               <p> {employeeDetails.Contact}</p>
               <p> {employeeDetails.Email}</p>
-              <p> {employeeDetails.pharmacyPostCode}</p>
             </div>
           </div>
         </Col>

@@ -20,5 +20,6 @@
   color: white;
 }
 .breadcrumb-col {
-  padding: 0px !important;
+  padding-left: 10px;
+  font-family: "Poppins", sans-serif;
 }

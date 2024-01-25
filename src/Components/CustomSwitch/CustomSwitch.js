@@ -24,15 +24,10 @@ const CustomSwitch = ({ checked, onChange }) => {
 
   return (
     <div>
-      <Row className="pharmacy-list-breadcrumb">
-        <Col className="gutter-row ms-2 mt-3" span={6}>
-          <CustomBreadcrumb
-            className="breadcrumb-col"
-            items={breadcrumbItems}
-          ></CustomBreadcrumb>
-        </Col>
+      <Row className="breadcrumb-col">
+        <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
       </Row>
-      <hr className="full-width-line" />
+
       <Row className="toggle-btn" gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
         <Col className="gutter-row" span={7}>
           <div className="toggle-btn-container">

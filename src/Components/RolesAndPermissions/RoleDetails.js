@@ -32,7 +32,7 @@ const RoleDetails = () => {
         console.error("Error fetching role details:", error);
       })
       .finally(() => {
-        setLoading(false); // Set loading to false regardless of success or failure
+        setLoading(false);
       });
   }, [role_id, authToken]);
   const breadcrumbItems = [
@@ -49,7 +49,6 @@ const RoleDetails = () => {
     4: "Pharmacy",
     5: "Data Tiles",
     6: "Employees",
-    // Add more mappings as needed
   };
   if (loading === true) {
     return <Spinner />;
@@ -80,7 +79,7 @@ const RoleDetails = () => {
         }}
       >
         <Col className="emp-detail-heading" span={4}>
-          <p>{roleDetails.name} Details</p>
+          <p>Role Details</p>
         </Col>
 
         <Col className="emp-detail-heading-btn" span={6}></Col>
