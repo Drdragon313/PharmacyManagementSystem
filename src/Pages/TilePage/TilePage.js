@@ -27,7 +27,6 @@ import {
 import "./TilePage.css";
 import SelectionModal from "../../Components/CreateSchemaSelectionModal/SelectionModal";
 import CustomCard from "../../Components/Card/Card";
-import schemaImg from "../../Assets/Schemas.png";
 import { Link } from "react-router-dom";
 import tileImg from "../../Assets/schemaImg.svg";
 import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";

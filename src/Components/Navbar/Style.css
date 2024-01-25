@@ -9,6 +9,22 @@
 .NavbarMenu .ant-menu-item-selected {
   color: #fff !important;
 }
+.reports-submenu {
+  background-color: transparent !important;
+  color: #bababa !important;
+  transition: color 0.3s;
+  outline: none !important;
+}
+.reports-submenu:hover,
+.reports-submenu:active {
+  color: #fff !important;
+}
+.ant-menu-submenu-arrow {
+  color: #bababa !important;
+}
+.reports-submenu-item {
+  margin-left: 8% !important;
+}
 .NavbarMenu {
   height: 100%;
   width: 100%;
@@ -27,6 +43,11 @@
 .icons-sidenav {
   height: 20px;
   width: 20px;
+}
+.icons-sidenav-reports {
+  height: 20px;
+  width: 20px;
+  margin-right: 8%;
 }
 .NavbarFooter {
   background-color: transparent;

@@ -17,8 +17,7 @@ import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword";
 import CheckEmail from "./Pages/CheckEmail/CheckEmail";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import TilePage from "./Pages/TilePage/TilePage";
-// import Profile from "./Pages/Profile/Profile";
-// import Permissions from "./Pages/Profile/Permissions/Permissions";
+import CostofStock from "./Iframes/CostofStock";
 import "./App.css";
 import UpdatePassword from "./Pages/UpdatePassword/UpdatePassword";
 import AddUsers from "./Pages/AddUsers/AddUsers";
@@ -39,6 +38,8 @@ import RoleDetails from "./Components/RolesAndPermissions/RoleDetails";
 import EditUsers from "./Pages/EditUsers/EditUsers";
 import UpdateRole from "./Components/RolesAndPermissions/UpdateRole";
 import EditPharmacy from "./Pages/EditPharmacy/EditPharmacy";
+import Owing from "./Iframes/Owing";
+import Employee from "./Iframes/Employee";
 const { Content } = Layout;
 
 function App() {
@@ -102,10 +103,9 @@ function MainContent() {
             path="/rolesandpermissions/createrole"
             element={<CreateRole />}
           />
-          {/* <Route path="/profile" element={<Profile />}>
-            <Route path="permissions" element={<Permissions />} />
-            <Route path="updatePassword" element={<UpdatePassword />} />
-          </Route> */}
+          <Route path="/CostofStock" element={<CostofStock />}></Route>
+          <Route path="/Owing" element={<Owing />}></Route>
+          <Route path="/EmployeeReport" element={<Employee />}></Route>
 
           <Route path="schema/autopopulate" element={<AutoPopulate />} />
           <Route path="users/AddUser" element={<AddUsers />} />
