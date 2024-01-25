@@ -16,10 +16,10 @@ const PharmacyIframe = () => {
     <div className="iframe-container">
       <iframe
         className="exampleIframe"
-        title="Pharmacy Report"
-        width="1100"
-        height="570"
-        src="https://app.powerbi.com/view?r=eyJrIjoiMjI0OTk4NDktM2U1Ny00NmQ3LTg2NjYtN2NiZjQxNzFlOTI1IiwidCI6ImEyNjUwODVjLTA2NjQtNGExNy1iYTlhLTBhZTcwMGY2YjVhYiJ9"
+        title="Pharmacy"
+        width="600"
+        height="373.5"
+        src="https://app.powerbi.com/view?r=eyJrIjoiZTc0MDQxM2MtNmMxNS00YzZjLWI1YWUtNjYwMjhmODM3NDUxIiwidCI6ImEyNjUwODVjLTA2NjQtNGExNy1iYTlhLTBhZTcwMGY2YjVhYiJ9"
         frameborder="0"
         allowFullScreen="true"
       ></iframe>

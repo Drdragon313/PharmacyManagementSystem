@@ -13,16 +13,22 @@ import {
   fetchUserPermissions,
   fetchModules,
 } from "../../Utility Function/ModulesAndPermissions";
+// ... (import statements)
 
-// const { SubMenu } = Menu;
 const SideMenuBar = (props) => {
   const [selectedKeys, setSelectedKeys] = useState(["4"]);
-
   const [menuItems, setMenuItems] = useState([]);
 
   const handleMenuItemClick = (key) => {
     setSelectedKeys([key]);
   };
+  const SubMenuTitle = ({ title, icon }) => (
+    <div className="reports-submenu">
+      <img className="icons-sidenav-reports" src={icon} alt="Icon" />
+      {title}
+    </div>
+  );
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -38,8 +44,6 @@ const SideMenuBar = (props) => {
                 const permissions = userPermissions.find(
                   (permission) => permission.module_id === module.module_id
                 );
-
-                // Include only modules where read permission is true
                 if (permissions && permissions.actions.read) {
                   return {
                     ...module,
@@ -47,9 +51,9 @@ const SideMenuBar = (props) => {
                   };
                 }
 
-                return null; // Exclude modules without read permission
+                return null;
               })
-              .filter(Boolean); // Remove null entries
+              .filter(Boolean);
 
             setMenuItems(modulesWithPermissions);
           });
@@ -71,28 +75,59 @@ const SideMenuBar = (props) => {
         className="NavbarMenu"
       >
         {menuItems.map((menuItem) => (
-          <Menu.Item
-            key={menuItem.module_id}
-            onClick={() => handleMenuItemClick(`${menuItem.module_id}`)}
-          >
-            <Space
-              direction="horizontal"
-              size={10}
-              className="menu-items-sidebar"
-            >
-              <img
-                className="icons-sidenav"
-                src={getIconByModuleId(menuItem.module_id)}
-                alt="Icon"
-              />
-              <Link
-                className="side-bar-links"
-                to={getRouteByModuleId(menuItem.module_id)}
+          <React.Fragment key={menuItem.module_id}>
+            {menuItem.module_id === 2 && menuItem.sub_modules ? (
+              <Menu.SubMenu
+                key={`sub${menuItem.module_id}`}
+                title={
+                  <SubMenuTitle
+                    title={menuItem.module_name}
+                    icon={getIconByModuleId(menuItem.module_id)}
+                  />
+                }
               >
-                {menuItem.module_name}
-              </Link>
-            </Space>
-          </Menu.Item>
+                {menuItem.sub_modules.map((subModule) => (
+                  <Menu.Item
+                    key={`sub${subModule.report_id}`}
+                    className="reports-submenu-item"
+                    onClick={() =>
+                      handleMenuItemClick(`sub${subModule.report_id}`)
+                    }
+                  >
+                    <Link
+                      className="side-bar-links"
+                      to={getReportsRouteByModuleId(subModule.report_id)}
+                    >
+                      {subModule.report_name}
+                    </Link>
+                  </Menu.Item>
+                ))}
+              </Menu.SubMenu>
+            ) : (
+              <Menu.Item
+                key={menuItem.module_id}
+                onClick={() => handleMenuItemClick(`${menuItem.module_id}`)}
+              >
+                <Space
+                  direction="horizontal"
+                  size={10}
+                  className="menu-items-sidebar"
+                >
+                  <img
+                    className="icons-sidenav"
+                    src={getIconByModuleId(menuItem.module_id)}
+                    alt="Icon"
+                  />
+                  <Link
+                    className="side-bar-links"
+                    to={getRouteByModuleId(menuItem.module_id)}
+                  >
+                    {menuItem.module_name}
+                  </Link>
+                </Space>
+              </Menu.Item>
+            )}
+          </React.Fragment>
         ))}
       </Menu>
       {props.collapsed ? null : <div className="NavbarFooter"></div>}
@@ -112,6 +147,17 @@ const getRouteByModuleId = (moduleId) => {
 
   return routeMappings[moduleId] || "/";
 };
+const getReportsRouteByModuleId = (report_id) => {
+  const routeMappings = {
+    1: "pharmacy",
+    2: "EmployeeReport",
+    3: "Owing",
+    4: "CostofStock",
+  };
+
+  return routeMappings[report_id] || "/";
+};
+
 const getIconByModuleId = (moduleId) => {
   const iconMappings = {
     1: `${HeartGrey}`,
