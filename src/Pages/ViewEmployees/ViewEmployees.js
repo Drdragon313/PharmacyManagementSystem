@@ -7,7 +7,7 @@ import { Row, Col, Button, Image, message } from "antd";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 import editIcon from "../../Assets/tabler_edit.svg";
 import "./ViewEmployees.css";
-import checkboxImg from "../../Assets/checkbox.svg";
+import checkboxImg from "../../Assets/tickbullet.svg";
 import { Link } from "react-router-dom";
 const ViewEmployees = () => {
   const { userID } = useParams();
