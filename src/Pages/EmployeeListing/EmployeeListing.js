@@ -18,6 +18,7 @@ import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationMo
 import PaginationComponent from "../../Components/PaginationComponent/PaginationComponent";
 import deleteImg from "../../Assets/deleteexclaim.svg";
 import resendInviteIcon from "../../Assets/resendInviteIcon.svg";
+import { fetchUserPermissions } from "../../Utility Function/ModulesAndPermissions";
 const { Search } = Input;
 
 const EmployeeListing = () => {
@@ -27,7 +28,7 @@ const EmployeeListing = () => {
   const [statusModalVisible, setStatusModalVisible] = useState(false);
   const [employeeToDeleteId, setEmployeeToDeleteId] = useState(null);
   const [pharmacyToDeleteId, setPharmacyToDeleteId] = useState(null);
-
+  const [userPermissions, setUserPermissions] = useState(null);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [totalItems, setTotalItems] = useState(0);
@@ -123,6 +124,29 @@ const EmployeeListing = () => {
     searchedName,
     authToken,
   ]);
+  useEffect(() => {
+    const fetchUserPermissionData = async () => {
+      try {
+        await fetchUserPermissions(setUserPermissions);
+      } catch (error) {
+        console.error("Error fetching user permissions:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserPermissionData();
+  }, []);
+  const canCreateEmployee =
+    userPermissions?.find((module) => module.module_name === "Employees")
+      ?.actions?.write || false;
+  const canDeleteEmployee =
+    userPermissions?.find((module) => module.module_name === "Employees")
+      ?.actions?.delete || false;
+  const canEditEmployee =
+    userPermissions?.find((module) => module.module_name === "Employees")
+      ?.actions?.update || false;
+
   const showDeleteModal = (employeeId, pharmacyID) => {
     setDeleteModalVisible(true);
     setEmployeeToDeleteId(employeeId);
@@ -297,14 +321,18 @@ const EmployeeListing = () => {
           <Link to={`${record.userID}/viewUser`}>
             <Image preview={false} src={eyeIcon}></Image>
           </Link>
-          <Link to={`${record.userID}/editUser`}>
-            <Image preview={false} src={editicon}></Image>
-          </Link>
-          <Image
-            preview={false}
-            src={deleteActionbtn}
-            onClick={() => handleDelete(record.userID, record.pharmacyID)}
-          ></Image>
+          {canEditEmployee && (
+            <Link to={`${record.userID}/editUser`}>
+              <Image preview={false} src={editicon}></Image>
+            </Link>
+          )}
+          {canDeleteEmployee && (
+            <Image
+              preview={false}
+              src={deleteActionbtn}
+              onClick={() => handleDelete(record.userID, record.pharmacyID)}
+            ></Image>
+          )}
         </Space>
       ),
     },
@@ -400,16 +428,18 @@ const EmployeeListing = () => {
 
           <Col className="gutter-row" span={6}>
             {" "}
-            <Link to="/users/AddUser">
-              <CustomButton type="primary" title="" className="CreateEmpBtn">
-                <Image
-                  className="plus-outline-img"
-                  preview={false}
-                  src={plusOutline}
-                ></Image>
-                Create Employee
-              </CustomButton>
-            </Link>
+            {canCreateEmployee && (
+              <Link to="/users/AddUser">
+                <CustomButton type="primary" title="" className="CreateEmpBtn">
+                  <Image
+                    className="plus-outline-img"
+                    preview={false}
+                    src={plusOutline}
+                  ></Image>
+                  Create Employee
+                </CustomButton>
+              </Link>
+            )}
           </Col>
         </Row>
         <Row

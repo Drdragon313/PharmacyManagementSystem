@@ -3,7 +3,7 @@ import "./EditUsers.css";
 import Input from "antd/es/input/Input";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import axios from "axios";
-import { Col, Row, Select, message } from "antd";
+import { Col, DatePicker, Row, Select, message } from "antd";
 import { getMaxDate } from "../../Utility Function/DateUtils";
 import { getMinDate } from "../../Utility Function/DateUtils";
 import { handleBlur } from "../../Utility Function/DateUtils";
@@ -16,6 +16,7 @@ import CustomSelect from "../../Components/CustomSelect/CustomSelect";
 import { useParams } from "react-router-dom";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 const { Option } = Select;
 
 const EditUsers = () => {
@@ -233,6 +234,22 @@ const EditUsers = () => {
       [fieldName]: value,
     }));
   };
+
+  const handleDateChange = (date, dateString) => {
+    const currentDate = moment();
+    const selectedDate = moment(dateString, "DD-MM-YYYY");
+
+    if (selectedDate.isAfter(currentDate, "day")) {
+      message.error("Date of creation cannot be in the future");
+    } else if (currentDate.diff(selectedDate, "years") > 100) {
+      message.error("Date of creation cannot be more than 100 years ago");
+    } else {
+      setData((prevUserData) => ({
+        ...prevUserData,
+        DateOfBirth: dateString,
+      }));
+    }
+  };
   return (
     <div className="AddUsersBasicContainer">
       {userID && (
@@ -379,17 +396,15 @@ const EditUsers = () => {
                   Date of birth
                 </label>
                 <br />
-                <Input
+                <DatePicker
                   className="AddUsersDetailsInput"
-                  type="date"
                   name="DateOfBirth"
-                  value={data.DateOfBirth}
-                  onChange={handleChange}
-                  onBlur={(e) =>
-                    handleBlur("DateOfBirth", e.target.value, data, setData)
+                  onChange={handleDateChange}
+                  format="DD-MM-YYYY"
+                  disabledDate={(current) =>
+                    current && current > moment().endOf("day")
                   }
-                  max={getMaxDate()}
-                  min={getMinDate()}
+                  placeholder={data.DateOfBirth}
                 />
               </div>
               <CustomInput

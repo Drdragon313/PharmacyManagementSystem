@@ -23,7 +23,7 @@ const EditPharmacy = () => {
   const navigate = useNavigate();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [initialSelectedUsers, setInitialSelectedUsers] = useState([]);
-  const [isAddressSelected, setIsAddressSelected] = useState(false);
+
   const [managers, setManagers] = useState([]);
   const users = selectedUsers;
   console.log(users);
@@ -88,9 +88,7 @@ const EditPharmacy = () => {
     PostCodeHandler(data, setPCodeResponse);
 
     if (postCode !== value) {
-      setIsAddressSelected(false);
       message.warning("Please update the address according to the postcode");
-      // Clear the states of the address, line, and line2 when PostCode is changed
       setData((prevUserData) => ({
         ...prevUserData,
         line1: "",
@@ -101,12 +99,12 @@ const EditPharmacy = () => {
   }, 200);
 
   const handleDateChange = (date, dateString) => {
-    const currentDate = new Date();
-    const selectedDate = new Date(dateString);
+    const currentDate = moment();
+    const selectedDate = moment(dateString, "DD-MM-YYYY");
 
-    if (selectedDate > currentDate) {
+    if (selectedDate.isAfter(currentDate, "day")) {
       message.error("Date of creation cannot be in the future");
-    } else if (currentDate.getFullYear() - selectedDate.getFullYear() > 100) {
+    } else if (currentDate.diff(selectedDate, "years") > 100) {
       message.error("Date of creation cannot be more than 100 years ago");
     } else {
       setData((prevUserData) => ({
@@ -115,7 +113,6 @@ const EditPharmacy = () => {
       }));
     }
   };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -140,9 +137,6 @@ const EditPharmacy = () => {
       const selectedUdprn = selectedAddress.udprn;
       console.log("Selected udpRN:", selectedUdprn);
       AddressHandler(setData, selectedUdprn);
-
-      // Set address selection status to true when an address is selected
-      setIsAddressSelected(true);
     }
 
     if (fieldName === "managerName") {
@@ -306,15 +300,13 @@ const EditPharmacy = () => {
                 <DatePicker
                   className="AddPharmacyDetailsInput"
                   required={true}
-                  value={moment(data.dateOfCreation)}
-                  format="YYYY-MM-DD"
+                  format="DD-MM-YYYY"
                   name="dateOfCreation"
                   onChange={handleDateChange}
                   disabledDate={(current) =>
-                    current &&
-                    (current > moment().endOf("day") ||
-                      current < moment().subtract(100, "years"))
+                    current && current.isAfter(moment().endOf("day"))
                   }
+                  placeholder={data.dateOfCreation}
                 />
               </div>
 
@@ -329,7 +321,6 @@ const EditPharmacy = () => {
                   onChange={(value) => handleSelectChange("managerName", value)}
                   value={data.managerID}
                 >
-                  {/* <Option value={data.managerID}>{data.managerName}</Option> */}
                   {managers.map((manager) => (
                     <Option key={manager.id} value={manager.id}>
                       {manager.name}

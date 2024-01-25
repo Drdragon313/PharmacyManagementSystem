@@ -7,7 +7,7 @@ import axios from "axios";
 import CustomTable from "../CustomTable/CustomTable";
 import CustomButton from "../CustomButton/CustomButton";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { CaretDownOutlined, CaretUpOutlined } from "@ant-design/icons";
 
 const UpdateRole = () => {
@@ -448,7 +448,10 @@ const UpdateRole = () => {
           />
 
           <div className="btns-class">
-            <CustomButton className="cancel-btn">Cancel</CustomButton>
+            <Link to="/employeepage">
+              {" "}
+              <CustomButton className="cancel-btn">Cancel</CustomButton>
+            </Link>
             <CustomButton
               type="primary"
               style={{ width: "185px", height: "45px" }}

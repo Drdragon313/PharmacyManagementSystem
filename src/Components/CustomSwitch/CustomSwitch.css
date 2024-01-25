@@ -19,3 +19,7 @@
   background: #425cda;
   color: white;
 }
+.breadcrumb-col {
+  padding-left: 10px;
+  font-family: "Poppins", sans-serif;
+}

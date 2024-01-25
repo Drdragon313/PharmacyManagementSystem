@@ -2,7 +2,7 @@ image: node:18.16.1-slim
 definitions:
   services:
     docker:
-      memory: 2048
+      memory: 4096
   steps:
     - step: &build_and_push_docker_image
         size: 2x
@@ -32,6 +32,7 @@ definitions:
           - docker push $IMAGE:$TAG2
 
     - step: &deploy_to_ecs
+        size: 2x
         name: Deploy to ECS
         script:
           - pipe: atlassian/aws-ecs-deploy:1.11.0
