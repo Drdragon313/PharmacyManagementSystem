@@ -88,17 +88,17 @@ const SideMenuBar = (props) => {
               >
                 {menuItem.sub_modules.map((subModule) => (
                   <Menu.Item
-                    key={`sub${subModule.report_id}`}
+                    key={`sub${subModule.sub_module_id}`}
                     className="reports-submenu-item"
                     onClick={() =>
-                      handleMenuItemClick(`sub${subModule.report_id}`)
+                      handleMenuItemClick(`sub${subModule.sub_module_id}`)
                     }
                   >
                     <Link
                       className="side-bar-links"
-                      to={getReportsRouteByModuleId(subModule.report_id)}
+                      to={getReportsRouteByModuleId(subModule.sub_module_id)}
                     >
-                      {subModule.report_name}
+                      {subModule.sub_module_name}
                     </Link>
                   </Menu.Item>
                 ))}
@@ -147,15 +147,15 @@ const getRouteByModuleId = (moduleId) => {
 
   return routeMappings[moduleId] || "/";
 };
-const getReportsRouteByModuleId = (report_id) => {
+const getReportsRouteByModuleId = (sub_module_id) => {
   const routeMappings = {
-    1: "pharmacy",
+    1: "PharmacyReport",
     2: "EmployeeReport",
     3: "Owing",
     4: "CostofStock",
   };
 
-  return routeMappings[report_id] || "/";
+  return routeMappings[sub_module_id] || "/";
 };
 
 const getIconByModuleId = (moduleId) => {

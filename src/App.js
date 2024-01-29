@@ -84,7 +84,7 @@ function MainContent() {
             path="pharmacies/:pharmacy_id/pharmacydetails/:employee_id"
             element={<EmployeeDetails />}
           />
-          <Route path="pharmacy" element={<PharmacyIfame />} />
+          <Route path="PharmacyReport" element={<PharmacyIfame />} />
           <Route path="/schema/:schemaId" element={<SchemaDetail />} />
           <Route path="/file/:schemaId" element={<SchemaDetail />} />
           <Route path="schema/autopopulate" element={<AutoPopulate />} />
