@@ -27,7 +27,7 @@ const Pharmacies = () => {
   const [pharmacyToDeleteId, setPharmacyToDeleteId] = useState(null);
   const [userPermissions, setUserPermissions] = useState(null);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(5);
   const [totalItems, setTotalItems] = useState(0);
   const [sortField, setSortField] = useState("rent");
   const [sortDirection, setSortDirection] = useState("asc");
@@ -97,6 +97,11 @@ const Pharmacies = () => {
     setLimit(newLimit);
     setPage(1);
   };
+  const handleSelectedPostalCodeChange = (values) => {
+    setSelectedPostalCode(values);
+    setPage(1);
+  };
+
   const handleSortChange = (columnKey, order) => {
     setSortField(columnKey);
     setSortDirection((prevSortDirection) =>
@@ -132,6 +137,7 @@ const Pharmacies = () => {
   const handleCancelDelete = () => {
     setDeleteModalVisible(false);
   };
+
   const canCreatePharmacy =
     userPermissions?.find((module) => module.module_name === "Pharmacy")
       ?.actions?.write || false;
@@ -344,7 +350,7 @@ const Pharmacies = () => {
             className="filter-pharm-btn"
             mode="multiple"
             value={selectedPostalCode}
-            onChange={(values) => setSelectedPostalCode(values)}
+            onChange={handleSelectedPostalCodeChange}
             placeholder={placeholderSelect()}
             showSearch={false}
             optionLabelProp="label"

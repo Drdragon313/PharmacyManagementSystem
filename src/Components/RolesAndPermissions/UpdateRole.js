@@ -29,7 +29,6 @@ const UpdateRole = () => {
           const roleData = data.data;
           setRoleName(roleData.role_name);
 
-          // Map modules and submodules to the dataSource
           const updatedDataSource = roleData.permissions.map((module) => ({
             key: module.module_id,
             module: module.module_name,
@@ -38,8 +37,8 @@ const UpdateRole = () => {
             update: module.actions.update,
             delete: module.actions.delete,
             subModules: (module.sub_modules || []).map((subModule) => ({
-              key: subModule.schema_id,
-              module: subModule.schema_name,
+              key: subModule.sub_module_id,
+              module: subModule.sub_module_name,
               read: subModule.actions.read,
               write: subModule.actions.write,
               update: subModule.actions.update,
@@ -50,7 +49,6 @@ const UpdateRole = () => {
           setDataSource(updatedDataSource);
           setCheckedCheckboxes(roleData.permissions);
         } else {
-          // Handle error
         }
       } catch (error) {
         // Handle error
@@ -202,7 +200,7 @@ const UpdateRole = () => {
           const existingSubModuleIndex = updatedCheckedModules[
             existingModuleIndex
           ].sub_modules.findIndex(
-            (sModule) => sModule.schema_id === subModule.key
+            (sModule) => sModule.sub_module_id === subModule.key
           );
 
           if (existingSubModuleIndex !== -1) {
@@ -213,7 +211,7 @@ const UpdateRole = () => {
           } else {
             // If sub-module doesn't exist, create a new sub-module entry
             const newSubModule = {
-              schema_id: subModule.key,
+              sub_module_id: subModule.key,
               actions: {
                 [columnName]: e.target.checked,
               },
@@ -238,7 +236,7 @@ const UpdateRole = () => {
             },
             sub_modules: [
               {
-                schema_id: subModule.key,
+                sub_module_id: subModule.key,
                 actions: {
                   [columnName]: e.target.checked,
                 },
@@ -342,11 +340,11 @@ const UpdateRole = () => {
             module_id,
             actions,
             sub_modules: sub_modules
-              ? sub_modules.map(({ schema_id, actions }) => {
-                  console.log("Sub Mapping:", schema_id, actions);
+              ? sub_modules.map(({ sub_module_id, actions }) => {
+                  console.log("Sub Mapping:", sub_module_id, actions);
 
                   return {
-                    schema_id,
+                    sub_module_id,
                     actions,
                   };
                 })

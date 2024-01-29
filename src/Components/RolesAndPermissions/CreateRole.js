@@ -10,6 +10,7 @@ import CustomButton from "../CustomButton/CustomButton";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
 import { useNavigate } from "react-router-dom";
 import { CaretDownOutlined, CaretUpOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const CreateRole = () => {
   const authToken = localStorage.getItem("AuthorizationToken");
@@ -38,8 +39,8 @@ const CreateRole = () => {
               delete: false,
             },
             subModules: (module.sub_modules || []).map((subModule) => ({
-              key: subModule.schema_id,
-              module: subModule.schema_name,
+              key: subModule.sub_module_id,
+              module: subModule.sub_module_name,
               actions: {
                 read: false,
                 write: false,
@@ -201,7 +202,7 @@ const CreateRole = () => {
           const existingSubModuleIndex = updatedCheckedModules[
             existingModuleIndex
           ].sub_modules.findIndex(
-            (sModule) => sModule.schema_id === subModule.key
+            (sModule) => sModule.sub_module_id === subModule.key
           );
 
           if (existingSubModuleIndex !== -1) {
@@ -210,7 +211,7 @@ const CreateRole = () => {
             ].actions[columnName] = e.target.checked;
           } else {
             const newSubModule = {
-              schema_id: subModule.key,
+              sub_module_id: subModule.key,
               actions: {
                 [columnName]: e.target.checked,
               },
@@ -234,7 +235,7 @@ const CreateRole = () => {
             },
             sub_modules: [
               {
-                schema_id: subModule.key,
+                sub_module_id: subModule.key,
                 actions: {
                   [columnName]: e.target.checked,
                 },
@@ -339,9 +340,9 @@ const CreateRole = () => {
               delete: actions.delete || false,
             },
             sub_modules: sub_modules
-              ? sub_modules.map(({ schema_id, actions }) => {
+              ? sub_modules.map(({ sub_module_id, actions }) => {
                   return {
-                    schema_id,
+                    sub_module_id,
                     actions: {
                       read: actions.read || false,
                       write: actions.write || false,
@@ -443,7 +444,9 @@ const CreateRole = () => {
           />
 
           <div className="btns-class">
-            <CustomButton className="cancel-btn">Cancel</CustomButton>
+            <Link to="/employeepage">
+              <CustomButton className="cancel-btn">Cancel</CustomButton>
+            </Link>
             <CustomButton
               type="primary"
               style={{ width: "185px", height: "45px" }}
