@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./UpdatePassword.css";
-import { baseURL } from "../../../Components/BaseURLAPI/BaseURLAPI";
+import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import { message } from "antd";
-import PasswordInput from "../../../Components/Input/PasswordInput";
+import PasswordInput from "../../Components/Input/PasswordInput";
 import axios from "axios";
 import { PasswordRegex } from "../../Utility Function/PasswordRegex";
 import { handleInputChangeUtil } from "../../Utility Function/ResetPasswordUtils";
 import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
-import CustomButton from "../../../Components/CustomButton/CustomButton";
+import CustomButton from "../../Components/CustomButton/CustomButton";
 import { Link } from "react-router-dom";
 const UpdatePassword = () => {
   const [formData, setFormData] = useState({
