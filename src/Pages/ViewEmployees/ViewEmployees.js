@@ -194,24 +194,6 @@ const ViewEmployees = () => {
                   </div>
                 ))}
             </div>
-            {/* <div className="values2">
-              <h5>Employee permissions</h5>
-              {employeeDetails.permissions &&
-              employeeDetails.permissions.length > 0 ? (
-                employeeDetails.permissions.map((permission, index) => (
-                  <p key={index}>
-                    <Image
-                      className="bullet-image"
-                      preview={false}
-                      src={checkboxImg}
-                    />{" "}
-                    {permission}
-                  </p>
-                ))
-              ) : (
-                <p className="Nonetxt">None</p>
-              )}
-            </div> */}
           </div>
         </Col>
       </Row>

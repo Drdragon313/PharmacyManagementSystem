@@ -5,7 +5,7 @@ export function getMaxDate() {
   const year = maxDate.getFullYear();
   const month = 12;
   const day = 31;
-  return `${year}-${month}-${day}`;
+  return `${day}-${month}-${year}`;
 }
 
 export function getMinDate() {
@@ -15,7 +15,7 @@ export function getMinDate() {
   const year = maxDate.getFullYear();
   const month = 12;
   const day = 31;
-  return `${year}-${month}-${day}`;
+  return `${day}-${month}-${year}`;
 }
 
 export const handleBlur = (name, value, userData, setUserData) => {

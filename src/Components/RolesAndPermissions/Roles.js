@@ -26,25 +26,25 @@ const Roles = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
-  useEffect(() => {
-    const fetchRolesData = async () => {
-      try {
-        const response = await axios.get(
-          `${baseURL}/list-available-roles?page=${page}&limit=${limit}`
-        );
-        const data = response.data;
+  const fetchRolesData = async () => {
+    try {
+      const response = await axios.get(
+        `${baseURL}/list-available-roles?page=${page}&limit=${limit}`
+      );
+      const data = response.data;
 
-        if (data && data.Data && data.Data.roles) {
-          setRolesData(data.Data.roles);
-          setTotalItems(data.Data);
-        } else {
-          console.error("Invalid response format:", data);
-        }
-      } catch (error) {
-        console.error("Error fetching roles data:", error);
+      if (data && data.Data && data.Data.roles) {
+        setRolesData(data.Data.roles);
+        setTotalItems(data.Data);
+      } else {
+        console.error("Invalid response format:", data);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching roles data:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchRolesData();
   }, [page, limit]);
   const handleDelete = (roleId) => {

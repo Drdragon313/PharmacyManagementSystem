@@ -16,6 +16,7 @@ import CustomSelect from "../../Components/CustomSelect/CustomSelect";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import CustomButton from "../../Components/CustomButton/CustomButton";
 const { Option } = Select;
 const AddUsers = () => {
   const navigate = useNavigate();
@@ -138,11 +139,15 @@ const AddUsers = () => {
   const handleDateChange = (date, dateString) => {
     const currentDate = moment();
     const selectedDate = moment(dateString, "DD-MM-YYYY");
+    const maxDate = getMaxDate();
+    const minDate = getMinDate();
 
     if (selectedDate.isAfter(currentDate, "day")) {
       message.error("Date of creation cannot be in the future");
-    } else if (currentDate.diff(selectedDate, "years") > 100) {
-      message.error("Date of creation cannot be more than 100 years ago");
+    } else if (selectedDate.isBefore(moment(minDate, "DD-MM-YYYY"))) {
+      message.error("Date of creation should be after 100 years ago");
+    } else if (selectedDate.isAfter(moment(maxDate, "DD-MM-YYYY"))) {
+      message.error("Date of creation should be before 18 years ago");
     } else {
       setData((prevUserData) => ({
         ...prevUserData,
@@ -150,6 +155,7 @@ const AddUsers = () => {
       }));
     }
   };
+
   const handleSelectChange = (fieldName, value) => {
     if (fieldName === "Role") {
       setSelectedRole(value);
@@ -390,10 +396,12 @@ const AddUsers = () => {
           <div className="AddUsersThreeDetails"></div>
         </div>
         <div className="AddUsersInformationUpdateBtnContainer">
-          <button className="btn AddUsersInformationCancelBtn">Cancel</button>
-          <button type="submit" className="btn AddUsersInformationUpdateBtn">
+          <CustomButton className="btn AddUsersInformationCancelBtn">
+            Cancel
+          </CustomButton>
+          <CustomButton htmlType="submit" type="primary">
             Create User
-          </button>
+          </CustomButton>
         </div>
       </form>
     </div>

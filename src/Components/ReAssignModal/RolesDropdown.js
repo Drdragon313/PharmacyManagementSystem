@@ -36,12 +36,11 @@ const RolesDropdown = ({ excludedRoleId, onSelect }) => {
 
   return (
     <Select
-      showSearch
       placeholder="Select a role"
       optionFilterProp="children"
       loading={loading}
       className="roles-dropdown-reassign-modal"
-      onSelect={onSelect} // Pass selected value to parent component
+      onSelect={onSelect}
     >
       {roles.map((role) => (
         <Option key={role.id} value={role.id}>

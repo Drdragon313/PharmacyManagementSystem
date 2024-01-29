@@ -238,11 +238,15 @@ const EditUsers = () => {
   const handleDateChange = (date, dateString) => {
     const currentDate = moment();
     const selectedDate = moment(dateString, "DD-MM-YYYY");
+    const maxDate = getMaxDate();
+    const minDate = getMinDate();
 
     if (selectedDate.isAfter(currentDate, "day")) {
       message.error("Date of creation cannot be in the future");
-    } else if (currentDate.diff(selectedDate, "years") > 100) {
-      message.error("Date of creation cannot be more than 100 years ago");
+    } else if (selectedDate.isBefore(moment(minDate, "DD-MM-YYYY"))) {
+      message.error("Date of creation should be after 100 years ago");
+    } else if (selectedDate.isAfter(moment(maxDate, "DD-MM-YYYY"))) {
+      message.error("Date of creation should be before 18 years ago");
     } else {
       setData((prevUserData) => ({
         ...prevUserData,

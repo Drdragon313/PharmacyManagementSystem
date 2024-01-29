@@ -47,6 +47,7 @@ const EmployeeListing = () => {
     setSelectedPostalCode(value === "" ? "" : value);
   };
   const handleRoleChange = (value) => {
+    setPage(1);
     setSelectedRole(value === "" ? "" : value);
   };
 

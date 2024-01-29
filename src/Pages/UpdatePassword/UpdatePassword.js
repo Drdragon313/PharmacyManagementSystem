@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import "./UpdatePassword.css";
-import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
+import { baseURL } from "../../../Components/BaseURLAPI/BaseURLAPI";
 import { message } from "antd";
-import PasswordInput from "../../Components/Input/PasswordInput";
+import PasswordInput from "../../../Components/Input/PasswordInput";
 import axios from "axios";
 import { PasswordRegex } from "../../Utility Function/PasswordRegex";
 import { handleInputChangeUtil } from "../../Utility Function/ResetPasswordUtils";
 import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
+import CustomButton from "../../../Components/CustomButton/CustomButton";
+import { Link } from "react-router-dom";
 const UpdatePassword = () => {
   const [formData, setFormData] = useState({
     PreviousPassword: "",
@@ -55,7 +57,7 @@ const UpdatePassword = () => {
               }
             });
         } else {
-          message.error("New Password doesnt meet the required criteria!", 3);
+          message.error("New Password doesn't meet the required criteria!", 3);
         }
       } else {
         message.error("Old Password and New Password cannot be same!", 2);
@@ -126,7 +128,7 @@ const UpdatePassword = () => {
               ) : (
                 <CloseCircleTwoTone twoToneColor="#EE0004" />
               )}
-              Password must contain at least one number or special character.
+              Password must contain at least one number and special character.
             </li>
           </ul>
           <PasswordInput
@@ -135,10 +137,12 @@ const UpdatePassword = () => {
             onChange={handleChange}
           />
           <div className="updatePasswordBtnContainer">
-            <button className="btn CancelBtn">Cancel</button>
-            <button type="submit" className="btn PasswordUpdateBtn">
+            <Link to="/pharmacies">
+              <CustomButton className="btn CancelBtn">Cancel</CustomButton>
+            </Link>
+            <CustomButton htmlType="submit" className="PasswordUpdateBtn">
               Save Password
-            </button>
+            </CustomButton>
           </div>
         </form>
       </div>

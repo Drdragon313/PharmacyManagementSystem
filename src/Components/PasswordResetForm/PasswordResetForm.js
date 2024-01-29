@@ -22,6 +22,7 @@ import {
 } from "../../Utility Function/ResetPasswordUtils";
 import "./PasswordResetForm.css";
 import Spinner from "../Spinner/Spinner";
+import CustomButton from "../CustomButton/CustomButton";
 
 const PasswordResetForm = (props) => {
   const [apiStatus, setApiStatus] = useState(null);
@@ -158,7 +159,7 @@ const PasswordResetForm = (props) => {
                 ) : (
                   <CloseCircleTwoTone twoToneColor="#EE0004" />
                 )}
-                Password must contain at least one number or special character.
+                Password must contain at least one number and special character.
               </li>
             </ul>
 
@@ -217,13 +218,13 @@ const PasswordResetForm = (props) => {
                     Cancel
                   </Button>
                 </Link>
-                <Button
+                <CustomButton
                   type="submit"
-                  className="btn my-3 signinbtn"
+                  className="signinbtn"
                   onClick={handleSubmit}
                 >
                   {props.buttonText}
-                </Button>
+                </CustomButton>
               </div>
             </form>
           </div>

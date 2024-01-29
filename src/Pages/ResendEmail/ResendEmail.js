@@ -7,15 +7,11 @@ import CheckEmailicon from "../../Assets/CheckEmailicon.svg";
 import { Button } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { resendEmail } from "../../Utility Function/ResetPasswordUtils";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 
 const ResendEmail = () => {
   const userEmail = localStorage.getItem("userEmail");
 
-  const handleResendbtn = () => {
-    resendEmail(userEmail);
-  };
   return (
     <div className="siginContainer">
       <div className="signinLogoMainContainer">
@@ -59,11 +55,11 @@ const ResendEmail = () => {
             <strong>Check</strong> your email
           </h3>
           <p className="ResendText">
-            We have sent an email with password reset information to {userEmail}
-            . Please check your inbox.
+            We have sent an email with password reset information to{" "}
+            <strong>{userEmail}</strong>. Please check your inbox.
           </p>
           <p className="ResendText-small">
-            Didn’t receive the email? Check span folder or
+            Didn’t receive the email? Check span folder
           </p>
           <div className="resend-email-btns">
             <Link to="/">
@@ -71,9 +67,6 @@ const ResendEmail = () => {
                 Back to Login
               </CustomButton>
             </Link>
-            <CustomButton htmlType="submit" onClick={handleResendbtn}>
-              Resend Email
-            </CustomButton>
           </div>
         </div>
       </div>
