@@ -9,10 +9,10 @@
 }
 .edit-btn-pharmacy-details {
   background-color: #fff;
+  color: #425cda;
   font-family: "Poppins", sans-serif;
   margin-left: 110px;
-  color: #3a3475;
-  border: 1px solid #3a3475;
+  border: 1px solid #425cda;
 }
 .gutter-row-labels {
   margin-left: 20px;
@@ -21,7 +21,7 @@
 .edit-outline-img {
   height: 50px;
   width: 50px;
-  margin-right: -1px;
+  margin-right: -2px;
   padding-right: 10px;
   margin-bottom: 3px;
 }

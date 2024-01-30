@@ -64,18 +64,15 @@ const ViewEmployees = () => {
         </Col>
       </Row>
       <Row
-        style={{
-          margin: "5px",
-          marginTop: "20px",
-          marginLeft: "10px",
-          marginRight: "50px",
+        gutter={{
+          xs: 8,
+          sm: 16,
+          md: 24,
+          lg: 32,
         }}
-        justify="space-between"
       >
-        <Col className="emp-detail-heading">
+        <Col className="emp-detail-heading" span={23}>
           <p>{employeeDetails.FName} details</p>
-        </Col>
-        <Col className="emp-detail-heading-btn">
           <Link to={`/employeepage/${userID}/editUser`}>
             <Button type="primary" className="primary-Class">
               <Image

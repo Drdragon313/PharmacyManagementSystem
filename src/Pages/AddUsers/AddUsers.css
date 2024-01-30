@@ -32,6 +32,14 @@
   width: 24vw;
   border-radius: 12px;
 }
+.addUserNotLabelContact {
+  margin-left: 3%;
+}
+.addUserNotLabelContact::after {
+  content: " *";
+  font-weight: bold;
+  color: red;
+}
 .DetailsInput {
   height: 6vh;
   border-radius: 12px;
@@ -39,22 +47,23 @@
 
 .AddUsersInformationUpdateBtnContainer {
   display: flex;
-  width: 23vw;
-  margin-left: 2.4%;
+  width: 24vw !important;
+
   justify-content: space-between;
-  margin-top: 8%;
 }
 .AddUsersInformationCancelBtn {
   border-radius: 10px;
   border: 1px solid #3a3475;
   color: #3a3475;
-  width: 7vw;
+  height: 5vh !important;
+  width: 10vw;
 }
-.AddUsersInformationUpdateBtn {
-  border-radius: 10px;
+.add-user-btn-submit {
   background: #425cda;
   color: white;
   width: 12vw;
+  height: 5vh !important;
+  border-radius: 10px;
 }
 .GenderInput {
   width: 24vw !important;
@@ -90,6 +99,6 @@
 .usercreationtxt {
   color: #3a3475;
 }
-.InvalidContactTxt{
+.InvalidContactTxt {
   color: red;
 }

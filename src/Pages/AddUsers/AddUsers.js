@@ -17,6 +17,7 @@ import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb"
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import CustomButton from "../../Components/CustomButton/CustomButton";
+import { Link } from "react-router-dom";
 const { Option } = Select;
 const AddUsers = () => {
   const navigate = useNavigate();
@@ -143,11 +144,11 @@ const AddUsers = () => {
     const minDate = getMinDate();
 
     if (selectedDate.isAfter(currentDate, "day")) {
-      message.error("Date of creation cannot be in the future");
+      message.error("Date of Birth cannot be in the future");
     } else if (selectedDate.isBefore(moment(minDate, "DD-MM-YYYY"))) {
-      message.error("Date of creation should be after 100 years ago");
+      message.error("Date of Birth should be after 100 years ago");
     } else if (selectedDate.isAfter(moment(maxDate, "DD-MM-YYYY"))) {
-      message.error("Date of creation should be before 18 years ago");
+      message.error("Date of Birth should be before 18 years ago");
     } else {
       setData((prevUserData) => ({
         ...prevUserData,
@@ -213,7 +214,7 @@ const AddUsers = () => {
                 options={["Male", "Female", "Other", "Do Not Wish to Disclose"]}
               />
               <div className="mb-3">
-                <label htmlFor="Contact" className="addUserNotLabel">
+                <label htmlFor="Contact" className="addUserNotLabelContact">
                   Contact number
                 </label>
                 <br />
@@ -268,31 +269,41 @@ const AddUsers = () => {
                 handleBlur={handleFindAddress}
                 value={data.postCode}
               />
-              <Row>
-                <Col span={11}>
-                  <CustomInput
-                    divclassName="mb-3"
-                    labelclassName="addUserNotLabel"
-                    labelText="Building No."
-                    inputclassName="DetailsInput"
-                    inputName="Line1"
-                    handleChange={handleChange}
-                    value={data.Line1}
-                  />
-                </Col>
-                <Col span={1}></Col>
-                <Col span={11}>
-                  <CustomInput
-                    divclassName="mb-3"
-                    labelclassName="addUserNotLabel"
-                    labelText="Street No"
-                    inputclassName="DetailsInput"
-                    inputName="Line2"
-                    handleChange={handleChange}
-                    value={data.Line2}
-                  />
-                </Col>
-              </Row>
+
+              <CustomInput
+                divclassName="mb-3"
+                labelclassName="addUserNotLabel"
+                labelText="Building No."
+                inputclassName="DetailsInput"
+                inputName="Line1"
+                handleChange={handleChange}
+                value={data.Line1}
+              />
+
+              <CustomInput
+                divclassName="mb-3"
+                labelclassName="addUserNotLabel"
+                labelText="Street No"
+                inputclassName="DetailsInput"
+                inputName="Line2"
+                handleChange={handleChange}
+                value={data.Line2}
+              />
+              <div className="AddUsersInformationUpdateBtnContainer">
+                <Link to="/employeepage">
+                  {" "}
+                  <CustomButton className="AddUsersInformationCancelBtn">
+                    Cancel
+                  </CustomButton>
+                </Link>
+                <CustomButton
+                  className="add-user-btn-submit"
+                  htmlType="submit"
+                  type="primary"
+                >
+                  Create User
+                </CustomButton>
+              </div>
             </div>
           </div>
           <div className="AddUsersTwoDetails">
@@ -394,14 +405,6 @@ const AddUsers = () => {
             </div>
           </div>
           <div className="AddUsersThreeDetails"></div>
-        </div>
-        <div className="AddUsersInformationUpdateBtnContainer">
-          <CustomButton className="btn AddUsersInformationCancelBtn">
-            Cancel
-          </CustomButton>
-          <CustomButton htmlType="submit" type="primary">
-            Create User
-          </CustomButton>
         </div>
       </form>
     </div>

@@ -8,7 +8,7 @@ import CustomTable from "../../Components/CustomTable/CustomTable";
 import eyeIcon from "../../Assets/Icon feather-eye.svg";
 import deleteActionbtn from "../../Assets/deleteAction.svg";
 import plusOutline from "../../Assets/PlusOutlined.svg";
-import editIcon from "../../Assets/editInBlue.svg";
+import editIcon from "../../Assets/editIconBlue.svg";
 import Spinner from "../../Components/Spinner/Spinner";
 import "./PharmacyDetails.css";
 import { Link } from "react-router-dom";

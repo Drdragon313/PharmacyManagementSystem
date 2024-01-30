@@ -27,7 +27,7 @@ const Pharmacies = () => {
   const [pharmacyToDeleteId, setPharmacyToDeleteId] = useState(null);
   const [userPermissions, setUserPermissions] = useState(null);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(10);
   const [totalItems, setTotalItems] = useState(0);
   const [sortField, setSortField] = useState("rent");
   const [sortDirection, setSortDirection] = useState("asc");
