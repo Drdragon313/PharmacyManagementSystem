@@ -26,7 +26,9 @@ export const handleInputChangeUtil = (e, setData, setConditions) => {
     minLength: value.length >= 8,
     upperCase: /[A-Z]/.test(value),
     lowerCase: /[a-z]/.test(value),
-    numberOrSpecialChar: /[0-9!@#$%^&*(),.?":{}|<>]/.test(value),
+    numberAndSpecialChar: /^(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>])/.test(
+      value
+    ),
   });
 };
 

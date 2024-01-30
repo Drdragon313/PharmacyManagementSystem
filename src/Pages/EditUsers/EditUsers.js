@@ -419,12 +419,16 @@ const EditUsers = () => {
                 </label>
                 <br />
                 <DatePicker
+                  disabled={userID ? false : true}
                   className="AddUsersDetailsInput"
                   name="DateOfBirth"
                   onChange={handleDateChange}
                   format="DD-MM-YYYY"
                   disabledDate={(current) =>
-                    current && current > moment().endOf("day")
+                    current &&
+                    (current > moment().endOf("day") ||
+                      current < moment().subtract(100, "years") ||
+                      current > moment().subtract(18, "years"))
                   }
                   placeholder={data.DateOfBirth}
                 />

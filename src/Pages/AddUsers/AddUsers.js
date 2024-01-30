@@ -328,7 +328,10 @@ const AddUsers = () => {
                   onChange={handleDateChange}
                   format="DD-MM-YYYY"
                   disabledDate={(current) =>
-                    current && current > moment().endOf("day")
+                    current &&
+                    (current > moment().endOf("day") ||
+                      current < moment().subtract(100, "years") ||
+                      current > moment().subtract(18, "years"))
                   }
                 />
               </div>
