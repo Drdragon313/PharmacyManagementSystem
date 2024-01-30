@@ -67,11 +67,6 @@ const UpdatePassword = () => {
     }
   };
   const handleChange = (e) => {
-    // const { name, value } = e.target;
-    // setFormData((prevUserData) => ({
-    //   ...prevUserData,
-    //   [name]: value,
-    // }));
     if (e.target.name === "PreviousPassword") {
       const { name, value } = e.target;
       setFormData((prevUserData) => ({

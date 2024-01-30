@@ -36,7 +36,7 @@ const RoleDetails = () => {
       });
   }, [role_id, authToken]);
   const breadcrumbItems = [
-    { label: "Pharmacy", link: "/employeepage" },
+    { label: "Roles and Permissions", link: "/employeepage" },
     {
       label: "Role Details",
       link: `/employeepage/${role_id}/details`,

@@ -13,7 +13,6 @@ import {
   fetchUserPermissions,
   fetchModules,
 } from "../../Utility Function/ModulesAndPermissions";
-// ... (import statements)
 
 const SideMenuBar = (props) => {
   const [selectedKeys, setSelectedKeys] = useState(["4"]);

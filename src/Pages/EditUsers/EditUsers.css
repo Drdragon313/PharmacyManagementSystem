@@ -32,23 +32,32 @@
   width: 24vw;
   border-radius: 12px;
 }
+.EditUsersDetailsInputContact {
+  height: 6vh;
+  width: 24vw;
+  border-radius: 12px;
+}
+.addUserNotLabelContact::after {
+  content: " *";
+  font-weight: bold;
+  color: red;
+}
 .DetailsInput {
   height: 6vh;
   border-radius: 12px;
 }
 
-.AddUsersInformationUpdateBtnContainer {
+.EditUsersInformationUpdateBtnContainer {
   display: flex;
-  width: 23vw;
-  margin-left: 2.4%;
+  width: 24vw;
+
   justify-content: space-between;
-  margin-top: 8%;
 }
 .AddUsersInformationCancelBtn {
   border-radius: 10px;
   border: 1px solid #3a3475;
   color: #3a3475;
-  width: 7vw;
+  width: 8vw;
 }
 .AddUsersInformationUpdateBtn {
   border-radius: 10px;

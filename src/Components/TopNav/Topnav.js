@@ -10,6 +10,7 @@ import ProfileSettings from "../../Assets/ProfileSettings.svg";
 import ProfileSecurity from "../../Assets/ProfileSecurity.svg";
 import ProfileLogout from "../../Assets/ProfileLogout.svg";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../Spinner/Spinner";
 const { Header } = Layout;
 
 const Topnav = () => {
@@ -19,8 +20,11 @@ const Topnav = () => {
     Role: "",
   });
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
   const handleLogout = async () => {
     try {
+      setLoading(true);
       const authToken = localStorage.getItem("AuthorizationToken");
 
       if (!authToken) {
@@ -65,9 +69,6 @@ const Topnav = () => {
     },
     {
       label: (
-        // <Link to="/" className="ProfileNavlink">
-        //   Logout
-        // </Link>
         <span className="ProfileNavlink" onClick={handleLogout}>
           Logout
         </span>
@@ -97,6 +98,7 @@ const Topnav = () => {
         message.error("Some Error has Occured in Loading Information!", 2);
       });
   }, []);
+
   return (
     <Layout>
       <Header className="TopnavHeader">

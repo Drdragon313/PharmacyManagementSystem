@@ -17,6 +17,8 @@ import { useParams } from "react-router-dom";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import { Link } from "react-router-dom";
+import CustomButton from "../../Components/CustomButton/CustomButton";
 const { Option } = Select;
 
 const EditUsers = () => {
@@ -31,13 +33,13 @@ const EditUsers = () => {
     Contact: "",
     DateOfBirth: "",
     Pharmacy: [],
-    PostCode: "",
+    postCode: "",
     Address: "",
     Line_Manager: "",
     Line_Manager_id: "",
     Line1: "",
     Line2: "",
-    PostTown: "",
+    postTown: "",
     salary: "",
     Available_Roles: [],
     AvailablePharmacies: [],
@@ -293,12 +295,12 @@ const EditUsers = () => {
                 options={["Male", "Female", "Other", "Do Not Wish to Disclose"]}
               />
               <div className="mb-3">
-                <label htmlFor="Contact" className="addUserNotLabel">
+                <label htmlFor="Contact" className="addUserNotLabelContact">
                   Contact number
                 </label>
                 <br />
                 <Input
-                  className="AddUsersDetailsInput"
+                  className="EditUsersDetailsInputContact"
                   name="Contact"
                   onChange={handleChange}
                   value={data.Contact}
@@ -352,36 +354,52 @@ const EditUsers = () => {
                 labelclassName="addUserNotLabel"
                 labelText="Postcode"
                 inputclassName="AddUsersDetailsInput"
-                inputName="PostCode"
+                inputName="postCode"
                 handleChange={handleChange}
                 handleBlur={handleFindAddress}
-                value={data.PostCode}
+                value={data.postCode}
               />
-              <Row>
-                <Col span={11}>
-                  <CustomInput
-                    divclassName="mb-3"
-                    labelclassName="addUserNotLabel"
-                    labelText="Building No."
-                    inputclassName="DetailsInput"
-                    inputName="Line1"
-                    handleChange={handleChange}
-                    value={data.Line1}
-                  />
-                </Col>
-                <Col span={1}></Col>
-                <Col span={11}>
-                  <CustomInput
-                    divclassName="mb-3"
-                    labelclassName="addUserNotLabel"
-                    labelText="Street No"
-                    inputclassName="DetailsInput"
-                    inputName="Line2"
-                    handleChange={handleChange}
-                    value={data.Line2}
-                  />
-                </Col>
-              </Row>
+
+              <CustomInput
+                divclassName="mb-3"
+                labelclassName="addUserNotLabel"
+                labelText="Building No."
+                inputclassName="DetailsInput"
+                inputName="Line1"
+                handleChange={handleChange}
+                value={data.Line1}
+              />
+
+              <CustomInput
+                divclassName="mb-3"
+                labelclassName="addUserNotLabel"
+                labelText="Street No"
+                inputclassName="DetailsInput"
+                inputName="Line2"
+                handleChange={handleChange}
+                value={data.Line2}
+              />
+              <div className="EditUsersInformationUpdateBtnContainer">
+                <Link to="/employeepage">
+                  {" "}
+                  <CustomButton className="AddUsersInformationCancelBtn">
+                    Cancel
+                  </CustomButton>
+                </Link>
+                <CustomButton
+                  className="add-user-btn-submit"
+                  htmlType="submit"
+                  type="primary"
+                >
+                  {userID ? "Update User" : "Update Profile"}
+                </CustomButton>
+                {/* <button
+                  type="submit"
+                  className="AddUsersInformationUpdateBtn"
+                >
+                  {userID ? "Update User" : "Update Profile"}
+                </button> */}
+              </div>
             </div>
           </div>
           <div className="AddUsersTwoDetails">
@@ -485,19 +503,13 @@ const EditUsers = () => {
                 labelclassName="addUserNotLabel"
                 labelText="Town"
                 inputclassName="AddUsersDetailsInput"
-                inputName="PostTown"
+                inputName=" postTown"
                 handleChange={handleChange}
-                value={data.PostTown}
+                value={data.postTown}
               />
             </div>
           </div>
           <div className="AddUsersThreeDetails"></div>
-        </div>
-        <div className="AddUsersInformationUpdateBtnContainer">
-          <button className="btn AddUsersInformationCancelBtn">Cancel</button>
-          <button type="submit" className="btn AddUsersInformationUpdateBtn">
-            {userID ? "Update User" : "Update Profile"}
-          </button>
         </div>
       </form>
     </div>
