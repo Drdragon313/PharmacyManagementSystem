@@ -37,7 +37,7 @@ const PasswordResetForm = (props) => {
     minLength: false,
     upperCase: false,
     lowerCase: false,
-    numberOrSpecialChar: false,
+    numberAndSpecialChar: false,
   });
 
   const handleInputChange = (e) => {
@@ -154,7 +154,7 @@ const PasswordResetForm = (props) => {
                 One lower case letter.
               </li>
               <li>
-                {conditions.numberOrSpecialChar ? (
+                {conditions.numberAndSpecialChar ? (
                   <CheckCircleTwoTone twoToneColor="#06C552" />
                 ) : (
                   <CloseCircleTwoTone twoToneColor="#EE0004" />
