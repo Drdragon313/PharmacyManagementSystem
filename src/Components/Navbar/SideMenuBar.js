@@ -13,7 +13,6 @@ import {
   fetchUserPermissions,
   fetchModules,
 } from "../../Utility Function/ModulesAndPermissions";
-// ... (import statements)
 
 const SideMenuBar = (props) => {
   const [selectedKeys, setSelectedKeys] = useState(["4"]);
@@ -90,9 +89,10 @@ const SideMenuBar = (props) => {
                   <Menu.Item
                     key={`sub${subModule.sub_module_id}`}
                     className="reports-submenu-item"
-                    onClick={() =>
-                      handleMenuItemClick(`sub${subModule.sub_module_id}`)
-                    }
+                    onClick={() => {
+                      handleMenuItemClick(`sub${subModule.sub_module_id}`);
+                      localStorage.setItem("ReportID", subModule.sub_module_id);
+                    }}
                   >
                     <Link
                       className="side-bar-links"
