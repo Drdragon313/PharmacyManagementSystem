@@ -52,9 +52,14 @@ const Pharmacies = () => {
     };
 
     const fetchData = async () => {
+      const authToken = localStorage.getItem("AuthorizationToken");
+      const headers = {
+        Authorization: authToken,
+      };
       try {
         const response = await axios.get(
-          `${baseURL}/list-pharmacies?page=${page}&limit=${limit}&post_code=${selectedPostalCode}&sort_field=${sortField}&sort_direction=${sortDirection}`
+          `${baseURL}/list-pharmacies?page=${page}&limit=${limit}&post_code=${selectedPostalCode}&sort_field=${sortField}&sort_direction=${sortDirection}`,
+          { headers }
         );
         const data = response.data;
 

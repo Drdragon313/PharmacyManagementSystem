@@ -10,3 +10,10 @@
   height: 98%;
   margin: 10px;
 }
+.customIframe {
+  margin: 20px;
+  height: 85vh;
+  width: 83vw;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
