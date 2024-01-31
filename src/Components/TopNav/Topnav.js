@@ -10,7 +10,7 @@ import ProfileSettings from "../../Assets/ProfileSettings.svg";
 import ProfileSecurity from "../../Assets/ProfileSecurity.svg";
 import ProfileLogout from "../../Assets/ProfileLogout.svg";
 import { useNavigate } from "react-router-dom";
-import Spinner from "../Spinner/Spinner";
+
 const { Header } = Layout;
 
 const Topnav = () => {
@@ -31,6 +31,7 @@ const Topnav = () => {
         console.error("Auth token not found");
         return;
       }
+      const loadingMessageKey = message.loading("Logging out...", 0.3);
       const response = await axios.post(
         `${baseURL}/signout`,
         {},
@@ -42,9 +43,13 @@ const Topnav = () => {
       );
       localStorage.removeItem("AuthorizationToken");
       console.log(response.data);
+      message.success({ content: "Logout successful", key: loadingMessageKey });
+
       navigate("/");
     } catch (error) {
       console.error("Error during signout:", error);
+    } finally {
+      setLoading(true);
     }
   };
   const items = [
@@ -56,7 +61,6 @@ const Topnav = () => {
       ),
       key: "0",
       icon: <img src={ProfileSettings} alt="Account Settings" />,
-      // link: "/Profile/Settings",
     },
     {
       label: (
@@ -70,7 +74,7 @@ const Topnav = () => {
     {
       label: (
         <span className="ProfileNavlink" onClick={handleLogout}>
-          Logout
+          <div>Logout</div>
         </span>
       ),
       key: "2",
@@ -111,7 +115,7 @@ const Topnav = () => {
             }}
             trigger={["click"]}
             arrow
-            // placement="topRight"
+            rootClassName="nav-drop-down"
           >
             <div size={10} className="nav-itmes-contianer">
               <Avatar size="large" icon={<UserOutlined />} />

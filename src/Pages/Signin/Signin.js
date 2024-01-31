@@ -5,7 +5,7 @@ import PharmalyticsLogo from "../../Assets/Pharmalytics-Logo.svg";
 import Email_icon from "../../Assets/Email-icon.svg";
 import Password_icon from "../../Assets/Password_icon.svg";
 import { useNavigate } from "react-router-dom";
-import { Button, message } from "antd";
+import { Button, Form, message } from "antd";
 import { Input } from "antd";
 import {
   EyeTwoTone,
@@ -54,9 +54,7 @@ const Signin = () => {
       setLoading(false); // Set loading to false after login process completes
     }
   };
-  if (loading === true) {
-    return <Spinner />;
-  }
+
   return (
     <div className="siginContainer">
       <div className="signinLogoMainContainer">
@@ -95,8 +93,16 @@ const Signin = () => {
             <LoginOutlined className="LoginOutlined" />
             <strong>Log In</strong> to your account
           </h3>
-          <form>
-            <div className="mb-3 mt-4">
+          <Form onFinish={handleLogin}>
+            <Form.Item
+              className="mb-3 mt-4"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your email!",
+                },
+              ]}
+            >
               <label
                 htmlFor="exampleInputEmail1"
                 className="form-label signinboldLabel"
@@ -104,6 +110,7 @@ const Signin = () => {
                 Email
               </label>
               <Input
+                itemType="email"
                 prefix={
                   <img
                     className="Email_icon"
@@ -120,8 +127,16 @@ const Signin = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-            </div>
-            <div className="mb-3">
+            </Form.Item>
+            <Form.Item
+              className="mb-3"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your Password!",
+                },
+              ]}
+            >
               <label
                 htmlFor="exampleInputPassword1"
                 className="form-label signinboldLabel"
@@ -145,17 +160,21 @@ const Signin = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-            </div>
+            </Form.Item>
             <div className="stay-signedin-forgot-pass">
               {/* <div className="stay-signedin"></div> */}
               <Link to="/forgotpassword" className="signinForget">
                 Forget Password?
               </Link>
             </div>
-            <CustomButton type="primary" onClick={handleLogin}>
-              Log In
+            <CustomButton
+              className="login-btn"
+              type="primary"
+              htmlType="submit"
+            >
+              LogIn
             </CustomButton>
-          </form>
+          </Form>
         </div>
       </div>
     </div>

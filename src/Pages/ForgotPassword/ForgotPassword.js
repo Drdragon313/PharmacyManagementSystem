@@ -139,7 +139,12 @@ const ForgotPassword = () => {
               >
                 Back to Log in
               </CustomButton>
-              <CustomButton type="primary" disabled={!email} htmlType="submit">
+              <CustomButton
+                className="request-reset-btn"
+                type="primary"
+                disabled={!email}
+                htmlType="submit"
+              >
                 Request Reset Password
               </CustomButton>
             </div>

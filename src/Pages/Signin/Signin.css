@@ -1,5 +1,6 @@
 .siginContainer {
   display: flex;
+  font-family: Lato, sans-serif;
 }
 
 .signinLogoMainContainer {
@@ -77,11 +78,17 @@
   font-size: 11px;
   color: #3a3475;
 }
-.signinBtn {
+.login-btn {
   color: white;
   width: 100%;
   background: #3a3475;
   border-radius: 10px;
+  height: 5vh;
+  font-size: 16px;
+  font-family: Lato, sans-serif;
+}
+.login-btn:hover {
+  background-color: #110a59 !important;
 }
 .siginTerms {
   border-top: 1px solid #dddddf;
