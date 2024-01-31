@@ -52,3 +52,6 @@
 .ProfileNavlink {
   text-decoration: none;
 }
+.nav-drop-down {
+  margin-top: -18px;
+}

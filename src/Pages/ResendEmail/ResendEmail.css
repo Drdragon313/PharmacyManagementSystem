@@ -152,4 +152,14 @@
 }
 .back-to-login-btn {
   border-radius: 10px;
+  width: 16vh;
+  height: 6vh;
+  color: #3a3475 !important;
+  background-color: #fff !important;
+  border-color: #3a3475;
+  font-size: 14px;
+}
+.back-to-login-btn:hover {
+  background-color: #3a3475 !important;
+  color: #fff !important;
 }
