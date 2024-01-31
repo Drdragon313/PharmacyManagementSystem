@@ -73,62 +73,71 @@ const SideMenuBar = (props) => {
         defaultOpenKeys={["sub1"]}
         className="NavbarMenu"
       >
-        {menuItems.map((menuItem) => (
-          <React.Fragment key={menuItem.module_id}>
-            {menuItem.module_id === 2 && menuItem.sub_modules ? (
-              <Menu.SubMenu
-                key={`sub${menuItem.module_id}`}
-                title={
-                  <SubMenuTitle
-                    title={menuItem.module_name}
-                    icon={getIconByModuleId(menuItem.module_id)}
-                  />
-                }
-              >
-                {menuItem.sub_modules.map((subModule) => (
-                  <Menu.Item
-                    key={`sub${subModule.sub_module_id}`}
-                    className="reports-submenu-item"
-                    onClick={() => {
-                      handleMenuItemClick(`sub${subModule.sub_module_id}`);
-                      localStorage.setItem("ReportID", subModule.sub_module_id);
-                    }}
+        {menuItems
+          .filter((menuItem) => menuItem.module_id !== 7)
+          .map((menuItem) => (
+            <React.Fragment key={menuItem.module_id}>
+              {menuItem.module_id === 2 && menuItem.sub_modules ? (
+                <Menu.SubMenu
+                  key={`sub${menuItem.module_id}`}
+                  title={
+                    <SubMenuTitle
+                      title={menuItem.module_name}
+                      icon={getIconByModuleId(menuItem.module_id)}
+                    />
+                  }
+                >
+                  {menuItem.sub_modules.map((subModule) => (
+                    <Menu.Item
+                      key={`sub${subModule.sub_module_id}`}
+                      className="reports-submenu-item"
+                      onClick={() => {
+                        handleMenuItemClick(`sub${subModule.sub_module_id}`);
+                        localStorage.setItem(
+                          "ReportID",
+                          subModule.sub_module_id
+                        );
+                      }}
+                    >
+                      <Link
+                        className="side-bar-links"
+                        to={getReportsRouteByModuleId(subModule.sub_module_id)}
+                      >
+                        {subModule.sub_module_name}
+                      </Link>
+                    </Menu.Item>
+                  ))}
+                </Menu.SubMenu>
+              ) : (
+                <Menu.Item
+                  key={menuItem.module_id}
+                  onClick={() => handleMenuItemClick(`${menuItem.module_id}`)}
+                >
+                  <Space
+                    direction="horizontal"
+                    size={10}
+                    className="menu-items-sidebar"
                   >
+                    <img
+                      className="icons-sidenav"
+                      src={
+                        menuItem.module_id === 7
+                          ? ""
+                          : getIconByModuleId(menuItem.module_id)
+                      }
+                      alt="Icon"
+                    />
                     <Link
                       className="side-bar-links"
-                      to={getReportsRouteByModuleId(subModule.sub_module_id)}
+                      to={getRouteByModuleId(menuItem.module_id)}
                     >
-                      {subModule.sub_module_name}
+                      {menuItem.module_name}
                     </Link>
-                  </Menu.Item>
-                ))}
-              </Menu.SubMenu>
-            ) : (
-              <Menu.Item
-                key={menuItem.module_id}
-                onClick={() => handleMenuItemClick(`${menuItem.module_id}`)}
-              >
-                <Space
-                  direction="horizontal"
-                  size={10}
-                  className="menu-items-sidebar"
-                >
-                  <img
-                    className="icons-sidenav"
-                    src={getIconByModuleId(menuItem.module_id)}
-                    alt="Icon"
-                  />
-                  <Link
-                    className="side-bar-links"
-                    to={getRouteByModuleId(menuItem.module_id)}
-                  >
-                    {menuItem.module_name}
-                  </Link>
-                </Space>
-              </Menu.Item>
-            )}
-          </React.Fragment>
-        ))}
+                  </Space>
+                </Menu.Item>
+              )}
+            </React.Fragment>
+          ))}
       </Menu>
       {props.collapsed ? null : <div className="NavbarFooter"></div>}
     </div>
