@@ -1,16 +1,28 @@
 import axios from "axios";
 import { baseURL } from "../Components/BaseURLAPI/BaseURLAPI";
 import { message } from "antd";
-
-export const PostCodeHandler = (data, setPCodeResponse) => {
+export const PostCodeHandler = (data, setPCodeResponse, setData) => {
   console.log("sending:", data.postCode);
   axios
     .post(`${baseURL}/postcode-lookup`, { postCode: data.postCode })
     .then((response) => {
-      setPCodeResponse(response.data);
+      if (response.status === 200) {
+        setPCodeResponse(response.data);
+
+        // Only call AddressHandler if the status is 200
+        AddressHandler(setData, response.data[0].udprn);
+      } else {
+        setPCodeResponse([]);
+        message.error(
+          "Postcode lookup failed with status: " + response.status,
+          3
+        );
+      }
     })
     .catch(() => {
-      message.error("Address fetching Failed. Kindly enter Manually!", 3);
+      setPCodeResponse([]);
+
+      message.error("Postcode lookup failed. Kindly enter manually!", 3);
     });
 };
 

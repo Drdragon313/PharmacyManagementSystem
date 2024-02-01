@@ -32,8 +32,8 @@ const EditPharmacy = () => {
     dateOfCreation: "",
     rent: null,
     managerName: "",
-    line1: "",
-    line2: "",
+    Line1: "",
+    Line2: "",
     postCode: "",
     postTown: "",
     users: [],
@@ -62,8 +62,8 @@ const EditPharmacy = () => {
             pharmacyName: pharmacyData.pharmacyName,
             dateOfCreation: pharmacyData.dateOfCreation,
             rent: pharmacyData.rent,
-            line1: pharmacyData.line1,
-            line2: pharmacyData.line2,
+            Line1: pharmacyData.Line1,
+            Line2: pharmacyData.Line2,
             managerID: pharmacyData.managerID,
             managerName: pharmacyData.managerName,
             postCode: pharmacyData.postCode,
@@ -91,8 +91,8 @@ const EditPharmacy = () => {
       message.warning("Please update the address according to the postcode");
       setData((prevUserData) => ({
         ...prevUserData,
-        line1: "",
-        line2: "",
+        Line1: "",
+        Line2: "",
         postTown: "",
       }));
     }
@@ -169,8 +169,8 @@ const EditPharmacy = () => {
           dateOfCreation: "",
           rent: null,
           manager_id: null,
-          line1: "",
-          line2: "",
+          Line1: "",
+          Line2: "",
           postCode: "",
           postTown: "",
           users: [],
@@ -261,18 +261,18 @@ const EditPharmacy = () => {
                 labelclassName="adduserNotLabel"
                 labelText="Building Name"
                 inputclassName="AddUsersDetailsInput"
-                inputName="line1"
+                inputName="Line1"
                 handleChange={handleChange}
-                value={data.line1}
+                value={data.Line1}
               />
               <CustomInput
                 divclassName="mb-3"
                 labelclassName="addPharmacyNotLabel"
                 labelText="Street Name"
                 inputclassName="AddUsersDetailsInput"
-                inputName="line2"
+                inputName="Line2"
                 handleChange={handleChange}
-                value={data.line2}
+                value={data.Line2}
               />
               {/* </div> */}
 

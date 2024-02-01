@@ -104,11 +104,7 @@ div.ant-select-selector {
 .addPharmacyNotLabel {
   margin-left: 3%;
 }
-.dateOfCreationLabel::after {
-  content: " *";
-  font-weight: bold;
-  color: red;
-}
+
 .addPharmacyManager::after {
   content: " *";
   font-weight: bold;
