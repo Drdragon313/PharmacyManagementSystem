@@ -20,11 +20,9 @@ const Topnav = () => {
     Role: "",
   });
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
 
   const handleLogout = async () => {
     try {
-      setLoading(true);
       const authToken = localStorage.getItem("AuthorizationToken");
 
       if (!authToken) {
@@ -48,8 +46,6 @@ const Topnav = () => {
       navigate("/");
     } catch (error) {
       console.error("Error during signout:", error);
-    } finally {
-      setLoading(true);
     }
   };
   const items = [

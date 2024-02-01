@@ -137,21 +137,19 @@ const UpdateRole = () => {
           : item
       );
 
-      // Update checkedCheckboxes state
       setCheckedCheckboxes((prevChecked) => {
         const existingModuleIndex = prevChecked.findIndex(
           (item) => item.module_id === record.key
         );
 
         if (existingModuleIndex !== -1) {
-          // If module exists, update the permissions
           const updatedCheckedModules = [...prevChecked];
           updatedCheckedModules[existingModuleIndex].actions[columnName] =
             e.target.checked;
 
           return updatedCheckedModules;
         } else {
-          // If module doesn't exist, create a new module entry
+          // Module doesn't exist, create a new module entry
           const newModule = {
             module_id: record.key,
             module_name: record.module,
@@ -168,7 +166,7 @@ const UpdateRole = () => {
       return updatedData;
     });
   };
-  // Function to handle sub-module checkbox changes
+
   const handleSubModuleCheckboxChange = (
     e,
     subModule,
@@ -195,7 +193,6 @@ const UpdateRole = () => {
         );
 
         if (existingModuleIndex !== -1) {
-          // If module exists, update the permissions
           const updatedCheckedModules = [...prevChecked];
           const existingSubModuleIndex = updatedCheckedModules[
             existingModuleIndex
@@ -204,12 +201,12 @@ const UpdateRole = () => {
           );
 
           if (existingSubModuleIndex !== -1) {
-            // If sub-module exists, update the permissions
+            // Sub-module exists, update the permissions
             updatedCheckedModules[existingModuleIndex].sub_modules[
               existingSubModuleIndex
             ].actions[columnName] = e.target.checked;
           } else {
-            // If sub-module doesn't exist, create a new sub-module entry
+            // Sub-module doesn't exist, create a new sub-module entry
             const newSubModule = {
               sub_module_id: subModule.key,
               actions: {
@@ -223,7 +220,7 @@ const UpdateRole = () => {
 
           return updatedCheckedModules;
         } else {
-          // If module doesn't exist, create a new module entry with sub-modules
+          // Module doesn't exist, create a new module entry with sub-modules
           const newModule = {
             module_id: parentKey,
             module_name: updatedData.find((module) => module.key === parentKey)
@@ -238,7 +235,10 @@ const UpdateRole = () => {
               {
                 sub_module_id: subModule.key,
                 actions: {
-                  [columnName]: e.target.checked,
+                  read: false,
+                  write: false,
+                  update: false,
+                  delete: false,
                 },
               },
             ],
@@ -261,21 +261,7 @@ const UpdateRole = () => {
         width: 190,
       },
       {
-        title: "Read",
-        dataIndex: "read",
-        key: "read",
-        width: 100,
-        render: (_, subModule) => (
-          <Checkbox
-            checked={subModule.read}
-            onChange={(e) =>
-              handleSubModuleCheckboxChange(e, subModule, "read", record.key)
-            }
-          />
-        ),
-      },
-      {
-        title: "Write",
+        title: "Add",
         dataIndex: "write",
         key: "write",
         width: 100,
@@ -284,6 +270,20 @@ const UpdateRole = () => {
             checked={subModule.write}
             onChange={(e) =>
               handleSubModuleCheckboxChange(e, subModule, "write", record.key)
+            }
+          />
+        ),
+      },
+      {
+        title: "View",
+        dataIndex: "read",
+        key: "read",
+        width: 100,
+        render: (_, subModule) => (
+          <Checkbox
+            checked={subModule.read}
+            onChange={(e) =>
+              handleSubModuleCheckboxChange(e, subModule, "read", record.key)
             }
           />
         ),

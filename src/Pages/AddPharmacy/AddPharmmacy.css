@@ -111,7 +111,7 @@ div.ant-select-selector {
   margin-left: 3%;
 }
 .dateOfCreationLabel::after {
-  content: " *";
+  content: none;
   font-weight: bold;
   color: red;
 }

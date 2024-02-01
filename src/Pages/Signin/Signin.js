@@ -24,17 +24,15 @@ import {
   fetchUserPermissions,
   fetchModules,
 } from "../../Utility Function/ModulesAndPermissions";
-import Spinner from "../../Components/Spinner/Spinner";
+
 const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false); // Add loading state
 
   const handleLogin = async (setUserPermissions, setModules) => {
     try {
-      setLoading(true);
       const response = await login(email, password);
 
       if (response.status === 200) {
@@ -50,8 +48,6 @@ const Signin = () => {
       }
     } catch (error) {
       // ... (existing error handling code)
-    } finally {
-      setLoading(false); // Set loading to false after login process completes
     }
   };
 

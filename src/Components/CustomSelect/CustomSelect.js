@@ -12,13 +12,14 @@ const CustomSelect = ({
   onChange,
   value,
   options,
-  z,
+  disabled,
 }) => {
   return (
     <div className={divclassName}>
       <label className={labelclassName}>{labelText}</label>
       <br />
       <Select
+        disabled={disabled}
         className={selectclassName}
         name={name}
         onChange={(value) => onChange(name, value)}

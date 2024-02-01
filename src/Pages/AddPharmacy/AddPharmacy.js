@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./AddPharmmacy.css";
-import { debounce } from "lodash";
 
 import { Input, Select, DatePicker, message, Button, Image } from "antd";
 import axios from "axios";
@@ -30,10 +29,11 @@ const AddPharmacy = () => {
     pharmacyName: "",
     dateOfCreation: "",
     rent: null,
-    line1: "",
-    line2: "",
+    Line1: "",
+    Line2: "",
     postCode: "",
     postTown: "",
+    managerID: null,
     users: [],
   });
   const pharmacy_id = "";
@@ -51,7 +51,8 @@ const AddPharmacy = () => {
   }, []);
 
   const [pCodeResponse, setPCodeResponse] = useState([]);
-  const handleFindAddress = debounce(() => {
+
+  const handleFindAddress = () => {
     const { postCode, value } = data;
 
     PostCodeHandler(data, setPCodeResponse);
@@ -61,12 +62,13 @@ const AddPharmacy = () => {
 
       setData((prevUserData) => ({
         ...prevUserData,
-        line1: "",
-        line2: "",
+        Line1: "",
+        Line2: "",
         postTown: "",
       }));
     }
-  }, 200);
+  };
+
   const handleDateChange = (date, dateString) => {
     const currentDate = moment();
     const selectedDate = moment(dateString, "DD-MM-YYYY");
@@ -125,10 +127,6 @@ const AddPharmacy = () => {
       return;
     }
 
-    if (!data.dateOfCreation) {
-      message.error("Please select the date of creation");
-      return;
-    }
     if (!data.pharmacyName) {
       message.error("Please Enter a Name for your pharmacy");
       return;
@@ -148,8 +146,8 @@ const AddPharmacy = () => {
           pharmacyName: "",
           dateOfCreation: "",
           rent: null,
-          line1: "",
-          line2: "",
+          Line1: "",
+          Line2: "",
           postCode: "",
           postTown: "",
           managerID: null,
@@ -240,9 +238,9 @@ const AddPharmacy = () => {
                 labelclassName="adduserNotLabel"
                 labelText="Building Name"
                 inputclassName="AddUsersDetailsInput"
-                inputName="line1"
+                inputName="Line1"
                 handleChange={handleChange}
-                value={data.line1}
+                value={data.Line1}
                 required={true}
               />
               <CustomInput
@@ -250,9 +248,9 @@ const AddPharmacy = () => {
                 labelclassName="addPharmacyNotLabel"
                 labelText="Street Name"
                 inputclassName="AddUsersDetailsInput"
-                inputName="line2"
+                inputName="Line2"
                 handleChange={handleChange}
-                value={data.line2}
+                value={data.Line2}
               />
 
               <div className="mb-3">
@@ -284,7 +282,6 @@ const AddPharmacy = () => {
                 <br />
                 <DatePicker
                   className="AddPharmacyDetailsInput"
-                  required={true}
                   format="DD-MM-YYYY"
                   name="dateOfCreation"
                   onChange={handleDateChange}
@@ -305,7 +302,7 @@ const AddPharmacy = () => {
                   onChange={(value) =>
                     handleSelectChange("PharmacyManager", value)
                   }
-                  value={data.manager_id}
+                  value={data.managerID}
                   required={true}
                 >
                   {managers.map((manager) => (

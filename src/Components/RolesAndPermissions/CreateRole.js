@@ -260,20 +260,7 @@ const CreateRole = () => {
         width: 186,
       },
       {
-        title: "Read",
-        dataIndex: "read",
-        key: "read",
-        render: (_, subModule) => (
-          <Checkbox
-            checked={subModule.read || false}
-            onChange={(e) =>
-              handleSubModuleCheckboxChange(e, subModule, "read", record.key)
-            }
-          />
-        ),
-      },
-      {
-        title: "Write",
+        title: "Add",
         dataIndex: "write",
         key: "write",
         render: (_, subModule) => (
@@ -285,6 +272,20 @@ const CreateRole = () => {
           />
         ),
       },
+      {
+        title: "View",
+        dataIndex: "read",
+        key: "read",
+        render: (_, subModule) => (
+          <Checkbox
+            checked={subModule.read || false}
+            onChange={(e) =>
+              handleSubModuleCheckboxChange(e, subModule, "read", record.key)
+            }
+          />
+        ),
+      },
+
       {
         title: "Update",
         dataIndex: "update",
