@@ -90,7 +90,7 @@ const AddUsers = () => {
         setAvailableRoles(data);
       })
       .catch(() => {});
-    axios.get(`${baseURL}/list-pharmacies`).then((response) => {
+    axios.get(`${baseURL}/list-pharmacies-dropdown`).then((response) => {
       const pharmData = response.data.data;
       setAvailablePharmacies(pharmData);
     });

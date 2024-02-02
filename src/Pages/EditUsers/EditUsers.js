@@ -6,7 +6,6 @@ import axios from "axios";
 import { Col, DatePicker, Row, Select, message } from "antd";
 import { getMaxDate } from "../../Utility Function/DateUtils";
 import { getMinDate } from "../../Utility Function/DateUtils";
-import { handleBlur } from "../../Utility Function/DateUtils";
 import {
   AddressHandler,
   PostCodeHandler,
@@ -210,6 +209,7 @@ const EditUsers = () => {
   useEffect(() => {
     handleContactBlur();
   }, [data.Contact]);
+
   const handleSelectChange = (fieldName, value) => {
     if (fieldName === "Selected_Role_Name") {
       setSelectedRole(value);

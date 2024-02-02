@@ -1,5 +1,11 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 import { Layout } from "antd";
 import Navbar from "./Components/Navbar/Navbar";
 import Topnav from "./Components/TopNav/Topnav";
@@ -54,85 +60,102 @@ function App() {
 
 function MainContent() {
   const location = useLocation();
+  const authToken = localStorage.getItem("AuthorizationToken");
+  const excludedPaths = [
+    "/",
+    "/forgotpassword",
+    "/resendemail",
+    "/resetpassword",
+    "/setpassword",
+    "/passwordupdatesuccess",
+  ];
+  if (!authToken && !excludedPaths.includes(location.pathname)) {
+    return <Navigate to="/" />;
+  } else
+    return (
+      <>
+        {shouldRenderNavbar(location) && <Navbar />}
+        <Content className="MainContent">
+          {shouldRenderTopnav(location) && <Topnav />}
+          <Routes>
+            <Route path="/" element={<Signin />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/checkemail" element={<CheckEmail />} />
+            <Route path="/resetpassword" element={<ResetPassword />} />
+            <Route
+              path="/passwordupdatesuccess"
+              element={<PasswordUpdatedSuccess />}
+            />
+            <Route path="/setpassword" element={<SetPassword />} />
+            <Route path="home" element={<HomeIframe />} />
+            <Route path="/tilepage" element={<TilePage />} />
+            <Route path="schema" element={<Schema />} />
+            <Route path="file" element={<ValidationOptions />} />
+            <Route path="file/fileUpload" element={<File />} />
+            <Route
+              path="file/fileUpload/UploadSuccess"
+              element={<UploadSuccess />}
+            />
+            <Route path="employee" element={<Iframe />} />
+            <Route
+              path="pharmacies/:pharmacy_id/pharmacydetails/:employee_id"
+              element={<EmployeeDetails />}
+            />
+            <Route path="PharmacyReport" element={<PharmacyIfame />} />
+            <Route path="/schema/:schemaId" element={<SchemaDetail />} />
+            <Route path="/file/:schemaId" element={<SchemaDetail />} />
+            <Route path="schema/autopopulate" element={<AutoPopulate />} />
+            <Route path="/customschema" element={<CustomSchema />} />
+            <Route path="/employeepage" element={<EmployeePage />} />
+            <Route
+              path="/employeepage/:role_id/details"
+              element={<RoleDetails />}
+            />
+            <Route
+              path="/employeepage/:role_id/update"
+              element={<UpdateRole />}
+            />
+            <Route path="/rolesandpermissions" element={<Roles />} />
+            <Route
+              path="/rolesandpermissions/createrole"
+              element={<CreateRole />}
+            />
+            <Route path="/CostofStock" element={<CostofStock />}></Route>
+            <Route path="/Owing" element={<Owing />}></Route>
+            <Route path="/EmployeeReport" element={<Employee />}></Route>
 
-  return (
-    <>
-      {shouldRenderNavbar(location) && <Navbar />}
-      <Content className="MainContent">
-        {shouldRenderTopnav(location) && <Topnav />}
-        <Routes>
-          <Route path="/" element={<Signin />} />
-          <Route path="forgotpassword" element={<ForgotPassword />} />
-          <Route path="checkemail" element={<CheckEmail />} />
-          <Route path="/resetpassword" element={<ResetPassword />} />
-          <Route
-            path="passwordupdatesuccess"
-            element={<PasswordUpdatedSuccess />}
-          />
-          <Route path="/setpassword" element={<SetPassword />} />
-          <Route path="home" element={<HomeIframe />} />
-          <Route path="/tilepage" element={<TilePage />} />
-          <Route path="schema" element={<Schema />} />
-          <Route path="file" element={<ValidationOptions />} />
-          <Route path="file/fileUpload" element={<File />} />
-          <Route
-            path="file/fileUpload/UploadSuccess"
-            element={<UploadSuccess />}
-          />
-          <Route path="employee" element={<Iframe />} />
-          <Route
-            path="pharmacies/:pharmacy_id/pharmacydetails/:employee_id"
-            element={<EmployeeDetails />}
-          />
-          <Route path="PharmacyReport" element={<PharmacyIfame />} />
-          <Route path="/schema/:schemaId" element={<SchemaDetail />} />
-          <Route path="/file/:schemaId" element={<SchemaDetail />} />
-          <Route path="schema/autopopulate" element={<AutoPopulate />} />
-          <Route path="/customschema" element={<CustomSchema />} />
-          <Route path="/employeepage" element={<EmployeePage />} />
-          <Route
-            path="/employeepage/:role_id/details"
-            element={<RoleDetails />}
-          />
-          <Route
-            path="/employeepage/:role_id/update"
-            element={<UpdateRole />}
-          />
-          <Route path="/rolesandpermissions" element={<Roles />} />
-          <Route
-            path="/rolesandpermissions/createrole"
-            element={<CreateRole />}
-          />
-          <Route path="/CostofStock" element={<CostofStock />}></Route>
-          <Route path="/Owing" element={<Owing />}></Route>
-          <Route path="/EmployeeReport" element={<Employee />}></Route>
+            <Route path="schema/autopopulate" element={<AutoPopulate />} />
+            <Route path="users/AddUser" element={<AddUsers />} />
 
-          <Route path="schema/autopopulate" element={<AutoPopulate />} />
-          <Route path="users/AddUser" element={<AddUsers />} />
-
-          <Route
-            path="employeepage/:userID/viewUser"
-            element={<ViewEmployees />}
-          />
-          <Route path="resendemail" element={<ResendEmail />} />
-          <Route path="pharmacies" element={<Pharmacies />} />
-          <Route path="pharmacies/AddPharmacy" element={<AddPharmacy />} />
-          <Route
-            path="pharmacies/:pharmacy_id/pharmacydetails"
-            element={<PharmacyDetails />}
-          />
-          <Route
-            path="pharmacies/:pharmacy_id/pharmacyedit"
-            element={<EditPharmacy />}
-          />
-          <Route path="employeepage/:userID/editUser" element={<EditUsers />} />
-          <Route path="/Profile/Settings" element={<EditUsers />}></Route>
-          <Route path="/Profile/Security" element={<UpdatePassword />}></Route>
-          <Route path="reports" element={<Reports />} />
-        </Routes>
-      </Content>
-    </>
-  );
+            <Route
+              path="employeepage/:userID/viewUser"
+              element={<ViewEmployees />}
+            />
+            <Route path="resendemail" element={<ResendEmail />} />
+            <Route path="pharmacies" element={<Pharmacies />} />
+            <Route path="pharmacies/AddPharmacy" element={<AddPharmacy />} />
+            <Route
+              path="pharmacies/:pharmacy_id/pharmacydetails"
+              element={<PharmacyDetails />}
+            />
+            <Route
+              path="pharmacies/:pharmacy_id/pharmacyedit"
+              element={<EditPharmacy />}
+            />
+            <Route
+              path="employeepage/:userID/editUser"
+              element={<EditUsers />}
+            />
+            <Route path="/Profile/Settings" element={<EditUsers />}></Route>
+            <Route
+              path="/Profile/Security"
+              element={<UpdatePassword />}
+            ></Route>
+            <Route path="reports" element={<Reports />} />
+          </Routes>
+        </Content>
+      </>
+    );
 }
 
 function shouldRenderNavbar(location) {
