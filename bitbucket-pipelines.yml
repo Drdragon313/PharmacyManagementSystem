@@ -47,8 +47,6 @@ definitions:
               FORCE_NEW_DEPLOYMENT: 'true'
 
 pipelines:
-  #pull-requests:
-  #  '**':
   branches:
     '{develop,qa}':
      - step: *build_and_push_docker_image
