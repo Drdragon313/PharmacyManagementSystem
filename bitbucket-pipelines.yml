@@ -36,7 +36,7 @@ definitions:
         name: Deploy to ECS
         script:
           - ENV="${BITBUCKET_BRANCH}"
-          - if [[ "${ENV}" == "master" ]]; then CLUSTER_NAME="PROD_ECS_CLUSTER_NAME"; elif [[ "${ENV}" == "qa" ]]; then CLUSTER_NAME="QA_ECS_CLUSTER_NAME"; elif [[ "${ENV}" == "dev" ]]; then CLUSTER_NAME="DEV_ECS_CLUSTER_NAME"; fi
+          - if [[ "${ENV}" == "master" ]]; then CLUSTER_NAME="${PROD_ECS_CLUSTER_NAME}"; elif [[ "${ENV}" == "qa" ]]; then CLUSTER_NAME="${QA_ECS_CLUSTER_NAME}"; elif [[ "${ENV}" == "develop" ]]; then CLUSTER_NAME="${DEV_ECS_CLUSTER_NAME}"; fi
           - pipe: atlassian/aws-ecs-deploy:1.11.0
             variables:
               AWS_ACCESS_KEY_ID: $AWS_KEY
