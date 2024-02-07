@@ -46,10 +46,25 @@ definitions:
               CLUSTER_NAME: $CLUSTER_NAME
               SERVICE_NAME: $SERVICE_NAME
               FORCE_NEW_DEPLOYMENT: 'true'
+    
+    - step: &check_ecs_task_status
+        name: Check Deployment Status
+        image: xueshanf/awscli:3.10-alpine
+        script:
+          - ENV="${BITBUCKET_BRANCH}"
+          - if [[ "${ENV}" == "master" ]]; then CLUSTER_NAME="${PROD_ECS_CLUSTER_NAME}"; elif [[ "${ENV}" == "qa" ]]; then CLUSTER_NAME="${QA_ECS_CLUSTER_NAME}"; elif [[ "${ENV}" == "develop" ]]; then CLUSTER_NAME="${DEV_ECS_CLUSTER_NAME}"; fi
+          - aws configure set aws_access_key_id "${AWS_KEY}"
+          - aws configure set aws_secret_access_key "${AWS_SECRET}"
+          - export cluster_name=$CLUSTER_NAME
+          - export service_name=$SERVICE_NAME
+          - export region_name=$AWS_REGION
+          - chmod +x check_ecs_task_status.sh
+          - ./check_ecs_task_status.sh
 
 pipelines:
   branches:
     '{develop,qa}':
      - step: *build_and_push_docker_image
      - step: *deploy_to_ecs
+     - step: *check_ecs_task_status
 
