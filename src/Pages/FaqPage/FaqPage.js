@@ -7,12 +7,7 @@ import EmployeeContent from "../../Components/FaqComponents/Employee";
 import PharmacyContent from "../../Components/FaqComponents/Pharmacy";
 import ReportsContent from "../../Components/FaqComponents/Reports";
 import RolesPermissionsContent from "../../Components/FaqComponents/RoleAndPermissions";
-import {
-  FileTextOutlined,
-  LockOutlined,
-  MedicineBoxOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { LockOutlined } from "@ant-design/icons";
 
 const generateButtonStyle = (checked, background, color) => ({
   width: 250,
