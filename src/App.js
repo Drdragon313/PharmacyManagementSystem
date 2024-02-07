@@ -46,6 +46,7 @@ import UpdateRole from "./Components/RolesAndPermissions/UpdateRole";
 import EditPharmacy from "./Pages/EditPharmacy/EditPharmacy";
 import Owing from "./Iframes/Owing";
 import Employee from "./Iframes/Employee";
+import FaqPage from "./Pages/FaqPage/FaqPage";
 const { Content } = Layout;
 
 function App() {
@@ -107,6 +108,7 @@ function MainContent() {
             <Route path="schema/autopopulate" element={<AutoPopulate />} />
             <Route path="/customschema" element={<CustomSchema />} />
             <Route path="/employeepage" element={<EmployeePage />} />
+            <Route path="/faqpage" element={<FaqPage />} />
             <Route
               path="/employeepage/:role_id/details"
               element={<RoleDetails />}

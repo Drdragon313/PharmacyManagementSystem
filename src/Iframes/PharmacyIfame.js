@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Iframe.css";
 import { PowerBIEmbed } from "powerbi-client-react";
-// import { models } from "powerbi-client";
 import axios from "axios";
 import { baseURL } from "../Components/BaseURLAPI/BaseURLAPI";
 import { embedConfig } from "../Utility Function/ReportUtils";
@@ -48,33 +47,6 @@ const PharmacyIframe = () => {
           column,
           operator
         )}
-        // embedConfig={{
-        //   type: "report",
-        //   id: reportData.reportID,
-        //   embedUrl: `https://app.powerbi.com/reportEmbed?reportId=${reportData.reportID}`,
-        //   accessToken: reportData.embedToken,
-        //   tokenType: models.TokenType.Embed,
-        //   settings: {
-        //     panes: {
-        //       filters: {
-        //         expanded: false,
-        //         visible: false,
-        //       },
-        //     },
-        //     background: models.BackgroundType.Transparent,
-        //   },
-        //   filters: [
-        //     {
-        //       $schema: "http://powerbi.com/product/schema#basicFilter",
-        //       target: {
-        //         table: "public pharmacy_data_1",
-        //         column: "pharmacy_id",
-        //       },
-        //       operator: "eq",
-        //       values: reportData.pharmacyIDs.map((value) => value),
-        //     },
-        //   ],
-        // }}
         eventHandlers={
           new Map([
             [
@@ -93,5 +65,4 @@ const PharmacyIframe = () => {
     </div>
   );
 };
-
 export default PharmacyIframe;

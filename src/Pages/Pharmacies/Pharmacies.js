@@ -152,12 +152,6 @@ const Pharmacies = () => {
   const canEditPharmacy =
     userPermissions?.find((module) => module.module_name === "Pharmacy")
       ?.actions?.update || false;
-  if (!authToken) {
-    const openModal = () => {
-      setModalVisible(true);
-    };
-    return <SignInFirstModal visible={modalVisible} open={openModal} />;
-  }
 
   const tableColumns = [
     {

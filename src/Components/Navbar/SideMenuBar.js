@@ -53,7 +53,6 @@ const SideMenuBar = (props) => {
                 return null;
               })
               .filter(Boolean);
-
             setMenuItems(modulesWithPermissions);
           });
         });

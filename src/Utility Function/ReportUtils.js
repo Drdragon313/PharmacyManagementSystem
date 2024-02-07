@@ -19,7 +19,16 @@ export const embedConfig = (
           expanded: false,
           visible: false,
         },
+        pageNavigation: {
+          visible: false,
+        },
+        bars: {
+          actionBar: {
+            visible: true,
+          },
+        },
       },
+      hideFooter: true,
       background: models.BackgroundType.Transparent,
     },
     filters: [
