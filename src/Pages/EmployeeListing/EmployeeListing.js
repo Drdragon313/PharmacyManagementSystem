@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./EmployeeListing.css";
 import axios from "axios";
-import { Col, Image, Row, Space, message, Input } from "antd";
+import { Col, Image, Row, Space, message, Input, Select } from "antd";
 import eyeIcon from "../../Assets/Icon feather-eye.svg";
 import editicon from "../../Assets/editInBlue.svg";
 import deleteActionbtn from "../../Assets/deleteAction.svg";
@@ -11,7 +11,6 @@ import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import Spinner from "../../Components/Spinner/Spinner";
 import rightArrow from "../../Assets/rightarrow.svg";
 import leftArrow from "../../Assets/leftarrow.svg";
-import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import plusOutline from "../../Assets/PlusOutlined.svg";
 import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationModal";
@@ -19,6 +18,8 @@ import PaginationComponent from "../../Components/PaginationComponent/Pagination
 import deleteImg from "../../Assets/deleteexclaim.svg";
 import resendInviteIcon from "../../Assets/resendInviteIcon.svg";
 import { fetchUserPermissions } from "../../Utility Function/ModulesAndPermissions";
+import bookImg from "../../Assets/notebook.svg";
+import rolesImg from "../../Assets/material-symbols_map-outline-rounded.svg";
 const { Search } = Input;
 
 const EmployeeListing = () => {
@@ -37,9 +38,8 @@ const EmployeeListing = () => {
   const [availablePostalCodes, setAvailablePostalCodes] = useState([]);
   const [availableRoles, setAvailableRoles] = useState();
   const authToken = localStorage.getItem("AuthorizationToken");
-  const [modalVisible, setModalVisible] = useState(!authToken);
-  const [selectedPostalCode, setSelectedPostalCode] = useState("");
-  const [selectedRole, setSelectedRole] = useState("");
+  const [selectedPostalCode, setSelectedPostalCode] = useState([]);
+  const [selectedRole, setSelectedRole] = useState([]);
   const [statusEmail, setStatusEmail] = useState("");
   const [searchedName, setSearchedName] = useState("");
 
@@ -366,12 +366,27 @@ const EmployeeListing = () => {
     return <Spinner />;
   }
 
-  if (!authToken) {
-    const openModal = () => {
-      setModalVisible(true);
-    };
-    return <SignInFirstModal visible={modalVisible} open={openModal} />;
-  }
+  const placeholderSelect = () => {
+    return (
+      <div className="placeholder-for-select-postcodes">
+        <div>
+          <Image className="filter-icon" src={bookImg} preview={false} />
+          <span> Pharmacy postal code</span>
+        </div>
+      </div>
+    );
+  };
+  const placeholderSelectRoles = () => {
+    return (
+      <div className="placeholder-for-select-postcodes">
+        <div>
+          <Image className="filter-icon" src={rolesImg} preview={false} />
+          <span> Roles</span>
+        </div>
+      </div>
+    );
+  };
+
   const handleSearch = (searchValue) => {
     setSearchedName(searchValue);
   };
@@ -452,67 +467,63 @@ const EmployeeListing = () => {
             lg: 32,
           }}
         >
-          <Col className="gutter-row" span={17}>
-            <Col className="gutter-row" span={12}>
-              <Search
-                placeholder="Search Here..."
-                onSearch={handleSearch}
-                enterButton
-              />
-            </Col>
+          <Col className="gutter-row" span={8}>
+            <Search
+              placeholder="Search Here..."
+              onSearch={handleSearch}
+              enterButton
+            />
           </Col>
-          <Col className="filter-container-emp" span={3.5}>
-            <div className="custom-select-container">
-              <select
-                className="filter-role-btn"
+          <Col span={4}></Col>
+
+          <Col className="filter-container-emp" span={4}>
+            <Col className="filter-container-pharm" span={4}>
+              <Select
+                allowClear={true}
+                className="filter-pharm-btn"
+                mode="multiple"
                 value={selectedRole}
-                onChange={(e) => handleRoleChange(e.target.value)}
-                defaultValue=""
+                onChange={handleRoleChange}
+                placeholder={placeholderSelectRoles()}
+                showSearch={false}
+                optionLabelProp="label"
               >
-                <option value="" disabled>
-                  Role
-                </option>
-                {selectedRole && <option value="">All roles</option>}
                 {availableRoles &&
                   availableRoles.map((role) => (
-                    <option
+                    <Select.Option
                       className="select-options"
                       key={role.id}
                       value={role.id}
+                      label={role.name}
                     >
                       {role.name}
-                    </option>
+                    </Select.Option>
                   ))}
-              </select>
-            </div>
+              </Select>
+            </Col>
           </Col>
           <Col className="filter-container-emp" span={3.5}>
-            <div className="custom-select-container">
-              <select
-                className="filter-emp-btn"
-                value={selectedPostalCode}
-                // onChange={(e) => setSelectedPostalCode(e.target.value)}
-                onChange={(e) => handlePostalCodeChange(e.target.value)}
-                defaultValue=""
-              >
-                <option value="" disabled>
-                  Pharmacy postal code
-                </option>
-                {selectedPostalCode && (
-                  <option value="">All postal codes</option>
-                )}
-
-                {availablePostalCodes.map((postalCode) => (
-                  <option
-                    className="select-options"
-                    key={postalCode}
-                    value={postalCode}
-                  >
-                    {postalCode}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <Select
+              allowClear={true}
+              className="filter-pharm-btn"
+              mode="multiple"
+              value={selectedPostalCode}
+              onChange={(values) => handlePostalCodeChange(values)}
+              placeholder={placeholderSelect()}
+              showSearch={false}
+              optionLabelProp="label"
+            >
+              {availablePostalCodes.map((postalCode) => (
+                <Select.Option
+                  className="select-options"
+                  key={postalCode}
+                  value={postalCode}
+                  label={postalCode}
+                >
+                  {postalCode}
+                </Select.Option>
+              ))}
+            </Select>
           </Col>
         </Row>
         <Row

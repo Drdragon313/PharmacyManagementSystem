@@ -28,7 +28,7 @@ const PaginationComponent = ({
         </Space>
       </Col>
 
-      <Col className="pagination-col-right-txt" span={14}>
+      <Col className="pagination-col-right-txt" span={16}>
         <div className="pagination-col-right">
           <p className="pagination-txt">
             Showing {page} - {Math.ceil(totalItems / limit)} of {totalItems}

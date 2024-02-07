@@ -6,7 +6,6 @@ import axios from "axios";
 import { Col, DatePicker, Row, Select, message } from "antd";
 import { getMaxDate } from "../../Utility Function/DateUtils";
 import { getMinDate } from "../../Utility Function/DateUtils";
-import { handleBlur } from "../../Utility Function/DateUtils";
 import {
   AddressHandler,
   PostCodeHandler,
@@ -29,13 +28,13 @@ const AddUsers = () => {
     Email: "",
     Contact: "",
     DateOfBirth: "",
-    Pharmacy: "",
+    Pharmacy: null,
     postCode: "",
     Address: "",
     Line1: "",
     Line2: "",
     postTown: "",
-    Line_Manager: "",
+    Line_Manager: null,
   });
   const [validContact, setValidContact] = useState(false);
   const [avaiableRoles, setAvailableRoles] = useState([]);

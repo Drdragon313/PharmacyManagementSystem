@@ -1,8 +1,7 @@
-// CustomSwitch.js
 import React from "react";
 import { Button, Col, Row } from "antd";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
-import "./CustomSwitch.css"; // Ensure to import your styles
+import "./CustomSwitch.css";
 
 const generateButtonStyle = (checked, background, color) => ({
   width: 150,
