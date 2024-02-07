@@ -58,7 +58,7 @@ const EmployeeListing = () => {
           `${baseURL}/list-available-postcodes`,
           {
             headers: {
-              Authorization: `Bearer ${authToken}`,
+              Authorization: `${authToken}`,
             },
           }
         );

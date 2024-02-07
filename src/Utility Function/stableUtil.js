@@ -4,7 +4,7 @@ export async function saveSchema(
   schemaName,
   formDataArray,
   tilePath,
-  dispatch,
+
   successCallback
 ) {
   if (formDataArray.length > 0) {
