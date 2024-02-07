@@ -18,12 +18,13 @@ definitions:
           - ./aws/install
           - IMAGE="365330253536.dkr.ecr.eu-west-2.amazonaws.com/pharmlytics-frontend"
           - NAME="pharmlytics-frontend"
-          - ENV="${BITBUCKET_BRANCH}"
+          - ENV="${BITBUCKET_BRANCH}";
           - TAG1="${ENV}-${BITBUCKET_BUILD_NUMBER}"
           - TAG2="${ENV}-latest"
           - aws configure set aws_access_key_id "${AWS_KEY}"
           - aws configure set aws_secret_access_key "${AWS_SECRET}"
           - aws ecr get-login-password --region "${AWS_REGION}" | docker login -u AWS --password-stdin $IMAGE
+          - aws s3 cp s3://pharmalytics-bi-platform/frontend/${ENV}.env ./.env
           - ls -al
           - docker build -t $NAME:$TAG1 .
           - docker tag $NAME:$TAG1 $IMAGE:$TAG1
