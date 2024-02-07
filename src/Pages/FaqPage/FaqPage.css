@@ -1,0 +1,45 @@
+.toggle-btn-container-faq {
+  border: 1px solid #425cda33;
+  border-radius: 12px;
+  padding: 2px;
+  width: 98.5%;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #f8fbff;
+  margin-top: 2%;
+  gap: 5px;
+}
+.full-width-line {
+  color: #808080;
+}
+.CreateEmpBtn {
+  height: 80%;
+  background: #425cda;
+  color: white;
+}
+.breadcrumb-col {
+  padding-left: 10px;
+  font-family: "Poppins", sans-serif;
+}
+.faq-content-container {
+  margin-top: 10px;
+  margin-left: 1px !important;
+  width: 100%;
+}
+.faq-content {
+  font-family: Poppins, sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.faq-btns {
+  font-family: Lato, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 19px;
+  letter-spacing: 0em;
+}
