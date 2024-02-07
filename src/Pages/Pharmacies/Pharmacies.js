@@ -39,7 +39,14 @@ const Pharmacies = () => {
   useEffect(() => {
     const fetchPostalCodes = async () => {
       try {
-        const response = await axios.get(`${baseURL}/list-available-postcodes`);
+        const response = await axios.get(
+          `${baseURL}/list-available-postcodes`,
+          {
+            headers: {
+              Authorization: `${authToken}`,
+            },
+          }
+        );
         const postCodeData = response.data;
         console.log(postCodeData);
 
