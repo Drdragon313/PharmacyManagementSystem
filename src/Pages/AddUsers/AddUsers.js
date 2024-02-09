@@ -44,6 +44,7 @@ const AddUsers = () => {
   const [avaiablePharmacies, setAvailablePharmacies] = useState([]);
   const [pCodeResponse, setPCodeResponse] = useState([]);
   const [permissions, setPermissions] = useState([]);
+  const authToken = localStorage.getItem("AuthorizationToken");
   const handleFindAddress = () => {
     PostCodeHandler(data, setPCodeResponse);
   };
@@ -83,17 +84,27 @@ const AddUsers = () => {
   };
   useEffect(() => {
     axios
-      .get(`${baseURL}/list-available-roles`)
+      .get(`${baseURL}/list-available-roles`, {
+        headers: {
+          Authorization: ` ${authToken}`,
+        },
+      })
       .then((response) => {
         const data = response.data.Data.roles;
         setAvailableRoles(data);
       })
       .catch(() => {});
-    axios.get(`${baseURL}/list-pharmacies-dropdown`).then((response) => {
-      const pharmData = response.data.data;
-      setAvailablePharmacies(pharmData);
-    });
-  }, []);
+    axios
+      .get(`${baseURL}/list-pharmacies-dropdown`, {
+        headers: {
+          Authorization: ` ${authToken}`,
+        },
+      })
+      .then((response) => {
+        const pharmData = response.data.data;
+        setAvailablePharmacies(pharmData);
+      });
+  }, [authToken]);
   useEffect(() => {
     axios
       .get(`${baseURL}/role-permissions?role_id=${selectedRole}`)

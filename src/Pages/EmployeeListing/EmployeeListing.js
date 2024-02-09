@@ -105,6 +105,10 @@ const EmployeeListing = () => {
           setTableDataSource(data.data);
           setTotalItems(data.totalItems);
         }
+        if (data && data.data === null) {
+          setTableDataSource([]);
+          setTotalItems(0);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
