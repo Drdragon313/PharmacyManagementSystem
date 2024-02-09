@@ -227,24 +227,60 @@ const EmployeeListing = () => {
       ellipsis: true,
     },
     {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      width: "17%",
+      ellipsis: true,
+    },
+    {
       title: "Contact",
       dataIndex: "contact",
       key: "contact",
       width: "10%",
       ellipsis: true,
     },
+
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      title: "Pharmacy Postal Code",
+      dataIndex: "pharmacyPostCode",
+      key: "pharmacyPostCode",
+      width: "13%",
+      ellipsis: true,
+      render: (text, record) => {
+        if (record.PharmacyDetails && record.PharmacyDetails.length > 0) {
+          const postalCodes = record.PharmacyDetails.map(
+            (pharmacy) => pharmacy.post_code
+          );
+          return <span>{postalCodes.join(", ")}</span>;
+        }
+        return <span></span>;
+      },
+    },
+    {
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
       width: "10%",
       ellipsis: true,
+    },
+    {
+      title: "Salary",
+      dataIndex: "salary",
+      key: "salary",
+      width: "7%",
+      sorter: true,
+      showSorterTooltip: false,
+      sortOrder: sortField === "salary" && sortDirection,
+      onHeaderCell: (column) => ({
+        onClick: () => handleSortChange(column.dataIndex, column.order),
+      }),
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      width: "10%",
+      width: "8%",
       ellipsis: true,
       render: (text, record) => (
         <>
@@ -274,41 +310,6 @@ const EmployeeListing = () => {
       sorter: true,
       showSorterTooltip: false,
       sortOrder: sortField === "status" && sortDirection,
-      onHeaderCell: (column) => ({
-        onClick: () => handleSortChange(column.dataIndex, column.order),
-      }),
-    },
-    {
-      title: "Pharmacy Postal Code",
-      dataIndex: "pharmacyPostCode",
-      key: "pharmacyPostCode",
-      width: "20%",
-      ellipsis: true,
-      render: (text, record) => {
-        if (record.PharmacyDetails && record.PharmacyDetails.length > 0) {
-          const postalCodes = record.PharmacyDetails.map(
-            (pharmacy) => pharmacy.post_code
-          );
-          return <span>{postalCodes.join(", ")}</span>;
-        }
-        return <span></span>;
-      },
-    },
-    {
-      title: "Role",
-      dataIndex: "role",
-      key: "role",
-      width: "10%",
-      ellipsis: true,
-    },
-    {
-      title: "Salary",
-      dataIndex: "salary",
-      key: "salary",
-      width: "10%",
-      sorter: true,
-      showSorterTooltip: false,
-      sortOrder: sortField === "salary" && sortDirection,
       onHeaderCell: (column) => ({
         onClick: () => handleSortChange(column.dataIndex, column.order),
       }),
