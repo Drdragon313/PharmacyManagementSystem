@@ -32,13 +32,13 @@ const EditUsers = () => {
     Contact: "",
     DateOfBirth: "",
     Pharmacy: [],
-    postCode: "",
+    PostCode: "",
     Address: "",
     Line_Manager: "",
     Line_Manager_id: "",
     Line1: "",
     Line2: "",
-    postTown: "",
+    PostTown: "",
     salary: "",
     Available_Roles: [],
     AvailablePharmacies: [],
@@ -355,10 +355,10 @@ const EditUsers = () => {
                 labelclassName="addUserNotLabel"
                 labelText="Postcode"
                 inputclassName="AddUsersDetailsInput"
-                inputName="postCode"
+                inputName="PostCode"
                 handleChange={handleChange}
                 handleBlur={handleFindAddress}
-                value={data.postCode}
+                value={data.PostCode}
               />
 
               <CustomInput
@@ -500,7 +500,7 @@ const EditUsers = () => {
                 value={data.Address}
                 onChange={handleSelectChange}
                 options={
-                  pCodeResponse ? pCodeResponse.map((item) => item.address) : []
+                  pCodeResponse ? pCodeResponse.map((item) => item.Address) : []
                 }
               />
               <CustomInput
@@ -508,9 +508,9 @@ const EditUsers = () => {
                 labelclassName="addUserNotLabel"
                 labelText="Town"
                 inputclassName="AddUsersDetailsInput"
-                inputName=" postTown"
+                inputName="PostTown" // <-- Remove the extra space before PostTown
                 handleChange={handleChange}
-                value={data.postTown}
+                value={data.PostTown}
               />
             </div>
           </div>
