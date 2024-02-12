@@ -324,11 +324,12 @@ const EditUsers = () => {
                   }
                   disabled={userID ? false : true}
                 >
-                  {data.Available_Roles.map((option) => (
-                    <Option key={option.id} value={option.id}>
-                      {option.role_name}
-                    </Option>
-                  ))}
+                  {data.Available_Roles &&
+                    data.Available_Roles.map((option) => (
+                      <Option key={option.id} value={option.id}>
+                        {option.role_name}
+                      </Option>
+                    ))}
                 </Select>
               </div>
 
@@ -342,11 +343,12 @@ const EditUsers = () => {
                   onChange={(value) => handleSelectChange("Pharmacy", value)}
                   disabled={userID ? false : true}
                 >
-                  {data.AvailablePharmacies.map((option) => (
-                    <Option key={option.id} value={option.id}>
-                      {option.pharmacy_name}
-                    </Option>
-                  ))}
+                  {data.AvailablePharmacies &&
+                    data.AvailablePharmacies.map((option) => (
+                      <Option key={option.id} value={option.id}>
+                        {option.pharmacy_name}
+                      </Option>
+                    ))}
                 </Select>
               </div>
               <CustomInput
@@ -456,11 +458,12 @@ const EditUsers = () => {
                   }
                   disabled={userID ? false : true}
                 >
-                  {permissions.map((option) => (
-                    <Option key={option} value={option}>
-                      {option}
-                    </Option>
-                  ))}
+                  {permissions &&
+                    permissions.map((option) => (
+                      <Option key={option} value={option}>
+                        {option}
+                      </Option>
+                    ))}
                 </Select>
               </div>
               <Row>
