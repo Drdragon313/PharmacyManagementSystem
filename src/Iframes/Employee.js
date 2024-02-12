@@ -1,17 +1,46 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Iframe.css";
+import { PowerBIEmbed } from "powerbi-client-react";
+import { embedConfig, getReportData } from "../Utility Function/ReportUtils";
 const Employee = () => {
+  const [reportData, setReportData] = useState({
+    embedToken: "",
+    pharmacyIDs: [],
+    reportID: "",
+  });
+  useEffect(() => {
+    getReportData(setReportData);
+  }, []);
+  const table = "public pharmacy_data_1";
+  const column = "pharmacy_id";
+  const operator = "eq";
+
   return (
-    <div className="iframe-container">
-      <iframe
-        className="exampleIframe"
-        title="Employee"
-        width="600"
-        height="373.5"
-        src="https://app.powerbi.com/view?r=eyJrIjoiOTg5MDg5NjItYzMwYi00YjZiLTlhZTktMDU0ZDk3MDMxMmU3IiwidCI6ImEyNjUwODVjLTA2NjQtNGExNy1iYTlhLTBhZTcwMGY2YjVhYiJ9"
-        frameborder="0"
-        allowFullScreen="true"
-      ></iframe>
+    <div>
+      <PowerBIEmbed
+        embedConfig={embedConfig(
+          reportData.reportID,
+          reportData.embedToken,
+          reportData.pharmacyIDs,
+          table,
+          column,
+          operator
+        )}
+        eventHandlers={
+          new Map([
+            [
+              "error",
+              function (event) {
+                console.log("Error while loading report:", event.detail);
+              },
+            ],
+          ])
+        }
+        cssClassName={"customIframe"}
+        getEmbeddedComponent={(embeddedReport) => {
+          window.report = embeddedReport;
+        }}
+      />
     </div>
   );
 };
