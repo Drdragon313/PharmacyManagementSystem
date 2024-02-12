@@ -11,8 +11,8 @@ const Employee = () => {
   useEffect(() => {
     getReportData(setReportData);
   }, []);
-  const table = "public pharmacy_data_1";
-  const column = "pharmacy_id";
+  const table = "public pharmacies";
+  const column = "id";
   const operator = "eq";
 
   return (
