@@ -10,7 +10,7 @@ import "./CreateRole.css";
 import editIconBlue from "../../Assets/editInBlue.svg";
 import { Link } from "react-router-dom";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
-
+import { fetchUserPermissions } from "../../Utility Function/ModulesAndPermissions";
 import axios from "axios";
 import PaginationComponent from "../PaginationComponent/PaginationComponent";
 import ReAssignModal from "../ReAssignModal/ReAssignModal";
@@ -20,6 +20,7 @@ const Roles = () => {
   const [modalVisible, setModalVisible] = useState(!authToken);
   const [rolesData, setRolesData] = useState(null);
   const [totalItems, setTotalItems] = useState();
+  const [userPermissions, setUserPermissions] = useState(null);
   const [ConfirmationModalVisible, setConfirmationModalVisible] =
     useState(false);
   const [roleIdToDelete, setRoleIdToDelete] = useState(null);
@@ -87,12 +88,27 @@ const Roles = () => {
     }
     return null;
   };
-  if (!authToken) {
-    const openModal = () => {
-      setModalVisible(true);
+  useEffect(() => {
+    const fetchUserPermissionData = async () => {
+      try {
+        await fetchUserPermissions(setUserPermissions);
+      } catch (error) {
+        console.error("Error fetching user permissions:", error);
+      }
     };
-    return <SignInFirstModal visible={modalVisible} open={openModal} />;
-  }
+
+    fetchUserPermissionData();
+  }, []);
+  const canCreateRoles =
+    userPermissions?.find((module) => module.module_name === "Roles")?.actions
+      ?.write || false;
+  const canDeleteRoles =
+    userPermissions?.find((module) => module.module_name === "Roles")?.actions
+      ?.delete || false;
+  const canEditRoles =
+    userPermissions?.find((module) => module.module_name === "Roles")?.actions
+      ?.update || false;
+
   const columns = [
     {
       title: "Role",
@@ -119,18 +135,22 @@ const Roles = () => {
           <Link to={`${record.id}/details`}>
             <Image preview={false} src={eyeIcon}></Image>
           </Link>
-          <Link to={`${record.id}/update`}>
+          {canEditRoles && (
+            <Link to={`${record.id}/update`}>
+              <Image
+                preview={false}
+                src={editIconBlue}
+                style={{ fill: "#3A3475" }}
+              ></Image>
+            </Link>
+          )}
+          {canDeleteRoles && (
             <Image
               preview={false}
-              src={editIconBlue}
-              style={{ fill: "#3A3475" }}
+              src={deleteActionbtn}
+              onClick={() => handleDelete(record.id)}
             ></Image>
-          </Link>
-          <Image
-            preview={false}
-            src={deleteActionbtn}
-            onClick={() => handleDelete(record.id)}
-          ></Image>
+          )}
         </Space>
       ),
     },
@@ -149,14 +169,16 @@ const Roles = () => {
         <Col span={2}></Col>
         <Col className="roles-txt" span={23}>
           <p>Roles</p>
-          <Link to="/rolesandpermissions/createrole">
-            <CustomButton
-              type="primary"
-              style={{ width: "100%", height: "40px", marginLeft: "40px" }}
-            >
-              Create Role
-            </CustomButton>
-          </Link>
+          {canCreateRoles && (
+            <Link to="/rolesandpermissions/createrole">
+              <CustomButton
+                type="primary"
+                style={{ width: "100%", height: "40px", marginLeft: "40px" }}
+              >
+                Create Role
+              </CustomButton>
+            </Link>
+          )}
         </Col>
       </Row>
       <Row

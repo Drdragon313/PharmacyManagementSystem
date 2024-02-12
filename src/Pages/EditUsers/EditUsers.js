@@ -324,12 +324,11 @@ const EditUsers = () => {
                   }
                   disabled={userID ? false : true}
                 >
-                  {data.Available_Roles &&
-                    data.Available_Roles.map((option) => (
-                      <Option key={option.id} value={option.id}>
-                        {option.role_name}
-                      </Option>
-                    ))}
+                  {data.Available_Roles.map((option) => (
+                    <Option key={option.id} value={option.id}>
+                      {option.role_name}
+                    </Option>
+                  ))}
                 </Select>
               </div>
 
@@ -458,12 +457,11 @@ const EditUsers = () => {
                   }
                   disabled={userID ? false : true}
                 >
-                  {permissions &&
-                    permissions.map((option) => (
-                      <Option key={option} value={option}>
-                        {option}
-                      </Option>
-                    ))}
+                  {permissions.map((option) => (
+                    <Option key={option} value={option}>
+                      {option}
+                    </Option>
+                  ))}
                 </Select>
               </div>
               <Row>

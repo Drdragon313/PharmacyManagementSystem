@@ -262,12 +262,11 @@ const AddUsers = () => {
                   name="Role"
                   onChange={(value) => handleSelectChange("Pharmacy", value)}
                 >
-                  {data.AvailablePharmacies &&
-                    data.AvailablePharmacies.map((option) => (
-                      <Option key={option.id} value={option.id}>
-                        {option.pharmacy_name}
-                      </Option>
-                    ))}
+                  {avaiablePharmacies.map((option) => (
+                    <Option key={option.id} value={option.id}>
+                      {option.pharmacyName}
+                    </Option>
+                  ))}
                 </Select>
               </div>
               <CustomInput
