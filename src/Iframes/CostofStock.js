@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./Iframe.css";
 import { PowerBIEmbed } from "powerbi-client-react";
-import axios from "axios";
-import { baseURL } from "../Components/BaseURLAPI/BaseURLAPI";
-import { embedConfig } from "../Utility Function/ReportUtils";
+
+import { embedConfig, getReportData } from "../Utility Function/ReportUtils";
 const CostofStock = () => {
   const [reportData, setReportData] = useState({
     embedToken: "",
@@ -11,29 +10,10 @@ const CostofStock = () => {
     reportID: "",
   });
   useEffect(() => {
-    // getReportData(setReportData);
-    const authToken = localStorage.getItem("AuthorizationToken");
-    const headers = {
-      Authorization: authToken,
-    };
-    const reportID = localStorage.getItem("ReportID");
-
-    axios
-      .get(`${baseURL}/get-report-data?report_id=${reportID}`, { headers })
-      .then((response) => {
-        console.log(response.data.Data);
-        const newData = response.data.Data;
-        setReportData((prevData) => ({
-          ...prevData,
-          ...newData,
-        }));
-      })
-      .catch((error) => {
-        console.log("Error from API", error);
-      });
+    getReportData(setReportData);
   }, []);
-  const table = "public pharmacy_data_1";
-  const column = "pharmacy_id";
+  const table = "public pharmacies";
+  const column = "id";
   const operator = "eq";
 
   return (
