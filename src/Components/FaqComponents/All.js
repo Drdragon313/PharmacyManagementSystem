@@ -3,6 +3,11 @@ import "./FaqStyle.css";
 import { Collapse, Image, theme } from "antd";
 import plusOutline from "../../Assets/plus.svg";
 import Papa from "papaparse";
+import {
+  MinusCircleOutlined,
+  PlusCircleOutlined,
+  PlusCircleTwoTone,
+} from "@ant-design/icons";
 
 const All = () => {
   const [faqData, setFaqData] = useState([]);
@@ -59,9 +64,13 @@ const All = () => {
         bordered={false}
         defaultActiveKey={["1"]}
         expandIconPosition="end"
-        expandIcon={({ isActive }) => (
-          <Image preview={false} src={plusOutline} rotate={isActive ? 90 : 0} />
-        )}
+        expandIcon={({ isActive }) =>
+          isActive ? (
+            <MinusCircleOutlined color="#3A3475" rotate={180} />
+          ) : (
+            <PlusCircleOutlined color="#3A3475" rotate={0} />
+          )
+        }
         style={{
           background: token.colorBgContainer,
         }}

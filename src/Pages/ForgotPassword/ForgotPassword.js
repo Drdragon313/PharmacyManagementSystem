@@ -83,7 +83,7 @@ const ForgotPassword = () => {
             src={PharmalyticsLogo}
           ></img>
         </div>
-        <div className="signinFields">
+        <div className="signinFields-frgt-pass">
           <h3 className="LoginText">
             <img
               className="forgotIcon"

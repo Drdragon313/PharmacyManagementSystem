@@ -7,6 +7,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { Layout } from "antd";
+import MainLayout from "./Layout/MainLayout";
 import Navbar from "./Components/Navbar/Navbar";
 import Topnav from "./Components/TopNav/Topnav";
 import SchemaDetail from "./Components/AvailableSchema/SchemaDetail";
@@ -75,9 +76,9 @@ function MainContent() {
   } else
     return (
       <>
-        {shouldRenderNavbar(location) && <Navbar />}
+        {/* {shouldRenderNavbar(location) && <Navbar />} */}
         <Content className="MainContent">
-          {shouldRenderTopnav(location) && <Topnav />}
+          {/* {shouldRenderTopnav(location) && <Topnav />} */}
           <Routes>
             <Route path="/" element={<Signin />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
@@ -88,108 +89,305 @@ function MainContent() {
               element={<PasswordUpdatedSuccess />}
             />
             <Route path="/setpassword" element={<SetPassword />} />
-            <Route path="home" element={<HomeIframe />} />
-            <Route path="/tilepage" element={<TilePage />} />
-            <Route path="schema" element={<Schema />} />
-            <Route path="file" element={<ValidationOptions />} />
-            <Route path="file/fileUpload" element={<File />} />
+            <Route
+              path="/home"
+              element={
+                <MainLayout>
+                  <HomeIframe />
+                </MainLayout>
+              }
+            />
+            <Route
+              path="/tilepage"
+              element={
+                <MainLayout>
+                  <TilePage />
+                </MainLayout>
+              }
+            />
+            <Route
+              path="schema"
+              element={
+                <MainLayout>
+                  <Schema />
+                </MainLayout>
+              }
+            />
+            <Route
+              path="file"
+              element={
+                <MainLayout>
+                  <ValidationOptions />
+                </MainLayout>
+              }
+            />
+            <Route
+              path="file/fileUpload"
+              element={
+                <MainLayout>
+                  <File />
+                </MainLayout>
+              }
+            />
             <Route
               path="file/fileUpload/UploadSuccess"
-              element={<UploadSuccess />}
+              element={
+                <MainLayout>
+                  <UploadSuccess />
+                </MainLayout>
+              }
             />
-            <Route path="employee" element={<Iframe />} />
+            <Route
+              path="employee"
+              element={
+                <MainLayout>
+                  <Iframe />
+                </MainLayout>
+              }
+            />
             <Route
               path="pharmacies/:pharmacy_id/pharmacydetails/:employee_id"
-              element={<EmployeeDetails />}
+              element={
+                <MainLayout>
+                  <EmployeeDetails />
+                </MainLayout>
+              }
             />
-            <Route path="PharmacyReport" element={<PharmacyIfame />} />
-            <Route path="/schema/:schemaId" element={<SchemaDetail />} />
-            <Route path="/file/:schemaId" element={<SchemaDetail />} />
-            <Route path="schema/autopopulate" element={<AutoPopulate />} />
-            <Route path="/customschema" element={<CustomSchema />} />
-            <Route path="/employeepage" element={<EmployeePage />} />
-            <Route path="/faqpage" element={<FaqPage />} />
+            <Route
+              path="PharmacyReport"
+              element={
+                <MainLayout>
+                  <PharmacyIfame />
+                </MainLayout>
+              }
+            />
+            <Route
+              path="/schema/:schemaId"
+              element={
+                <MainLayout>
+                  <SchemaDetail />
+                </MainLayout>
+              }
+            />
+            <Route
+              path="/file/:schemaId"
+              element={
+                <MainLayout>
+                  <SchemaDetail />
+                </MainLayout>
+              }
+            />
+            <Route
+              path="schema/autopopulate"
+              element={
+                <MainLayout>
+                  <AutoPopulate />
+                </MainLayout>
+              }
+            />
+            <Route
+              path="/customschema"
+              element={
+                <MainLayout>
+                  <CustomSchema />
+                </MainLayout>
+              }
+            />
+            <Route
+              path="/employeepage"
+              element={
+                <MainLayout>
+                  <EmployeePage />
+                </MainLayout>
+              }
+            />
+            <Route
+              path="/faqpage"
+              element={
+                <MainLayout>
+                  <FaqPage />
+                </MainLayout>
+              }
+            />
             <Route
               path="/employeepage/:role_id/details"
-              element={<RoleDetails />}
+              element={
+                <MainLayout>
+                  <RoleDetails />
+                </MainLayout>
+              }
             />
             <Route
               path="/employeepage/:role_id/update"
-              element={<UpdateRole />}
+              element={
+                <MainLayout>
+                  <UpdateRole />
+                </MainLayout>
+              }
             />
-            <Route path="/rolesandpermissions" element={<Roles />} />
+            <Route
+              path="/rolesandpermissions"
+              element={
+                <MainLayout>
+                  <Roles />
+                </MainLayout>
+              }
+            />
             <Route
               path="/rolesandpermissions/createrole"
-              element={<CreateRole />}
+              element={
+                <MainLayout>
+                  <CreateRole />
+                </MainLayout>
+              }
             />
-            <Route path="/CostofStock" element={<CostofStock />}></Route>
-            <Route path="/Owing" element={<Owing />}></Route>
-            <Route path="/EmployeeReport" element={<Employee />}></Route>
+            <Route
+              path="/CostofStock"
+              element={
+                <MainLayout>
+                  <CostofStock />
+                </MainLayout>
+              }
+            ></Route>
+            <Route
+              path="/Owing"
+              element={
+                <MainLayout>
+                  <Owing />
+                </MainLayout>
+              }
+            ></Route>
+            <Route
+              path="/EmployeeReport"
+              element={
+                <MainLayout>
+                  <Employee />
+                </MainLayout>
+              }
+            ></Route>
 
-            <Route path="schema/autopopulate" element={<AutoPopulate />} />
-            <Route path="users/AddUser" element={<AddUsers />} />
+            <Route
+              path="schema/autopopulate"
+              element={
+                <MainLayout>
+                  <AutoPopulate />
+                </MainLayout>
+              }
+            />
+            <Route
+              path="users/AddUser"
+              element={
+                <MainLayout>
+                  <AddUsers />
+                </MainLayout>
+              }
+            />
 
             <Route
               path="employeepage/:userID/viewUser"
-              element={<ViewEmployees />}
+              element={
+                <MainLayout>
+                  <ViewEmployees />
+                </MainLayout>
+              }
             />
             <Route path="resendemail" element={<ResendEmail />} />
-            <Route path="pharmacies" element={<Pharmacies />} />
-            <Route path="pharmacies/AddPharmacy" element={<AddPharmacy />} />
+            <Route
+              path="pharmacies"
+              element={
+                <MainLayout>
+                  <Pharmacies />
+                </MainLayout>
+              }
+            />
+            <Route
+              path="pharmacies/AddPharmacy"
+              element={
+                <MainLayout>
+                  <AddPharmacy />
+                </MainLayout>
+              }
+            />
             <Route
               path="pharmacies/:pharmacy_id/pharmacydetails"
-              element={<PharmacyDetails />}
+              element={
+                <MainLayout>
+                  <PharmacyDetails />
+                </MainLayout>
+              }
             />
             <Route
               path="pharmacies/:pharmacy_id/pharmacyedit"
-              element={<EditPharmacy />}
+              element={
+                <MainLayout>
+                  <EditPharmacy />
+                </MainLayout>
+              }
             />
             <Route
               path="employeepage/:userID/editUser"
-              element={<EditUsers />}
+              element={
+                <MainLayout>
+                  <EditUsers />
+                </MainLayout>
+              }
             />
-            <Route path="/Profile/Settings" element={<EditUsers />}></Route>
+            <Route
+              path="/Profile/Settings"
+              element={
+                <MainLayout>
+                  <EditUsers />
+                </MainLayout>
+              }
+            ></Route>
             <Route
               path="/Profile/Security"
               element={<UpdatePassword />}
             ></Route>
-            <Route path="reports" element={<Reports />} />
+            <Route
+              path="reports"
+              element={
+                <MainLayout>
+                  <Reports />
+                </MainLayout>
+              }
+            />
           </Routes>
         </Content>
       </>
     );
 }
 
-function shouldRenderNavbar(location) {
-  const currentPath = location.pathname;
-  return (
-    currentPath !== "/" &&
-    currentPath !== "/forgotpassword" &&
-    currentPath !== "/checkemail" &&
-    currentPath !== "/resetpassword" &&
-    currentPath !== "/setpassword" &&
-    currentPath !== "/profile" &&
-    currentPath !== "/profile/permissions" &&
-    currentPath !== "/profile/updatePassword" &&
-    currentPath !== "/resendemail" &&
-    currentPath !== "/passwordupdatesuccess"
-  );
-}
+// function shouldRenderNavbar(location) {
+//   const currentPath = location.pathname;
+//   return (
+//     currentPath !== "/" &&
+//     currentPath !== "/forgotpassword" &&
+//     currentPath !== "/checkemail" &&
+//     currentPath !== "/resetpassword" &&
+//     currentPath !== "/setpassword" &&
+//     currentPath !== "/profile" &&
+//     currentPath !== "/profile/permissions" &&
+//     currentPath !== "/profile/updatePassword" &&
+//     currentPath !== "/resendemail" &&
+//     currentPath !== "/passwordupdatesuccess"
+//   );
+// }
 
-function shouldRenderTopnav(location) {
-  const currentPath = location.pathname;
-  return (
-    currentPath !== "/" &&
-    currentPath !== "/forgotpassword" &&
-    currentPath !== "/checkemail" &&
-    currentPath !== "/resetpassword" &&
-    currentPath !== "/setpassword" &&
-    currentPath !== "/profile" &&
-    currentPath !== "/profile/permissions" &&
-    currentPath !== "/profile/updatePassword" &&
-    currentPath !== "/resendemail" &&
-    currentPath !== "/passwordupdatesuccess"
-  );
-}
+// function shouldRenderTopnav(location) {
+//   const currentPath = location.pathname;
+//   return (
+//     currentPath !== "/" &&
+//     currentPath !== "/forgotpassword" &&
+//     currentPath !== "/checkemail" &&
+//     currentPath !== "/resetpassword" &&
+//     currentPath !== "/setpassword" &&
+//     currentPath !== "/profile" &&
+//     currentPath !== "/profile/permissions" &&
+//     currentPath !== "/profile/updatePassword" &&
+//     currentPath !== "/resendemail" &&
+//     currentPath !== "/passwordupdatesuccess"
+//   );
+// }
 
 export default App;
