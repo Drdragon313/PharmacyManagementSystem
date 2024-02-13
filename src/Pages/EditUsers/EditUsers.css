@@ -99,3 +99,7 @@
 .usercreationtxt {
   color: #3a3475;
 }
+.breadcrumb-border-edit-user {
+  border: 1px solid #ededed;
+  padding-left: 10px;
+}

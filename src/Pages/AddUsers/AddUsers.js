@@ -196,7 +196,11 @@ const AddUsers = () => {
   ];
   return (
     <div className="AddUsersBasicContainer">
-      <CustomBreadcrumb seperator=">>" items={breadcrumbItems} />
+      <div className="breadcrumb-border-add-pharmacy">
+        {" "}
+        <CustomBreadcrumb seperator=">>" items={breadcrumbItems} />
+      </div>
+
       <div className="AddUsersBasicInfoHeading">
         <h5 className="usercreationtxt">New user creation</h5>
       </div>
@@ -262,11 +266,12 @@ const AddUsers = () => {
                   name="Role"
                   onChange={(value) => handleSelectChange("Pharmacy", value)}
                 >
-                  {avaiablePharmacies.map((option) => (
-                    <Option key={option.id} value={option.id}>
-                      {option.pharmacyName}
-                    </Option>
-                  ))}
+                  {avaiablePharmacies &&
+                    avaiablePharmacies.map((option) => (
+                      <Option key={option.id} value={option.id}>
+                        {option.pharmacyName}
+                      </Option>
+                    ))}
                 </Select>
               </div>
               <CustomInput

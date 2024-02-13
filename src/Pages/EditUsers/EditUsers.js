@@ -259,10 +259,12 @@ const EditUsers = () => {
   return (
     <div className="AddUsersBasicContainer">
       {userID && (
-        <CustomBreadcrumb
-          seperator=">>"
-          items={breadcrumbItems}
-        ></CustomBreadcrumb>
+        <div className="breadcrumb-border-edit-user">
+          <CustomBreadcrumb
+            seperator=">>"
+            items={breadcrumbItems}
+          ></CustomBreadcrumb>
+        </div>
       )}
       <div className="AddUsersBasicInfoHeading">
         {userID ? (
@@ -394,12 +396,6 @@ const EditUsers = () => {
                 >
                   {userID ? "Update User" : "Update Profile"}
                 </CustomButton>
-                {/* <button
-                  type="submit"
-                  className="AddUsersInformationUpdateBtn"
-                >
-                  {userID ? "Update User" : "Update Profile"}
-                </button> */}
               </div>
             </div>
           </div>
@@ -497,7 +493,7 @@ const EditUsers = () => {
                 labelText="Select address"
                 selectclassName="GenderInput ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
                 name="Address"
-                value={data.Address}
+                value={data.PostTown}
                 onChange={handleSelectChange}
                 options={
                   pCodeResponse ? pCodeResponse.map((item) => item.Address) : []
@@ -508,7 +504,7 @@ const EditUsers = () => {
                 labelclassName="addUserNotLabel"
                 labelText="Town"
                 inputclassName="AddUsersDetailsInput"
-                inputName="PostTown" // <-- Remove the extra space before PostTown
+                inputName="PostTown"
                 handleChange={handleChange}
                 value={data.PostTown}
               />

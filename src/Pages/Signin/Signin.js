@@ -46,9 +46,7 @@ const Signin = () => {
       } else {
         message.error("Invalid Credentials", 2);
       }
-    } catch (error) {
-      // ... (existing error handling code)
-    }
+    } catch (error) {}
   };
 
   return (
