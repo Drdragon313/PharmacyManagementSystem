@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Iframe.css";
 import { PowerBIEmbed } from "powerbi-client-react";
 import { embedConfig, getReportData } from "../Utility Function/ReportUtils";
-const Employee = () => {
+const Services = () => {
   const [reportData, setReportData] = useState({
     embedToken: "",
     pharmacyIDs: [],
@@ -46,4 +46,4 @@ const Employee = () => {
   );
 };
 
-export default Employee;
+export default Services;

@@ -47,6 +47,8 @@ import EditPharmacy from "./Pages/EditPharmacy/EditPharmacy";
 import Owing from "./Iframes/Owing";
 import Employee from "./Iframes/Employee";
 import FaqPage from "./Pages/FaqPage/FaqPage";
+import Services from "./Iframes/Services";
+import Prescriptions from "./Iframes/Prescriptions";
 const { Content } = Layout;
 
 function App() {
@@ -125,6 +127,8 @@ function MainContent() {
             <Route path="/CostofStock" element={<CostofStock />}></Route>
             <Route path="/Owing" element={<Owing />}></Route>
             <Route path="/EmployeeReport" element={<Employee />}></Route>
+            <Route path="/Services" element={<Services />}></Route>
+            <Route path="/Prescriptions" element={<Prescriptions />}></Route>
 
             <Route path="schema/autopopulate" element={<AutoPopulate />} />
             <Route path="users/AddUser" element={<AddUsers />} />
