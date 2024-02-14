@@ -12,6 +12,16 @@ const CostofStock = () => {
   useEffect(() => {
     getReportData(setReportData);
   }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       await getReportData(setReportData);
+  //     } catch (error) {
+  //       console.error("Error fetching report data:", error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
   const table = "public pharmacies";
   const column = "id";
   const operator = "eq";
