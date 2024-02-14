@@ -48,6 +48,8 @@ import EditPharmacy from "./Pages/EditPharmacy/EditPharmacy";
 import Owing from "./Iframes/Owing";
 import Employee from "./Iframes/Employee";
 import FaqPage from "./Pages/FaqPage/FaqPage";
+import Services from "./Iframes/Services";
+import Prescriptions from "./Iframes/Prescriptions";
 const { Content } = Layout;
 
 function App() {

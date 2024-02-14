@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import CustomButton from "../../Components/CustomButton/CustomButton";
+import { fetchUserPermissions } from "../../Utility Function/ModulesAndPermissions";
 const { Option } = Select;
 
 const EditUsers = () => {
@@ -50,6 +51,7 @@ const EditUsers = () => {
   const [pCodeResponse, setPCodeResponse] = useState([]);
   const [permissions, setPermissions] = useState([]);
   const [selectedRole, setSelectedRole] = useState();
+  const [isRoleSelectDisabled, setIsRoleSelectDisabled] = useState(false);
   const { userID } = useParams();
   const breadcrumbItems = [
     { label: "Employees", link: "/employeepage" },
@@ -170,6 +172,19 @@ const EditUsers = () => {
           setPermissions(permissionsData);
         })
         .catch(() => {});
+      const setUserPermissions = (permissions) => {
+        // Check if the update action for module_id 7 is false
+        const isUpdateActionAllowed = permissions.find(
+          (permission) =>
+            permission.module_id === 7 && permission.actions.update === false
+        );
+
+        // Set the state to disable/enable the Role Select field
+        setIsRoleSelectDisabled(isUpdateActionAllowed);
+      };
+
+      // Fetch user permissions using the utility function
+      fetchUserPermissions(setUserPermissions);
     }
   }, [data.Selected_Role_Name]);
 
@@ -197,18 +212,16 @@ const EditUsers = () => {
       [name]: value,
     }));
   };
-  const ukTelephoneNumberRegex = /^\+44\s?\d{3}\s?\d{7}$/;
 
-  const handleContactBlur = (e) => {
-    if (ukTelephoneNumberRegex.test(data.Contact)) {
+  const handleContactValidation = (contactValue) => {
+    const ukTelephoneNumberRegex = /^\+44\s?\d{3}\s?\d{7}$/;
+
+    if (ukTelephoneNumberRegex.test(contactValue)) {
       setValidContact(true);
     } else {
       setValidContact(false);
     }
   };
-  useEffect(() => {
-    handleContactBlur();
-  }, [data.Contact]);
 
   const handleSelectChange = (fieldName, value) => {
     if (fieldName === "Selected_Role_Name") {
@@ -304,9 +317,11 @@ const EditUsers = () => {
                 <Input
                   className="EditUsersDetailsInputContact"
                   name="Contact"
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    handleChange(e); // Call your existing handleChange function
+                    handleContactValidation(e.target.value);
+                  }}
                   value={data.Contact}
-                  onBlur={handleContactBlur}
                 />
                 {data.Contact.length > 0 && !validContact && (
                   <p className="InvalidContactTxt">Invalid Contact</p>
@@ -324,7 +339,7 @@ const EditUsers = () => {
                   onChange={(value) =>
                     handleSelectChange("Selected_Role_Name", value)
                   }
-                  disabled={userID ? false : true}
+                  disabled={isRoleSelectDisabled}
                 >
                   {data.Available_Roles.map((option) => (
                     <Option key={option.id} value={option.id}>
@@ -435,7 +450,7 @@ const EditUsers = () => {
                 labelclassName={userID ? "adduserLabel" : "addUserNotLabel"}
                 labelText="Email"
                 type="email"
-                inputclassName="AddUsersDetailsInput"
+                inputclassName="EditUsersDetailsInput"
                 inputName="Email"
                 handleChange={handleChange}
                 value={data.Email}
@@ -448,10 +463,14 @@ const EditUsers = () => {
                   className="GenderInput ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
                   name="Role_Permissions"
                   value={data.Role_Permissions}
+                  style={{
+                    backgroundColor:
+                      userID && !isRoleSelectDisabled ? "#d9d9d9" : "inherit",
+                  }}
                   onChange={(value) =>
                     handleSelectChange("Role_Permissions", value)
                   }
-                  disabled={userID ? false : true}
+                  disabled={userID && !isRoleSelectDisabled ? false : true}
                 >
                   {permissions.map((option) => (
                     <Option key={option} value={option}>
@@ -483,7 +502,7 @@ const EditUsers = () => {
                     inputName="Line_Manager"
                     handleChange={handleChange}
                     value={data.Line_Manager}
-                    disabled={userID ? false : true}
+                    disabled={true}
                   />
                 </Col>
               </Row>
