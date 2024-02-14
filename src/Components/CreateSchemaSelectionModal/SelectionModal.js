@@ -3,9 +3,8 @@ import "./Style.css";
 import CustomCard from "../Card/Card";
 import { Row, Col, Modal, Image } from "antd";
 import SchemaCreationForm from "../SchemaCreationForm/SchemaCreationForm";
-import databaseImg from "../../Assets/uploadDatabase.png";
-import manulaImg from "../../Assets/manual.png";
-import CSVimg from "../../Assets/csv.png";
+import manulaImg from "../../Assets/manual.svg";
+import CSVimg from "../../Assets/csv.svg";
 const SelectionModal = ({ visible, setSelectionModalVisible, tilePath }) => {
   const [isSchemaFormVisible, setSchemaFormVisible] = useState(false);
   const [selectedType, setSelectedType] = useState(null);
@@ -21,10 +20,10 @@ const SelectionModal = ({ visible, setSelectionModalVisible, tilePath }) => {
     <>
       <Modal
         open={visible}
-        // width={800}
         onCancel={() => setSelectionModalVisible(false)}
         footer={null}
         className="modalstyle"
+        style={{ overflowX: "hidden" }}
       >
         <h5 className="heading">Select a Method To Create New Schema</h5>
         <p className="sub-heading">

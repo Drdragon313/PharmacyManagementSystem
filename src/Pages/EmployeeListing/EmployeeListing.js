@@ -391,7 +391,9 @@ const EmployeeListing = () => {
       </div>
     );
   };
-
+  const handleClearSearch = () => {
+    setSearchedName("");
+  };
   const handleSearch = (searchValue) => {
     setSearchedName(searchValue);
   };
@@ -477,6 +479,7 @@ const EmployeeListing = () => {
               placeholder="Search Here..."
               onSearch={handleSearch}
               enterButton
+              allowClear
             />
           </Col>
           <Col span={4}></Col>
