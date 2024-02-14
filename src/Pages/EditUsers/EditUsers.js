@@ -439,7 +439,7 @@ const EditUsers = () => {
                 inputName="Email"
                 handleChange={handleChange}
                 value={data.Email}
-                disabled={userID ? false : true}
+                disabled={true}
               />
               <div className="mb-3">
                 <label className="addUserNotLabel">Permissions</label>

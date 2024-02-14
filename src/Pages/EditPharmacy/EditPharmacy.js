@@ -258,7 +258,6 @@ const EditPharmacy = () => {
               > */}
               <CustomInput
                 divclassName="mb-3"
-                labelclassName="adduserNotLabel"
                 labelText="Building Name"
                 inputclassName="AddUsersDetailsInput"
                 inputName="Line1"
@@ -274,7 +273,6 @@ const EditPharmacy = () => {
                 handleChange={handleChange}
                 value={data.Line2}
               />
-              {/* </div> */}
 
               <Button
                 type="dashed"
@@ -343,7 +341,6 @@ const EditPharmacy = () => {
               />
               <CustomInput
                 divclassName="mb-3"
-                labelclassName="adduserNotLabel"
                 labelText="Post Town"
                 inputclassName="AddUsersDetailsInput"
                 inputName="postTown"

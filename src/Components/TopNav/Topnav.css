@@ -45,8 +45,9 @@
   gap: 10px;
 }
 .mobile-drawer-nav {
-  width: 35vb !important;
-  height: 55vh !important;
+  max-width: 26vb !important;
+  min-width: 23vb !important;
+  min-height: 55vh !important;
 }
 :where(.css-dev-only-do-not-override-nnuwmp).ant-drawer .ant-drawer-body {
   padding-top: 0px !important;
