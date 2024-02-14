@@ -29,12 +29,8 @@ import SelectionModal from "../../Components/CreateSchemaSelectionModal/Selectio
 import CustomCard from "../../Components/Card/Card";
 import { Link } from "react-router-dom";
 import tileImg from "../../Assets/schemaImg.svg";
-import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";
 
 const TilePage = () => {
-  const authToken = localStorage.getItem("AuthorizationToken");
-  const [modalVisible, setModalVisible] = useState(!authToken);
-
   const [path, setPath] = useState([""]);
   const [tiles, setTiles] = useState([]);
   const [newCardName, setNewCardName] = useState("");
@@ -145,11 +141,8 @@ const TilePage = () => {
     setEditModalVisible(true);
   };
 
-  // ... (rest of your code)
-
   const handleEditTile = async () => {
     try {
-      // Call the utility function to update the tile name
       await updateTileNameApi(selectedTileIdForEdit, editedTileName);
       message.success("Tile updated successfully");
       setEditModalVisible(false);
@@ -185,12 +178,7 @@ const TilePage = () => {
       message.error("Selected schema or tile is not valid");
     }
   };
-  if (!authToken) {
-    const openModal = () => {
-      setModalVisible(true);
-    };
-    return <SignInFirstModal visible={modalVisible} open={openModal} />;
-  }
+
   return (
     <div className="tilepage-container">
       <Breadcrumb className="breadcrumb" separator=">">
@@ -205,8 +193,8 @@ const TilePage = () => {
         ))}
       </Breadcrumb>
 
-      <Row gutter={24}>
-        <Col span={22} md={12} lg={16} xl={22}>
+      <Row gutter={5}>
+        <Col span={23}>
           <h4 className="available-tiles-txt">Available Tiles</h4>
           <div className="allcards">
             {tiles.map((tile, index) => (
@@ -267,7 +255,7 @@ const TilePage = () => {
         </Col>
       </Row>
       <Row gutter={16}>
-        <Col span={22} md={12} lg={16} xl={22}>
+        <Col span={23}>
           <h4 className="available-tiles-txt">Available Schemas</h4>
           <div className="allSchemas">
             {schemas ? (
@@ -386,23 +374,10 @@ const TilePage = () => {
               onChange={(e) => setNewCardName(e.target.value)}
             />
           </Form.Item>
-          <Form.Item>
-            <div>
-              {iconsData && iconsData.length > 0 ? (
-                iconsData.map((icon, index) => (
-                  <div key={index}>
-                    <Image preview={false} src={icon.URL} className="icons" />
-                  </div>
-                ))
-              ) : (
-                <p>No icons data available.</p>
-              )}
-            </div>
-          </Form.Item>
         </Form>
       </Modal>
       <Modal
-        visible={isEditModalVisible}
+        open={isEditModalVisible}
         title="Edit Tile"
         onCancel={() => setEditModalVisible(false)}
         onOk={handleEditTile}

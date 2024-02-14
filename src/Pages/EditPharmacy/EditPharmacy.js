@@ -62,8 +62,8 @@ const EditPharmacy = () => {
             pharmacyName: pharmacyData.pharmacyName,
             dateOfCreation: pharmacyData.dateOfCreation,
             rent: pharmacyData.rent,
-            Line1: pharmacyData.Line1,
-            Line2: pharmacyData.Line2,
+            Line1: pharmacyData.line1,
+            Line2: pharmacyData.line2,
             managerID: pharmacyData.managerID,
             managerName: pharmacyData.managerName,
             postCode: pharmacyData.postCode,
@@ -169,8 +169,8 @@ const EditPharmacy = () => {
           dateOfCreation: "",
           rent: null,
           manager_id: null,
-          Line1: "",
-          Line2: "",
+          line1: "",
+          line2: "",
           postCode: "",
           postTown: "",
           users: [],
@@ -258,7 +258,6 @@ const EditPharmacy = () => {
               > */}
               <CustomInput
                 divclassName="mb-3"
-                labelclassName="adduserNotLabel"
                 labelText="Building Name"
                 inputclassName="AddUsersDetailsInput"
                 inputName="Line1"
@@ -274,7 +273,6 @@ const EditPharmacy = () => {
                 handleChange={handleChange}
                 value={data.Line2}
               />
-              {/* </div> */}
 
               <Button
                 type="dashed"
@@ -343,7 +341,6 @@ const EditPharmacy = () => {
               />
               <CustomInput
                 divclassName="mb-3"
-                labelclassName="adduserNotLabel"
                 labelText="Post Town"
                 inputclassName="AddUsersDetailsInput"
                 inputName="postTown"

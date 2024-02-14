@@ -5,6 +5,20 @@
   background: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+.top-nav-logo-container {
+  margin-left: -20px;
+}
+.ProfileDropdown {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.top-nav-column {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 .TopnavUser {
   display: flex;
   flex-direction: column;
@@ -30,28 +44,38 @@
   justify-content: space-between;
   gap: 10px;
 }
-@media screen and (max-width: 480px) {
-  .TopnavUserName {
-    height: 10px;
-    width: 60px;
-    color: #009cdf;
-  }
-  .TopnavJobTitle {
-    height: 10px;
-    width: 60px;
-    margin-top: 10px;
-  }
-  .TopnavSearch {
-    margin-left: -40px;
-    margin-right: 30px;
+.mobile-drawer-nav {
+  max-width: 26vb !important;
+  min-width: 23vb !important;
+  min-height: 55vh !important;
+}
+:where(.css-dev-only-do-not-override-nnuwmp).ant-drawer .ant-drawer-body {
+  padding-top: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+
+  background-color: #3a3475;
+}
+:where(.css-dev-only-do-not-override-nnuwmp).ant-drawer .ant-drawer-header {
+  background-color: #3a3475;
+}
+.mobileButton {
+  display: none;
+  margin-right: 10px;
+
+  @media (max-width: 768px) {
+    display: block;
   }
 }
-.ProfileDropdown {
-  cursor: pointer;
-}
-.ProfileNavlink {
-  text-decoration: none;
-}
-.nav-drop-down {
-  margin-top: -18px;
+@media only screen and (max-width: 768px) {
+  .TopnavHeader {
+    background-color: #3a3475;
+    color: #fff;
+  }
+  .TopnavUser {
+    display: none;
+  }
+  .nav-itmes-contianer {
+    margin-right: -40px !important;
+  }
 }

@@ -5,13 +5,23 @@
 .sub-heading {
   text-align: center;
   font-size: 14px !important;
+  font-weight: 400;
+  font-family: Poppins, sans-serif;
 }
 .modalstyle {
   align-items: center;
-  width: 55vw !important;
+  width: 45vw !important;
+  /* overflow-y: hidden !important;
+  overflow-x: hidden !important; */
+  font-family: Poppins, sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 36px;
+  letter-spacing: 0em;
+  text-align: left;
 }
 .modalstyle p {
-  font-size: 9px;
+  font-size: 8px;
 }
 .importManuallycard,
 .importfromDataBase,
@@ -23,19 +33,23 @@
   height: 20vmin;
   margin: 10px;
   border: 1px solid;
-  border-color: #707477;
+  border-color: #2a44c1 !important;
   text-align: center;
-  color: black;
+  color: #2a44c1 !important;
+  font-family: Poppins, sans-serif !important;
+  font-size: 16px;
+  font-weight: 400;
+  border-radius: 12px;
+  letter-spacing: 0em;
+  text-align: center;
+
   transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s,
     color 0.3s;
 }
 
 .importManuallycard:hover {
   cursor: pointer;
-  border-color: #001529;
-  box-shadow: 2px 2px 4px rgba(0, 21, 41, 100);
-  background: linear-gradient(to bottom, #009ee2, #001529);
-  color: aliceblue;
+  background: #eff1ff;
 }
 
 .importfromDataBase {
@@ -46,15 +60,7 @@
   border-color: #707477;
   text-align: center;
   color: black;
-  transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s, color 0,
-    3s;
-}
-.importfromDataBase:hover {
-  cursor: pointer;
-  border-color: #001529;
-  box-shadow: 2px 2px 4px rgba(0, 21, 41, 100);
-  background: linear-gradient(to bottom, #009ee2, #001529);
-  color: aliceblue;
+  transition: border-color 0.3s, background-color 0.3s, color 0, 3s;
 }
 .importfromCSV {
   width: 30vmin;
@@ -64,22 +70,13 @@
   border-color: #707477;
   text-align: center;
   color: black;
-  transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s,
-    color 0.3s;
+  transition: border-color 0.3s, background-color 0.3s, color 0.3s;
 }
 .importfromCSV:hover {
   cursor: pointer;
-  border-color: #001529;
-  box-shadow: 2px 2px 4px rgba(0, 21, 41, 100);
-  background: linear-gradient(to bottom, #009ee2, #001529);
-  color: aliceblue;
+  background: #eff1ff;
 }
 
-.DBimg {
-  height: 30px !important;
-  width: 30px !important;
-  margin-top: -30px;
-}
 .manualImg {
   height: 30px !important;
   width: 25px !important;
@@ -93,11 +90,12 @@
 .importManuallycard p,
 .importfromDataBase p,
 .importfromCSV p {
-  font-size: 8px;
+  font-size: 9px;
 }
 
-@media (max-width: 1200px) {
+@media screen and (max-width: 768px) {
   .importManuallycard p,
+  .sub-heading,
   .importfromDataBase p,
   .importfromCSV p {
     display: none;

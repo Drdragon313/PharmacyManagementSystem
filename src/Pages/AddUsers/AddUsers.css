@@ -56,12 +56,13 @@
   border: 1px solid #3a3475;
   color: #3a3475;
   height: 5vh !important;
-  width: 10vw;
+  min-width: 5vw;
+  text-overflow: none;
 }
 .add-user-btn-submit {
   background: #425cda;
   color: white;
-  width: 12vw;
+  min-width: 12vw;
   height: 5vh !important;
   border-radius: 10px;
 }
@@ -101,4 +102,31 @@
 }
 .InvalidContactTxt {
   color: red;
+}
+@media screen and (max-width: 768px) {
+  .AddUsersDetails {
+    flex-direction: row;
+  }
+
+  .AddUsersOneDetails,
+  .AddUsersTwoDetails,
+  .AddUsersThreeDetails {
+    width: 100%;
+  }
+
+  .AddUsersDetailsInput,
+  .DetailsInput {
+    width: 100%;
+  }
+
+  .AddUsersInformationUpdateBtnContainer {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .add-user-btn-submit,
+  .AddUsersInformationCancelBtn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 }

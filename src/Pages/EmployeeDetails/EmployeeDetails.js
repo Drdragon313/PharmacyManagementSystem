@@ -95,7 +95,7 @@ const EmployeeDetails = () => {
             <div className="values">
               <p>{employeeDetails.FName}</p>
               <p> {employeeDetails.LName}</p>
-              <p> {employeeDetails.Gender}</p>
+              <p> {employeeDetails.Gender || "None"}</p>
               <p> {employeeDetails.DateOfBirth}</p>
               <p> {employeeDetails.Contact}</p>
               <p> {employeeDetails.Email}</p>

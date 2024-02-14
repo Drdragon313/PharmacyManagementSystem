@@ -9,7 +9,7 @@
 .add-emp-modal-ok-btn {
   width: 40%;
 }
-.ant-modal-body {
+.add-emp-modal {
   max-height: calc(100vh - 200px);
   overflow-y: auto;
 }
