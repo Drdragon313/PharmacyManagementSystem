@@ -235,7 +235,6 @@ const AddPharmacy = () => {
 
               <CustomInput
                 divclassName="mb-3"
-                labelclassName="adduserNotLabel"
                 labelText="Building Name"
                 inputclassName="AddUsersDetailsInput"
                 inputName="Line1"
@@ -327,7 +326,6 @@ const AddPharmacy = () => {
               />
               <CustomInput
                 divclassName="mb-3"
-                labelclassName="adduserNotLabel"
                 labelText="Post Town"
                 inputclassName="AddUsersDetailsInput"
                 inputName="postTown"

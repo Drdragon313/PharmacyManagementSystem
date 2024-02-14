@@ -37,20 +37,6 @@ const SelectionModal = ({ visible, setSelectionModalVisible, tilePath }) => {
           justify={"space-evenly"}
           align={"middle"}
         >
-          <Col>
-            <CustomCard className="importfromDataBase">
-              <Image
-                className="DBimg"
-                src={databaseImg}
-                preview={false}
-              ></Image>
-              <h6>Connect To Database</h6>
-              <p>
-                This method will allow users to connect to their existence
-                database to import their desired schema.
-              </p>
-            </CustomCard>
-          </Col>
           <Col onClick={() => openSchemaCreationForm("manual")} type="manual">
             <CustomCard className="importManuallycard">
               <Image

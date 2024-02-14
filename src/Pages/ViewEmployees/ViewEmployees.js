@@ -51,6 +51,7 @@ const ViewEmployees = () => {
     4: "Pharmacy",
     5: "Data Tiles",
     6: "Employees",
+    7: "Roles",
   };
 
   return (
@@ -120,33 +121,38 @@ const ViewEmployees = () => {
               <p> {employeeDetails.roleName || "None"}</p>
               <p> {employeeDetails.Salary || "None"}</p>
               <p>
-                {employeeDetails.pharmacies &&
-                  (employeeDetails.pharmacies.length > 0
+                {employeeDetails.pharmacies
+                  ? employeeDetails.pharmacies.length > 0
                     ? employeeDetails.pharmacies
                         .map((value) => value.postCode)
                         .join(", ")
-                    : "None")}
+                    : "N/A"
+                  : "N/A"}
               </p>
               <p>
-                {employeeDetails.pharmacies &&
-                  (employeeDetails.pharmacies.some(
-                    (value) => value.managerName !== ""
-                  )
+                {employeeDetails.pharmacies
+                  ? employeeDetails.pharmacies.some(
+                      (value) => value.managerName !== ""
+                    )
                     ? employeeDetails.pharmacies
                         .filter((value) => value.managerName !== "")
                         .map((value) => value.managerName)
                         .join(", ")
-                    : "None")}
+                    : "N/A"
+                  : "N/A"}
               </p>
-              <p> {employeeDetails.Address || "None"}</p>
+              <p> {employeeDetails.Address || "N/A"}</p>
               <p>
-                {employeeDetails.pharmacies &&
-                  (employeeDetails.pharmacies.some((value) => value.name !== "")
+                {employeeDetails.pharmacies
+                  ? employeeDetails.pharmacies.some(
+                      (value) => value.postCode !== ""
+                    )
                     ? employeeDetails.pharmacies
-                        .filter((value) => value.name !== "")
-                        .map((value) => value.name)
+                        .filter((value) => value.postCode !== "")
+                        .map((value) => value.postCode)
                         .join(", ")
-                    : "None")}
+                    : "N/A"
+                  : "N/A"}
               </p>
             </div>
             <div className="values2">

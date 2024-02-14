@@ -8,7 +8,9 @@
 }
 .modalstyle {
   align-items: center;
-  width: 55vw !important;
+  width: 40vw !important;
+  overflow-y: hidden !important;
+  overflow-x: hidden !important;
 }
 .modalstyle p {
   font-size: 9px;
@@ -96,8 +98,9 @@
   font-size: 8px;
 }
 
-@media (max-width: 1200px) {
+@media screen and (max-width: 768px) {
   .importManuallycard p,
+  .sub-heading,
   .importfromDataBase p,
   .importfromCSV p {
     display: none;
