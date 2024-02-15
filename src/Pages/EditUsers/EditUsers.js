@@ -240,7 +240,7 @@ const EditUsers = () => {
     }
     if (fieldName === "Address") {
       const selectedAddress = pCodeResponse.find(
-        (item) => item.Address === value
+        (item) => item.address === value
       );
       const selectedUdprn = selectedAddress.udprn;
       console.log("Selected udpRN:", selectedUdprn);
@@ -516,7 +516,7 @@ const EditUsers = () => {
                 name="Address"
                 onChange={handleSelectChange}
                 options={
-                  pCodeResponse ? pCodeResponse.map((item) => item.Address) : []
+                  pCodeResponse ? pCodeResponse.map((item) => item.address) : []
                 }
                 value={data.PostTown}
               />
