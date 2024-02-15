@@ -121,7 +121,12 @@ const AddPharmacy = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    if (!data.managerID) {
+      message.error(
+        "Please select a Pharmacy Manager before creating the pharmacy"
+      );
+      return;
+    }
     if (!data.postCode || !data.postTown) {
       message.error("Please select the appropriate address");
       return;

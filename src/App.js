@@ -8,8 +8,7 @@ import {
 } from "react-router-dom";
 import { Layout } from "antd";
 import MainLayout from "./Layout/MainLayout";
-import Navbar from "./Components/Navbar/Navbar";
-import Topnav from "./Components/TopNav/Topnav";
+
 import SchemaDetail from "./Components/AvailableSchema/SchemaDetail";
 import CustomSchema from "./Pages/CustomSchema/CustomSchema";
 import Iframe from "./Iframes/Iframe";

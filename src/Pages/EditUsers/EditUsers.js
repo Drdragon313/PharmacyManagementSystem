@@ -74,6 +74,7 @@ const EditUsers = () => {
             ...prevData,
             ...datafromAPI,
           }));
+          handleContactValidation(datafromAPI.Contact);
         })
         .catch((error) => {
           message.error("Failed to fetch employee details", 3);
@@ -216,7 +217,7 @@ const EditUsers = () => {
   const handleContactValidation = (contactValue) => {
     const ukTelephoneNumberRegex = /^\+44\s?\d{3}\s?\d{7}$/;
 
-    if (ukTelephoneNumberRegex.test(contactValue)) {
+    if (contactValue && ukTelephoneNumberRegex.test(contactValue)) {
       setValidContact(true);
     } else {
       setValidContact(false);
@@ -318,7 +319,7 @@ const EditUsers = () => {
                   className="EditUsersDetailsInputContact"
                   name="Contact"
                   onChange={(e) => {
-                    handleChange(e); // Call your existing handleChange function
+                    handleChange(e);
                     handleContactValidation(e.target.value);
                   }}
                   value={data.Contact}

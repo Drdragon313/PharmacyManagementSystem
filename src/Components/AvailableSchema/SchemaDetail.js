@@ -58,7 +58,7 @@ const SchemaDetails = () => {
     <div>
       {schemaData ? (
         <div className="table">
-          <h3 style={{ marginLeft: "10px" }}>Schema Name: {schemaData.name}</h3>
+          <h3 style={{ marginLeft: "10px" }}>Tile Name: {schemaData.name}</h3>
           <Table
             className="schema-table"
             dataSource={schemaData.data}
