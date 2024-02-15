@@ -39,7 +39,7 @@ const EditUsers = () => {
     Line_Manager_id: "",
     Line1: "",
     Line2: "",
-    PostTown: "",
+    postTown: "",
     salary: "",
     Available_Roles: [],
     AvailablePharmacies: [],
@@ -518,7 +518,7 @@ const EditUsers = () => {
                 options={
                   pCodeResponse ? pCodeResponse.map((item) => item.address) : []
                 }
-                value={data.PostTown}
+                value={data.postTown}
               />
               <CustomInput
                 divclassName="mb-3"
@@ -527,7 +527,7 @@ const EditUsers = () => {
                 inputclassName="AddUsersDetailsInput"
                 inputName="PostTown"
                 handleChange={handleChange}
-                value={data.PostTown}
+                value={data.postTown}
               />
             </div>
           </div>
