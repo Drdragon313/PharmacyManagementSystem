@@ -240,7 +240,7 @@ const EditUsers = () => {
     }
     if (fieldName === "Address") {
       const selectedAddress = pCodeResponse.find(
-        (item) => item.address === value
+        (item) => item.Address === value
       );
       const selectedUdprn = selectedAddress.udprn;
       AddressHandler(setData, selectedUdprn);
@@ -513,7 +513,7 @@ const EditUsers = () => {
                 labelText="Select address"
                 selectclassName="GenderInput ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
                 name="Address"
-                value={data.PostTown}
+                value={data.Address}
                 onChange={handleSelectChange}
                 options={
                   pCodeResponse ? pCodeResponse.map((item) => item.Address) : []
