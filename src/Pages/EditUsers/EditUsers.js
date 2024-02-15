@@ -243,6 +243,7 @@ const EditUsers = () => {
         (item) => item.Address === value
       );
       const selectedUdprn = selectedAddress.udprn;
+      console.log("Selected udpRN:", selectedUdprn);
       AddressHandler(setData, selectedUdprn);
     }
     setData((prevData) => ({
@@ -509,15 +510,15 @@ const EditUsers = () => {
               </Row>
               <CustomSelect
                 divclassName="mb-3"
-                labelclassName="addUserNotLabel"
-                labelText="Select address"
+                labelclassName="adduserNotLabel"
+                labelText="Please Select your Address"
                 selectclassName="GenderInput ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
                 name="Address"
-                value={data.Address}
                 onChange={handleSelectChange}
                 options={
                   pCodeResponse ? pCodeResponse.map((item) => item.Address) : []
                 }
+                value={data.PostTown}
               />
               <CustomInput
                 divclassName="mb-3"
