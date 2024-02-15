@@ -291,6 +291,7 @@ const EmployeeListing = () => {
           <span
             className="status-circle"
             style={{
+              textDecoration: text === "Awaiting" ? "underline" : "none",
               backgroundColor:
                 text === "Active"
                   ? "green"

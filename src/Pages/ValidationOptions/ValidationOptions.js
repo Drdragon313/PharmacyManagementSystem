@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./VaidationOptions.css";
-import { Col, Row, Button, Space, Image, Spin } from "antd";
+import { Row, Button, Space, Image, Spin } from "antd";
 import schemaImg from "../../Assets/schemaImg.svg";
 import axios from "axios";
 import { addIndex } from "../../redux/features/SchemaSelectionSlice/SchemaSelectionSlice";
