@@ -33,7 +33,7 @@ const EditUsers = () => {
     Contact: "",
     DateOfBirth: "",
     Pharmacy: [],
-    PostCode: "",
+    postCode: "",
     Address: "",
     Line_Manager: "",
     Line_Manager_id: "",
@@ -373,10 +373,10 @@ const EditUsers = () => {
                 labelclassName="addUserNotLabel"
                 labelText="Postcode"
                 inputclassName="AddUsersDetailsInput"
-                inputName="PostCode"
+                inputName="postCode"
                 handleChange={handleChange}
                 handleBlur={handleFindAddress}
-                value={data.PostCode}
+                value={data.postCode}
               />
 
               <CustomInput
