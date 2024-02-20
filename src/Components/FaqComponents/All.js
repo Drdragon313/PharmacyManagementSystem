@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./FaqStyle.css";
 import { Collapse, Image, theme } from "antd";
-import plusOutline from "../../Assets/plus.svg";
+
 import Papa from "papaparse";
-import {
-  MinusCircleOutlined,
-  PlusCircleOutlined,
-  PlusCircleTwoTone,
-} from "@ant-design/icons";
+import { MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
 
 const All = () => {
   const [faqData, setFaqData] = useState([]);
@@ -39,9 +35,18 @@ const All = () => {
       children: (
         <div>
           <p>{item.Answers}</p>
+          <p>
+            <strong>Navigation Path: </strong>
+            {item.Path}
+          </p>
           <div className="faq-img">
-            {item.Image && (
-              <Image src={item.Image} alt="FAQ Image" preview={false} />
+            {item.Image1 && (
+              <Image src={item.Image1} alt="FAQ Image" preview={false} />
+            )}
+          </div>
+          <div className="faq-img">
+            {item.Image2 && (
+              <Image src={item.Image2} alt="FAQ Image" preview={false} />
             )}
           </div>
         </div>

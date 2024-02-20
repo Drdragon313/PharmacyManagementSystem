@@ -289,7 +289,8 @@ const PharmacyDetails = () => {
                 <strong>Town</strong> <p> {pharmacyDetails.postTown}</p>
               </div>
               <div className="pharm-labels-values">
-                <strong>Street Name</strong> <p> {pharmacyDetails.line2}</p>
+                <strong>Street Name</strong>{" "}
+                <p> {pharmacyDetails.line2 ? pharmacyDetails.line2 : "N/A"}</p>
               </div>
             </div>
           </div>

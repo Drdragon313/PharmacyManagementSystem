@@ -170,6 +170,11 @@
 }
 .status-pointer {
   cursor: pointer;
+  text-decoration: underline;
+  transition: text-decoration 0.1s;
+}
+.status-pointer :hover {
+  text-decoration: none !important;
 }
 .delete-modal-ok-btn {
   background-color: #d92d20 !important;

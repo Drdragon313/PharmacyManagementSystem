@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./VaidationOptions.css";
-import { Col, Row, Button, Space, Image, Spin } from "antd";
+import { Row, Button, Space, Image, Spin } from "antd";
 import schemaImg from "../../Assets/schemaImg.svg";
 import axios from "axios";
 import { addIndex } from "../../redux/features/SchemaSelectionSlice/SchemaSelectionSlice";
@@ -97,55 +97,52 @@ const ValidationOptions = () => {
           </div>
         ) : (
           <div className="Options-containerElements">
-            <Row gutter={16}>
+            <Row gutter={22} className="schema-conatiner-row">
               {schemas.map((schema, index) => (
-                <Col span={6} className="validation-col" key={index}>
-                  <CustomCard
-                    className="schema-file-upload-cards"
-                    bordered={true}
-                  >
-                    <div className="schema-file-upload-content">
-                      <div className="dropdown">
-                        <Button className="dropbtn-schema">
-                          <MoreOutlined />
-                        </Button>
-                        <div className="dropdown-content">
-                          <Link to="fileUpload">
-                            <Button
-                              type="link"
-                              onClick={() =>
-                                handleMenuClick("uploadFile", index)
-                              }
-                            >
-                              Upload File
-                            </Button>
-                          </Link>
-                          <Link to={`/schema/${schema.id}`}>
-                            <Button type="link">View Details</Button>
-                          </Link>
-                        </div>
+                <CustomCard
+                  className="schema-file-upload-cards"
+                  bordered={true}
+                  key={index}
+                >
+                  <div className="schema-file-upload-content">
+                    <div className="dropdown">
+                      <Button className="dropbtn-schema-vo">
+                        <MoreOutlined />
+                      </Button>
+                      <div className="dropdown-content">
+                        <Link to="fileUpload">
+                          <Button
+                            type="link"
+                            onClick={() => handleMenuClick("uploadFile", index)}
+                          >
+                            Upload File
+                          </Button>
+                        </Link>
+                        <Link to={`/schema/${schema.schema_id}`}>
+                          <Button type="link">View Details</Button>
+                        </Link>
                       </div>
-                      <Space
-                        direction="vertical"
-                        size={2}
-                        className="schema-content"
-                      >
-                        <Image
-                          className="schema-file-upload-img"
-                          preview={false}
-                          src={schemaImg}
-                        ></Image>
-
-                        <h5 className="schema-file-upload-name">
-                          {" "}
-                          {schema.schema_name}
-                        </h5>
-                      </Space>
-
-                      <div></div>
                     </div>
-                  </CustomCard>
-                </Col>
+                    <Space
+                      direction="vertical"
+                      size={2}
+                      className="schema-content"
+                    >
+                      <Image
+                        className="schema-file-upload-img"
+                        preview={false}
+                        src={schemaImg}
+                      ></Image>
+
+                      <h5 className="schema-file-upload-name">
+                        {" "}
+                        {schema.schema_name}
+                      </h5>
+                    </Space>
+
+                    <div></div>
+                  </div>
+                </CustomCard>
               ))}
             </Row>
           </div>

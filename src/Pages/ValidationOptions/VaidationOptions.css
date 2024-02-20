@@ -9,6 +9,12 @@
   margin-left: 15px;
   margin-top: 10px;
 }
+.schema-conatiner-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 5px;
+}
 .Options-container {
   border-radius: 10px;
   border: 1px solid #d3d3d3;
@@ -27,18 +33,18 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  width: 100%;
-  background: #fff;
+  width: 33vb;
+  background-color: #fff;
   height: 180px;
   margin-top: 10px;
   border: 1px solid #2a44c1;
   color: #2a44c1;
-  transform: border-style 0.5s border-color 0.5s box-shadow 1s;
+  transform: border-style 0.5s border-color 0.5s box-shadow 1s background-color
+    1s;
 }
 .schema-file-upload-cards:hover {
   cursor: pointer;
-  border-color: #fff;
-  box-shadow: 2px 2px 4px #2a44c1;
+  background-color: #eff1ff !important;
   color: #2a44c1;
   border-style: solid;
 }
@@ -111,6 +117,18 @@
   top: 55%;
   left: 56%;
   transform: translate(-50%, -50%);
+}
+.dropbtn-schema-vo {
+  color: #2a44c1;
+  padding: 1px;
+  border-radius: 5px;
+  margin-left: 20px;
+  margin-top: -10px;
+  font-size: 25px;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  position: absolute;
 }
 @media screen and (max-width: 768px) {
   .optionsCustomCard {

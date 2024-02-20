@@ -33,13 +33,13 @@ const EditUsers = () => {
     Contact: "",
     DateOfBirth: "",
     Pharmacy: [],
-    PostCode: "",
+    postCode: "",
     Address: "",
     Line_Manager: "",
     Line_Manager_id: "",
     Line1: "",
     Line2: "",
-    PostTown: "",
+    postTown: "",
     salary: "",
     Available_Roles: [],
     AvailablePharmacies: [],
@@ -74,6 +74,7 @@ const EditUsers = () => {
             ...prevData,
             ...datafromAPI,
           }));
+          handleContactValidation(datafromAPI.Contact);
         })
         .catch((error) => {
           message.error("Failed to fetch employee details", 3);
@@ -216,7 +217,7 @@ const EditUsers = () => {
   const handleContactValidation = (contactValue) => {
     const ukTelephoneNumberRegex = /^\+44\s?\d{3}\s?\d{7}$/;
 
-    if (ukTelephoneNumberRegex.test(contactValue)) {
+    if (contactValue && ukTelephoneNumberRegex.test(contactValue)) {
       setValidContact(true);
     } else {
       setValidContact(false);
@@ -242,6 +243,7 @@ const EditUsers = () => {
         (item) => item.address === value
       );
       const selectedUdprn = selectedAddress.udprn;
+      console.log("Selected udpRN:", selectedUdprn);
       AddressHandler(setData, selectedUdprn);
     }
     setData((prevData) => ({
@@ -318,7 +320,7 @@ const EditUsers = () => {
                   className="EditUsersDetailsInputContact"
                   name="Contact"
                   onChange={(e) => {
-                    handleChange(e); // Call your existing handleChange function
+                    handleChange(e);
                     handleContactValidation(e.target.value);
                   }}
                   value={data.Contact}
@@ -372,10 +374,10 @@ const EditUsers = () => {
                 labelclassName="addUserNotLabel"
                 labelText="Postcode"
                 inputclassName="AddUsersDetailsInput"
-                inputName="PostCode"
+                inputName="postCode"
                 handleChange={handleChange}
                 handleBlur={handleFindAddress}
-                value={data.PostCode}
+                value={data.postCode}
               />
 
               <CustomInput
@@ -508,15 +510,15 @@ const EditUsers = () => {
               </Row>
               <CustomSelect
                 divclassName="mb-3"
-                labelclassName="addUserNotLabel"
-                labelText="Select address"
+                labelclassName="adduserNotLabel"
+                labelText="Please Select your Address"
                 selectclassName="GenderInput ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
                 name="Address"
-                value={data.PostTown}
                 onChange={handleSelectChange}
                 options={
-                  pCodeResponse ? pCodeResponse.map((item) => item.Address) : []
+                  pCodeResponse ? pCodeResponse.map((item) => item.address) : []
                 }
+                value={data.postTown}
               />
               <CustomInput
                 divclassName="mb-3"
@@ -525,7 +527,7 @@ const EditUsers = () => {
                 inputclassName="AddUsersDetailsInput"
                 inputName="PostTown"
                 handleChange={handleChange}
-                value={data.PostTown}
+                value={data.postTown}
               />
             </div>
           </div>
