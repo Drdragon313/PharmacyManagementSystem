@@ -251,6 +251,22 @@ function MainContent() {
               }
             ></Route>
             <Route
+              path="/Prescriptions"
+              element={
+                <MainLayout>
+                  <Prescriptions />
+                </MainLayout>
+              }
+            ></Route>
+            <Route
+              path="/Services"
+              element={
+                <MainLayout>
+                  <Services />
+                </MainLayout>
+              }
+            ></Route>
+            <Route
               path="/Owing"
               element={
                 <MainLayout>
