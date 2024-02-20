@@ -49,6 +49,7 @@ import Employee from "./Iframes/Employee";
 import FaqPage from "./Pages/FaqPage/FaqPage";
 import Services from "./Iframes/Services";
 import Prescriptions from "./Iframes/Prescriptions";
+import TillSales from "./Iframes/TillSales";
 const { Content } = Layout;
 
 function App() {
@@ -255,6 +256,14 @@ function MainContent() {
               element={
                 <MainLayout>
                   <Prescriptions />
+                </MainLayout>
+              }
+            ></Route>
+            <Route
+              path="/TillSales"
+              element={
+                <MainLayout>
+                  <TillSales />
                 </MainLayout>
               }
             ></Route>
