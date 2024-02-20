@@ -260,7 +260,11 @@ const TilePage = () => {
           <div className="allSchemas">
             {schemas ? (
               schemas.map((schema, index) => (
-                <CustomCard className="schemacards" key={index} bordered={true}>
+                <CustomCard
+                  className="schemacards-tilepage"
+                  key={index}
+                  bordered={true}
+                >
                   <div className="dropdown">
                     <Button className="dropbtn-schema">
                       <MoreOutlined />

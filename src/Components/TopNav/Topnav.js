@@ -14,11 +14,12 @@ import SideMenuBar from "../Navbar/SideMenuBar";
 import CustomButton from "../CustomButton/CustomButton";
 import Helplogo from "../../Assets/helplogo.svg";
 import logo from "../../Assets/logo_for_nav.svg";
+import cross from "../../Assets/cross.svg";
 const { Header, Footer } = Layout;
 
 const Topnav = () => {
   const [showMobileDrawer, setShowMobileDrawer] = useState(false);
-
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [userData, setUserData] = useState({
     FName: "",
     LName: "",
@@ -102,32 +103,43 @@ const Topnav = () => {
       .catch(() => {
         message.error("Some Error has Occured in Loading Information!", 2);
       });
-    const handleToggleMobileDrawer = () => {
-      const screenWidth = window.innerWidth;
-
-      if (screenWidth <= 680) {
-        setShowMobileDrawer(!showMobileDrawer);
-      }
-    };
-    handleToggleMobileDrawer();
   }, []);
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
 
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []); // Effect only runs once to set up the resize listener
+
+  useEffect(() => {
+    if (windowWidth > 770 && showMobileDrawer) {
+      setShowMobileDrawer(false);
+    }
+  }, [windowWidth, showMobileDrawer]); // Effect to close drawer if window width increases
+
+  const handleToggleMobileDrawer = () => {
+    setWindowWidth(window.innerWidth);
+
+    if (window.innerWidth <= 770) {
+      setShowMobileDrawer(!showMobileDrawer);
+    }
+  };
   return (
     <Layout>
       <Header className="TopnavHeader">
         <div>
-          <Image
-            className="top-nav-logo-container"
-            src={logo}
-            preview={false}
-          ></Image>
+          <MenuOutlined
+            className="mobileButton"
+            onClick={() => handleToggleMobileDrawer()}
+          />
         </div>
 
         <div className="ProfileDropdown">
-          <MenuOutlined
-            className="mobileButton"
-            onClick={setShowMobileDrawer}
-          />
           <Dropdown
             menu={{
               items,
@@ -158,8 +170,27 @@ const Topnav = () => {
           onClose={() => setShowMobileDrawer(false)}
           open={showMobileDrawer}
           className="mobile-drawer-nav"
+          title={false}
+          closeIcon={false}
         >
+          <div className="top-nav-logo-container">
+            <div className="responsive-nav-logo">
+              <Image src={logo} preview={false}></Image>
+            </div>
+            <div>
+              <p className="responsive-nav-txt">Pharmalytics</p>
+            </div>
+
+            <div className="cross-btn">
+              <Image
+                src={cross}
+                preview={false}
+                onClick={() => setShowMobileDrawer(false)}
+              ></Image>
+            </div>
+          </div>
           <SideMenuBar
+            className="side-menu-bar-items"
             collapsed={true}
             toggleMobileDrawer={() => setShowMobileDrawer(false)}
           />
