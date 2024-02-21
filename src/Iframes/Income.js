@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Iframe.css";
 import { PowerBIEmbed } from "powerbi-client-react";
 import { embedConfig, getReportData } from "../Utility Function/ReportUtils";
-const Owing = () => {
+const Income = () => {
   const [reportData, setReportData] = useState({
     embedToken: "",
     pharmacyIDs: [],
@@ -11,6 +11,7 @@ const Owing = () => {
   useEffect(() => {
     getReportData(setReportData);
   }, []);
+
   const table = "public pharmacies";
   const column = "id";
   const operator = "eq";
@@ -45,4 +46,4 @@ const Owing = () => {
   );
 };
 
-export default Owing;
+export default Income;

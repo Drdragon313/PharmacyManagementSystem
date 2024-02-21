@@ -17,7 +17,7 @@ const Employee = () => {
   const operator = "eq";
 
   return (
-    <div>
+    <div className="iframe-container">
       <PowerBIEmbed
         embedConfig={embedConfig(
           reportData.reportID,
@@ -37,7 +37,7 @@ const Employee = () => {
             ],
           ])
         }
-        cssClassName={"customIframe"}
+        cssClassName={"exampleIframe"}
         getEmbeddedComponent={(embeddedReport) => {
           window.report = embeddedReport;
         }}
