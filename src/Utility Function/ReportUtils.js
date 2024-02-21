@@ -10,16 +10,13 @@ export const getReportData = (setReportData) => {
   axios
     .get(`${baseURL}/get-report-data?report_id=${reportID}`, { headers })
     .then((response) => {
-      console.log(response.data.Data);
       const newData = response.data.Data;
       setReportData((prevData) => ({
         ...prevData,
         ...newData,
       }));
     })
-    .catch((error) => {
-      console.log("Error from API", error);
-    });
+    .catch(() => {});
 };
 
 export const embedConfig = (
@@ -28,7 +25,8 @@ export const embedConfig = (
   values,
   table,
   column,
-  operator
+  operator,
+  screenSize
 ) => {
   return {
     type: "report",
@@ -39,6 +37,10 @@ export const embedConfig = (
 
     settings: {
       hideErrors: true,
+      layoutType:
+        screenSize < 768
+          ? models.LayoutType.MobilePortrait
+          : models.LayoutType.MobileLandscape,
       panes: {
         filters: {
           expanded: false,

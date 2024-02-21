@@ -50,6 +50,7 @@ import FaqPage from "./Pages/FaqPage/FaqPage";
 import Services from "./Iframes/Services";
 import Prescriptions from "./Iframes/Prescriptions";
 import TillSales from "./Iframes/TillSales";
+import Income from "./Iframes/Income";
 const { Content } = Layout;
 
 function App() {
@@ -272,6 +273,14 @@ function MainContent() {
               element={
                 <MainLayout>
                   <Services />
+                </MainLayout>
+              }
+            ></Route>
+            <Route
+              path="/Income"
+              element={
+                <MainLayout>
+                  <Income />
                 </MainLayout>
               }
             ></Route>

@@ -9,15 +9,26 @@ const PharmacyIframe = () => {
     pharmacyIDs: [],
     reportID: "",
   });
+  const [screenSize, setScreenSize] = useState(window.innerWidth);
   useEffect(() => {
     getReportData(setReportData);
+  }, []);
+  useEffect(() => {
+    const handleScroll = (e) => {
+      setScreenSize(e.currentTarget.innerWidth);
+      console.log("Page scrolled", e.currentTarget.innerWidth);
+    };
+    window.addEventListener("resize", handleScroll);
+    return () => {
+      window.removeEventListener("resize", handleScroll);
+    };
   }, []);
   const table = "public pharmacies";
   const column = "id";
   const operator = "eq";
 
   return (
-    <div>
+    <div className="iframe-container">
       <PowerBIEmbed
         embedConfig={embedConfig(
           reportData.reportID,
@@ -25,7 +36,8 @@ const PharmacyIframe = () => {
           reportData.pharmacyIDs,
           table,
           column,
-          operator
+          operator,
+          screenSize
         )}
         eventHandlers={
           new Map([
@@ -37,7 +49,7 @@ const PharmacyIframe = () => {
             ],
           ])
         }
-        cssClassName={"customIframe"}
+        cssClassName={"exampleIframe"}
         getEmbeddedComponent={(embeddedReport) => {
           window.report = embeddedReport;
         }}

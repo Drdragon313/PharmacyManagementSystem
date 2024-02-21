@@ -164,6 +164,7 @@ const getReportsRouteByModuleId = (sub_module_id) => {
     5: "/Services",
     6: "/Prescriptions",
     7: "/TillSales",
+    8: "/Income",
   };
 
   return routeMappings[sub_module_id] || "/";
