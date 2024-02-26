@@ -1,3 +1,6 @@
+.pharm-details-container {
+  padding: 10px;
+}
 .pharm-detail-heading {
   font-family: "Poppins", sans-serif;
   font-size: 18px;
@@ -11,8 +14,9 @@
   background-color: #fff;
   color: #425cda;
   font-family: "Poppins", sans-serif;
-  margin-left: 110px;
+
   border: 1px solid #425cda;
+  width: 15vw;
 }
 .gutter-row-labels {
   margin-left: 20px;
@@ -27,10 +31,9 @@
 }
 .plus-btn-add-emp {
   background-color: #425cda;
-  width: 130% !important;
+  width: 25vw;
   justify-content: center;
   font-family: "Poppins", sans-serif;
-  margin-left: 50px;
 }
 .ant-spin-container {
   border: 1px solid #ededed;
@@ -65,4 +68,67 @@
 }
 .custom-table-content {
   font-family: "Poppins", sans-serif;
+}
+/**/
+.pharm-details-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+.pharm-details-txt-container {
+  width: 50%;
+}
+.pharmacy-details-edit-btns-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-right: 60px;
+}
+.pharmacy-details-table-btns-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+@media (max-width: 768px) {
+  .pharm-details-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 10px;
+    gap: 20px;
+  }
+  .pharm-details-txt-container {
+    width: 100%;
+  }
+  .pharm-details-emp-table {
+    width: 100%;
+  }
+  .pharmacy-details-edit-btns-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+  }
+  .pharmacy-details-table-btns-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .second-row {
+    overflow-x: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .labels-values-container-pharm {
+    width: 100%;
+    margin-top: 20px;
+  }
+  .plus-btn-add-emp {
+    width: 70vw;
+  }
+  .edit-btn-pharmacy-details {
+    width: 35vw;
+  }
 }

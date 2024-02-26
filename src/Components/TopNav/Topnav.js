@@ -26,7 +26,11 @@ const Topnav = () => {
     Role: "",
   });
   const navigate = useNavigate();
-
+  const getInitials = () => {
+    const firstNameInitial = userData.FName ? userData.FName.charAt(0) : "";
+    const lastNameInitial = userData.LName ? userData.LName.charAt(0) : "";
+    return `${firstNameInitial}${lastNameInitial}`;
+  };
   const handleLogout = async () => {
     try {
       const authToken = localStorage.getItem("AuthorizationToken");
@@ -114,13 +118,13 @@ const Topnav = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []); // Effect only runs once to set up the resize listener
+  }, []);
 
   useEffect(() => {
     if (windowWidth > 770 && showMobileDrawer) {
       setShowMobileDrawer(false);
     }
-  }, [windowWidth, showMobileDrawer]); // Effect to close drawer if window width increases
+  }, [windowWidth, showMobileDrawer]);
 
   const handleToggleMobileDrawer = () => {
     setWindowWidth(window.innerWidth);
@@ -149,7 +153,11 @@ const Topnav = () => {
             rootClassName="nav-drop-down"
           >
             <div size={10} className="nav-itmes-contianer">
-              <Avatar size="large" icon={<UserOutlined />} />
+              {userData.FName && userData.LName ? (
+                <Avatar size="large" icon={getInitials()} />
+              ) : (
+                <Avatar size="large" icon={<UserOutlined />} />
+              )}
 
               <span></span>
               <div className="TopnavUser">

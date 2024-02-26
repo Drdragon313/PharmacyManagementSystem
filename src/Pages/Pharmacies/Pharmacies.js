@@ -322,10 +322,10 @@ const Pharmacies = () => {
           Are you sure you want to delete this pharmacy?
         </ConfirmationModal>
 
-        <Col className="gutter-row" span={4}>
+        <Col className="gutter-row" span={{ xs: 24, sm: 16, md: 8, lg: 4 }}>
           <p className="pharmacy-list-head-txt">Pharmacy list</p>
         </Col>
-        <Col span={3.5}>
+        <Col span={{ xs: 24, sm: 16, md: 12, lg: 4 }}>
           <Link to="AddPharmacy">
             {canCreatePharmacy && (
               <CustomButton type="primary">
@@ -349,8 +349,14 @@ const Pharmacies = () => {
           lg: 32,
         }}
       >
-        <Col className="gutter-row" span={8}></Col>
-        <Col className="filter-container-pharm" span={3.5}>
+        <Col
+          className="gutter-row"
+          span={{ xs: 24, sm: 16, md: 8, lg: 4 }}
+        ></Col>
+        <Col
+          className="filter-container-pharm"
+          span={{ xs: 24, sm: 16, md: 8, lg: 4 }}
+        >
           <Select
             allowClear={true}
             className="filter-pharm-btn"
@@ -383,9 +389,11 @@ const Pharmacies = () => {
           lg: 32,
         }}
       >
-        <Col className="table-row" span={24}>
+        <Col
+          className="pharmacy-details-table"
+          span={{ xs: 24, sm: 16, md: 8, lg: 4 }}
+        >
           <CustomTable
-            className="pharmacy-details-table"
             dataSource={tableDataSource}
             footer={false}
             columns={tableColumns.map((column) => ({
@@ -402,6 +410,9 @@ const Pharmacies = () => {
               ),
             }))}
           />
+        </Col>
+        <Col span={{ xs: 24, sm: 16, md: 8, lg: 4 }}>
+          {" "}
           <PaginationComponent
             limit={limit}
             handleLimitChange={handleLimitChange}

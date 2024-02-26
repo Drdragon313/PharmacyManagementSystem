@@ -4,6 +4,7 @@
   align-items: center;
   background: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #ededed;
 }
 .top-nav-logo-container {
   display: flex;
@@ -35,6 +36,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  text-decoration: none;
 }
 .top-nav-column {
   display: flex;
@@ -66,6 +68,12 @@
   justify-content: space-between;
   gap: 10px;
 }
+.nav-itmes-contianer :hover {
+  cursor: pointer;
+}
+.ProfileNavlink {
+  text-decoration: none !important;
+}
 .mobile-drawer-nav {
   max-width: 26vb !important;
   min-width: 23vb !important;
@@ -81,6 +89,7 @@
 :where(.css-dev-only-do-not-override-nnuwmp).ant-drawer .ant-drawer-header {
   background-color: #3a3475;
 }
+
 .mobileButton {
   display: none;
   margin-left: -20px;

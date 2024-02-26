@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
-import { Row, Col, Button, Space, Image, message } from "antd";
+import { Row, Col, Space, Image, message } from "antd";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 import CustomTable from "../../Components/CustomTable/CustomTable";
 import eyeIcon from "../../Assets/Icon feather-eye.svg";
@@ -16,6 +16,7 @@ import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationMo
 import AddEmployeeModal from "../../Components/AddEmployeeModal/AddEmployeeModal";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import { fetchUserPermissions } from "../../Utility Function/ModulesAndPermissions";
+import { useNavigate } from "react-router-dom";
 
 const PharmacyDetails = () => {
   const { pharmacy_id } = useParams();
@@ -27,7 +28,7 @@ const PharmacyDetails = () => {
   const [isAddEmployeeModalVisible, setIsAddEmployeeModalVisible] =
     useState(false);
   const [userPermissions, setUserPermissions] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchPharmacyDetails = async () => {
       try {
@@ -92,6 +93,9 @@ const PharmacyDetails = () => {
     }
 
     setIsDeleteModalVisible(false);
+  };
+  const HandleBtnEditPharm = () => {
+    navigate(`/pharmacies/${pharmacy_id}/pharmacyedit`);
   };
 
   if (!pharmacyDetails) {
@@ -207,16 +211,19 @@ const PharmacyDetails = () => {
           md: 24,
           lg: 32,
         }}
+        className="pharm-details-container"
       >
-        <Col className="pharm-detail-heading" span={6}>
-          <p>Pharmacy detail view</p>
-        </Col>
-        <Col className="primary-btns" span={6}>
-          {canEditPharmacy && (
-            <Link to={`/pharmacies/${pharmacy_id}/pharmacyedit`}>
+        <Col
+          span={{ xs: 24, sm: 16, md: 8, lg: 4 }}
+          className="pharm-details-txt-container"
+        >
+          <div className="pharmacy-details-edit-btns-container">
+            <p className="pharm-detail-heading">Pharmacy detail view</p>
+            {canEditPharmacy && (
               <CustomButton
                 type="default"
                 className="edit-btn-pharmacy-details"
+                onClick={HandleBtnEditPharm}
               >
                 <Image
                   className="edit-outline-img"
@@ -225,39 +232,9 @@ const PharmacyDetails = () => {
                 ></Image>
                 Edit details
               </CustomButton>
-            </Link>
-          )}
-        </Col>
-        <Col className="pharm-detail-heading" span={6}>
-          <p>Pharmacy employees</p>
-        </Col>
-        <Col className="gutter-row" span={4}>
-          {canCreatePharmacy && (
-            <Button
-              type="primary"
-              className="plus-btn-add-emp"
-              onClick={showAddEmployeeModal}
-            >
-              <Image
-                className="plus-outline-img"
-                preview={false}
-                src={plusOutline}
-              ></Image>
-              Add employee to pharmacy
-            </Button>
-          )}
-        </Col>
-      </Row>
-      <Row
-        style={{ margin: "5px", marginTop: "10px" }}
-        gutter={{
-          xs: 8,
-          sm: 16,
-          md: 24,
-          lg: 32,
-        }}
-      >
-        <Col span={12}>
+            )}
+          </div>
+
           <div className="labels-values-container-pharm">
             <div>
               <div className="pharm-labels-values">
@@ -295,26 +272,55 @@ const PharmacyDetails = () => {
             </div>
           </div>
         </Col>
-        <Col className="second-row" span={12}>
-          <CustomTable
-            className="emp-table"
-            dataSource={tableDataSource}
-            columns={tableColumns.map((column) => ({
-              ...column,
-              title: (
-                <span className="custom-table-header">{column.title}</span>
-              ),
-              render: (text, record) => (
-                <span className="custom-table-content">
-                  {typeof column.render === "function"
-                    ? column.render(text, record)
-                    : text}
-                </span>
-              ),
-            }))}
-          />
+        <Col className="pharm-details-emp-table">
+          {" "}
+          <div className="pharmacy-details-table-btns-container">
+            <p className="pharm-detail-heading">Pharmacy employees</p>
+            {canCreatePharmacy && (
+              <CustomButton
+                type="primary"
+                className="plus-btn-add-emp"
+                onClick={showAddEmployeeModal}
+              >
+                <Image
+                  className="plus-outline-img"
+                  preview={false}
+                  src={plusOutline}
+                ></Image>
+                Add employee to pharmacy
+              </CustomButton>
+            )}
+          </div>
+          <div className="second-row">
+            <CustomTable
+              className="emp-table"
+              dataSource={tableDataSource}
+              columns={tableColumns.map((column) => ({
+                ...column,
+                title: (
+                  <span className="custom-table-header">{column.title}</span>
+                ),
+                render: (text, record) => (
+                  <span className="custom-table-content">
+                    {typeof column.render === "function"
+                      ? column.render(text, record)
+                      : text}
+                  </span>
+                ),
+              }))}
+            />
+          </div>
         </Col>
       </Row>
+      <Row
+        style={{ margin: "5px", marginTop: "10px" }}
+        gutter={{
+          xs: 8,
+          sm: 16,
+          md: 24,
+          lg: 32,
+        }}
+      ></Row>
       <AddEmployeeModal
         open={isAddEmployeeModalVisible}
         onCancel={handleCancelAddEmployeeModal}
