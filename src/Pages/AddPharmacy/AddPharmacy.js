@@ -188,178 +188,180 @@ const AddPharmacy = () => {
   ];
   return (
     <div className="AddPharmacyBasicContainer">
-      <div className="breadcrumb-border-add-pharmacy">
-        <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
+      <div>
+        {" "}
+        <div className="breadcrumb-border-add-pharmacy">
+          <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
+        </div>
+        <div className="AddPharmacyBasicInfoHeading">
+          <h5 className="Pharmacycreationtxt">New pharmacy creation</h5>
+        </div>
       </div>
 
-      <div className="AddPharmacyBasicInfoHeading">
-        <h5 className="Pharmacycreationtxt">New pharmacy creation</h5>
-      </div>
-      <form onSubmit={handleSubmit}>
-        <div className="AddPharmacyDetails">
-          <div className="AddPharmacyOneDetails">
-            <form>
-              <div className="mb-3">
-                <label htmlFor="PharmacyName" className="addPharmacyLabel">
-                  Pharmacy name
-                </label>
-                <br />
-                <Input
-                  required={true}
-                  className="AddPharmacyDetailsInput"
-                  name="pharmacyName"
-                  onChange={handleChange}
-                  value={data.pharmacyName}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="rent" className="addPharmacyNotLabel">
-                  Rent
-                </label>
-                <br />
-                <Input
-                  className="AddPharmacyDetailsInput"
-                  type="number"
-                  name="rent"
-                  onChange={handleChange}
-                  value={data.rent}
-                />
-              </div>
-
-              <CustomInput
-                divclassName="mb-3"
-                labelclassName="adduserNotLabel"
-                labelText="Postcode"
-                inputclassName="AddUsersDetailsInput"
-                inputName="postCode"
-                handleChange={handleChange}
-                handleBlur={handleFindAddress}
-                value={data.postCode}
+      <div className="AddPharmacyDetails">
+        <form onSubmit={handleSubmit}>
+          <div className="adjacent-fields">
+            <div className="mb-3">
+              <label htmlFor="PharmacyName" className="addPharmacyLabel">
+                Pharmacy name
+              </label>
+              <br />
+              <Input
                 required={true}
+                className="AddUsersDetailsInput"
+                name="pharmacyName"
+                onChange={handleChange}
+                value={data.pharmacyName}
               />
-
-              <CustomInput
-                divclassName="mb-3"
-                labelText="Building Name"
-                inputclassName="AddUsersDetailsInput"
-                inputName="Line1"
-                handleChange={handleChange}
-                value={data.Line1}
-                required={true}
-              />
-              <CustomInput
-                divclassName="mb-3"
-                labelclassName="addPharmacyNotLabel"
-                labelText="Street Name"
-                inputclassName="AddUsersDetailsInput"
-                inputName="Line2"
-                handleChange={handleChange}
-                value={data.Line2}
-              />
-
-              <div className="mb-3">
-                <label htmlFor="users" className="addPharmacyNotLabel">
-                  Add users in pharmacy
-                </label>
-                <br />
-                <Button
-                  type="dashed"
-                  className="dashed-btn-add-emp"
-                  onClick={openAddEmployeeModal}
-                >
-                  <Image
-                    className="plus-outline-img"
-                    preview={false}
-                    src={plusOutline}
-                  ></Image>
-                  Add employee to pharmacy
-                </Button>
-              </div>
-            </form>
-          </div>
-          <div className="AddPharmacyTwoDetails">
-            <form>
-              <div className="mb-3">
-                <label htmlFor="dateOfCreation" className="dateOfCreationLabel">
-                  Date of creation
-                </label>
-                <br />
-                <DatePicker
-                  className="AddPharmacyDetailsInput"
-                  format="DD-MM-YYYY"
-                  name="dateOfCreation"
-                  onChange={handleDateChange}
-                  disabledDate={(current) =>
-                    current && current.isAfter(moment().endOf("day"))
-                  }
-                />
-              </div>
-
-              <div className="mb-3">
-                <label className="addPharmacyManager" htmlFor="managerName">
-                  Pharmacy manager
-                </label>
-                <br />
-                <Select
-                  className="AddPharmacySelect ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
-                  name="managerName"
-                  onChange={(value) =>
-                    handleSelectChange("PharmacyManager", value)
-                  }
-                  value={data.managerID}
-                  required={true}
-                >
-                  {managers.map((manager) => (
-                    <Option key={manager.id} value={manager.id}>
-                      {manager.name}
-                    </Option>
-                  ))}
-                </Select>
-              </div>
-
-              <CustomSelect
-                divclassName="mb-3"
-                labelclassName="adduserNotLabel"
-                labelText="Please Select your Address"
-                selectclassName="GenderInput ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
-                name="Address"
-                onChange={handleSelectChange}
-                options={
-                  pCodeResponse ? pCodeResponse.map((item) => item.address) : []
+            </div>
+            <div className="mb-3">
+              <label htmlFor="dateOfCreation" className="dateOfCreationLabel">
+                Date of creation
+              </label>
+              <br />
+              <DatePicker
+                className="AddUsersDetailsInput"
+                format="DD-MM-YYYY"
+                name="dateOfCreation"
+                onChange={handleDateChange}
+                disabledDate={(current) =>
+                  current && current.isAfter(moment().endOf("day"))
                 }
-                value={data.postTown}
               />
-              <CustomInput
-                divclassName="mb-3"
-                labelText="Post Town"
-                inputclassName="AddUsersDetailsInput"
-                inputName="postTown"
-                handleChange={handleChange}
-                value={data.postTown}
-                required={true}
-              />
-            </form>
+            </div>
           </div>
-          <div className="AddPharmacyThreeDetails"></div>
-        </div>
-        <div className="AddPharmacyInformationUpdateBtnContainer">
-          <Link to="/pharmacies">
-            <CustomButton
-              type="default"
-              className="AddPharmacyInformationCancelBtn"
+          <div className="adjacent-fields">
+            <div className="mb-3">
+              <label htmlFor="rent" className="addPharmacyNotLabel">
+                Rent
+              </label>
+              <br />
+              <Input
+                className="AddUsersDetailsInput"
+                type="number"
+                name="rent"
+                onChange={handleChange}
+                value={data.rent}
+              />
+            </div>
+            <div className="mb-3">
+              <label className="addPharmacyManager" htmlFor="managerName">
+                Pharmacy manager
+              </label>
+              <br />
+              <Select
+                className="AddPharmacySelect"
+                name="managerName"
+                onChange={(value) =>
+                  handleSelectChange("PharmacyManager", value)
+                }
+                value={data.managerID}
+                required={true}
+              >
+                {managers.map((manager) => (
+                  <Option key={manager.id} value={manager.id}>
+                    {manager.name}
+                  </Option>
+                ))}
+              </Select>
+            </div>
+          </div>
+          <div className="adjacent-fields">
+            {" "}
+            <CustomInput
+              divclassName="mb-3"
+              labelclassName="adduserNotLabel"
+              labelText="Postcode"
+              inputclassName="AddUsersDetailsInput"
+              inputName="postCode"
+              handleChange={handleChange}
+              handleBlur={handleFindAddress}
+              value={data.postCode}
+              required={true}
+            />{" "}
+            <CustomSelect
+              divclassName="mb-3"
+              labelclassName="adduserNotLabel"
+              labelText="Please Select your Address"
+              selectclassName="AddPharmacySelect"
+              name="Address"
+              onChange={handleSelectChange}
+              options={
+                pCodeResponse ? pCodeResponse.map((item) => item.address) : []
+              }
+              value={data.postTown}
+            />
+          </div>
+          <div className="adjacent-fields">
+            {" "}
+            <CustomInput
+              divclassName="mb-3"
+              labelText="Building Name"
+              inputclassName="AddUsersDetailsInput"
+              inputName="Line1"
+              handleChange={handleChange}
+              value={data.Line1}
+              required={true}
+            />{" "}
+            <CustomInput
+              divclassName="mb-3"
+              labelText="Post Town"
+              inputclassName="AddUsersDetailsInput"
+              inputName="postTown"
+              handleChange={handleChange}
+              value={data.postTown}
+              required={true}
+            />
+          </div>
+
+          <CustomInput
+            divclassName="mb-3"
+            labelclassName="addPharmacyNotLabel"
+            labelText="Street Name"
+            inputclassName="AddUsersDetailsInput"
+            inputName="Line2"
+            handleChange={handleChange}
+            value={data.Line2}
+          />
+
+          <div className="add-emp-modal-button">
+            <label htmlFor="users" className="addPharmacyNotLabel">
+              Add employees to Pharmacy
+            </label>
+            <br />
+            <Button
+              type="dashed"
+              className="dashed-btn-add-emp"
+              onClick={openAddEmployeeModal}
             >
-              Cancel
+              <Image
+                className="plus-outline-img"
+                preview={false}
+                src={plusOutline}
+              ></Image>
+              Add employee to Pharmacy
+            </Button>
+          </div>
+
+          <div className="AddPharmacyInformationBtnsContainer">
+            <Link to="/pharmacies">
+              <CustomButton
+                type="default"
+                className="AddPharmacyInformationCancelBtn"
+              >
+                Cancel
+              </CustomButton>
+            </Link>
+            <CustomButton
+              type="primary"
+              htmlType="submit"
+              className="AddPharmacyInformationUpdateBtn"
+            >
+              Create Pharmacy
             </CustomButton>
-          </Link>
-          <CustomButton
-            type="primary"
-            htmlType="submit"
-            className="AddPharmacyInformationUpdateBtn"
-          >
-            Create Pharmacy
-          </CustomButton>
-        </div>
-      </form>
+          </div>
+        </form>
+      </div>
       <AddEmployeeModalEditPharm
         open={isAddEmployeeModalVisible}
         onClose={closeAddEmployeeModal}

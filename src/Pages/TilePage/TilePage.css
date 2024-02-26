@@ -82,7 +82,7 @@
 .breadcrumb {
   padding-left: 20px;
   margin-top: 1px;
-  border: 1px solid #ededed;
+  border-bottom: 1px solid #ededed;
 }
 .breadcrumb-item {
   cursor: pointer;

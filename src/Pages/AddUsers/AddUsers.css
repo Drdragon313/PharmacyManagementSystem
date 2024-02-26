@@ -112,7 +112,7 @@
   .adjacent-fields {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 1px !important;
   }
   .AddUsersDetails-container {
     width: 100% !important;
@@ -129,7 +129,8 @@
     flex-direction: column;
   }
   .AddUsersBasicContainer {
-    height: auto !important; /* Allow the container to adjust its height based on content */
+    height: auto !important;
+    padding-bottom: 20px;
   }
   .AddUsersInformationUpdateBtnContainer {
     width: 80vw !important;
