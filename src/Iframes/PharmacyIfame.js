@@ -12,8 +12,6 @@ const PharmacyIframe = () => {
   const [screenSize, setScreenSize] = useState(window.innerWidth);
   useEffect(() => {
     getReportData(setReportData);
-  }, []);
-  useEffect(() => {
     const handleScroll = (e) => {
       setScreenSize(e.currentTarget.innerWidth);
       console.log("Page scrolled", e.currentTarget.innerWidth);
