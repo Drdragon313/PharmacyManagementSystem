@@ -1,7 +1,7 @@
 .main-container-employees {
   font-family: "Poppins", sans-serif;
   margin: 10px;
-  margin-left: 1.5%;
+  margin-left: 20px;
 }
 .employee-list-head-txt {
   font-size: 18px;
@@ -13,23 +13,47 @@
   font-family: "Poppins", sans-serif;
 }
 .employee-list-head {
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
+  width: 100%;
+  padding-left: 30px;
+}
+.search-col {
+  width: 30%;
+}
+.search-bar {
+  width: 100%;
 }
 .employee-list-search-filter-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
   justify-content: space-between;
   border: 1px solid #ededed;
   border-radius: 8px;
   width: 100%;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
   margin-left: 1px !important;
   padding-top: 10px;
   padding-bottom: 10px;
   margin-bottom: 10px;
   font-family: "Poppins", sans-serif;
 }
+.filter-container-emp-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-right: 10px;
+}
 .create-emp-btn {
   justify-content: center;
-
+  width: 100% !important;
   font-family: "Poppins", sans-serif;
+  background-color: #425cda;
 }
 .filter-emp-btn {
   font-family: "Poppins", sans-serif;
@@ -38,11 +62,11 @@
   text-align: left;
   justify-content: space-evenly;
   margin-right: -10px;
-  padding-left: 30px; /* Adjust the padding to make space for the image */
-  background-image: url("../../Assets/notebook.svg"); /* Replace with the correct path to your image */
+  padding-left: 30px;
+  background-image: url("../../Assets/notebook.svg");
   background-repeat: no-repeat;
-  background-size: 15px; /* Adjust the size of the image */
-  background-position: 5px center; /* Adjust the position of the image */
+  background-size: 15px;
+  background-position: 5px center;
 }
 .filter-role-btn {
   font-family: "Poppins", sans-serif;
@@ -190,6 +214,24 @@
 
   transition: background-color 1ms, color 1ms;
 }
-.CreateEmpBtn {
-  margin-left: 45%;
+.employee-details-table {
+  width: 100vw !important;
+}
+@media only screen and (max-width: 668px) {
+  .search-col {
+    width: 100%;
+  }
+  .create-emp-btn {
+    margin-bottom: 10px;
+  }
+  .employee-details-table {
+    width: 100%;
+    overflow-x: auto !important;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .employee-details-table {
+    width: 100%;
+    overflow-x: auto !important;
+  }
 }

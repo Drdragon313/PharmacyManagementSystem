@@ -53,6 +53,7 @@
   width: 24vw !important;
   justify-content: space-between;
   gap: 20px;
+  margin-top: 20px;
 }
 .AddUsersInformationCancelBtn {
   border-radius: 10px;
@@ -124,9 +125,11 @@
     min-width: 44vw;
   }
   .DetailsInput-container {
-    min-width: 44vw;
+    width: 100% !important;
     display: flex;
     flex-direction: column;
+    gap: 1px;
+    padding: 0px;
   }
   .AddUsersBasicContainer {
     height: auto !important;

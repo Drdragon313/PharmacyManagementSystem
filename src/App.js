@@ -377,7 +377,11 @@ function MainContent() {
             ></Route>
             <Route
               path="/Profile/Security"
-              element={<UpdatePassword />}
+              element={
+                <MainLayout>
+                  <UpdatePassword />
+                </MainLayout>
+              }
             ></Route>
             <Route
               path="reports"

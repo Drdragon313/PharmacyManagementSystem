@@ -1,28 +1,49 @@
-import { Upload, Button, message, Progress, Pagination } from "antd";
-import React, { useState } from "react";
+import { Upload, message, Progress, Pagination, Image } from "antd";
+import React, { useState, useEffect, useMemo } from "react";
 import { validateCSV } from "../../Utility Function/FileUtils";
 import "./File.css";
-import uploadIcon from "../../Components/Images/uploadIcon.png";
+
+import uploadloadIcon from "../../Assets/uploadbtn.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
+import CustomButton from "../../Components/CustomButton/CustomButton";
+import CustomTable from "../../Components/CustomTable/CustomTable";
 
 const File = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [listReports, setListReports] = useState([]);
   const errorsPerPage = 6;
   const schemaData = localStorage.getItem("selectedSchemaData");
   const schemaID = localStorage.getItem("selectedSchemaID");
   const localHeader = localStorage.getItem("AuthorizationToken");
-  const headers = {
-    Authorization: localHeader,
-  };
+  const headers = useMemo(() => {
+    return {
+      Authorization: localHeader,
+    };
+  }, [localHeader]);
 
   const navigate = useNavigate();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${baseURL}/get-files-data?schema_id=${schemaID}`,
+          { headers }
+        );
+        setListReports(response.data.data); // Update this line
+        console.log(response.data.data);
+      } catch (error) {
+        console.error("Error fetching schema data:", error);
+      }
+    };
 
+    fetchData();
+  }, [schemaID, headers]);
   const getCurrentPageErrors = () => {
     const startIndex = (currentPage - 1) * errorsPerPage;
     const endIndex = startIndex + errorsPerPage;
@@ -69,7 +90,20 @@ const File = () => {
       setIsLoading(false);
     }
   };
-
+  const columns = [
+    {
+      title: "File Name",
+      dataIndex: "file_name",
+    },
+    {
+      title: "File Size",
+      dataIndex: "file_size",
+    },
+    {
+      title: "Upload Date",
+      dataIndex: "upload_date",
+    },
+  ];
   const breadcrumbItems = [
     { label: "Available Schemas", link: "/file" },
     { label: "Choose File", link: `/file/fileUpload` },
@@ -80,14 +114,13 @@ const File = () => {
         <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
       </div>
       <div className="file-container">
-        <h2>Files and Assets</h2>
+        <p className="table-tile-schema-details">Upload schema</p>
         <p className="file-paragraph">
-          Documents and Attachments that have been uploaded will be validated
-          with the already defined selected schema in order to upload to the
-          database.
+          Default column names for the CSV file for pharmacy table are below. A
+          CSV example of this table can be downloaded from below.
         </p>
-        <div className="file-dragger">
-          <Upload.Dragger
+        <div className="upload-download-btn-container">
+          <Upload
             listType="text"
             className="file-upload"
             accept=".csv"
@@ -96,13 +129,18 @@ const File = () => {
               setError([]);
             }}
           >
-            <img src={uploadIcon} alt="Upload Icon" />
-            <br />
-            <p className="file-uploadText">Drag or Drop your files here</p>
-            <p className="file-supportedText">Files Supported: .CSV</p>
-            <Button className="import-button">Choose File</Button>
-          </Upload.Dragger>
+            <CustomButton className="import-button">
+              <Image
+                className="down-img"
+                preview={false}
+                src={uploadloadIcon}
+              ></Image>
+              Choose File
+            </CustomButton>
+          </Upload>
         </div>
+        <p className="table-tile-schema-details">Uploaded Reports List</p>
+        <CustomTable dataSource={listReports} columns={columns} />
         {isLoading ? (
           <div className="loading-indicator">
             <Progress className="fileProgress" percent={progress} />

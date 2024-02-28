@@ -16,7 +16,7 @@ import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb"
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import CustomButton from "../../Components/CustomButton/CustomButton";
-import { Link } from "react-router-dom";
+
 const { Option } = Select;
 const AddUsers = () => {
   const navigate = useNavigate();
@@ -233,16 +233,15 @@ const AddUsers = () => {
           <div className="adjacent-fields">
             {" "}
             <CustomSelect
-              divclassName="mb-3"
               labelclassName="addUserNotLabel"
               labelText="Gender"
-              selectclassName="GenderInput ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
+              selectclassName="AddUsersDetailsInput"
               name="Gender"
               onChange={handleSelectChange}
               value={data.Gender}
               options={["Male", "Female", "Other", "Do Not Wish to Disclose"]}
             />
-            <div className="mb-3">
+            <div>
               <label htmlFor="DOB" className="addUserNotLabel">
                 Date of birth
               </label>
@@ -262,7 +261,7 @@ const AddUsers = () => {
             </div>
           </div>
           <div className="adjacent-fields">
-            <div className="mb-3">
+            <div>
               <label htmlFor="Contact" className="addUserNotLabelContact">
                 Contact number
               </label>
@@ -278,7 +277,6 @@ const AddUsers = () => {
               )}
             </div>{" "}
             <CustomInput
-              divclassName="mb-3"
               labelclassName="adduserLabel"
               labelText="Email"
               type="email"
@@ -290,11 +288,11 @@ const AddUsers = () => {
           </div>
           <div className="adjacent-fields">
             {" "}
-            <div className="mb-3">
+            <div>
               <label className="adduserLabel">Role</label>
               <br />
               <Select
-                className="GenderInput ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
+                className="AddUsersDetailsInput"
                 name="Role"
                 onChange={(value) => handleSelectChange("Role", value)}
               >
@@ -305,11 +303,11 @@ const AddUsers = () => {
                 ))}
               </Select>
             </div>{" "}
-            <div className="mb-3">
+            <div>
               <label className="addUserNotLabel">Permissions</label>
               <br />
               <Select
-                className="GenderInput ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
+                className="AddUsersDetailsInput"
                 name="Role"
                 onChange={(value) => handleSelectChange("Permissions", value)}
               >
@@ -323,11 +321,11 @@ const AddUsers = () => {
           </div>
           <div className="adjacent-fields">
             {" "}
-            <div className="mb-3">
+            <div>
               <label className="addUserNotLabel">Pharmacy</label>
               <br />
               <Select
-                className="GenderInput ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
+                className="AddUsersDetailsInput"
                 name="Role"
                 onChange={(value) => handleSelectChange("Pharmacy", value)}
               >
@@ -361,7 +359,6 @@ const AddUsers = () => {
           <div className="adjacent-fields">
             {" "}
             <CustomInput
-              divclassName="mb-3"
               labelclassName="addUserNotLabel"
               labelText="Postcode"
               inputclassName="AddUsersDetailsInput"
@@ -371,10 +368,9 @@ const AddUsers = () => {
               value={data.postCode}
             />{" "}
             <CustomSelect
-              divclassName="mb-3"
               labelclassName="addUserNotLabel"
               labelText="Select address"
-              selectclassName="GenderInput ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
+              selectclassName="AddUsersDetailsInput"
               name="Address"
               onChange={handleSelectChange}
               options={
@@ -385,7 +381,6 @@ const AddUsers = () => {
           <div className="adjacent-fields">
             {" "}
             <CustomInput
-              divclassName="mb-3"
               labelclassName="addUserNotLabel"
               labelText="Building Name"
               inputclassName="AddUsersDetailsInput"
@@ -394,7 +389,6 @@ const AddUsers = () => {
               value={data.Line1}
             />{" "}
             <CustomInput
-              divclassName="mb-3"
               labelclassName="addUserNotLabel"
               labelText="Town"
               inputclassName="AddUsersDetailsInput"
@@ -405,7 +399,6 @@ const AddUsers = () => {
           </div>
 
           <CustomInput
-            divclassName="mb-3"
             labelclassName="addUserNotLabel"
             labelText="Street No"
             inputclassName="AddUsersDetailsInput"

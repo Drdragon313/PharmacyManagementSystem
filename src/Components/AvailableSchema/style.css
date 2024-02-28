@@ -1,14 +1,28 @@
-.csvbtn {
-  margin-left: 1170px;
-  background: linear-gradient(to right, #001529, #009de1);
+.download-btn-schema-details {
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end;
+  gap: 10px;
+  border: 1px solid #3a3475;
+  color: #3a3475;
+  font-family: Poppins, sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0.3840723931789398px;
+  text-align: left;
+  margin-bottom: 20px;
+  height: 5.5vh;
+  line-height: 30.15px;
+}
+.down-img-schema-details {
+  width: 20px;
+  height: 20px;
 }
 .table {
-  margin: 20px;
+  padding: 10px;
 }
-.table .schema-table {
-  margin: 20px;
-  border: 2px solid black;
-  border-radius: 2px;
+.schema-table-schema-details {
+  margin-top: 20px !important;
 }
 .loader {
   display: flex;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Space, Pagination } from "antd";
+import { Row, Col, Pagination } from "antd";
 import "./PaginationComponent.css";
 const PaginationComponent = ({
   limit,
@@ -35,9 +35,9 @@ const PaginationComponent = ({
           span={{ xs: 24, sm: 16, md: 8, lg: 4 }}
         >
           <div className="pagination-col-right">
-            <p className="pagination-txt">
+            <div className="pagination-txt">
               Showing {page} - {Math.ceil(totalItems / limit)} of {totalItems}
-            </p>
+            </div>
 
             <Pagination
               itemRender={itemRender}
