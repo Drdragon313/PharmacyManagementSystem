@@ -28,15 +28,17 @@ const CustomSwitch = ({ checked, onChange }) => {
       </Row>
 
       <Row className="toggle-btn" gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-        <Col className="gutter-row" span={7}>
+        <Col className="gutter-row">
           <div className="toggle-btn-container">
             <Button
+              className="switch-btns"
               style={generateButtonStyle(checked, "#3A3475", "#F8FBFF")}
               onClick={() => onChange(!checked)}
             >
               Employees
             </Button>
             <Button
+              className="switch-btns"
               style={generateButtonStyle(checked, "#F8FBFF", "#3A3475")}
               onClick={() => onChange(!checked)}
             >

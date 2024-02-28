@@ -34,7 +34,7 @@
 .filter-pharm-btn {
   font-family: Poppins, sans-serif;
   font-size: 14px;
-  width: 30vb;
+  width: 20vw;
   text-align: left;
   justify-content: space-evenly;
 
@@ -162,7 +162,7 @@
     overflow-x: auto;
   }
   .filter-pharm-btn {
-    width: 92vw !important;
+    width: 85vw !important;
   }
   .pharmacy-list-search-filter-container {
     margin-top: 20px;

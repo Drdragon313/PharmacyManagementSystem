@@ -228,21 +228,18 @@ const EmployeeListing = () => {
       dataIndex: "employeeName",
       key: "employeeName",
       width: "10%",
-      ellipsis: true,
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
       width: "17%",
-      ellipsis: true,
     },
     {
       title: "Contact",
       dataIndex: "contact",
       key: "contact",
       width: "10%",
-      ellipsis: true,
     },
 
     {
@@ -250,7 +247,7 @@ const EmployeeListing = () => {
       dataIndex: "pharmacyPostCode",
       key: "pharmacyPostCode",
       width: "13%",
-      ellipsis: true,
+
       render: (text, record) => {
         if (record.PharmacyDetails && record.PharmacyDetails.length > 0) {
           const postalCodes = record.PharmacyDetails.map(
@@ -266,7 +263,6 @@ const EmployeeListing = () => {
       dataIndex: "role",
       key: "role",
       width: "10%",
-      ellipsis: true,
     },
     {
       title: "Salary",
@@ -285,7 +281,7 @@ const EmployeeListing = () => {
       dataIndex: "status",
       key: "status",
       width: "8%",
-      ellipsis: true,
+
       render: (text, record) => (
         <>
           <span
@@ -392,9 +388,7 @@ const EmployeeListing = () => {
       </div>
     );
   };
-  const handleClearSearch = () => {
-    setSearchedName("");
-  };
+
   const handleSearch = (searchValue) => {
     setSearchedName(searchValue);
   };
@@ -446,25 +440,21 @@ const EmployeeListing = () => {
             confirmationText=" Are you sure you want to resend invite to this user? This
             action cannot be undone."
           ></ConfirmationModal>
-          <Col className="gutter-row" span={6}>
-            <p className="employee-list-head-txt">Employees list</p>
-          </Col>
 
-          <Col className="gutter-row" span={6}>
-            {" "}
-            {canCreateEmployee && (
-              <Link to="/users/AddUser">
-                <CustomButton type="primary" title="" className="CreateEmpBtn">
-                  <Image
-                    className="plus-outline-img"
-                    preview={false}
-                    src={plusOutline}
-                  ></Image>
-                  Create Employee
-                </CustomButton>
-              </Link>
-            )}
-          </Col>
+          <p className="employee-list-head-txt">Employees list</p>
+
+          {canCreateEmployee && (
+            <Link to="/users/AddUser">
+              <CustomButton type="primary" className="create-emp-btn ">
+                <Image
+                  className="plus-outline-img"
+                  preview={false}
+                  src={plusOutline}
+                ></Image>
+                Create Employee
+              </CustomButton>
+            </Link>
+          )}
         </Row>
         <Row
           className="employee-list-search-filter-container"
@@ -475,43 +465,39 @@ const EmployeeListing = () => {
             lg: 32,
           }}
         >
-          <Col className="gutter-row" span={8}>
+          <div className="search-col">
             <Search
+              className="search-bar"
               placeholder="Search Here..."
               onSearch={handleSearch}
               enterButton
               allowClear
             />
-          </Col>
-          <Col span={4}></Col>
+          </div>
 
-          <Col className="filter-container-emp" span={4}>
-            <Col className="filter-container-pharm" span={4}>
-              <Select
-                allowClear={true}
-                className="filter-pharm-btn"
-                mode="multiple"
-                value={selectedRole}
-                onChange={handleRoleChange}
-                placeholder={placeholderSelectRoles()}
-                showSearch={false}
-                optionLabelProp="label"
-              >
-                {availableRoles &&
-                  availableRoles.map((role) => (
-                    <Select.Option
-                      className="select-options"
-                      key={role.id}
-                      value={role.id}
-                      label={role.name}
-                    >
-                      {role.name}
-                    </Select.Option>
-                  ))}
-              </Select>
-            </Col>
-          </Col>
-          <Col className="filter-container-emp" span={3.5}>
+          <div className="filter-container-emp-list">
+            <Select
+              allowClear={true}
+              className="filter-pharm-btn"
+              mode="multiple"
+              value={selectedRole}
+              onChange={handleRoleChange}
+              placeholder={placeholderSelectRoles()}
+              showSearch={false}
+              optionLabelProp="label"
+            >
+              {availableRoles &&
+                availableRoles.map((role) => (
+                  <Select.Option
+                    className="select-options"
+                    key={role.id}
+                    value={role.id}
+                    label={role.name}
+                  >
+                    {role.name}
+                  </Select.Option>
+                ))}
+            </Select>
             <Select
               allowClear={true}
               className="filter-pharm-btn"
@@ -533,7 +519,7 @@ const EmployeeListing = () => {
                 </Select.Option>
               ))}
             </Select>
-          </Col>
+          </div>
         </Row>
         <Row
           className=""
@@ -544,9 +530,11 @@ const EmployeeListing = () => {
             lg: 32,
           }}
         >
-          <Col className="table-row" span={24}>
+          <Col
+            className="employee-details-table"
+            span={{ xs: 24, sm: 16, md: 8, lg: 4 }}
+          >
             <CustomTable
-              className="employee-details-table"
               dataSource={tableDataSource}
               footer={false}
               columns={tableColumns.map((column) => ({
@@ -563,6 +551,8 @@ const EmployeeListing = () => {
                 ),
               }))}
             />
+          </Col>
+          <Col>
             <PaginationComponent
               limit={limit}
               handleLimitChange={handleLimitChange}

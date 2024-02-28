@@ -2,11 +2,19 @@
   font-family: Poppins, sans-serif;
   margin-left: 15px;
   margin-top: 10px;
+  margin-right: 20px;
 }
 .import-button {
-  margin-top: 10px;
-  background: #2a44c1;
+  background: #3a3475;
   color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  font-family: Poppins, sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  margin-bottom: 10px;
 }
 .breadcrumb-file-upload {
   border: 1px solid #ededed;
@@ -17,7 +25,7 @@
   color: #707477;
 }
 .file-upload {
-  width: 80vw;
+  margin-bottom: 20px;
 }
 .file-uploadText {
   height: 10px;
@@ -27,9 +35,34 @@
   font-size: 11px;
   height: 10px;
 }
-.file-dragger {
-  width: 79vw;
-}
+
 .fileProgress {
   width: 80vw;
+}
+.down-img {
+  width: 50px;
+  height: 50px;
+  margin-right: 1px;
+}
+.download-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid #3a3475;
+  color: #3a3475;
+  font-family: Poppins, sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0.3840723931789398px;
+  text-align: left;
+  margin-bottom: 20px;
+}
+.table-tile-schema-details {
+  font-family: Poppins, sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 36px;
+  letter-spacing: 0em;
+  text-align: left;
 }
