@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./Iframe.css";
 import { PowerBIEmbed } from "powerbi-client-react";
-
-import { embedConfig, getReportData } from "../Utility Function/ReportUtils";
-const CostofStock = () => {
+import { embedConfig } from "../Utility Function/ReportUtils";
+import axios from "axios";
+import { baseURL } from "../Components/BaseURLAPI/BaseURLAPI";
+const Dashboard = () => {
   const [reportData, setReportData] = useState({
     embedToken: "",
     pharmacyIDs: [],
@@ -11,7 +12,21 @@ const CostofStock = () => {
   });
   const [screenSize, setScreenSize] = useState(window.innerWidth);
   useEffect(() => {
-    getReportData(setReportData);
+    const authToken = localStorage.getItem("AuthorizationToken");
+    const headers = {
+      Authorization: authToken,
+    };
+    axios
+      .get(`${baseURL}/get-report-data?report_id=9`, { headers })
+      .then((response) => {
+        const newData = response.data.Data;
+        setReportData((prevData) => ({
+          ...prevData,
+          ...newData,
+        }));
+      })
+      .catch(() => {});
+
     const handleScroll = (e) => {
       setScreenSize(e.currentTarget.innerWidth);
       console.log("Page scrolled", e.currentTarget.innerWidth);
@@ -57,4 +72,4 @@ const CostofStock = () => {
   );
 };
 
-export default CostofStock;
+export default Dashboard;
