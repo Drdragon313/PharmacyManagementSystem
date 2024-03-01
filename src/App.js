@@ -32,7 +32,6 @@ import ResendEmail from "./Pages/ResendEmail/ResendEmail";
 import Pharmacies from "./Pages/Pharmacies/Pharmacies";
 import Reports from "./Pages/Reports/Reports";
 import SetPassword from "./Pages/SetPassword/SetPassword";
-import HomeIframe from "./Iframes/HomeIframe";
 import AddPharmacy from "./Pages/AddPharmacy/AddPharmacy";
 import PharmacyDetails from "./Pages/PharmacyDetails/PharmacyDetails";
 import PasswordUpdatedSuccess from "./Pages/PasswordUpdatedSuccess/PasswordUpdatedSuccess";
@@ -51,6 +50,7 @@ import Services from "./Iframes/Services";
 import Prescriptions from "./Iframes/Prescriptions";
 import TillSales from "./Iframes/TillSales";
 import Income from "./Iframes/Income";
+import Dashboard from "./Iframes/Dashboard";
 const { Content } = Layout;
 
 function App() {
@@ -93,10 +93,10 @@ function MainContent() {
             />
             <Route path="/setpassword" element={<SetPassword />} />
             <Route
-              path="/home"
+              path="/dashboard"
               element={
                 <MainLayout>
-                  <HomeIframe />
+                  <Dashboard />
                 </MainLayout>
               }
             />
