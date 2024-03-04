@@ -84,8 +84,9 @@ const Employee = () => {
                 table: table1,
                 column: column1,
               },
-              operator: operator,
-              values: reportData.pharmacyIDs,
+              operator: reportData.pharmacyIDs === null ? "lt" : operator,
+              values:
+                reportData.pharmacyIDs === null ? [0] : reportData.pharmacyIDs,
             },
             {
               $schema: "http://powerbi.com/product/schema#basicFilter",
@@ -93,8 +94,8 @@ const Employee = () => {
                 table: table2,
                 column: column2,
               },
-              operator: operator,
-              values: reportData.userIDs,
+              operator: reportData.userIDs.length > 0 ? operator : "lt",
+              values: reportData.userIDs.length > 0 ? reportData.userIDs : [0],
             },
           ],
         }}

@@ -140,7 +140,7 @@ const File = () => {
           </Upload>
         </div>
         <p className="table-tile-schema-details">Uploaded Reports List</p>
-        <CustomTable dataSource={listReports} columns={columns} />
+        {/* <CustomTable dataSource={listReports} columns={columns} /> */}
         {isLoading ? (
           <div className="loading-indicator">
             <Progress className="fileProgress" percent={progress} />
@@ -149,7 +149,7 @@ const File = () => {
           <div>
             {error &&
               getCurrentPageErrors().map((value, index) => (
-                <div style={{ color: "green" }} key={index}>
+                <div style={{ color: "red" }} key={index}>
                   <p>{value}</p>
                 </div>
               ))}
