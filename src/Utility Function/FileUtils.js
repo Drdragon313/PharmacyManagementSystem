@@ -12,7 +12,7 @@ export const validateCSV = async (file, schemaData, setProgress) => {
       header: true,
       chunk: (results) => {
         const schemaDataArray = JSON.parse(schemaData);
-        console.log("This is schema Data:", JSON.parse(schemaData));
+        console.log("This is schema Data:", schemaDataArray);
         totalLines += results.data.length;
         let progress = Math.round((totalLines / file.size) * 10000);
         setProgress(progress);

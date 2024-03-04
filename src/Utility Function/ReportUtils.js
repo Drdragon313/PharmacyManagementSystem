@@ -28,6 +28,30 @@ export const embedConfig = (
   operator,
   screenSize
 ) => {
+  let filters = [];
+  if (!values || values.length === 0) {
+    console.log("abc");
+
+    filters.push({
+      $schema: "http://powerbi.com/product/schema#basicFilter",
+      target: {
+        table: table,
+        column: column,
+      },
+      operator: "lt",
+      values: [0],
+    });
+  } else {
+    filters.push({
+      $schema: "http://powerbi.com/product/schema#basicFilter",
+      target: {
+        table: table,
+        column: column,
+      },
+      operator: operator,
+      values: values,
+    });
+  }
   return {
     type: "report",
     id: id,
@@ -58,16 +82,18 @@ export const embedConfig = (
       hideFooter: true,
       background: models.BackgroundType.Transparent,
     },
-    filters: [
-      {
-        $schema: "http://powerbi.com/product/schema#basicFilter",
-        target: {
-          table: table,
-          column: column,
-        },
-        operator: operator,
-        values: values,
-      },
-    ],
+
+    // filters: [
+    //   {
+    //     $schema: "http://powerbi.com/product/schema#basicFilter",
+    //     target: {
+    //       table: table,
+    //       column: column,
+    //     },
+    //     operator: operator,
+    //     values: values,
+    //   },
+    // ],
+    filters: filters,
   };
 };
