@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateSchemaName } from "../../redux/features/SchemaSlice/schemaSlice";
 import "./schemaCreationForm.css";
+import CustomButton from "../CustomButton/CustomButton";
 
 const SchemaCreationForm = ({ visible, onCancel, selectedType, tilePath }) => {
   const dispatch = useDispatch();
@@ -55,9 +56,9 @@ const SchemaCreationForm = ({ visible, onCancel, selectedType, tilePath }) => {
           <Input.TextArea />
         </Form.Item>
         <Form.Item>
-          <Button className="create-btn" type="primary" onClick={handleCreate}>
+          <CustomButton type="primary" onClick={handleCreate}>
             Create
-          </Button>
+          </CustomButton>
         </Form.Item>
       </Form>
     </Modal>

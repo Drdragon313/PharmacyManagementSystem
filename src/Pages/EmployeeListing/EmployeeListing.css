@@ -51,7 +51,7 @@
 }
 .create-emp-btn {
   justify-content: center;
-  width: 100% !important;
+  width: 100%;
   font-family: "Poppins", sans-serif;
   background-color: #425cda;
 }

@@ -1,9 +1,25 @@
+:root {
+  overflow: none;
+}
+.main-container-roles-permissions {
+  padding-left: 20px;
+}
 .Roles-input {
   height: 6vh;
   width: 24vw;
   background: #fdfdfd !important;
 
   border-radius: 12px;
+}
+.roles-checkbox-table-container {
+  width: 50%;
+}
+.roles-checkbox-table {
+  overflow-y: auto;
+}
+.sub-module-table {
+  margin-left: -15px !important;
+  border: none;
 }
 .addRoleNameLabel {
   font-family: Poppins, sans-serif;
@@ -15,6 +31,7 @@
   margin-left: 10px;
   color: #1e293b;
 }
+
 .addRoleNameLabel::after {
   content: " *";
   font-weight: bold;
@@ -25,6 +42,7 @@
   flex-direction: row;
   gap: 20px;
   margin-top: 30px;
+  margin-left: 10px;
 }
 .cancel-btn {
   width: 135px;
@@ -49,7 +67,31 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 20px;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 10px;
 }
+
 .table-module-permissions {
   border: none;
+}
+.roles-list-table {
+  margin-right: 20px;
+  padding-left: 20px;
+  width: 100%;
+}
+.breadcrumb-row {
+  border-bottom: 1px solid #ededed;
+  width: 100%;
+}
+@media (max-width: 768px) {
+  .roles-list-table {
+    overflow-x: auto;
+  }
+  .roles-checkbox-table-container {
+    overflow-x: auto;
+    width: 100%;
+  }
 }

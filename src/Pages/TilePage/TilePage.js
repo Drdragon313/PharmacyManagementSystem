@@ -13,8 +13,7 @@ import {
   Breadcrumb,
 } from "antd";
 import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
-import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
-import axios from "axios";
+
 import {
   createCard,
   deleteCard,
@@ -29,7 +28,9 @@ import SelectionModal from "../../Components/CreateSchemaSelectionModal/Selectio
 import CustomCard from "../../Components/Card/Card";
 import { Link } from "react-router-dom";
 import tileImg from "../../Assets/schemaImg.svg";
-
+import Spinner from "../../Components/Spinner/Spinner";
+import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationModal";
+import { fetchUserPermissions } from "../../Utility Function/ModulesAndPermissions";
 const TilePage = () => {
   const [path, setPath] = useState([""]);
   const [tiles, setTiles] = useState([]);
@@ -43,11 +44,14 @@ const TilePage = () => {
   const [selectedSchemaId, setSelectedSchemaId] = useState(null);
   const [selectedTileId, setSelectedTileId] = useState(null);
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(-1);
-  const [iconsData, setIconsData] = useState();
+  const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] =
+    useState(false);
+  const [deleteItem, setDeleteItem] = useState({ type: "", id: null });
   const [isEditModalVisible, setEditModalVisible] = useState(false);
   const [editedTileName, setEditedTileName] = useState("");
   const [selectedTileIdForEdit, setSelectedTileIdForEdit] = useState(null);
-
+  const [isLoading, setIsLoading] = useState(true);
+  const [userPermissions, setUserPermissions] = useState(null);
   const [form] = Form.useForm();
   const handleMoveButtonClick = (schemaId) => {
     setSelectedSchemaId(schemaId);
@@ -59,22 +63,33 @@ const TilePage = () => {
   const handleCloseMoveModal = () => {
     setIsMoveModalVisible(false);
   };
-  const fetchIconsData = async () => {
-    try {
-      const response = await axios.get(`${baseURL}/icons`);
-      let Icon = Object.values(response.data.imageUrls);
-      setIconsData(Icon);
-    } catch (error) {
-      console.error("Error fetching icons data:", error);
-    }
-  };
+
   const getPath = useCallback(
     () => (path.length === 1 ? "/" : path.join("/")),
     [path]
   );
+  useEffect(() => {
+    const fetchUserPermissionData = async () => {
+      try {
+        await fetchUserPermissions(setUserPermissions);
+      } catch (error) {
+        console.error("Error fetching user permissions:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUserPermissionData();
+  }, []);
 
   useEffect(() => {
-    fetchDataTiles(getPath());
+    setIsLoading(true);
+    fetchDataTiles(getPath())
+      .then(() => setIsLoading(false))
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setIsLoading(false);
+      });
   }, [getPath]);
 
   const fetchDataTiles = async (tilePath) => {
@@ -82,7 +97,6 @@ const TilePage = () => {
     setTiles(data.tiles);
     setSchemas(data.schemas);
     localStorage.setItem("tilePath", tilePath);
-    fetchIconsData();
   };
 
   const handleTileClick = (cardPath) => {
@@ -119,12 +133,26 @@ const TilePage = () => {
     }
   };
 
-  const handleDeleteCard = async (tileName, event) => {
-    event.stopPropagation();
+  const handleDeleteCard = async (tileName) => {
     const updatedTilesData = await deleteCard(tileName);
     if (updatedTilesData) {
       fetchDataTiles(getPath());
     }
+  };
+  const handleDeleteConfirmation = (type, id, event) => {
+    event.stopPropagation();
+    setDeleteConfirmationVisible(true);
+    setDeleteItem({ type, id });
+  };
+
+  const handleConfirmDelete = async () => {
+    if (deleteItem.type === "tile") {
+      await handleDeleteCard(deleteItem.id);
+    } else if (deleteItem.type === "schema") {
+      await handleDeleteSchema(deleteItem.id);
+    }
+
+    setDeleteConfirmationVisible(false);
   };
 
   const handleDeleteSchema = async (schemaId) => {
@@ -163,6 +191,18 @@ const TilePage = () => {
     setNewCardName("");
     setSelectionModalVisible(false);
   };
+  const canCreateTiles =
+    userPermissions?.find((module) => module.module_name === "Data live")
+      ?.actions?.write || false;
+  const canDeleteTiles =
+    userPermissions?.find((module) => module.module_name === "Data live")
+      ?.actions?.delete || false;
+  const canEditTiles =
+    userPermissions?.find((module) => module.module_name === "Data live")
+      ?.actions?.update || false;
+  const canViewTiles =
+    userPermissions?.find((module) => module.module_name === "Data live")
+      ?.actions?.read || false;
 
   const moveSchema = () => {
     if (selectedSchemaId && selectedTileId) {
@@ -178,10 +218,12 @@ const TilePage = () => {
       message.error("Selected schema or tile is not valid");
     }
   };
-
+  if (isLoading === true) {
+    return <Spinner />;
+  }
   return (
     <div className="tilepage-container">
-      <Breadcrumb className="breadcrumb" separator=">">
+      <Breadcrumb className="breadcrumb" separator=">>">
         {path.map((pathItem, index) => (
           <Breadcrumb.Item
             className="breadcrumb-item"
@@ -208,20 +250,30 @@ const TilePage = () => {
                   <Button className="dropbtn">
                     <MoreOutlined />
                     <div className="dropdown-content">
-                      <Button
-                        type="link"
-                        onClick={(event) =>
-                          handleDeleteCard(tile.TileName, event)
-                        }
-                      >
-                        Delete
-                      </Button>
-                      <Button
-                        type="link"
-                        onClick={(event) => handleEditTileClick(tile.ID, event)}
-                      >
-                        Edit Tile
-                      </Button>
+                      {canDeleteTiles && (
+                        <Button
+                          type="link"
+                          onClick={(event) =>
+                            handleDeleteConfirmation(
+                              "tile",
+                              tile.TileName,
+                              event
+                            )
+                          }
+                        >
+                          Delete
+                        </Button>
+                      )}
+                      {canEditTiles && (
+                        <Button
+                          type="link"
+                          onClick={(event) =>
+                            handleEditTileClick(tile.ID, event)
+                          }
+                        >
+                          Edit Tile
+                        </Button>
+                      )}
                     </div>
                   </Button>
                 </div>
@@ -237,20 +289,22 @@ const TilePage = () => {
                 </Space>
               </CustomCard>
             ))}
-            <CustomCard
-              className="button-container"
-              onClick={() => openCardModal("createTile")}
-            >
-              <Button
-                shape="circle"
-                icon={<PlusOutlined />}
-                size="large"
-                className="new-card-btn"
-              ></Button>
-              <Button className="create-new-tile-btn-txt" type="link">
-                Add new Tile
-              </Button>
-            </CustomCard>
+            {canCreateTiles && (
+              <CustomCard
+                className="button-container"
+                onClick={() => openCardModal("createTile")}
+              >
+                <Button
+                  shape="circle"
+                  icon={<PlusOutlined />}
+                  size="large"
+                  className="new-card-btn"
+                ></Button>
+                <Button className="create-new-tile-btn-txt" type="link">
+                  Add new Tile
+                </Button>
+              </CustomCard>
+            )}
           </div>
         </Col>
       </Row>
@@ -270,18 +324,25 @@ const TilePage = () => {
                       <MoreOutlined />
                     </Button>
                     <div className="dropdown-content">
-                      <Button
-                        type="link"
-                        onClick={() => handleDeleteSchema(schema.id)}
-                      >
-                        Delete
-                      </Button>
-                      <Button
-                        type="link"
-                        onClick={() => handleMoveButtonClick(schema.id)}
-                      >
-                        Move
-                      </Button>
+                      {canDeleteTiles && (
+                        <Button
+                          type="link"
+                          onClick={(event) =>
+                            handleDeleteConfirmation("schema", schema.id, event)
+                          }
+                        >
+                          Delete
+                        </Button>
+                      )}
+                      {canEditTiles && (
+                        <Button
+                          type="link"
+                          onClick={() => handleMoveButtonClick(schema.id)}
+                        >
+                          Move
+                        </Button>
+                      )}
+
                       <Link to={`/schema/${schema.id}`}>
                         <Button type="link">View Details</Button>
                       </Link>
@@ -313,9 +374,11 @@ const TilePage = () => {
                               </div>
                             ))}
                         </ul>
-                        <Button type="primary" onClick={moveSchema}>
-                          Move
-                        </Button>
+                        {canEditTiles && (
+                          <Button type="primary" onClick={moveSchema}>
+                            Move
+                          </Button>
+                        )}
                       </Modal>
                     </div>
                   </div>
@@ -336,20 +399,22 @@ const TilePage = () => {
             ) : (
               <p></p>
             )}
-            <CustomCard
-              className="button-container-schema"
-              onClick={() => openCardModal("createSchema")}
-            >
-              <Button
-                shape="circle"
-                icon={<PlusOutlined />}
-                size="large"
-                className="new-card-btn"
-              ></Button>
-              <Button className="create-new-tile-btn-txt" type="link">
-                Add new Schema
-              </Button>
-            </CustomCard>
+            {canViewTiles && (
+              <CustomCard
+                className="button-container-schema"
+                onClick={() => openCardModal("createSchema")}
+              >
+                <Button
+                  shape="circle"
+                  icon={<PlusOutlined />}
+                  size="large"
+                  className="new-card-btn"
+                ></Button>
+                <Button className="create-new-tile-btn-txt" type="link">
+                  Add new Schema
+                </Button>
+              </CustomCard>
+            )}
           </div>
         </Col>
       </Row>
@@ -392,6 +457,16 @@ const TilePage = () => {
           onChange={(e) => setEditedTileName(e.target.value)}
         />
       </Modal>
+      <ConfirmationModal
+        open={isDeleteConfirmationVisible}
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setDeleteConfirmationVisible(false)}
+        confirmationHeading="Confirm Deletion"
+        confirmationText="Are you sure you want to delete this item?"
+        titleImage={null}
+        btnclassName="delete-confirm-btn"
+        btnTxt="Confirm Delete"
+      />
     </div>
   );
 };

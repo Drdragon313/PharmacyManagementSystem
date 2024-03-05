@@ -62,6 +62,7 @@ const EditUsers = () => {
   ];
 
   useEffect(() => {
+    setValidContact(true);
     if (userID) {
       const headers = {
         Authorization: `${authToken}`,
@@ -380,13 +381,13 @@ const EditUsers = () => {
               </label>
               <br />
               <Select
+                disabled={userID ? isRoleSelectDisabled : true}
                 className="AddUsersDetailsInput"
                 name="Selected_Role_Name"
                 value={data.Selected_Role_Name}
                 onChange={(value) =>
                   handleSelectChange("Selected_Role_Name", value)
                 }
-                disabled={isRoleSelectDisabled}
               >
                 {data.Available_Roles.map((option) => (
                   <Option key={option.id} value={option.id}>
