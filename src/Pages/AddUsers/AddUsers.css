@@ -4,32 +4,27 @@
 .AddUsersBasicInfoHeading {
   padding-top: 2%;
   margin-left: 2.4%;
-  margin-bottom: 2%;
+  margin-bottom: 5% !important;
+}
+.adjacent-fields {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+.AddUsersDetails-container {
+  display: flex;
+  margin-top: -20px;
+  margin-left: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.AddUsersDetails {
-  display: flex;
-  height: 70vh;
-}
-.AddUsersOneDetails {
-  width: 34vw;
-  display: flex;
-  justify-content: center;
-}
-.AddUsersTwoDetails {
-  width: 34vw;
-  display: flex;
-  justify-content: center;
-}
-.AddUsersThreeDetails {
-  width: 34vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .AddUsersDetailsInput {
   height: 6vh;
-  width: 24vw;
+  max-width: 24vw;
+  min-width: 24vw;
   border-radius: 12px;
 }
 .addUserNotLabelContact {
@@ -43,31 +38,41 @@
 .DetailsInput {
   height: 6vh;
   border-radius: 12px;
+  min-width: 10.6vw;
+}
+.DetailsInput-container {
+  display: flex;
+  flex-direction: row;
+  width: 10% !important;
+  justify-content: space-between;
+  gap: 40px;
 }
 
 .AddUsersInformationUpdateBtnContainer {
   display: flex;
   width: 24vw !important;
-
   justify-content: space-between;
+  gap: 20px;
+  margin-top: 20px;
 }
 .AddUsersInformationCancelBtn {
   border-radius: 10px;
   border: 1px solid #3a3475;
   color: #3a3475;
   height: 5vh !important;
-  min-width: 5vw;
+  width: 100% !important;
   text-overflow: none;
 }
 .add-user-btn-submit {
   background: #425cda;
   color: white;
-  min-width: 12vw;
+  width: 100%;
   height: 5vh !important;
   border-radius: 10px;
 }
 .GenderInput {
-  width: 24vw !important;
+  max-width: 24vw;
+  min-width: 24vw;
 }
 .ant-select-custom .ant-select-selector {
   height: 6vh !important;
@@ -103,30 +108,34 @@
 .InvalidContactTxt {
   color: red;
 }
-@media screen and (max-width: 768px) {
-  .AddUsersDetails {
-    flex-direction: row;
-  }
 
-  .AddUsersOneDetails,
-  .AddUsersTwoDetails,
-  .AddUsersThreeDetails {
-    width: 100%;
-  }
-
-  .AddUsersDetailsInput,
-  .DetailsInput {
-    width: 100%;
-  }
-
-  .AddUsersInformationUpdateBtnContainer {
-    width: 100%;
+@media only screen and (max-width: 668px) {
+  .adjacent-fields {
+    display: flex;
     flex-direction: column;
+    gap: 1px !important;
   }
-
-  .add-user-btn-submit,
-  .AddUsersInformationCancelBtn {
-    width: 100%;
-    margin-bottom: 10px;
+  .AddUsersDetails-container {
+    width: 100% !important;
+  }
+  .AddUsersDetailsInput {
+    min-width: 80vw;
+  }
+  .GenderInput {
+    min-width: 44vw;
+  }
+  .DetailsInput-container {
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 0px;
+  }
+  .AddUsersBasicContainer {
+    height: auto !important;
+    padding-bottom: 20px;
+  }
+  .AddUsersInformationUpdateBtnContainer {
+    width: 80vw !important;
   }
 }

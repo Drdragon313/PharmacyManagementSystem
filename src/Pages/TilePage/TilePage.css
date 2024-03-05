@@ -29,8 +29,7 @@
 }
 .tilecards:hover {
   cursor: pointer;
-  border-color: #fff;
-  box-shadow: 2px 2px 4px rgba(0, 21, 41, 100);
+  background-color: #eff1ff;
   color: #2a44c1;
   border-style: solid;
 }
@@ -83,7 +82,7 @@
 .breadcrumb {
   padding-left: 20px;
   margin-top: 1px;
-  border: 1px solid #ededed;
+  border-bottom: 1px solid #ededed;
 }
 .breadcrumb-item {
   cursor: pointer;
@@ -101,18 +100,6 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-}
-.schemacards {
-  margin-left: 10px;
-  width: 230px;
-  text-align: center;
-  height: 190px;
-  background: #fff;
-  justify-content: center;
-  transform: border-style 0.5s border-color 0.5s box-shadow 1s;
-  color: #2a44c1;
-  border: 1px solid#2a44c1;
-  border-radius: 12px;
 }
 
 .add-button {
@@ -143,8 +130,7 @@
 .button-container:hover {
   cursor: pointer;
   border-color: #001529;
-  box-shadow: 2px 2px 4px rgba(0, 21, 41, 100);
-  background: #2a44c1;
+  background: #eff1ff;
   color: #fff;
   border-style: solid;
 }
@@ -167,8 +153,7 @@
 .button-container-schema:hover {
   cursor: pointer;
   border-color: #001529;
-  box-shadow: 2px 2px 4px rgba(0, 21, 41, 100);
-  background: #2a44c1;
+  background: #eff1ff;
   color: aliceblue;
   border-style: solid;
 }
@@ -232,7 +217,24 @@
   display: flex;
   flex-direction: column;
 }
-
+.schemacards-tilepage {
+  margin-left: 10px;
+  width: 230px;
+  text-align: center;
+  height: 190px;
+  background: #fff;
+  justify-content: center;
+  transform: border-style 0.5s border-color 0.5s box-shadow 1s;
+  color: #2a44c1;
+  border: 1px solid#2a44c1;
+  border-radius: 12px;
+}
+.schemacards-tilepage:hover {
+  cursor: pointer;
+  background-color: #eff1ff;
+  color: #2a44c1;
+  border-style: solid;
+}
 .schema-content {
   text-align: center;
   margin-left: 10px;
@@ -258,8 +260,7 @@
   text-align: center;
 }
 .move-tile-name-btn {
-  background-color: #ffffff; /* Default background color */
-  /* Other button styles */
+  background-color: #ffffff;
 }
 
 .move-tile-name-btn.clicked {
@@ -284,6 +285,11 @@
   box-shadow: 2px 2px 4px rgba(0, 21, 41, 100);
   color: aliceblue;
   border-style: solid;
+}
+.delete-confirm-btn {
+  background-color: red;
+  width: 50%;
+  height: 5vh;
 }
 @media only screen and (max-width: 560px) {
   .allcards,

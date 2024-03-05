@@ -6,6 +6,7 @@ import Email_icon from "../../Assets/Email-icon.svg";
 import Password_icon from "../../Assets/Password_icon.svg";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, message } from "antd";
+import Spinner from "../../Components/Spinner/Spinner";
 import { Input } from "antd";
 import {
   EyeTwoTone,
@@ -30,9 +31,10 @@ const Signin = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const handleLogin = async (setUserPermissions, setModules) => {
     try {
+      setLoading(true);
       const response = await login(email, password);
 
       if (response.status === 200) {
@@ -46,132 +48,142 @@ const Signin = () => {
       } else {
         message.error("Invalid Credentials", 2);
       }
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="siginContainer">
-      <div className="signinLogoMainContainer">
-        <img
-          alt="SigninBackground"
-          className="SigninLogoContainerpharm-img"
-          src={signinBackground}
-        ></img>
-        <div>
-          <img
-            className="PharmacyImage"
-            alt="pharmacyImage"
-            src={PharmacyImage}
-          ></img>
-        </div>
-        <div className="SigninLogoContainertxt">
-          <p className="SigninLogoContainertitletext1">Elevate Your</p>
-          <p className="SigninLogoContainertitletext2">Pharmacy Insights</p>
-        </div>
-        <div className="LearnMoreBtn">
-          <Button>
-            Learn More <ArrowRightOutlined className="LearnMoreArrow" />
-          </Button>
-        </div>
-      </div>
-      <div className="siginFieldsContainer">
-        <div>
-          <img
-            alt="PharmalyticsLogo"
-            className="PharmalyticsLogo"
-            src={PharmalyticsLogo}
-          ></img>
-        </div>
-        <div className="signinFields">
-          <h3 className="LoginText">
-            <LoginOutlined className="LoginOutlined" />
-            <strong>Log In</strong> to your account
-          </h3>
-          <Form onFinish={handleLogin}>
-            <Form.Item
-              className="mb-3 mt-4"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your email!",
-                },
-              ]}
-            >
-              <label
-                htmlFor="exampleInputEmail1"
-                className="form-label signinboldLabel"
-              >
-                Email
-              </label>
-              <Input
-                itemType="email"
-                prefix={
-                  <img
-                    className="Email_icon"
-                    src={Email_icon}
-                    alt="Email Icon"
-                  />
-                }
-                size="medium"
-                type="email"
-                id="exampleInputEmail1"
-                className="SigninInputField"
-                aria-describedby="emailHelp"
-                required={true}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </Form.Item>
-            <Form.Item
-              className="mb-3"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Password!",
-                },
-              ]}
-            >
-              <label
-                htmlFor="exampleInputPassword1"
-                className="form-label signinboldLabel"
-              >
-                Password
-              </label>
-              <Input.Password
-                prefix={
-                  <img
-                    className="Email_icon"
-                    src={Password_icon}
-                    alt="Password Icon"
-                  />
-                }
-                id="exampleInputPassword1"
-                className="SigninInputField"
-                required={true}
-                iconRender={(visible) =>
-                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                }
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Form.Item>
-            <div className="stay-signedin-forgot-pass">
-              {/* <div className="stay-signedin"></div> */}
-              <Link to="/forgotpassword" className="signinForget">
-                Forget Password?
-              </Link>
+    <>
+      {" "}
+      {loading ? (
+        <Spinner />
+      ) : (
+        <div className="siginContainer">
+          <div className="signinLogoMainContainer">
+            <img
+              alt="SigninBackground"
+              className="SigninLogoContainerpharm-img"
+              src={signinBackground}
+            ></img>
+            <div>
+              <img
+                className="PharmacyImage"
+                alt="pharmacyImage"
+                src={PharmacyImage}
+              ></img>
             </div>
-            <CustomButton
-              className="login-btn"
-              type="primary"
-              htmlType="submit"
-            >
-              LogIn
-            </CustomButton>
-          </Form>
+            <div className="SigninLogoContainertxt">
+              <p className="SigninLogoContainertitletext1">Elevate Your</p>
+              <p className="SigninLogoContainertitletext2">Pharmacy Insights</p>
+            </div>
+            <div className="LearnMoreBtn">
+              <Button>
+                Learn More <ArrowRightOutlined className="LearnMoreArrow" />
+              </Button>
+            </div>
+          </div>
+          <div className="siginFieldsContainer">
+            <div>
+              <img
+                alt="PharmalyticsLogo"
+                className="PharmalyticsLogo"
+                src={PharmalyticsLogo}
+              ></img>
+            </div>
+            <div className="signinFields">
+              <h3 className="LoginText">
+                <LoginOutlined className="LoginOutlined" />
+                <strong>Log In</strong> to your account
+              </h3>
+              <Form onFinish={handleLogin}>
+                <Form.Item
+                  className="mb-3 mt-4"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your email!",
+                    },
+                  ]}
+                >
+                  <label
+                    htmlFor="exampleInputEmail1"
+                    className="form-label signinboldLabel"
+                  >
+                    Email
+                  </label>
+                  <Input
+                    itemType="email"
+                    prefix={
+                      <img
+                        className="Email_icon"
+                        src={Email_icon}
+                        alt="Email Icon"
+                      />
+                    }
+                    size="medium"
+                    type="email"
+                    id="exampleInputEmail1"
+                    className="SigninInputField"
+                    aria-describedby="emailHelp"
+                    required={true}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </Form.Item>
+                <Form.Item
+                  className="mb-3"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your Password!",
+                    },
+                  ]}
+                >
+                  <label
+                    htmlFor="exampleInputPassword1"
+                    className="form-label signinboldLabel"
+                  >
+                    Password
+                  </label>
+                  <Input.Password
+                    prefix={
+                      <img
+                        className="Email_icon"
+                        src={Password_icon}
+                        alt="Password Icon"
+                      />
+                    }
+                    id="exampleInputPassword1"
+                    className="SigninInputField"
+                    required={true}
+                    iconRender={(visible) =>
+                      visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                    }
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Form.Item>
+                <div className="stay-signedin-forgot-pass">
+                  {/* <div className="stay-signedin"></div> */}
+                  <Link to="/forgotpassword" className="signinForget">
+                    Forget Password?
+                  </Link>
+                </div>
+                <CustomButton
+                  className="login-btn"
+                  type="primary"
+                  htmlType="submit"
+                >
+                  LogIn
+                </CustomButton>
+              </Form>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

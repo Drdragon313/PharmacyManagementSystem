@@ -6,12 +6,16 @@ import PharmalyticsLogo from "../../Assets/Pharmalytics-Logo.svg";
 import CheckEmailicon from "../../Assets/CheckEmailicon.svg";
 import { Button } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+
 import CustomButton from "../../Components/CustomButton/CustomButton";
+import { useNavigate } from "react-router-dom";
 
 const ResendEmail = () => {
+  const navigate = useNavigate();
   const userEmail = localStorage.getItem("userEmail");
-
+  const HandleBtnBacktoLogin = () => {
+    navigate("/");
+  };
   return (
     <div className="siginContainer">
       <div className="signinLogoMainContainer">
@@ -62,11 +66,14 @@ const ResendEmail = () => {
             Didn’t receive the email? Check span folder
           </p>
           <div className="resend-email-btns">
-            <Link to="/">
-              <CustomButton type="default" className="back-to-login-btn">
-                Back to Login
-              </CustomButton>
-            </Link>
+            <CustomButton
+              htmlType="button"
+              type="default"
+              className="reset-back-btn"
+              onClick={HandleBtnBacktoLogin}
+            >
+              Back To Login
+            </CustomButton>
           </div>
         </div>
       </div>

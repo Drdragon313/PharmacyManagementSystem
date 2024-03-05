@@ -10,16 +10,13 @@ export const getReportData = (setReportData) => {
   axios
     .get(`${baseURL}/get-report-data?report_id=${reportID}`, { headers })
     .then((response) => {
-      console.log(response.data.Data);
       const newData = response.data.Data;
       setReportData((prevData) => ({
         ...prevData,
         ...newData,
       }));
     })
-    .catch((error) => {
-      console.log("Error from API", error);
-    });
+    .catch(() => {});
 };
 
 export const embedConfig = (
@@ -28,8 +25,33 @@ export const embedConfig = (
   values,
   table,
   column,
-  operator
+  operator,
+  screenSize
 ) => {
+  let filters = [];
+  if (!values || values.length === 0) {
+    console.log("abc");
+
+    filters.push({
+      $schema: "http://powerbi.com/product/schema#basicFilter",
+      target: {
+        table: table,
+        column: column,
+      },
+      operator: "lt",
+      values: [0],
+    });
+  } else {
+    filters.push({
+      $schema: "http://powerbi.com/product/schema#basicFilter",
+      target: {
+        table: table,
+        column: column,
+      },
+      operator: operator,
+      values: values,
+    });
+  }
   return {
     type: "report",
     id: id,
@@ -39,6 +61,10 @@ export const embedConfig = (
 
     settings: {
       hideErrors: true,
+      layoutType:
+        screenSize < 768
+          ? models.LayoutType.MobilePortrait
+          : models.LayoutType.MobileLandscape,
       panes: {
         filters: {
           expanded: false,
@@ -56,16 +82,18 @@ export const embedConfig = (
       hideFooter: true,
       background: models.BackgroundType.Transparent,
     },
-    filters: [
-      {
-        $schema: "http://powerbi.com/product/schema#basicFilter",
-        target: {
-          table: table,
-          column: column,
-        },
-        operator: operator,
-        values: values,
-      },
-    ],
+
+    // filters: [
+    //   {
+    //     $schema: "http://powerbi.com/product/schema#basicFilter",
+    //     target: {
+    //       table: table,
+    //       column: column,
+    //     },
+    //     operator: operator,
+    //     values: values,
+    //   },
+    // ],
+    filters: filters,
   };
 };

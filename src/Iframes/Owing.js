@@ -1,43 +1,31 @@
 import React, { useState, useEffect } from "react";
 import "./Iframe.css";
 import { PowerBIEmbed } from "powerbi-client-react";
-import axios from "axios";
-import { baseURL } from "../Components/BaseURLAPI/BaseURLAPI";
-import { embedConfig } from "../Utility Function/ReportUtils";
+import { embedConfig, getReportData } from "../Utility Function/ReportUtils";
 const Owing = () => {
   const [reportData, setReportData] = useState({
     embedToken: "",
     pharmacyIDs: [],
     reportID: "",
   });
+  const [screenSize, setScreenSize] = useState(window.innerWidth);
   useEffect(() => {
-    // getReportData(setReportData);
-    const authToken = localStorage.getItem("AuthorizationToken");
-    const headers = {
-      Authorization: authToken,
+    getReportData(setReportData);
+    const handleScroll = (e) => {
+      setScreenSize(e.currentTarget.innerWidth);
+      console.log("Page scrolled", e.currentTarget.innerWidth);
     };
-    const reportID = localStorage.getItem("ReportID");
-
-    axios
-      .get(`${baseURL}/get-report-data?report_id=${reportID}`, { headers })
-      .then((response) => {
-        console.log(response.data.Data);
-        const newData = response.data.Data;
-        setReportData((prevData) => ({
-          ...prevData,
-          ...newData,
-        }));
-      })
-      .catch((error) => {
-        console.log("Error from API", error);
-      });
+    window.addEventListener("resize", handleScroll);
+    return () => {
+      window.removeEventListener("resize", handleScroll);
+    };
   }, []);
-  const table = "public pharmacy_data_1";
-  const column = "pharmacy_id";
+  const table = "public pharmacies";
+  const column = "id";
   const operator = "eq";
 
   return (
-    <div>
+    <div className="iframe-container">
       <PowerBIEmbed
         embedConfig={embedConfig(
           reportData.reportID,
@@ -45,7 +33,8 @@ const Owing = () => {
           reportData.pharmacyIDs,
           table,
           column,
-          operator
+          operator,
+          screenSize
         )}
         eventHandlers={
           new Map([
@@ -57,7 +46,7 @@ const Owing = () => {
             ],
           ])
         }
-        cssClassName={"customIframe"}
+        cssClassName={"exampleIframe"}
         getEmbeddedComponent={(embeddedReport) => {
           window.report = embeddedReport;
         }}

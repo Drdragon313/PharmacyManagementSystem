@@ -4,15 +4,39 @@
   align-items: center;
   background: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #ededed;
 }
 .top-nav-logo-container {
-  margin-left: -20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-left: 20px;
+  color: #fff;
+  width: 110px;
+  font-family: Helvetica;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.responsive-nav-logo {
+  width: 100px;
+}
+.cross-btn {
+  width: 150px;
+  margin-right: -50px;
+}
+.responsive-nav-txt {
+  margin-top: 20px;
 }
 .ProfileDropdown {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  text-decoration: none;
 }
 .top-nav-column {
   display: flex;
@@ -44,6 +68,12 @@
   justify-content: space-between;
   gap: 10px;
 }
+.nav-itmes-contianer :hover {
+  cursor: pointer;
+}
+.ProfileNavlink {
+  text-decoration: none !important;
+}
 .mobile-drawer-nav {
   max-width: 26vb !important;
   min-width: 23vb !important;
@@ -59,12 +89,14 @@
 :where(.css-dev-only-do-not-override-nnuwmp).ant-drawer .ant-drawer-header {
   background-color: #3a3475;
 }
+
 .mobileButton {
   display: none;
-  margin-right: 10px;
+  margin-left: -20px;
 
   @media (max-width: 768px) {
     display: block;
+    font-size: 20px;
   }
 }
 @media only screen and (max-width: 768px) {
@@ -77,5 +109,11 @@
   }
   .nav-itmes-contianer {
     margin-right: -40px !important;
+  }
+}
+@media only screen and (min-height: 768px) {
+  .mobile-drawer-nav {
+    width: 12vb !important;
+    height: 100vh !important;
   }
 }

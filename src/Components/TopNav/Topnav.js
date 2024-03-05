@@ -14,18 +14,23 @@ import SideMenuBar from "../Navbar/SideMenuBar";
 import CustomButton from "../CustomButton/CustomButton";
 import Helplogo from "../../Assets/helplogo.svg";
 import logo from "../../Assets/logo_for_nav.svg";
+import cross from "../../Assets/cross.svg";
 const { Header, Footer } = Layout;
 
 const Topnav = () => {
   const [showMobileDrawer, setShowMobileDrawer] = useState(false);
-
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [userData, setUserData] = useState({
     FName: "",
     LName: "",
     Role: "",
   });
   const navigate = useNavigate();
-
+  const getInitials = () => {
+    const firstNameInitial = userData.FName ? userData.FName.charAt(0) : "";
+    const lastNameInitial = userData.LName ? userData.LName.charAt(0) : "";
+    return `${firstNameInitial}${lastNameInitial}`;
+  };
   const handleLogout = async () => {
     try {
       const authToken = localStorage.getItem("AuthorizationToken");
@@ -102,32 +107,43 @@ const Topnav = () => {
       .catch(() => {
         message.error("Some Error has Occured in Loading Information!", 2);
       });
-    const handleToggleMobileDrawer = () => {
-      const screenWidth = window.innerWidth;
-
-      if (screenWidth <= 680) {
-        setShowMobileDrawer(!showMobileDrawer);
-      }
+  }, []);
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
     };
-    handleToggleMobileDrawer();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
+  useEffect(() => {
+    if (windowWidth > 770 && showMobileDrawer) {
+      setShowMobileDrawer(false);
+    }
+  }, [windowWidth, showMobileDrawer]);
+
+  const handleToggleMobileDrawer = () => {
+    setWindowWidth(window.innerWidth);
+
+    if (window.innerWidth <= 770) {
+      setShowMobileDrawer(!showMobileDrawer);
+    }
+  };
   return (
     <Layout>
       <Header className="TopnavHeader">
         <div>
-          <Image
-            className="top-nav-logo-container"
-            src={logo}
-            preview={false}
-          ></Image>
+          <MenuOutlined
+            className="mobileButton"
+            onClick={() => handleToggleMobileDrawer()}
+          />
         </div>
 
         <div className="ProfileDropdown">
-          <MenuOutlined
-            className="mobileButton"
-            onClick={setShowMobileDrawer}
-          />
           <Dropdown
             menu={{
               items,
@@ -137,7 +153,11 @@ const Topnav = () => {
             rootClassName="nav-drop-down"
           >
             <div size={10} className="nav-itmes-contianer">
-              <Avatar size="large" icon={<UserOutlined />} />
+              {userData.FName && userData.LName ? (
+                <Avatar size="large" icon={getInitials()} />
+              ) : (
+                <Avatar size="large" icon={<UserOutlined />} />
+              )}
 
               <span></span>
               <div className="TopnavUser">
@@ -158,8 +178,27 @@ const Topnav = () => {
           onClose={() => setShowMobileDrawer(false)}
           open={showMobileDrawer}
           className="mobile-drawer-nav"
+          title={false}
+          closeIcon={false}
         >
+          <div className="top-nav-logo-container">
+            <div className="responsive-nav-logo">
+              <Image src={logo} preview={false}></Image>
+            </div>
+            <div>
+              <p className="responsive-nav-txt">Pharmalytics</p>
+            </div>
+
+            <div className="cross-btn">
+              <Image
+                src={cross}
+                preview={false}
+                onClick={() => setShowMobileDrawer(false)}
+              ></Image>
+            </div>
+          </div>
           <SideMenuBar
+            className="side-menu-bar-items"
             collapsed={true}
             toggleMobileDrawer={() => setShowMobileDrawer(false)}
           />

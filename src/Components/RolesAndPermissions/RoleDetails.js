@@ -56,12 +56,8 @@ const RoleDetails = () => {
   return (
     <div className="main-container-role-details">
       <Row className="pharmacy-list-breadcrumb">
-        <Col className="breadcrumb-col" span={24}>
-          <CustomBreadcrumb
-            items={breadcrumbItems}
-            currentFontColor="black"
-            previousFontColor="blue"
-          ></CustomBreadcrumb>
+        <Col className="breadcrumb-row" span={24}>
+          <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
         </Col>
       </Row>
       <Row
@@ -93,33 +89,34 @@ const RoleDetails = () => {
           lg: 32,
         }}
       >
-        <Col span={24} style={{ marginLeft: "20px" }}>
-          <div className="labels-values-container">
-            <div className="labels">
-              <p>Role Name</p>
-              <p>Created on </p>
-              <p>Number of Assigned Users</p>
-              <p>Assigned Users</p>
+        <Col span={22} style={{ marginLeft: "20px" }}>
+          <div className="Labels-values-container">
+            <div className="values-container">
+              <div className="labels">
+                <p>Role Name</p>
+                <p>Created on </p>
+                <p>Number of Assigned Users</p>
+                <p>Assigned Users</p>
+              </div>
+              <div className="values">
+                <p> {roleDetails.name}</p>
+                <p> {roleDetails.created_at}</p>
+                <p>{roleDetails.assigned_users}</p>
+                {roleDetails.users &&
+                  roleDetails.users.map((user, index) => (
+                    <div>
+                      <span className="assigned-users-list" key={index}>
+                        <Image
+                          className="bullet-image"
+                          preview={false}
+                          src={usersImg}
+                        />
+                        {user.name} - {user.email}
+                      </span>
+                    </div>
+                  ))}
+              </div>
             </div>
-            <div className="values">
-              <p> {roleDetails.name}</p>
-              <p> {roleDetails.created_at}</p>
-              <p>{roleDetails.assigned_users}</p>
-              {roleDetails.users &&
-                roleDetails.users.map((user, index) => (
-                  <div>
-                    <span className="assigned-users-list" key={index}>
-                      <Image
-                        className="bullet-image"
-                        preview={false}
-                        src={usersImg}
-                      />
-                      {user.name} - {user.email}
-                    </span>
-                  </div>
-                ))}
-            </div>
-
             <div className="values2">
               {roleDetails.role_permissions.map((permission, index) => (
                 <div key={index}>

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Form, Input, Row, Col, Select } from "antd";
+import { Modal, Form, Input, Select } from "antd";
 import CustomSelect from "../Select/Select";
 import { useOptions } from "../../optionContext/OptionContext";
 import { filterValidationOptions } from "../../Utility Function/validationOptions";
+import CustomButton from "../CustomButton/CustomButton";
 
 const EditForm = ({
   editRow,
@@ -52,25 +53,24 @@ const EditForm = ({
   return (
     <Modal
       title="Edit Row"
-      visible={editModalVisible}
+      open={editModalVisible}
       onCancel={() => {
         onCancel();
       }}
-      onOk={handleFormSubmit}
+      footer={false}
     >
-      <Form form={form}>
-        <Row gutter={16}>
-          <Col span={12}>
+      <div className="schema-modal-form">
+        <Form form={form}>
+          <div className="first-row-schema-modal">
             <Form.Item
               name="fieldName"
               label="Field Name"
               initialValue={editRow?.Fieldname}
               rules={[{ required: true, message: "Please enter a field name" }]}
             >
-              <Input />
+              <Input className="SchemaDetailsInput" />
             </Form.Item>
-          </Col>
-          <Col span={12}>
+
             <Form.Item
               name="type"
               label="Type"
@@ -79,6 +79,7 @@ const EditForm = ({
             >
               <CustomSelect
                 options={typeOptions}
+                className="SchemaDetailSelect"
                 value={selectedData.type}
                 onChange={(value) => {
                   setSelectedData({ ...selectedData, type: value });
@@ -86,32 +87,36 @@ const EditForm = ({
                 placeholder="Select a Type"
               />
             </Form.Item>
-          </Col>
-          <Col span={24}>
-            <Form.Item
-              name="validation"
-              label="Validation"
-              initialValue={selectedData.validation}
-              rules={[{ required: true, message: "Please select Validation" }]}
+          </div>
+          <Form.Item
+            name="validation"
+            label="Validation"
+            initialValue={selectedData.validation}
+            rules={[{ required: true, message: "Please select Validation" }]}
+          >
+            <Select
+              className="AddUsersDetailsInput"
+              mode="multiple"
+              value={selectedData.validation}
+              onChange={(values) => {
+                setSelectedData({ ...selectedData, validation: values });
+              }}
+              placeholder="Enter or select multiple Validation values"
             >
-              <Select
-                mode="multiple"
-                value={selectedData.validation}
-                onChange={(values) => {
-                  setSelectedData({ ...selectedData, validation: values });
-                }}
-                placeholder="Enter or select multiple Validation values"
-              >
-                {validationOptions.map((option) => (
-                  <Select.Option key={option.value} value={option.value}>
-                    {option.label}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-        </Row>
-      </Form>
+              {validationOptions.map((option) => (
+                <Select.Option key={option.value} value={option.value}>
+                  {option.label}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item>
+            <CustomButton type="primary" onClick={handleFormSubmit}>
+              Add Row
+            </CustomButton>
+          </Form.Item>
+        </Form>
+      </div>
     </Modal>
   );
 };

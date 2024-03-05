@@ -6,23 +6,30 @@
   border-radius: 10px;
   transition: all;
 
-  /* Hover Style */
   &:hover {
     background-color: #1e38ba;
     border-color: #1e38ba;
     color: #fff;
   }
 
-  /* Focus Style */
   &:focus {
     box-shadow: 0 0 0 2px #acb8f4;
   }
 
-  /* Disabled Style */
   &:disabled {
     background-color: #c3ccf4;
     color: rgba(0, 0, 0, 0.25);
     border-color: #c3ccf4;
     cursor: not-allowed;
+  }
+}
+@media (max-width: 768px) {
+  .custom-button {
+    width: 50vw;
+  }
+}
+@media (max-width: 375px) {
+  .custom-button {
+    width: 75vw;
   }
 }

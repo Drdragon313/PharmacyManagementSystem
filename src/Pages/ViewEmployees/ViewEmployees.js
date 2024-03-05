@@ -58,10 +58,7 @@ const ViewEmployees = () => {
     <div className="main-container-pharmacy-details">
       <Row className="pharmacy-list-breadcrumb">
         <Col className="breadcrumb-col" span={24}>
-          <CustomBreadcrumb
-            seperator=">>"
-            items={breadcrumbItems}
-          ></CustomBreadcrumb>
+          <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
         </Col>
       </Row>
       <Row
@@ -72,7 +69,7 @@ const ViewEmployees = () => {
           lg: 32,
         }}
       >
-        <Col className="emp-detail-heading" span={23}>
+        <Col className="emp-detail-heading" span={22}>
           <p>{employeeDetails.FName} details</p>
           <Link to={`/employeepage/${userID}/editUser`}>
             <Button type="primary" className="primary-Class">
@@ -111,6 +108,7 @@ const ViewEmployees = () => {
               <p>Address</p>
               <p>Pharmacy</p>
             </div>
+
             <div className="values">
               <p>{employeeDetails.FName || "None"}</p>
               <p> {employeeDetails.LName || "None"}</p>

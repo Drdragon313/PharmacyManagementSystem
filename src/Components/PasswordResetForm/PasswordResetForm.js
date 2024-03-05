@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import pharmImg from "../../Assets/Asset 1 4.png";
-import { Button, Image, Input } from "antd";
+import { Button, Image, Input, Space } from "antd";
 import { useEffect } from "react";
 
 import {
@@ -8,7 +8,7 @@ import {
   EyeInvisibleOutlined,
   ArrowRightOutlined,
 } from "@ant-design/icons";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import phamalyticsLogo from "../../Assets/pharmaylics_logo.svg";
 import Lockimg from "../../Assets/lockoutlined.svg";
@@ -54,7 +54,9 @@ const PasswordResetForm = (props) => {
       handleApiStatus
     );
   };
-
+  const HandleBtnBacktoLogin = () => {
+    navigate("/");
+  };
   const handleApiStatus = (status) => {
     setApiStatus(status);
   };
@@ -76,7 +78,7 @@ const PasswordResetForm = (props) => {
   }
   return (
     <div className="siginContainer">
-      <div className="signinLogoContainer">
+      <div className="signinLogoResetContainer">
         <img alt="pharm" className="Resetpharm-img" src={pharmImg}></img>
         <div className="txt">
           <p className="title">
@@ -113,11 +115,14 @@ const PasswordResetForm = (props) => {
               create one by clicking the Resend Email button.
             </p>
             <div className="reset-password-btns">
-              <Link to="/">
-                <Button type="button" className="btn btn-primary backbtn">
-                  Back to Login
-                </Button>
-              </Link>
+              <CustomButton
+                htmlType="button"
+                type="default"
+                className="reset-back-btn"
+                onClick={HandleBtnBacktoLogin}
+              >
+                Back To Login
+              </CustomButton>
             </div>
           </div>
         ) : (
@@ -130,36 +135,46 @@ const PasswordResetForm = (props) => {
             </div>
             <ul className="conditions-signin">
               <li>
-                {conditions.minLength ? (
-                  <CheckCircleTwoTone twoToneColor="#06C552" />
-                ) : (
-                  <CloseCircleTwoTone twoToneColor="#EE0004" />
-                )}
-                Password should be at least 8 characters long.
+                <Space size={5}>
+                  {conditions.minLength ? (
+                    <CheckCircleTwoTone twoToneColor="#06C552" />
+                  ) : (
+                    <CloseCircleTwoTone twoToneColor="#EE0004" />
+                  )}
+                  Password should be at least 8 characters long.
+                </Space>
+              </li>
+
+              <li>
+                <Space size={5}>
+                  {conditions.upperCase ? (
+                    <CheckCircleTwoTone twoToneColor="#06C552" />
+                  ) : (
+                    <CloseCircleTwoTone twoToneColor="#EE0004" />
+                  )}
+                  Password must contain at least one upper case.
+                </Space>
               </li>
               <li>
-                {conditions.upperCase ? (
-                  <CheckCircleTwoTone twoToneColor="#06C552" />
-                ) : (
-                  <CloseCircleTwoTone twoToneColor="#EE0004" />
-                )}
-                Password must contain at least one upper case.
+                <Space size={5}>
+                  {conditions.lowerCase ? (
+                    <CheckCircleTwoTone twoToneColor="#06C552" />
+                  ) : (
+                    <CloseCircleTwoTone twoToneColor="#EE0004" />
+                  )}
+                  One lower case letter.
+                </Space>
               </li>
               <li>
-                {conditions.lowerCase ? (
-                  <CheckCircleTwoTone twoToneColor="#06C552" />
-                ) : (
-                  <CloseCircleTwoTone twoToneColor="#EE0004" />
-                )}
-                One lower case letter.
-              </li>
-              <li>
-                {conditions.numberAndSpecialChar ? (
-                  <CheckCircleTwoTone twoToneColor="#06C552" />
-                ) : (
-                  <CloseCircleTwoTone twoToneColor="#EE0004" />
-                )}
-                Password must contain at least one number and special character.
+                <Space size={5}>
+                  {conditions.numberAndSpecialChar ? (
+                    <CheckCircleTwoTone twoToneColor="#06C552" />
+                  ) : (
+                    <CloseCircleTwoTone twoToneColor="#EE0004" />
+                  )}
+                  Password must contain at least one number and special
+                  character.
+                </Space>
               </li>
             </ul>
 
@@ -213,15 +228,19 @@ const PasswordResetForm = (props) => {
                 />
               </div>
               <div className="reset-password-btns">
-                <Link to="/">
-                  <Button type="button" className="btn btn-primary backbtn">
-                    Cancel
-                  </Button>
-                </Link>
                 <CustomButton
-                  type="submit"
-                  className="signinbtn"
-                  onClick={handleSubmit}
+                  htmlType="button"
+                  type="default"
+                  className="reset-back-btn"
+                  onClick={HandleBtnBacktoLogin}
+                >
+                  Cancel
+                </CustomButton>
+
+                <CustomButton
+                  className="request-reset-btn"
+                  type="primary"
+                  htmlType="submit"
                 >
                   {props.buttonText}
                 </CustomButton>

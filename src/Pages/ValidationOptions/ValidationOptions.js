@@ -1,16 +1,16 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./VaidationOptions.css";
-import { Row, Button, Space, Image, Spin } from "antd";
+import { Row, Button, Space, Image } from "antd";
 import schemaImg from "../../Assets/schemaImg.svg";
 import axios from "axios";
 import { addIndex } from "../../redux/features/SchemaSelectionSlice/SchemaSelectionSlice";
 import { Link } from "react-router-dom";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import CustomCard from "../../Components/Card/Card";
-import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 import { MoreOutlined } from "@ant-design/icons";
+import Spinner from "../../Components/Spinner/Spinner";
 const ValidationOptions = () => {
   const schemaDataArray = useSelector((state) => state.schema.schemaDataArray);
   const [schemas, setSchemas] = useState([]);
@@ -18,8 +18,6 @@ const ValidationOptions = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const localHeader = localStorage.getItem("AuthorizationToken");
-
-  const [modalVisible, setModalVisible] = useState(!localHeader);
 
   const headers = useMemo(() => {
     return {
@@ -73,13 +71,6 @@ const ValidationOptions = () => {
     }
   };
 
-  if (!localHeader) {
-    const openModal = () => {
-      setModalVisible(true);
-    };
-    return <SignInFirstModal visible={modalVisible} open={openModal} />;
-  }
-
   const breadcrumbItems = [{ label: "Upload Files", link: "/file" }];
   return (
     <div className="Validation-container">
@@ -91,10 +82,7 @@ const ValidationOptions = () => {
 
       <div className="Options-container">
         {loading ? (
-          <div className="loader">
-            <Spin size={"large"}></Spin>
-            loading...
-          </div>
+          <Spinner />
         ) : (
           <div className="Options-containerElements">
             <Row gutter={22} className="schema-conatiner-row">

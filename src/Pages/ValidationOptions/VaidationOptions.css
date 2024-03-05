@@ -9,18 +9,22 @@
   margin-left: 15px;
   margin-top: 10px;
 }
+.Validation-container {
+  height: auto !important;
+}
 .schema-conatiner-row {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 10px;
 }
 .Options-container {
   border-radius: 10px;
   border: 1px solid #d3d3d3;
   width: 75vw;
-  height: 72vh;
-  margin-left: 10px;
+  height: auto;
+  margin-left: 20px;
+  margin-bottom: 20px;
 }
 .breadcrumb-validation-page {
   border: 1px solid #ededed;
@@ -28,23 +32,20 @@
   font-family: Poppins, sans-serif;
 }
 .schema-file-upload-cards {
-  margin-left: 1px;
-  border-radius: 17px;
-  align-items: center;
-  justify-content: center;
+  margin-left: 10px;
+  width: 230px;
   text-align: center;
-  width: 33vb;
+  height: 150px;
   background: #fff;
-  height: 180px;
-  margin-top: 10px;
-  border: 1px solid #2a44c1;
-  color: #2a44c1;
+  justify-content: center;
   transform: border-style 0.5s border-color 0.5s box-shadow 1s;
+  color: #2a44c1;
+  border: 1px solid#2a44c1;
+  border-radius: 12px;
 }
 .schema-file-upload-cards:hover {
   cursor: pointer;
-  border-color: #fff;
-  box-shadow: 2px 2px 4px #2a44c1;
+  background-color: #eff1ff !important;
   color: #2a44c1;
   border-style: solid;
 }
@@ -56,12 +57,11 @@
 }
 
 .schema-file-upload-img {
-  height: 80px !important;
-  width: 80px !important;
+  height: 60px !important;
+  width: 60px !important;
 }
 .Options-container {
   border: none;
-  padding-left: 10px;
 }
 
 .Validation-Img {
@@ -73,9 +73,8 @@
   max-height: 80px;
   max-width: 40px;
 }
-.Validation-schemaName {
-  font-size: 24;
-  font-weight: bold;
+.schema-file-upload-name {
+  font-size: 12 !important;
 }
 
 .Validation-Schemacheckbox {
@@ -134,6 +133,10 @@
   .optionsCustomCard {
     min-width: 100%;
     margin: 10px 0;
+  }
+  .schema-conatiner-row {
+    align-items: center !important;
+    justify-content: center;
   }
 }
 .dropdown {

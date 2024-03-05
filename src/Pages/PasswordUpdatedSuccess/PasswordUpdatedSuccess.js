@@ -3,11 +3,17 @@ import React from "react";
 import phamalyticsLogo from "../../Assets/pharmaylics_logo.svg";
 import pharmImg from "../../Assets/updatedPassImg.png";
 import tick from "../../Assets/tick.svg";
-import { Link } from "react-router-dom";
+
 import "./PasswordUpdatedSuccess.css";
 import { ArrowRightOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import CustomButton from "../../Components/CustomButton/CustomButton";
 
 const PasswordUpdatedSuccess = () => {
+  const navigate = useNavigate();
+  const HandleBtnBacktoLogin = () => {
+    navigate("/");
+  };
   return (
     <div className="siginContainer">
       <div className="signinLogoContainer">
@@ -30,21 +36,26 @@ const PasswordUpdatedSuccess = () => {
           src={phamalyticsLogo}
           preview={false}
         ></Image>
-        <Space direction="horizontal" className="password-updated-heading">
-          <Image src={tick}></Image>
-          <h2 style={{ color: " #5b3f88" }}>
-            <strong>Password</strong> Updated
-          </h2>
-        </Space>
-        <p>
-          Your password has been updated. You can now log in with your <br />
-          updated password.
-        </p>
-        <Link to="/">
-          <Button type="button" className="btn my-3 signinbtn">
+        <div className="update-success-form">
+          <Space direction="horizontal" className="password-updated-heading">
+            <Image src={tick}></Image>
+            <h2 style={{ color: " #5b3f88" }}>
+              <strong>Password</strong> Updated
+            </h2>
+          </Space>
+          <p>
+            Your password has been updated. You can now log in with your <br />
+            updated password.
+          </p>
+          <CustomButton
+            htmlType="button"
+            type="primary"
+            className="password-update-success-back-btn"
+            onClick={HandleBtnBacktoLogin}
+          >
             Login
-          </Button>
-        </Link>
+          </CustomButton>
+        </div>
       </div>
     </div>
   );

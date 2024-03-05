@@ -1,15 +1,14 @@
-.AddUsersBasicContainer {
-  height: 105vh;
+.EditUsersBasicContainer {
+  height: auto !important;
 }
-.AddUsersBasicInfoHeading {
+.EditUsersBasicInfoHeading {
   padding-top: 2%;
   margin-left: 2.4%;
-  margin-bottom: 2%;
 }
 
-.AddUsersDetails {
-  display: flex;
-  height: 70vh;
+.EditUsersDetails {
+  height: auto;
+  margin: 20px !important;
 }
 .AddUsersOneDetails {
   width: 34vw;
@@ -85,7 +84,6 @@
   align-items: center;
 }
 .adduserLabel {
-  /* font-weight: bold; */
   margin-left: 3%;
 }
 .adduserLabel::after {
@@ -98,6 +96,7 @@
 }
 .usercreationtxt {
   color: #3a3475;
+  margin-bottom: 30px;
 }
 .breadcrumb-border-edit-user {
   border: 1px solid #ededed;
@@ -112,4 +111,17 @@
 :where(.css-dev-only-do-not-override-nnuwmp).ant-input-disabled,
 :where(.css-dev-only-do-not-override-nnuwmp).ant-input[disabled] {
   background-color: #f5f5f5 !important;
+}
+@media only screen and (max-width: 668px) {
+  .adjacent-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1px !important;
+  }
+  .AddUsersDetailsInput {
+    width: 100% !important;
+  }
+  .DetailsInput {
+    width: 60% !important;
+  }
 }

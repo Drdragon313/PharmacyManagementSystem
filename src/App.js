@@ -32,7 +32,6 @@ import ResendEmail from "./Pages/ResendEmail/ResendEmail";
 import Pharmacies from "./Pages/Pharmacies/Pharmacies";
 import Reports from "./Pages/Reports/Reports";
 import SetPassword from "./Pages/SetPassword/SetPassword";
-import HomeIframe from "./Iframes/HomeIframe";
 import AddPharmacy from "./Pages/AddPharmacy/AddPharmacy";
 import PharmacyDetails from "./Pages/PharmacyDetails/PharmacyDetails";
 import PasswordUpdatedSuccess from "./Pages/PasswordUpdatedSuccess/PasswordUpdatedSuccess";
@@ -49,6 +48,9 @@ import Employee from "./Iframes/Employee";
 import FaqPage from "./Pages/FaqPage/FaqPage";
 import Services from "./Iframes/Services";
 import Prescriptions from "./Iframes/Prescriptions";
+import TillSales from "./Iframes/TillSales";
+import Income from "./Iframes/Income";
+import Dashboard from "./Iframes/Dashboard";
 const { Content } = Layout;
 
 function App() {
@@ -91,10 +93,10 @@ function MainContent() {
             />
             <Route path="/setpassword" element={<SetPassword />} />
             <Route
-              path="/home"
+              path="/dashboard"
               element={
                 <MainLayout>
-                  <HomeIframe />
+                  <Dashboard />
                 </MainLayout>
               }
             />
@@ -251,6 +253,38 @@ function MainContent() {
               }
             ></Route>
             <Route
+              path="/Prescriptions"
+              element={
+                <MainLayout>
+                  <Prescriptions />
+                </MainLayout>
+              }
+            ></Route>
+            <Route
+              path="/TillSales"
+              element={
+                <MainLayout>
+                  <TillSales />
+                </MainLayout>
+              }
+            ></Route>
+            <Route
+              path="/Services"
+              element={
+                <MainLayout>
+                  <Services />
+                </MainLayout>
+              }
+            ></Route>
+            <Route
+              path="/Income"
+              element={
+                <MainLayout>
+                  <Income />
+                </MainLayout>
+              }
+            ></Route>
+            <Route
               path="/Owing"
               element={
                 <MainLayout>
@@ -343,7 +377,11 @@ function MainContent() {
             ></Route>
             <Route
               path="/Profile/Security"
-              element={<UpdatePassword />}
+              element={
+                <MainLayout>
+                  <UpdatePassword />
+                </MainLayout>
+              }
             ></Route>
             <Route
               path="reports"

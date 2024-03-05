@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Form, Button, Input, Row, Col, Modal, Select } from "antd";
+import { Form, Button, Input, Modal, Select } from "antd";
 import CustomSelect from "../Select/Select";
 import { useOptions } from "../../optionContext/OptionContext";
 import { filterValidationOptions } from "../../Utility Function/validationOptions";
 import "./form.css";
+import CustomButton from "../CustomButton/CustomButton";
 
 const SchemaForm = ({ onAddRow }) => {
   const [form] = Form.useForm();
@@ -44,20 +45,21 @@ const SchemaForm = ({ onAddRow }) => {
   return (
     <div>
       <Modal
+        className="schema-modal"
         title="Add Schema Details"
         open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         footer={null}
       >
-        <Form
-          form={form}
-          name="basic"
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
-          <Row gutter={16}>
-            <Col span={12}>
+        <div className="schema-modal-form">
+          <Form
+            form={form}
+            name="basic"
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
+          >
+            <div className="first-row-schema-modal">
               <Form.Item
                 label="Field Name"
                 name="Fieldname"
@@ -68,10 +70,9 @@ const SchemaForm = ({ onAddRow }) => {
                   },
                 ]}
               >
-                <Input />
+                <Input className="SchemaDetailsInput" />
               </Form.Item>
-            </Col>
-            <Col span={12}>
+
               <Form.Item
                 label="Type"
                 name="Type"
@@ -83,6 +84,7 @@ const SchemaForm = ({ onAddRow }) => {
                 ]}
               >
                 <CustomSelect
+                  className="SchemaDetailSelect"
                   options={typeOptions}
                   value={selectedData.type}
                   onChange={(value) =>
@@ -91,56 +93,48 @@ const SchemaForm = ({ onAddRow }) => {
                   placeholder="Select a Type"
                 />
               </Form.Item>
-            </Col>
-            <Col span={24}>
-              <Form.Item
-                label="Validation"
-                name="Validation"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please select Validation",
-                  },
-                ]}
+            </div>
+            <Form.Item
+              label="Validation"
+              name="Validation"
+              rules={[
+                {
+                  required: true,
+                  message: "Please select Validation",
+                },
+              ]}
+            >
+              <Select
+                mode="multiple"
+                className="AddUsersDetailsInput"
+                value={selectedData.validation}
+                onChange={(values) =>
+                  setSelectedData({
+                    ...selectedData,
+                    validation: values,
+                  })
+                }
+                placeholder="Enter or select multiple Validation values"
               >
-                <Select
-                  mode="multiple"
-                  value={selectedData.validation}
-                  onChange={(values) =>
-                    setSelectedData({
-                      ...selectedData,
-                      validation: values,
-                    })
-                  }
-                  placeholder="Enter or select multiple Validation values"
-                >
-                  {filteredValidationOptions.map((option) => (
-                    <Select.Option
-                      key={option.value}
-                      value={option.value + `, `}
-                    >
-                      {option.label}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
-          </Row>
+                {filteredValidationOptions.map((option) => (
+                  <Select.Option key={option.value} value={option.value + `, `}>
+                    {option.label}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
 
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit">
-              Add Row
-            </Button>
-          </Form.Item>
-        </Form>
+            <Form.Item>
+              <CustomButton type="primary" htmlType="submit">
+                Add Row
+              </CustomButton>
+            </Form.Item>
+          </Form>
+        </div>
       </Modal>
-      <Button
-        className="addnew-btn"
-        type="primary"
-        onClick={() => setIsModalVisible(true)}
-      >
+      <CustomButton type="primary" onClick={() => setIsModalVisible(true)}>
         Add New Entry
-      </Button>
+      </CustomButton>
     </div>
   );
 };

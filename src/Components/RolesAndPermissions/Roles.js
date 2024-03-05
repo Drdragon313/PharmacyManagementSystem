@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CustomTable from "../../Components/CustomTable/CustomTable";
 import { Col, Image, Row, Space } from "antd";
-import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";
-// import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
+
 import eyeIcon from "../../Assets/Icon feather-eye.svg";
 import CustomButton from "../CustomButton/CustomButton";
 import deleteActionbtn from "../../Assets/deleteAction.svg";
@@ -16,8 +15,6 @@ import PaginationComponent from "../PaginationComponent/PaginationComponent";
 import ReAssignModal from "../ReAssignModal/ReAssignModal";
 
 const Roles = () => {
-  const authToken = localStorage.getItem("AuthorizationToken");
-  const [modalVisible, setModalVisible] = useState(!authToken);
   const [rolesData, setRolesData] = useState(null);
   const [totalItems, setTotalItems] = useState();
   const [userPermissions, setUserPermissions] = useState(null);
@@ -157,6 +154,15 @@ const Roles = () => {
   ];
   return (
     <div className="main-container">
+      <div className="roles-txt">
+        <p className="role-title">Roles</p>
+        {canCreateRoles && (
+          <Link to="/rolesandpermissions/createrole">
+            <CustomButton type="primary">Create Role</CustomButton>
+          </Link>
+        )}
+      </div>
+
       <Row
         gutter={{
           xs: 8,
@@ -166,36 +172,12 @@ const Roles = () => {
         }}
         style={{ marginTop: "10px", marginLeft: "1px" }}
       >
-        <Col span={2}></Col>
-        <Col className="roles-txt" span={23}>
-          <p>Roles</p>
-          {canCreateRoles && (
-            <Link to="/rolesandpermissions/createrole">
-              <CustomButton
-                type="primary"
-                style={{ width: "100%", height: "40px", marginLeft: "40px" }}
-              >
-                Create Role
-              </CustomButton>
-            </Link>
-          )}
-        </Col>
-      </Row>
-      <Row
-        gutter={{
-          xs: 8,
-          sm: 16,
-          md: 24,
-          lg: 32,
-        }}
-        style={{ marginTop: "10px", marginLeft: "1px" }}
-      >
-        <Col className="gutter-row" style={{ width: "99%" }}>
+        <div className="roles-list-table">
           {rolesData && (
             <CustomTable dataSource={rolesData} columns={columns} />
           )}
-          {renderPagination()}
-        </Col>
+        </div>
+        <Col> {renderPagination()}</Col>
       </Row>
       {roleIdToDelete && (
         <ReAssignModal

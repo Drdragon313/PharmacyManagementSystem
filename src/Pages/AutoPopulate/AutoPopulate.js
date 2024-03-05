@@ -7,6 +7,7 @@ import { addFormData } from "../../redux/features/formSlice/formSlice";
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
 import "./AutoPopulate.css";
+import CustomButton from "../../Components/CustomButton/CustomButton";
 const AutoPopulate = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -118,7 +119,8 @@ const AutoPopulate = () => {
             <br />
             <p className="populate-uploadText">Drag or Drop your files here</p>
             <p className="populate-supportedText">Files Supported: .CSV</p>
-            <Button className="populate-import-button">Choose File</Button>
+
+            <CustomButton style={{ width: "10%" }}>Choose File</CustomButton>
           </Upload.Dragger>
           {isLoading ? (
             <div className="loading-indicator">

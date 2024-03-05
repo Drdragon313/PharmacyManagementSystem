@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Iframe.css";
 import { PowerBIEmbed } from "powerbi-client-react";
 import { embedConfig, getReportData } from "../Utility Function/ReportUtils";
-
-const PharmacyIframe = () => {
+const Income = () => {
   const [reportData, setReportData] = useState({
     embedToken: "",
     pharmacyIDs: [],
@@ -21,6 +20,7 @@ const PharmacyIframe = () => {
       window.removeEventListener("resize", handleScroll);
     };
   }, []);
+
   const table = "public pharmacies";
   const column = "id";
   const operator = "eq";
@@ -55,4 +55,5 @@ const PharmacyIframe = () => {
     </div>
   );
 };
-export default PharmacyIframe;
+
+export default Income;

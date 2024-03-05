@@ -145,7 +145,7 @@ const SideMenuBar = (props) => {
 
 const getRouteByModuleId = (moduleId) => {
   const routeMappings = {
-    1: "/home",
+    1: "/dashboard",
     2: "pharmacy",
     3: "/tilepage",
     4: "/pharmacies",
@@ -163,6 +163,8 @@ const getReportsRouteByModuleId = (sub_module_id) => {
     4: "/CostofStock",
     5: "/Services",
     6: "/Prescriptions",
+    7: "/TillSales",
+    8: "/Income",
   };
 
   return routeMappings[sub_module_id] || "/";

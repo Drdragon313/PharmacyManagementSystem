@@ -1,14 +1,14 @@
 .iframe-container {
   width: 100%;
-  height: 90vh;
-  overflow-y: hidden;
-  overflow-x: hidden;
+  height: 100%;
+  /* overflow-y: hidden;
+  overflow-x: hidden; */
 }
 
 .exampleIframe {
   width: 100%;
-  height: 98%;
-  margin: 10px;
+  height: 100%;
+  margin: 10px 20px 10px 10px;
 }
 .customIframe {
   margin: 20px;

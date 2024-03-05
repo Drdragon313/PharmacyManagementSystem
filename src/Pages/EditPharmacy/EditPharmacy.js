@@ -210,165 +210,163 @@ const EditPharmacy = () => {
       <div className="AddPharmacyBasicInfoHeading">
         <h5 className="Pharmacycreationtxt">Edit pharmacy</h5>
       </div>
-      <form onSubmit={handleSubmit}>
-        <div className="AddPharmacyDetails">
-          <div className="AddPharmacyOneDetails">
-            <form>
-              <div className="mb-3">
-                <label htmlFor="PharmacyName" className="addPharmacyLabel">
-                  Pharmacy name
-                </label>
-                <br />
-                <Input
-                  required={true}
-                  className="AddPharmacyDetailsInput"
-                  name="pharmacyName"
-                  onChange={handleChange}
-                  value={data.pharmacyName}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="rent" className="addPharmacyNotLabel">
-                  Rent
-                </label>
-                <br />
-                <Input
-                  className="AddPharmacyDetailsInput"
-                  type="number"
-                  name="rent"
-                  onChange={handleChange}
-                  value={data.rent}
-                />
-              </div>
-
-              <CustomInput
-                divclassName="mb-3"
-                labelclassName="adduserNotLabel"
-                labelText="Postcode"
-                inputclassName="AddUsersDetailsInput"
-                inputName="postCode"
-                handleChange={handleChange}
-                handleBlur={handleFindAddress}
-                value={data.postCode}
+      <div className="AddPharmacyDetails">
+        <form onSubmit={handleSubmit}>
+          <div className="adjacent-fields">
+            {" "}
+            <div className="mb-3">
+              <label htmlFor="PharmacyName" className="addPharmacyLabel">
+                Pharmacy name
+              </label>
+              <br />
+              <Input
+                required={true}
+                className="AddUsersDetailsInput"
+                name="pharmacyName"
+                onChange={handleChange}
+                value={data.pharmacyName}
               />
-              {/* <div
-                direction="horizontal"
-                style={{ display: "flex", flexDirection: "row", gap: "47px" }}
-                className="mb-3 "
-              > */}
-              <CustomInput
-                divclassName="mb-3"
-                labelText="Building Name"
-                inputclassName="AddUsersDetailsInput"
-                inputName="Line1"
-                handleChange={handleChange}
-                value={data.Line1}
-              />
-              <CustomInput
-                divclassName="mb-3"
-                labelclassName="addPharmacyNotLabel"
-                labelText="Street Name"
-                inputclassName="AddUsersDetailsInput"
-                inputName="Line2"
-                handleChange={handleChange}
-                value={data.Line2}
-              />
-
-              <Button
-                type="dashed"
-                className="plus-btn-edit-pharm"
-                onClick={openAddEmployeeModal}
-              >
-                <Image
-                  className="plus-outline-img"
-                  preview={false}
-                  src={plusOutline}
-                ></Image>
-                Add employee to pharmacy
-              </Button>
-            </form>
-          </div>
-          <div className="AddPharmacyTwoDetails">
-            <form>
-              <div className="mb-3">
-                <label htmlFor="dateOfCreation" className="dateOfCreationLabel">
-                  Date of creation
-                </label>
-                <br />
-                <DatePicker
-                  className="AddPharmacyDetailsInput"
-                  required={true}
-                  format="DD-MM-YYYY"
-                  name="dateOfCreation"
-                  onChange={handleDateChange}
-                  disabledDate={(current) =>
-                    current && current.isAfter(moment().endOf("day"))
-                  }
-                  placeholder={data.dateOfCreation}
-                />
-              </div>
-
-              <div className="mb-3">
-                <label className="addPharmacyManager" htmlFor="managerName">
-                  Pharmacy manager
-                </label>
-                <br />
-                <Select
-                  className="AddPharmacySelect ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
-                  name="managerName"
-                  onChange={(value) => handleSelectChange("managerName", value)}
-                  value={data.managerID}
-                >
-                  {managers.map((manager) => (
-                    <Option key={manager.id} value={manager.id}>
-                      {manager.name}
-                    </Option>
-                  ))}
-                </Select>
-              </div>
-
-              <CustomSelect
-                divclassName="mb-3"
-                labelclassName="adduserNotLabel"
-                labelText="Please Select your Address"
-                selectclassName="GenderInput ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
-                name="Address"
-                onChange={handleSelectChange}
-                options={
-                  pCodeResponse ? pCodeResponse.map((item) => item.address) : []
+            </div>{" "}
+            <div className="mb-3">
+              <label htmlFor="dateOfCreation" className="dateOfCreationLabel">
+                Date of creation
+              </label>
+              <br />
+              <DatePicker
+                className="AddUsersDetailsInput"
+                required={true}
+                format="DD-MM-YYYY"
+                name="dateOfCreation"
+                onChange={handleDateChange}
+                disabledDate={(current) =>
+                  current && current.isAfter(moment().endOf("day"))
                 }
-                value={data.postTown}
+                placeholder={data.dateOfCreation}
               />
-              <CustomInput
-                divclassName="mb-3"
-                labelText="Post Town"
-                inputclassName="AddUsersDetailsInput"
-                inputName="postTown"
-                handleChange={handleChange}
-                value={data.postTown}
-              />
-            </form>
+            </div>
           </div>
-          <div className="AddPharmacyThreeDetails"></div>
-        </div>
-        <div className="AddPharmacyInformationUpdateBtnContainer">
-          <Link to="/pharmacies">
-            <CustomButton
-              type="default"
-              className="AddPharmacyInformationCancelBtn"
-            >
-              Cancel
-            </CustomButton>
-          </Link>
-          <CustomButton
-            type="primary"
-            htmlType="submit"
-            className="AddPharmacyInformationUpdateBtn"
+          <div className="adjacent-fields">
+            {" "}
+            <div className="mb-3">
+              <label htmlFor="rent" className="addPharmacyNotLabel">
+                Rent
+              </label>
+              <br />
+              <Input
+                className="AddUsersDetailsInput"
+                type="number"
+                name="rent"
+                onChange={handleChange}
+                value={data.rent}
+              />
+            </div>{" "}
+            <div className="mb-3">
+              <label className="addPharmacyManager" htmlFor="managerName">
+                Pharmacy manager
+              </label>
+              <br />
+              <Select
+                className="AddPharmacySelect ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
+                name="managerName"
+                onChange={(value) => handleSelectChange("managerName", value)}
+                value={data.managerID}
+              >
+                {managers.map((manager) => (
+                  <Option key={manager.id} value={manager.id}>
+                    {manager.name}
+                  </Option>
+                ))}
+              </Select>
+            </div>
+          </div>
+
+          <div className="adjacent-fields">
+            {" "}
+            <CustomInput
+              divclassName="mb-3"
+              labelclassName="adduserNotLabel"
+              labelText="Postcode"
+              inputclassName="AddUsersDetailsInput"
+              inputName="postCode"
+              handleChange={handleChange}
+              handleBlur={handleFindAddress}
+              value={data.postCode}
+            />{" "}
+            <CustomSelect
+              divclassName="mb-3"
+              labelclassName="adduserNotLabel"
+              labelText="Please Select your Address"
+              selectclassName="AddPharmacySelect ant-select-custom ant-select-selector ant-select-arrow ant-select-selection-placeholder"
+              name="Address"
+              onChange={handleSelectChange}
+              options={
+                pCodeResponse ? pCodeResponse.map((item) => item.address) : []
+              }
+              value={data.postTown}
+            />
+          </div>
+          <div className="adjacent-fields">
+            {" "}
+            <CustomInput
+              divclassName="mb-3"
+              labelText="Building Name"
+              inputclassName="AddUsersDetailsInput"
+              inputName="Line1"
+              handleChange={handleChange}
+              value={data.Line1}
+            />{" "}
+            <CustomInput
+              divclassName="mb-3"
+              labelText="Post Town"
+              inputclassName="AddUsersDetailsInput"
+              inputName="postTown"
+              handleChange={handleChange}
+              value={data.postTown}
+            />
+          </div>
+
+          <CustomInput
+            divclassName="mb-3"
+            labelclassName="addPharmacyNotLabel"
+            labelText="Street Name"
+            inputclassName="AddUsersDetailsInput"
+            inputName="Line2"
+            handleChange={handleChange}
+            value={data.Line2}
+          />
+
+          <Button
+            type="dashed"
+            className="plus-btn-edit-pharm"
+            onClick={openAddEmployeeModal}
           >
-            Update Pharmacy
-          </CustomButton>
-        </div>
-      </form>
+            <Image
+              className="plus-outline-img"
+              preview={false}
+              src={plusOutline}
+            ></Image>
+            Add employee to pharmacy
+          </Button>
+
+          <div className="AddPharmacyInformationUpdateBtnContainer">
+            <Link to="/pharmacies">
+              <CustomButton
+                type="default"
+                className="AddPharmacyInformationCancelBtn"
+              >
+                Cancel
+              </CustomButton>
+            </Link>
+            <CustomButton
+              type="primary"
+              htmlType="submit"
+              className="AddPharmacyInformationUpdateBtn"
+            >
+              Update Pharmacy
+            </CustomButton>
+          </div>
+        </form>
+      </div>
       <AddEmployeeModalEditPharm
         open={isAddEmployeeModalVisible}
         onClose={closeAddEmployeeModal}
