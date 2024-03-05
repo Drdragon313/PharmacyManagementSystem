@@ -286,6 +286,11 @@
   color: aliceblue;
   border-style: solid;
 }
+.delete-confirm-btn {
+  background-color: red;
+  width: 50%;
+  height: 5vh;
+}
 @media only screen and (max-width: 560px) {
   .allcards,
   .allSchemas {

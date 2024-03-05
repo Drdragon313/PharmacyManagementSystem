@@ -84,7 +84,6 @@
   align-items: center;
 }
 .adduserLabel {
-  /* font-weight: bold; */
   margin-left: 3%;
 }
 .adduserLabel::after {

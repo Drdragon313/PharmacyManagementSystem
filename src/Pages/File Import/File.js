@@ -103,6 +103,10 @@ const File = () => {
       title: "Upload Date",
       dataIndex: "upload_date",
     },
+    {
+      title: "Uploaded by",
+      dataIndex: "upload_by",
+    },
   ];
   const breadcrumbItems = [
     { label: "Available Schemas", link: "/file" },

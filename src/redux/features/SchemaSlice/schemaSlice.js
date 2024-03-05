@@ -16,6 +16,9 @@ const schemaSlice = createSlice({
       const indexToRemove = action.payload;
       state.schemaDataArray.splice(indexToRemove, 1);
     },
+    resetSchemaDataArray: (state) => {
+      state.schemaDataArray = [];
+    },
     updateSchemaName: (state, action) => {
       state.schemaName = action.payload;
     },
@@ -53,5 +56,6 @@ export const {
   addData,
   removeData,
   updateData,
+  resetSchemaDataArray,
 } = schemaSlice.actions;
 export default schemaSlice.reducer;

@@ -11,6 +11,9 @@
 }
 .populate-file-upload {
   width: 80vw;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center;
 }
 .populate-uploadText {
   height: 10px;
@@ -21,7 +24,7 @@
   height: 10px;
 }
 .populate-dragger {
-  width: 79vw;
+  width: 99%;
 }
 .AutoPopulatefileProgress {
   width: 80vw;

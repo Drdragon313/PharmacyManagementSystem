@@ -255,7 +255,7 @@ const UpdateRole = () => {
   const expandedRowRender = (record) => {
     const subModuleColumns = [
       {
-        title: "Sub Module Name",
+        title: "Name",
         dataIndex: "module",
         key: "module",
         width: 190,
@@ -377,7 +377,7 @@ const UpdateRole = () => {
   };
 
   return (
-    <div className="main-container">
+    <div className="main-container-roles-permissions">
       <Row
         className="pharmacy-list-breadcrumb"
         gutter={{
@@ -387,7 +387,7 @@ const UpdateRole = () => {
           lg: 32,
         }}
       >
-        <Col className="gutter-row" span={12}>
+        <Col className="breadcrumb-row" span={24}>
           <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
         </Col>
       </Row>
@@ -406,7 +406,7 @@ const UpdateRole = () => {
           </label>
           <Input
             name="RolesInput"
-            className="Roles-input"
+            className="AddUsersDetailsInput"
             value={roleName}
             onChange={(e) => setRoleName(e.target.value)}
           />
@@ -424,7 +424,7 @@ const UpdateRole = () => {
         }}
         style={{ margin: "10px", marginTop: "30px" }}
       >
-        <Col className="gutter-row" span={12}>
+        <div className="roles-checkbox-table-container">
           <label htmlFor="RolesInput" className="addRoleNameLabel">
             Select Role Permissions
           </label>
@@ -444,7 +444,10 @@ const UpdateRole = () => {
                 ),
             }}
           />
+        </div>
 
+        <Col className="gutter-row" span={23}>
+          {" "}
           <div className="btns-class">
             <Link to="/employeepage">
               {" "}
@@ -459,7 +462,6 @@ const UpdateRole = () => {
             </CustomButton>
           </div>
         </Col>
-        <Col className="gutter-row" span={12}></Col>
       </Row>
     </div>
   );

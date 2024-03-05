@@ -12,6 +12,7 @@ import {
 import {
   addSchemaData,
   updateSchemaName,
+  resetSchemaDataArray,
 } from "../../redux/features/SchemaSlice/schemaSlice";
 import SchemaForm from "../Form/Form";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
@@ -19,12 +20,13 @@ import "./style.css";
 import { reorderFormDataArray } from "../../Utility Function/reorderFormDataArray";
 import EditForm from "../EditForm/EditForm";
 import SchemaTable from "../GeneralSchemaTable/SchemaTable";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { numericToAlphabetic } from "../../Utility Function/numericToAlphabetic";
 import {
   saveSchema,
   updateFormDataArrayOnEdit,
 } from "../../Utility Function/stableUtil";
+import CustomButton from "../CustomButton/CustomButton";
 const Stable = () => {
   const tilePath = localStorage.getItem("tilePath");
   const [rowId, setRowId] = useState(1);
@@ -33,7 +35,7 @@ const Stable = () => {
   const schemaName = useSelector((state) => state.schema.schemaName);
   const dispatch = useDispatch();
   const formDataArray = useSelector((state) => state.form.formDataArray);
-
+  const navigate = useNavigate();
   const handleAddRow = (formDataArray) => {
     const numericId = rowId;
     const alphabeticId = numericToAlphabetic(numericId);
@@ -75,11 +77,13 @@ const Stable = () => {
     saveSchema(schemaName, formDataArray, tilePath, dispatch, (newSchema) => {
       success();
       dispatch(addSchemaData(newSchema));
-      dispatch(resetFormDataArray());
+      dispatch(resetSchemaDataArray(newSchema));
       dispatch(updateFormDataOrder([]));
       dispatch(updateSchemaName(newSchema.name));
       dispatch(resetId());
     });
+    navigate("/tilepage");
+    window.location.reload();
   };
   const handleEditSubmit = (editedData) => {
     const updatedDataArray = updateFormDataArrayOnEdit(
@@ -94,15 +98,11 @@ const Stable = () => {
     <div className="Stable">
       <div className="buttons">
         <SchemaForm className="addrow" onAddRow={handleAddRow} />
-        <Link to="/tilepage">
-          <Button
-            type="primary"
-            className="save-button"
-            onClick={handleSaveAndSuccess}
-          >
+        <div>
+          <CustomButton type="primary" onClick={handleSaveAndSuccess}>
             Save Schema
-          </Button>
-        </Link>
+          </CustomButton>
+        </div>
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="formDataArray">

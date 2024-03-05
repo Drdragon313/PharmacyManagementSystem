@@ -85,13 +85,12 @@ const CreateRole = () => {
       title: "Modules",
       dataIndex: "module",
       key: "module",
-      width: 194,
     },
     {
       title: "Add",
       dataIndex: "write",
       key: "write",
-      width: 100,
+
       render: (_, record) => (
         <Checkbox
           checked={record.write || false}
@@ -103,7 +102,7 @@ const CreateRole = () => {
       title: "View",
       dataIndex: "read",
       key: "read",
-      width: 100,
+
       render: (_, record) => (
         <Checkbox
           checked={record.read || false}
@@ -115,7 +114,7 @@ const CreateRole = () => {
       title: "Update",
       dataIndex: "update",
       key: "update",
-      width: 100,
+
       render: (_, record) => (
         <Checkbox
           checked={record.update || false}
@@ -127,7 +126,7 @@ const CreateRole = () => {
       title: "Delete",
       dataIndex: "delete",
       key: "delete",
-      width: 100,
+
       render: (_, record) => (
         <Checkbox
           checked={record.delete || false}
@@ -254,10 +253,10 @@ const CreateRole = () => {
   const expandedRowRender = (record) => {
     const subModuleColumns = [
       {
-        title: "Sub Module Name",
+        title: "Name",
         dataIndex: "module",
         key: "module",
-        width: 186,
+        width: 200,
       },
       {
         title: "Add",
@@ -276,6 +275,7 @@ const CreateRole = () => {
         title: "View",
         dataIndex: "read",
         key: "read",
+
         render: (_, subModule) => (
           <Checkbox
             checked={subModule.read || false}
@@ -290,6 +290,7 @@ const CreateRole = () => {
         title: "Update",
         dataIndex: "update",
         key: "update",
+
         render: (_, subModule) => (
           <Checkbox
             checked={subModule.update || false}
@@ -303,6 +304,7 @@ const CreateRole = () => {
         title: "Delete",
         dataIndex: "delete",
         key: "delete",
+
         render: (_, subModule) => (
           <Checkbox
             checked={subModule.delete || false}
@@ -316,10 +318,11 @@ const CreateRole = () => {
 
     return record.subModules.length > 0 ? (
       <Table
+        className="sub-module-table"
         columns={subModuleColumns}
         dataSource={record.subModules}
         pagination={false}
-        showHeader={false}
+        showHeader={true}
       />
     ) : null;
   };
@@ -376,7 +379,7 @@ const CreateRole = () => {
     }
   };
   return (
-    <div className="main-container">
+    <div className="main-container-roles-permissions">
       <Row
         className="pharmacy-list-breadcrumb"
         gutter={{
@@ -386,7 +389,7 @@ const CreateRole = () => {
           lg: 32,
         }}
       >
-        <Col className="gutter-row" span={12}>
+        <Col className="breadcrumb-row" span={24}>
           <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
         </Col>
       </Row>
@@ -405,7 +408,7 @@ const CreateRole = () => {
           </label>
           <Input
             name="RolesInput"
-            className="Roles-input"
+            className="AddUsersDetailsInput"
             value={roleName}
             onChange={(e) => setRoleName(e.target.value)}
           />
@@ -414,20 +417,13 @@ const CreateRole = () => {
         <Col className="gutter-row" span={6}></Col>
         <Col className="gutter-row" span={6}></Col>
       </Row>
-      <Row
-        gutter={{
-          xs: 8,
-          sm: 16,
-          md: 24,
-          lg: 32,
-        }}
-        style={{ margin: "10px", marginTop: "30px" }}
-      >
-        <Col className="gutter-row" span={12}>
+      <Row style={{ margin: "10px", marginTop: "30px" }}>
+        <div className="roles-checkbox-table-container">
           <label htmlFor="RolesInput" className="addRoleNameLabel">
             Select Role Permissions
           </label>
           <CustomTable
+            className="roles-checkbox-table"
             columns={columns}
             dataSource={dataSource}
             expandable={{
@@ -443,22 +439,22 @@ const CreateRole = () => {
                 ),
             }}
           />
-
-          <div className="btns-class">
-            <Link to="/employeepage">
-              <CustomButton className="cancel-btn">Cancel</CustomButton>
-            </Link>
-            <CustomButton
-              type="primary"
-              style={{ width: "185px", height: "45px" }}
-              onClick={() => handleCreateRole()}
-            >
-              Create role
-            </CustomButton>
-          </div>
-        </Col>
-        <Col className="gutter-row" span={12}></Col>
+        </div>{" "}
       </Row>
+      <Col span={23}>
+        <div className="btns-class">
+          <Link to="/employeepage">
+            <CustomButton className="cancel-btn">Cancel</CustomButton>
+          </Link>
+          <CustomButton
+            type="primary"
+            style={{ width: "185px", height: "45px" }}
+            onClick={() => handleCreateRole()}
+          >
+            Create role
+          </CustomButton>
+        </div>
+      </Col>
     </div>
   );
 };
