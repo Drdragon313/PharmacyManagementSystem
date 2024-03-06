@@ -1,8 +1,7 @@
-import { Upload, message, Progress, Pagination, Image } from "antd";
+import { Upload, message, Progress, Pagination, Image, Modal } from "antd";
 import React, { useState, useEffect, useMemo } from "react";
 import { validateCSV } from "../../Utility Function/FileUtils";
 import "./File.css";
-
 import uploadloadIcon from "../../Assets/uploadbtn.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -17,6 +16,7 @@ const File = () => {
   const [error, setError] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [listReports, setListReports] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   const errorsPerPage = 6;
   const schemaData = localStorage.getItem("selectedSchemaData");
   const schemaID = localStorage.getItem("selectedSchemaID");
@@ -35,7 +35,7 @@ const File = () => {
           `${baseURL}/get-files-data?schema_id=${schemaID}`,
           { headers }
         );
-        setListReports(response.data.data); // Update this line
+        setListReports(response.data.data);
         console.log(response.data.data);
       } catch (error) {
         console.error("Error fetching schema data:", error);
@@ -86,6 +86,7 @@ const File = () => {
     } catch (errorMessage) {
       setError(errorMessage);
       message.error("Invalid CSV File", 2);
+      setShowModal(true);
     } finally {
       setIsLoading(false);
     }
@@ -108,6 +109,9 @@ const File = () => {
     { label: "Available Schemas", link: "/file" },
     { label: "Choose File", link: `/file/fileUpload` },
   ];
+  const handleModalCancel = () => {
+    setShowModal(false);
+  };
   return (
     <div>
       <div className="breadcrumb-file-upload">
@@ -140,30 +144,34 @@ const File = () => {
             </CustomButton>
           </Upload>
         </div>
+        <Modal
+          open={showModal}
+          onCancel={handleModalCancel}
+          footer={null}
+          title="Errors in the uploaded file"
+        >
+          {error &&
+            getCurrentPageErrors().map((value, index) => (
+              <div style={{ color: "red" }} key={index}>
+                <p>{value}</p>
+              </div>
+            ))}
+          {error.length > errorsPerPage && (
+            <Pagination
+              current={currentPage}
+              pageSize={errorsPerPage}
+              total={error.length}
+              onChange={handlePageChange}
+              showSizeChanger={false}
+              className="pagination"
+            />
+          )}
+        </Modal>
         <p className="table-tile-schema-details">Uploaded Reports List</p>
         <CustomTable dataSource={listReports} columns={columns} />
-        {isLoading ? (
+        {isLoading && (
           <div className="loading-indicator">
             <Progress className="fileProgress" percent={progress} />
-          </div>
-        ) : (
-          <div>
-            {error &&
-              getCurrentPageErrors().map((value, index) => (
-                <div style={{ color: "red" }} key={index}>
-                  <p>{value}</p>
-                </div>
-              ))}
-            {error.length > errorsPerPage && (
-              <Pagination
-                current={currentPage}
-                pageSize={errorsPerPage}
-                total={error.length}
-                onChange={handlePageChange}
-                showSizeChanger={false}
-                className="pagination"
-              />
-            )}
           </div>
         )}
       </div>
