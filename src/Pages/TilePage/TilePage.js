@@ -277,7 +277,7 @@ const TilePage = () => {
                     </div>
                   </Button>
                 </div>
-                <Space direction="vertical" size={8} className="tile-content">
+                <Space direction="vertical" size={2} className="tile-content">
                   <Avatar className="tile-avatar-img" shape="circle">
                     <Image
                       className="tile-img"
