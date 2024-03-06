@@ -24,7 +24,7 @@
   margin-top: 5px;
   width: 230px;
   text-align: center;
-  height: 190px;
+  height: 150px;
   transform: border-style 0.5s border-color 0.5s, box-shadow 1s;
 }
 .tilecards:hover {
@@ -41,14 +41,16 @@
   justify-content: center;
 }
 .schema-content .schema-img {
-  height: 80px;
-  width: 80px;
+  height: 60px;
+  width: 60px;
 }
 .tile-avatar-img .tile-img {
-  height: 80px;
-  width: 80px;
+  height: 60px;
+  width: 60px;
 }
-
+.tile-avatar-img {
+  margin-bottom: -25px;
+}
 .tile-content {
   margin-top: 20px;
   color: #2a44c1;
@@ -117,7 +119,7 @@
   margin-top: 5px;
   width: 230px;
   text-align: center;
-  height: 190px;
+  height: 150px;
   border-width: 3px;
   border-style: dashed;
   border-color: #707477;
@@ -140,7 +142,7 @@
   margin-left: 10px;
   width: 230px;
   text-align: center;
-  height: 190px;
+  height: 150px;
   border-width: 3px;
   border-style: dashed;
   border-color: #707477;
@@ -221,7 +223,7 @@
   margin-left: 10px;
   width: 230px;
   text-align: center;
-  height: 190px;
+  height: 150px;
   background: #fff;
   justify-content: center;
   transform: border-style 0.5s border-color 0.5s box-shadow 1s;
