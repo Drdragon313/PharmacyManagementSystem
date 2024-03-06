@@ -29,12 +29,21 @@ export const validateCSV = async (file, schemaData, setProgress) => {
               const expectedType = item.Type;
               const actualType = typeof row[fieldName];
               if (actualType !== expectedType) {
-                hasInvalidChunk = true;
-                errorArray.push(
-                  `Invalid data type for column ${fieldName} at row ${
-                    rowNumber + 1
-                  }, Expected datatype ${expectedType} but instead got ${actualType}.`
-                );
+                if (actualType === "undefined") {
+                  hasInvalidChunk = true;
+                  errorArray.push(
+                    `Invalid data type for column ${fieldName} at row ${
+                      rowNumber + 1
+                    }, Expected datatype ${expectedType} but the cell is empty.`
+                  );
+                } else {
+                  hasInvalidChunk = true;
+                  errorArray.push(
+                    `Invalid data type for column ${fieldName} at row ${
+                      rowNumber + 1
+                    }, Expected datatype ${expectedType} but instead got ${actualType}.`
+                  );
+                }
               }
             });
           });

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Form, Input, Select } from "antd";
+import { Modal, Form, Input } from "antd";
 import CustomSelect from "../Select/Select";
 import { useOptions } from "../../optionContext/OptionContext";
 import { filterValidationOptions } from "../../Utility Function/validationOptions";
@@ -88,7 +88,7 @@ const EditForm = ({
               />
             </Form.Item>
           </div>
-          <Form.Item
+          {/* <Form.Item
             name="validation"
             label="Validation"
             initialValue={selectedData.validation}
@@ -109,7 +109,7 @@ const EditForm = ({
                 </Select.Option>
               ))}
             </Select>
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item>
             <CustomButton type="primary" onClick={handleFormSubmit}>
               Add Row

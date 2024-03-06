@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Button, message } from "antd";
+import { message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addFormData,
   removeFormData,
   updateFormDataOrder,
-  resetFormDataArray,
   resetId,
 } from "../../redux/features/formSlice/formSlice";
 
@@ -20,7 +19,7 @@ import "./style.css";
 import { reorderFormDataArray } from "../../Utility Function/reorderFormDataArray";
 import EditForm from "../EditForm/EditForm";
 import SchemaTable from "../GeneralSchemaTable/SchemaTable";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { numericToAlphabetic } from "../../Utility Function/numericToAlphabetic";
 import {
   saveSchema,

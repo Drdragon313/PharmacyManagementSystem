@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Form, Button, Input, Modal, Select } from "antd";
+import { Form, Input, Modal } from "antd";
 import CustomSelect from "../Select/Select";
 import { useOptions } from "../../optionContext/OptionContext";
-import { filterValidationOptions } from "../../Utility Function/validationOptions";
+// import { filterValidationOptions } from "../../Utility Function/validationOptions";
 import "./form.css";
 import CustomButton from "../CustomButton/CustomButton";
 
@@ -37,10 +37,10 @@ const SchemaForm = ({ onAddRow }) => {
     console.log("Failed:", errorInfo);
   };
 
-  const filteredValidationOptions = filterValidationOptions(
-    selectedData.type,
-    validationOptions
-  );
+  // const filteredValidationOptions = filterValidationOptions(
+  //   selectedData.type,
+  //   validationOptions
+  // );
 
   return (
     <div>
@@ -94,7 +94,7 @@ const SchemaForm = ({ onAddRow }) => {
                 />
               </Form.Item>
             </div>
-            <Form.Item
+            {/* <Form.Item
               label="Validation"
               name="Validation"
               rules={[
@@ -122,7 +122,7 @@ const SchemaForm = ({ onAddRow }) => {
                   </Select.Option>
                 ))}
               </Select>
-            </Form.Item>
+            </Form.Item> */}
 
             <Form.Item>
               <CustomButton type="primary" htmlType="submit">

@@ -16,7 +16,7 @@ const SchemaTable = ({ data, handleDelete, editFormData }) => {
   const columns = [
     {
       title: "",
-      width: "5%",
+      width: "10%",
       render: (_, record, index) => (
         <Draggable draggableId={record.id.toString()} index={index}>
           {(provided) => (
@@ -34,7 +34,7 @@ const SchemaTable = ({ data, handleDelete, editFormData }) => {
     {
       title: "ID",
       dataIndex: "id",
-      width: "5%",
+      width: "10%",
       render: (id) => numericToAlphabetic(id),
     },
     {
@@ -47,14 +47,11 @@ const SchemaTable = ({ data, handleDelete, editFormData }) => {
       dataIndex: "Type",
       width: "30%",
     },
-    {
-      title: "Validation",
-      dataIndex: "Validation",
-      width: "30%",
-    },
+
     {
       title: "Operations",
       dataIndex: "id",
+      width: "10%",
       render: (id) => (
         <Dropdown
           overlay={

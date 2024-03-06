@@ -49,7 +49,6 @@ const File = () => {
     const endIndex = startIndex + errorsPerPage;
     return error.slice(startIndex, endIndex);
   };
-
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
