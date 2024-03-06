@@ -1,5 +1,6 @@
 import axios from "axios";
 import { baseURL } from "../Components/BaseURLAPI/BaseURLAPI";
+const localHeader = localStorage.getItem("AuthorizationToken");
 export async function saveSchema(
   schemaName,
   formDataArray,
@@ -24,6 +25,7 @@ export async function saveSchema(
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: localHeader,
           },
         }
       );
