@@ -30,12 +30,14 @@ export const validateCSV = async (file, schemaData, setProgress) => {
               const actualType = typeof row[fieldName];
               if (actualType !== expectedType) {
                 if (actualType === "undefined" || actualType === "object") {
-                  hasInvalidChunk = true;
-                  errorArray.push(
-                    `Invalid data type for column ${fieldName} at row ${
-                      rowNumber + 1
-                    }, Expected datatype ${expectedType} but the cell is empty.`
-                  );
+                  if (item.Required && item.Required === true) {
+                    hasInvalidChunk = true;
+                    errorArray.push(
+                      `Invalid data type for column ${fieldName} at row ${
+                        rowNumber + 1
+                      }, Expected datatype ${expectedType} but the cell is empty.`
+                    );
+                  }
                 } else {
                   hasInvalidChunk = true;
                   errorArray.push(
