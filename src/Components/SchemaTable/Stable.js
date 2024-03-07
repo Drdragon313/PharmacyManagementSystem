@@ -80,9 +80,9 @@ const Stable = () => {
       dispatch(updateFormDataOrder([]));
       dispatch(updateSchemaName(newSchema.name));
       dispatch(resetId());
+      window.location.reload();
     });
     navigate("/tilepage");
-    window.location.reload();
   };
   const handleEditSubmit = (editedData) => {
     const updatedDataArray = updateFormDataArrayOnEdit(
