@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Modal } from "antd";
+import { Checkbox, Form, Input, Modal } from "antd";
 import CustomSelect from "../Select/Select";
 import { useOptions } from "../../optionContext/OptionContext";
 // import { filterValidationOptions } from "../../Utility Function/validationOptions";
@@ -11,10 +11,13 @@ const SchemaForm = ({ onAddRow }) => {
   const { typeOptions, validationOptions } = useOptions("");
   const [selectedData, setSelectedData] = useState({
     type: null,
-    validation: [],
+    validation: null,
+    Required: false,
   });
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const handleCheckboxChange = (e) => {
+    setSelectedData({ ...selectedData, Required: e.target.checked });
+  };
   const onFinish = (values) => {
     console.log("Success:", values);
 
@@ -22,6 +25,7 @@ const SchemaForm = ({ onAddRow }) => {
       Fieldname: values.Fieldname,
       Type: selectedData.type,
       Validation: selectedData.validation,
+      Required: selectedData.Required || false,
     };
 
     onAddRow(formDataEntry);
@@ -29,6 +33,7 @@ const SchemaForm = ({ onAddRow }) => {
     setSelectedData({
       type: null,
       validation: null,
+      Required: false,
     });
     setIsModalVisible(false);
   };
@@ -94,6 +99,12 @@ const SchemaForm = ({ onAddRow }) => {
                 />
               </Form.Item>
             </div>
+            <Form.Item>
+              <Checkbox onChange={handleCheckboxChange}>
+                {" "}
+                Please check the checkbox to make it a required field.
+              </Checkbox>
+            </Form.Item>
             {/* <Form.Item
               label="Validation"
               name="Validation"
