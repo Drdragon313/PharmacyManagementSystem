@@ -1,11 +1,9 @@
 import Logo from "../../Assets/logo_for_nav.svg";
-import CustomButton from "../CustomButton/CustomButton";
+
 import "./Navbar.css";
 import SideMenuBar from "./SideMenuBar";
-import { Image, Layout } from "antd";
-import Helplogo from "../../Assets/helplogo.svg";
-import { Link } from "react-router-dom";
-const { Sider, Footer } = Layout;
+import { Layout } from "antd";
+const { Sider } = Layout;
 const Navbar = () => {
   return (
     <Layout>
@@ -13,7 +11,9 @@ const Navbar = () => {
         <div className="NavbarSiderContainer">
           <div className="NavbarTop">
             <img src={Logo} alt={"Logo"} />
+            <p> Pharmlytics</p>
           </div>
+
           <SideMenuBar />
         </div>
         {/* <Footer

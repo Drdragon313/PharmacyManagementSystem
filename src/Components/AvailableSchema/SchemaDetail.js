@@ -61,6 +61,12 @@ const SchemaDetails = () => {
       dataIndex: "Validation",
       width: "30%",
     },
+    {
+      title: "Required",
+      dataIndex: "Required",
+      width: "30%",
+      render: (Required) => (Required ? "Yes" : "No"),
+    },
   ];
   return (
     <div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Form, Input } from "antd";
+import { Modal, Form, Input, Checkbox } from "antd";
 import CustomSelect from "../Select/Select";
 import { useOptions } from "../../optionContext/OptionContext";
 import { filterValidationOptions } from "../../Utility Function/validationOptions";
@@ -16,7 +16,8 @@ const EditForm = ({
   const [form] = Form.useForm();
   const [selectedData, setSelectedData] = useState({
     type: editRow?.Type,
-    validation: editRow?.Validation || [],
+    validation: editRow?.Validation || "none",
+    Required: editRow?.Required || false,
   });
 
   useEffect(() => {
@@ -43,13 +44,16 @@ const EditForm = ({
         ...editRow,
         Fieldname: values.fieldName,
         Type: values.type,
-        Validation: values.validation + `, `,
+        Validation: values.validation || "none",
+        Required: selectedData.Required,
       };
       onSubmit(editedData);
       form.resetFields();
     });
   };
-
+  const handleCheckboxChange = (e) => {
+    setSelectedData({ ...selectedData, Required: e.target.checked });
+  };
   return (
     <Modal
       title="Edit Row"
@@ -110,6 +114,12 @@ const EditForm = ({
               ))}
             </Select>
           </Form.Item> */}
+          <Form.Item>
+            <Checkbox onChange={handleCheckboxChange}>
+              {" "}
+              Please check the checkbox to make it a required field.
+            </Checkbox>
+          </Form.Item>
           <Form.Item>
             <CustomButton type="primary" onClick={handleFormSubmit}>
               Add Row
