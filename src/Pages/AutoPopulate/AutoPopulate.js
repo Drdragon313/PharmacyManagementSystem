@@ -50,8 +50,10 @@ const AutoPopulate = () => {
               }
               results.data.forEach((row) => {
                 const actualType = typeof row[fieldName];
-                columnData[fieldName][actualType] =
-                  (columnData[fieldName][actualType] || 0) + 1;
+                if (actualType !== "object") {
+                  columnData[fieldName][actualType] =
+                    (columnData[fieldName][actualType] || 0) + 1;
+                }
               });
             });
           }
