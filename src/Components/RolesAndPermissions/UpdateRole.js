@@ -373,6 +373,8 @@ const UpdateRole = () => {
       console.error("Error updating role:", error);
       message.error("Error updating role");
       // Handle error, such as showing an error message
+    } finally {
+      window.location.reload();
     }
   };
 
