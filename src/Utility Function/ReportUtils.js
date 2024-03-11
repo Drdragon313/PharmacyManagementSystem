@@ -30,8 +30,6 @@ export const embedConfig = (
 ) => {
   let filters = [];
   if (!values || values.length === 0) {
-    console.log("abc");
-
     filters.push({
       $schema: "http://powerbi.com/product/schema#basicFilter",
       target: {

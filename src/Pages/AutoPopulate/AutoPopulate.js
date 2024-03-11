@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Upload, Button, Progress } from "antd";
+import { Upload, Progress } from "antd";
 import uploadIcon from "../../Components/Images/uploadIcon.png";
 import Papa from "papaparse";
 import { useDispatch } from "react-redux";

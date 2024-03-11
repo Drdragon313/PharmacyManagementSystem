@@ -13,7 +13,6 @@ const TillSales = () => {
     getReportData(setReportData);
     const handleScroll = (e) => {
       setScreenSize(e.currentTarget.innerWidth);
-      console.log("Page scrolled", e.currentTarget.innerWidth);
     };
     window.addEventListener("resize", handleScroll);
     return () => {

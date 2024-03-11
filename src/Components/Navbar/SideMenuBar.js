@@ -13,8 +13,10 @@ import {
   fetchUserPermissions,
   fetchModules,
 } from "../../Utility Function/ModulesAndPermissions";
+import { useNavigate } from "react-router-dom";
 
 const SideMenuBar = (props) => {
+  const navigate = useNavigate();
   const [selectedKeys, setSelectedKeys] = useState(["4"]);
   const [menuItems, setMenuItems] = useState([]);
 
@@ -27,7 +29,6 @@ const SideMenuBar = (props) => {
       {title}
     </div>
   );
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -43,14 +44,29 @@ const SideMenuBar = (props) => {
                 const permissions = userPermissions.find(
                   (permission) => permission.module_id === module.module_id
                 );
-                if (permissions && permissions.actions.read) {
-                  return {
-                    ...module,
-                    actions: permissions.actions,
-                  };
-                }
 
-                return null;
+                if (permissions && permissions.actions.read) {
+                }
+                if (
+                  permissions &&
+                  permissions.module_id === 2 &&
+                  permissions.sub_modules &&
+                  permissions.sub_modules.length > 0
+                ) {
+                  const subModulesWithPermissions = permissions.sub_modules
+                    .map((subModule) => {
+                      if (subModule.actions.read) {
+                        return subModule;
+                      }
+                      return null;
+                    })
+                    .filter((subModule) => subModule !== null);
+                  module.sub_modules = subModulesWithPermissions;
+                }
+                return {
+                  ...module,
+                  actions: permissions.actions,
+                };
               })
               .filter(Boolean);
             setMenuItems(modulesWithPermissions);
@@ -91,19 +107,17 @@ const SideMenuBar = (props) => {
                       key={`sub${subModule.sub_module_id}`}
                       className="reports-submenu-item"
                       onClick={() => {
-                        handleMenuItemClick(`sub${subModule.sub_module_id}`);
                         localStorage.setItem(
                           "ReportID",
                           subModule.sub_module_id
                         );
+                        handleMenuItemClick(`sub${subModule.sub_module_id}`);
+                        navigate(
+                          getReportsRouteByModuleId(subModule.sub_module_id)
+                        );
                       }}
                     >
-                      <Link
-                        className="side-bar-links"
-                        to={getReportsRouteByModuleId(subModule.sub_module_id)}
-                      >
-                        {subModule.sub_module_name}
-                      </Link>
+                      {subModule.sub_module_name}
                     </Menu.Item>
                   ))}
                 </Menu.SubMenu>
