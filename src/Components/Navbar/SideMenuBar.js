@@ -46,27 +46,27 @@ const SideMenuBar = (props) => {
                 );
 
                 if (permissions && permissions.actions.read) {
+                  if (
+                    permissions &&
+                    permissions.module_id === 2 &&
+                    permissions.sub_modules &&
+                    permissions.sub_modules.length > 0
+                  ) {
+                    const subModulesWithPermissions = permissions.sub_modules
+                      .map((subModule) => {
+                        if (subModule.actions.read) {
+                          return subModule;
+                        }
+                        return null;
+                      })
+                      .filter((subModule) => subModule !== null);
+                    module.sub_modules = subModulesWithPermissions;
+                  }
+                  return {
+                    ...module,
+                    actions: permissions.actions,
+                  };
                 }
-                if (
-                  permissions &&
-                  permissions.module_id === 2 &&
-                  permissions.sub_modules &&
-                  permissions.sub_modules.length > 0
-                ) {
-                  const subModulesWithPermissions = permissions.sub_modules
-                    .map((subModule) => {
-                      if (subModule.actions.read) {
-                        return subModule;
-                      }
-                      return null;
-                    })
-                    .filter((subModule) => subModule !== null);
-                  module.sub_modules = subModulesWithPermissions;
-                }
-                return {
-                  ...module,
-                  actions: permissions.actions,
-                };
               })
               .filter(Boolean);
             setMenuItems(modulesWithPermissions);
