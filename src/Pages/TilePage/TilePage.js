@@ -31,6 +31,7 @@ import tileImg from "../../Assets/schemaImg.svg";
 import Spinner from "../../Components/Spinner/Spinner";
 import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationModal";
 import { fetchUserPermissions } from "../../Utility Function/ModulesAndPermissions";
+import CustomButton from "../../Components/CustomButton/CustomButton";
 const TilePage = () => {
   const [path, setPath] = useState([""]);
   const [tiles, setTiles] = useState([]);
@@ -375,9 +376,9 @@ const TilePage = () => {
                             ))}
                         </ul>
                         {canEditTiles && (
-                          <Button type="primary" onClick={moveSchema}>
+                          <CustomButton type="primary" onClick={moveSchema}>
                             Move
-                          </Button>
+                          </CustomButton>
                         )}
                       </Modal>
                     </div>
@@ -427,8 +428,7 @@ const TilePage = () => {
       <Modal
         open={activeModal === "createTile"}
         title="Create New Tile"
-        onOk={() => form.submit()}
-        okText="Create Tile"
+        footer={false}
         onCancel={closeCardModal}
       >
         <Form form={form} onFinish={handleCreateCard}>
@@ -443,19 +443,42 @@ const TilePage = () => {
               onChange={(e) => setNewCardName(e.target.value)}
             />
           </Form.Item>
+          <Form.Item>
+            <CustomButton type="primary" htmlType="submit">
+              Create
+            </CustomButton>
+          </Form.Item>
         </Form>
       </Modal>
       <Modal
         open={isEditModalVisible}
         title="Edit Tile"
         onCancel={() => setEditModalVisible(false)}
-        onOk={handleEditTile}
+        footer={false}
       >
-        <Input
+        <Form form={form} onFinish={handleEditTile}>
+          <Form.Item
+            name="newCardName"
+            label="Enter name"
+            rules={[{ required: true, message: "Please enter a Tile name!" }]}
+          >
+            <Input
+              placeholder="Enter name"
+              value={editedTileName}
+              onChange={(e) => setEditedTileName(e.target.value)}
+            />
+          </Form.Item>
+          <Form.Item>
+            <CustomButton type="primary" htmlType="submit">
+              Done
+            </CustomButton>
+          </Form.Item>
+        </Form>
+        {/* <Input
           placeholder="Enter new tile name"
           value={editedTileName}
           onChange={(e) => setEditedTileName(e.target.value)}
-        />
+        /> */}
       </Modal>
       <ConfirmationModal
         open={isDeleteConfirmationVisible}

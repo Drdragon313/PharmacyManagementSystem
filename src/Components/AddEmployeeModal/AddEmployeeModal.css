@@ -13,6 +13,7 @@
   max-height: calc(100vh - 200px);
   overflow-y: auto;
   padding: 0px !important;
+  font-family: "Poppins", sans-serif;
 }
 .add-emp-modal-header {
   width: 100%;

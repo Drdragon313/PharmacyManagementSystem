@@ -8,16 +8,14 @@ const { Sider, Content } = Layout;
 const MainLayout = ({ children }) => {
   return (
     <Layout>
+      <Topnav />
       <Sider className="navbar-sider" width={200}>
-        <div className="NavbarSiderContainer">
-          <div className="NavbarTop"></div>
-          <Navbar />
-        </div>
+        <Navbar />
       </Sider>
-      <Layout>
-        <Topnav />
-        <Content className="MainContent">{children}</Content>
-      </Layout>
+
+      <Content style={{ paddingTop: "65px" }} className="MainContent">
+        {children}
+      </Content>
     </Layout>
   );
 };

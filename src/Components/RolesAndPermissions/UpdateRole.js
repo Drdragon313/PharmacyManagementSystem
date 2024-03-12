@@ -15,6 +15,8 @@ const UpdateRole = () => {
   const [modalVisible, setModalVisible] = useState(!authToken);
   const [checkedCheckboxes, setCheckedCheckboxes] = useState([]);
   const [dataSource, setDataSource] = useState([]);
+  const [isAnyCheckboxChecked, setIsAnyCheckboxChecked] = useState(false);
+
   const [roleName, setRoleName] = useState("");
   const { role_id } = useParams();
   useEffect(() => {
@@ -162,7 +164,7 @@ const UpdateRole = () => {
           return [...prevChecked, newModule];
         }
       });
-
+      setIsAnyCheckboxChecked(updatedData.some((item) => item[columnName]));
       return updatedData;
     });
   };
@@ -247,7 +249,12 @@ const UpdateRole = () => {
           return [...prevChecked, newModule];
         }
       });
-
+      setIsAnyCheckboxChecked(
+        updatedData.some(
+          (item) =>
+            item.key === parentKey && item.subModules.some((s) => s[columnName])
+        )
+      );
       return updatedData;
     });
   };
@@ -459,6 +466,7 @@ const UpdateRole = () => {
               type="primary"
               style={{ width: "185px", height: "45px" }}
               onClick={() => handleUpdateRole()}
+              disabled={!isAnyCheckboxChecked}
             >
               Update role
             </CustomButton>
