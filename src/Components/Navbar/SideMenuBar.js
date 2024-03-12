@@ -43,7 +43,6 @@ const SideMenuBar = (props) => {
                 const permissions = userPermissions.find(
                   (permission) => permission.module_id === module.module_id
                 );
-
                 if (permissions && permissions.actions.read) {
                   if (
                     permissions &&

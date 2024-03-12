@@ -56,6 +56,11 @@ const File = () => {
   const validateAndUpload = async (file) => {
     try {
       setIsLoading(true);
+      const fileSizeLimit = 5 * 1024 * 1024;
+      if (file.size > fileSizeLimit) {
+        message.error("File size exceeds the limit (10MB).", 2);
+        return;
+      }
       await validateCSV(file, schemaData, setProgress);
       setError("");
       message.success("Valid CSV File", 2);
