@@ -92,6 +92,11 @@ const AutoPopulate = () => {
   const validateAndUpload = async (file) => {
     try {
       setIsLoading(true);
+      const fileSizeLimit = 5 * 1024 * 1024;
+      if (file.size > fileSizeLimit) {
+        message.error("File size exceeds the limit (10MB).", 2);
+        return;
+      }
       const { headers, columnData, validations } = await validateCSV(file);
       createTableData(headers, columnData, validations);
       message.success("Schema Auto Populated Successfully!", 2);
