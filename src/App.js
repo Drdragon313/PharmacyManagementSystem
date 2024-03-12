@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -51,6 +51,10 @@ import Prescriptions from "./Iframes/Prescriptions";
 import TillSales from "./Iframes/TillSales";
 import Income from "./Iframes/Income";
 import Dashboard from "./Iframes/Dashboard";
+import { fetchUserPermissions } from "./Utility Function/ModulesAndPermissions";
+import AccessDenied from "./Pages/AccessDenied/AccessDenied";
+import Spinner from "./Components/Spinner/Spinner";
+
 const { Content } = Layout;
 
 function App() {
@@ -64,6 +68,37 @@ function App() {
 }
 
 function MainContent() {
+  const [userPermissions, setUserPermissions] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUserPermissionData = async () => {
+      try {
+        await fetchUserPermissions(setUserPermissions);
+      } catch (error) {
+        console.error("Error fetching user permissions:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserPermissionData();
+  }, []);
+  const accessDataLive =
+    userPermissions?.find((module) => module.module_name === "Data live")
+      ?.actions?.read || false;
+  const accessDashboard =
+    userPermissions?.find((module) => module.module_name === "Dashboard")
+      ?.actions?.read || false;
+  const accessPharmacy =
+    userPermissions?.find((module) => module.module_name === "Pharmacy")
+      ?.actions?.read || false;
+  const accessUploadFile =
+    userPermissions?.find((module) => module.module_name === "Upload Files")
+      ?.actions?.read || false;
+  const accessEmployee =
+    userPermissions?.find((module) => module.module_name === "Employees")
+      ?.actions?.read || false;
   const location = useLocation();
   const authToken = localStorage.getItem("AuthorizationToken");
   const excludedPaths = [
@@ -74,14 +109,15 @@ function MainContent() {
     "/setpassword",
     "/passwordupdatesuccess",
   ];
+  if (loading) {
+    return <Spinner />;
+  }
   if (!authToken && !excludedPaths.includes(location.pathname)) {
-    return <Navigate to="/" />;
+    <Navigate to="/accessdenied" />;
   } else
     return (
       <>
-        {/* {shouldRenderNavbar(location) && <Navbar />} */}
         <Content className="MainContent">
-          {/* {shouldRenderTopnav(location) && <Topnav />} */}
           <Routes>
             <Route path="/" element={<Signin />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
@@ -92,22 +128,37 @@ function MainContent() {
               element={<PasswordUpdatedSuccess />}
             />
             <Route path="/setpassword" element={<SetPassword />} />
-            <Route
-              path="/dashboard"
-              element={
-                <MainLayout>
-                  <Dashboard />
-                </MainLayout>
-              }
-            />
-            <Route
-              path="/tilepage"
-              element={
-                <MainLayout>
-                  <TilePage />
-                </MainLayout>
-              }
-            />
+            {accessDashboard ? (
+              <Route
+                path="/dashboard"
+                element={
+                  <MainLayout>
+                    <Dashboard />
+                  </MainLayout>
+                }
+              />
+            ) : (
+              <Route
+                path="/dashboard"
+                element={<Navigate to="/accessdenied" />}
+              />
+            )}
+
+            {accessDataLive ? (
+              <Route
+                path="/tilepage"
+                element={
+                  <MainLayout>
+                    <TilePage />
+                  </MainLayout>
+                }
+              />
+            ) : (
+              <Route
+                path="/tilepage"
+                element={<Navigate to="/accessdenied" />}
+              />
+            )}
             <Route
               path="schema"
               element={
@@ -116,14 +167,19 @@ function MainContent() {
                 </MainLayout>
               }
             />
-            <Route
-              path="file"
-              element={
-                <MainLayout>
-                  <ValidationOptions />
-                </MainLayout>
-              }
-            />
+            <Route path="accessdenied" element={<AccessDenied />} />
+            {accessUploadFile ? (
+              <Route
+                path="file"
+                element={
+                  <MainLayout>
+                    <ValidationOptions />
+                  </MainLayout>
+                }
+              />
+            ) : (
+              <Route path="file" element={<Navigate to="/accessdenied" />} />
+            )}
             <Route
               path="file/fileUpload"
               element={
@@ -157,7 +213,7 @@ function MainContent() {
               }
             />
             <Route
-              path="PharmacyReport"
+              path="/pharmacyreport"
               element={
                 <MainLayout>
                   <PharmacyIfame />
@@ -196,14 +252,21 @@ function MainContent() {
                 </MainLayout>
               }
             />
-            <Route
-              path="/employeepage"
-              element={
-                <MainLayout>
-                  <EmployeePage />
-                </MainLayout>
-              }
-            />
+            {accessEmployee ? (
+              <Route
+                path="/employeepage"
+                element={
+                  <MainLayout>
+                    <EmployeePage />
+                  </MainLayout>
+                }
+              />
+            ) : (
+              <Route
+                path="/employeepage"
+                element={<Navigate to="/accessdenied" />}
+              />
+            )}
             <Route
               path="/faqpage"
               element={
@@ -245,7 +308,7 @@ function MainContent() {
               }
             />
             <Route
-              path="/CostofStock"
+              path="/costofstock"
               element={
                 <MainLayout>
                   <CostofStock />
@@ -253,7 +316,7 @@ function MainContent() {
               }
             ></Route>
             <Route
-              path="/Prescriptions"
+              path="/prescriptions"
               element={
                 <MainLayout>
                   <Prescriptions />
@@ -261,7 +324,7 @@ function MainContent() {
               }
             ></Route>
             <Route
-              path="/TillSales"
+              path="/tillSales"
               element={
                 <MainLayout>
                   <TillSales />
@@ -269,7 +332,7 @@ function MainContent() {
               }
             ></Route>
             <Route
-              path="/Services"
+              path="/services"
               element={
                 <MainLayout>
                   <Services />
@@ -277,7 +340,7 @@ function MainContent() {
               }
             ></Route>
             <Route
-              path="/Income"
+              path="/income"
               element={
                 <MainLayout>
                   <Income />
@@ -285,7 +348,7 @@ function MainContent() {
               }
             ></Route>
             <Route
-              path="/Owing"
+              path="/owing"
               element={
                 <MainLayout>
                   <Owing />
@@ -293,7 +356,7 @@ function MainContent() {
               }
             ></Route>
             <Route
-              path="/EmployeeReport"
+              path="/employeereport"
               element={
                 <MainLayout>
                   <Employee />
@@ -327,14 +390,21 @@ function MainContent() {
               }
             />
             <Route path="resendemail" element={<ResendEmail />} />
-            <Route
-              path="pharmacies"
-              element={
-                <MainLayout>
-                  <Pharmacies />
-                </MainLayout>
-              }
-            />
+            {accessPharmacy ? (
+              <Route
+                path="pharmacies"
+                element={
+                  <MainLayout>
+                    <Pharmacies />
+                  </MainLayout>
+                }
+              />
+            ) : (
+              <Route
+                path="pharmacies"
+                element={<Navigate to="/accessdenied" />}
+              />
+            )}
             <Route
               path="pharmacies/AddPharmacy"
               element={

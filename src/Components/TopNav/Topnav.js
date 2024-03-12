@@ -134,7 +134,14 @@ const Topnav = () => {
     }
   };
   return (
-    <Layout>
+    <Layout
+      style={{
+        position: "fixed",
+        top: "0",
+        width: "100%",
+        zIndex: 999,
+      }}
+    >
       <Header className="TopnavHeader">
         <div>
           <MenuOutlined
@@ -199,7 +206,6 @@ const Topnav = () => {
           </div>
           <SideMenuBar
             className="side-menu-bar-items"
-            collapsed={true}
             toggleMobileDrawer={() => setShowMobileDrawer(false)}
           />
           <Footer

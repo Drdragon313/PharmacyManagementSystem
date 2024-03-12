@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Menu, Space } from "antd";
-
 import "./Style.css";
 import { Link } from "react-router-dom";
 import dataLive from "../../Assets/datalive.svg";
@@ -171,14 +170,14 @@ const getRouteByModuleId = (moduleId) => {
 };
 const getReportsRouteByModuleId = (sub_module_id) => {
   const routeMappings = {
-    1: "/PharmacyReport",
-    2: "/EmployeeReport",
-    3: "/Owing",
-    4: "/CostofStock",
-    5: "/Services",
-    6: "/Prescriptions",
-    7: "/TillSales",
-    8: "/Income",
+    1: "/pharmacyreport",
+    2: "/employeereport",
+    3: "/owing",
+    4: "/costofstock",
+    5: "/services",
+    6: "/prescriptions",
+    7: "/tillsales",
+    8: "/income",
   };
 
   return routeMappings[sub_module_id] || "/";

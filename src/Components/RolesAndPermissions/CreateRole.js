@@ -19,6 +19,8 @@ const CreateRole = () => {
   const [checkedCheckboxes, setCheckedCheckboxes] = useState([]);
   const [dataSource, setDataSource] = useState([]);
   const [roleName, setRoleName] = useState("");
+  const [isAnyCheckboxChecked, setIsAnyCheckboxChecked] = useState(false);
+
   const previousModulesRef = useRef();
 
   useEffect(() => {
@@ -167,7 +169,7 @@ const CreateRole = () => {
           return [...prevChecked, newModule];
         }
       });
-
+      setIsAnyCheckboxChecked(updatedData.some((item) => item[columnName]));
       return updatedData;
     });
   };
@@ -450,6 +452,7 @@ const CreateRole = () => {
             type="primary"
             style={{ width: "185px", height: "45px" }}
             onClick={() => handleCreateRole()}
+            disabled={!isAnyCheckboxChecked}
           >
             Create role
           </CustomButton>

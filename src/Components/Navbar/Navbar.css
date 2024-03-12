@@ -1,7 +1,8 @@
 .NavbarTop {
   text-align: center;
   cursor: pointer;
-  padding: 10px;
+  padding-top: 10px;
+  margin-bottom: -20px;
   color: white;
   font-size: 20px;
   font-family: Poppins, sans-serif;
@@ -24,7 +25,8 @@
   background-color: #fff;
   display: flex;
   flex-direction: row;
-  max-width: 14vb !important;
+  gap: 5px;
+  max-width: 16vw !important;
   font-family: Poppins, sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -32,6 +34,8 @@
   letter-spacing: 0em;
   color: #3a3475;
   justify-content: space-evenly !important;
+  text-decoration: none !important;
+  position: relative;
 }
 @media only screen and (max-width: 768px) {
   .NavbarTop {
