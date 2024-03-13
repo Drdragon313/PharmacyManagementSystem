@@ -84,7 +84,9 @@ const Topnav = () => {
         </span>
       ),
       key: "2",
-      icon: <img src={ProfileLogout} alt="Account Logout" />,
+      icon: (
+        <img onClick={handleLogout} src={ProfileLogout} alt="Account Logout" />
+      ),
     },
   ];
 

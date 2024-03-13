@@ -128,8 +128,9 @@ const File = () => {
       <div className="file-container">
         <p className="table-tile-schema-details">Upload schema</p>
         <p className="file-paragraph">
-          Default column names for the CSV file for pharmacy table are below. A
-          CSV example of this table can be downloaded from below.
+          The CSV file's default column names can be viewed in the Details
+          section for each tile. Additionally, a template file can be downloaded
+          from there.
         </p>
         <div className="upload-download-btn-container">
           <Upload

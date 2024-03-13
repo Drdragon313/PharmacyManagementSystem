@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import signinBackground from "../../Assets/SigninBack.svg";
 import PharmacyImage from "../../Assets/Pharmacy-img.svg";
 import PharmalyticsLogo from "../../Assets/Pharmalytics-Logo.svg";
@@ -21,18 +21,23 @@ import { useDispatch } from "react-redux";
 import { addSigninData } from "../../redux/features/SigninSlice/SigninSlice";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 
-import {
-  fetchUserPermissions,
-  fetchModules,
-} from "../../Utility Function/ModulesAndPermissions";
-
+import { fetchUserPermissions } from "../../Utility Function/ModulesAndPermissions";
+const routeMappings = {
+  1: "/dashboard",
+  2: "/file",
+  3: "/tilepage",
+  4: "/pharmacies",
+  5: "/file",
+  6: "/employeepage",
+};
 const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const handleLogin = async (setUserPermissions, setModules) => {
+  const [userPermissions, setUserPermissions] = useState([]);
+  const handleLogin = async () => {
     try {
       setLoading(true);
       const response = await login(email, password);
@@ -42,16 +47,36 @@ const Signin = () => {
         const AuthorizationToken = `Bearer ${response.data.token}`;
         localStorage.setItem("AuthorizationToken", AuthorizationToken);
         await fetchUserPermissions(setUserPermissions);
-        await fetchModules(setModules);
-        navigate("/pharmacies");
-        message.success("Logged In Successfully!", 2);
       } else {
         message.error("Invalid Credentials", 2);
       }
     } catch (error) {
+      console.error("Login error:", error);
     } finally {
       setLoading(false);
     }
+  };
+
+  useEffect(() => {
+    // Find the first available module with its route
+    const firstAvailableModule = findFirstAvailableModule(userPermissions);
+    console.log("first avail", firstAvailableModule);
+    if (firstAvailableModule) {
+      navigate(routeMappings[firstAvailableModule.module_id]);
+      message.success("Logged In Successfully!", 2);
+    } else if (userPermissions.length > 0) {
+      message.error("No available modules found for the user.", 2);
+    }
+  }, [userPermissions, navigate]);
+
+  // Function to find the first available module for the user
+  const findFirstAvailableModule = (permissions) => {
+    for (const permission of permissions) {
+      if (permission.actions.read) {
+        return permission;
+      }
+    }
+    return null;
   };
 
   return (

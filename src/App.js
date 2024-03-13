@@ -113,7 +113,7 @@ function MainContent() {
     return <Spinner />;
   }
   if (!authToken && !excludedPaths.includes(location.pathname)) {
-    <Navigate to="/accessdenied" />;
+    return <Navigate to="/accessdenied" />;
   } else
     return (
       <>
