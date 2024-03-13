@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Menu, Space } from "antd";
 import "./Style.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import dataLive from "../../Assets/datalive.svg";
 import HeartGrey from "../../Assets/heart grey.svg";
 import empIcon from "../../Assets/emp_icon.svg";
@@ -16,23 +16,16 @@ import { useNavigate } from "react-router-dom";
 
 const SideMenuBar = (props) => {
   const navigate = useNavigate();
-  const [selectedKeys, setSelectedKeys] = useState(["4"]);
+  const location = useLocation();
+  const [selectedKeys, setSelectedKeys] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
+  const [dataFetched, setDataFetched] = useState(false);
 
-  const handleMenuItemClick = (key) => {
-    setSelectedKeys([key]);
-  };
-  const SubMenuTitle = ({ title, icon }) => (
-    <div className="reports-submenu">
-      <img className="icons-sidenav-reports" src={icon} alt="Icon" />
-      {title}
-    </div>
-  );
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetchUserPermissions((userPermissions) => {
-          fetchModules((modules) => {
+        await fetchUserPermissions(async (userPermissions) => {
+          await fetchModules((modules) => {
             const modulesWithPermissions = modules
               .filter((module) =>
                 userPermissions.some(
@@ -55,19 +48,25 @@ const SideMenuBar = (props) => {
                         if (subModule.actions.read) {
                           return subModule;
                         }
+                        // Explicitly return null when actions.read is false
                         return null;
                       })
                       .filter((subModule) => subModule !== null);
                     module.sub_modules = subModulesWithPermissions;
                   }
+                  // Explicitly return the module with actions when actions.read is true
                   return {
                     ...module,
                     actions: permissions.actions,
                   };
                 }
+                // Explicitly return null when actions.read is false
+                return null;
               })
               .filter(Boolean);
+
             setMenuItems(modulesWithPermissions);
+            setDataFetched(true);
           });
         });
       } catch (error) {
@@ -76,14 +75,44 @@ const SideMenuBar = (props) => {
     };
 
     fetchData();
-  }, []);
+  }, []); // Empty dependency array to run only once when component mounts
 
+  useEffect(() => {
+    // Set selected key based on the first module with permissions
+    if (dataFetched) {
+      const firstModuleWithPermissions = menuItems.find(
+        (menuItem) => menuItem.actions && menuItem.actions.read
+      );
+
+      if (firstModuleWithPermissions) {
+        setSelectedKeys([`${firstModuleWithPermissions.module_id}`]);
+      }
+      console.log("first", firstModuleWithPermissions.module_id);
+      const currentPath = location.pathname;
+      console.log("current path", currentPath);
+      const matchingMenuItem = menuItems.find((menuItem) =>
+        currentPath.includes(getRouteByModuleId(menuItem.module_id))
+      );
+      console.log("matching", matchingMenuItem.module_id);
+      if (matchingMenuItem) {
+        setSelectedKeys([`${matchingMenuItem.module_id}`]);
+      }
+    }
+  }, [location.pathname, menuItems, dataFetched]);
+  const handleMenuItemClick = (key) => {
+    setSelectedKeys([key]);
+  };
+  const SubMenuTitle = ({ title, icon }) => (
+    <div className="reports-submenu">
+      <img className="icons-sidenav-reports" src={icon} alt="Icon" />
+      {title}
+    </div>
+  );
   return (
     <div className="navbar-menu">
       <Menu
         mode={props.collapsed ? "vertical" : "inline"}
         selectedKeys={selectedKeys}
-        defaultOpenKeys={["sub1"]}
         className="NavbarMenu"
       >
         {menuItems
