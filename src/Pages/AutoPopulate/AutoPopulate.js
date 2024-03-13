@@ -94,7 +94,7 @@ const AutoPopulate = () => {
       setIsLoading(true);
       const fileSizeLimit = 5 * 1024 * 1024;
       if (file.size > fileSizeLimit) {
-        message.error("File size exceeds the limit (10MB).", 2);
+        message.error("File size exceeds the limit (5MB).", 2);
         return;
       }
       const { headers, columnData, validations } = await validateCSV(file);
