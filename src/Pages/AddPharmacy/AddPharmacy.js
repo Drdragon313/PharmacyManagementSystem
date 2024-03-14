@@ -51,6 +51,8 @@ const AddPharmacy = () => {
   }, []);
 
   const [pCodeResponse, setPCodeResponse] = useState([]);
+  // const ukPostcodeRegex =
+  //   /^([A-PR-UWYZa-pr-uwyz][A-HK-Ya-hk-y]?[0-9][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}|[Gg][Ii][Rr] 0[Aa]{2})$/;
 
   const handleFindAddress = () => {
     const { postCode, value } = data;
