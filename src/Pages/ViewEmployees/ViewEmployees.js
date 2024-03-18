@@ -70,7 +70,9 @@ const ViewEmployees = () => {
         }}
       >
         <Col className="emp-detail-heading" span={22}>
-          <p>{employeeDetails.FName} details</p>
+          <p className="emp-details-head-txt">
+            {employeeDetails.FName} details
+          </p>
           <Link to={`/employeepage/${userID}/editUser`}>
             <Button type="primary" className="primary-Class">
               <Image

@@ -3,11 +3,11 @@
   font-size: 18px;
   font-weight: 500;
   text-align: left;
-  color: #425cda;
+  color: #3a3475 !important;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding-top: 10px;
+  padding-top: 10px !important;
 }
 .values-container {
   display: flex;
@@ -89,6 +89,15 @@
 .Nonetxt {
   color: grey;
   margin-top: 5%;
+}
+.emp-detail-head-txt {
+  font-family: Poppins, sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 33px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #3a3475;
 }
 @media (max-width: 768px) {
   .Labels-values-container {
