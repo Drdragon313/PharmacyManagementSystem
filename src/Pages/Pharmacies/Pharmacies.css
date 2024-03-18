@@ -3,13 +3,15 @@
   margin: 10px;
 }
 .pharmacy-list-head-txt {
-  font-size: 18px;
+  font-family: Poppins, sans-serif;
+  font-size: 22px;
   font-weight: 500;
-  line-height: 27px;
+  line-height: 33px;
   letter-spacing: 0em;
   text-align: left;
   color: #3a3475;
-  font-family: "Poppins", sans-serif;
+  margin-left: 15px;
+  margin-top: 10px;
 }
 .pharmacy-list-head {
   justify-content: space-between;

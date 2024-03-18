@@ -18,13 +18,13 @@ const ConfirmationModal = ({
       onOk={onConfirm}
       title={titleImage}
       onCancel={onCancel}
-      className="delete-modal-body"
+      className="reassign-modal-body"
       footer={[
-        <div className="delete-modal-btns-container">
+        <div className="reassign-modal-btns-container">
           <Button
             key="cancel"
             onClick={onCancel}
-            className="delete-modal-cancel-btn"
+            className="reassign-modal-cancel-btn"
           >
             Cancel
           </Button>
@@ -33,7 +33,7 @@ const ConfirmationModal = ({
             key="confirm"
             type="primary"
             onClick={onConfirm}
-            className={btnclassName}
+            className="reassign-modal-ok-btn"
           >
             {btnTxt}
           </CustomButton>

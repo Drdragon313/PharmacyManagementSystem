@@ -62,13 +62,13 @@ const ReAssignModal = ({ open, onConfirm, onCancel, roleId }) => {
           onOk={handleConfirmDelete}
           title={<Image src={deleteImg} preview={false}></Image>}
           onCancel={onCancel}
-          className="delete-modal-body"
+          className="reassign-modal-body"
           footer={[
-            <div className="delete-modal-btns-container" key="footer">
+            <div className="reassign-modal-btns-container" key="footer">
               <Button
                 key="cancel"
                 onClick={onCancel}
-                className="delete-modal-cancel-btn"
+                className="reassign-modal-cancel-btn"
               >
                 Cancel
               </Button>
@@ -77,7 +77,7 @@ const ReAssignModal = ({ open, onConfirm, onCancel, roleId }) => {
                 key="confirm"
                 type="primary"
                 onClick={handleConfirmDelete}
-                className="delete-modal-ok-btn"
+                className="reassign-modal-ok-btn"
                 disabled={!selectedRoleId}
               >
                 Reassign Role
@@ -100,13 +100,13 @@ const ReAssignModal = ({ open, onConfirm, onCancel, roleId }) => {
           onOk={handleConfirmDelete}
           title={<Image src={deleteImg} preview={false}></Image>}
           onCancel={onCancel}
-          className="delete-modal-body"
+          className="reassign-modal-body"
           footer={[
-            <div className="delete-modal-btns-container" key="footer">
+            <div className="reassign-modal-btns-container" key="footer">
               <Button
                 key="cancel"
                 onClick={onCancel}
-                className="delete-modal-cancel-btn"
+                className="reassign-modal-cancel-btn"
               >
                 Cancel
               </Button>
@@ -115,7 +115,7 @@ const ReAssignModal = ({ open, onConfirm, onCancel, roleId }) => {
                 key="confirm"
                 type="primary"
                 onClick={handleConfirmDelete}
-                className="delete-modal-ok-btn"
+                className="reassign-modal-ok-btn"
               >
                 Delete Role
               </Button>

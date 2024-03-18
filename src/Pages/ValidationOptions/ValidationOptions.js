@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./VaidationOptions.css";
-import { Row, Button, Space, Image } from "antd";
+import { Row, Button, Space, Image, Dropdown, Menu } from "antd";
 import schemaImg from "../../Assets/schemaImg.svg";
 import axios from "axios";
 import { addIndex } from "../../redux/features/SchemaSelectionSlice/SchemaSelectionSlice";
@@ -94,7 +94,47 @@ const ValidationOptions = () => {
                 >
                   <div className="schema-file-upload-content">
                     <div className="dropdown">
-                      <Button className="dropbtn-schema-vo">
+                      <Dropdown
+                        overlay={
+                          <Menu>
+                            <Menu.Item key="uploadFile">
+                              <div
+                                onClick={() =>
+                                  handleMenuClick("uploadFile", index)
+                                }
+                              >
+                                {" "}
+                                <Link
+                                  style={{
+                                    textDecoration: "none",
+                                    color: "#000",
+                                  }}
+                                  to="fileUpload"
+                                >
+                                  Upload File
+                                </Link>
+                              </div>
+                            </Menu.Item>
+
+                            <Menu.Item key="view">
+                              <Link
+                                style={{ textDecoration: "none" }}
+                                to={`/schema/${schema.schema_id}`}
+                              >
+                                View Details
+                              </Link>
+                            </Menu.Item>
+                          </Menu>
+                        }
+                        trigger={["click"]}
+                      >
+                        <Button
+                          className="dropbtn-schema"
+                          icon={<MoreOutlined />}
+                        />
+                      </Dropdown>
+                    </div>
+                    {/* <Button className="dropbtn-schema-vo">
                         <MoreOutlined />
                       </Button>
                       <div className="dropdown-content">
@@ -109,8 +149,8 @@ const ValidationOptions = () => {
                         <Link to={`/schema/${schema.schema_id}`}>
                           <Button type="link">View Details</Button>
                         </Link>
-                      </div>
-                    </div>
+                      </div> */}
+
                     <Space
                       direction="vertical"
                       size={2}

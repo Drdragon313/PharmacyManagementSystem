@@ -172,7 +172,15 @@
   margin-top: 1px;
 }
 .available-tiles-txt {
-  margin-left: 30px;
+  font-family: Poppins, sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 33px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #3a3475;
+  margin-left: 15px;
+  margin-top: 10px;
 }
 .dropbtn {
   color: #2a44c1;
@@ -180,7 +188,7 @@
   border-radius: 5px;
   margin-left: 5px;
   margin-top: -30px;
-  font-size: 25px;
+  font-size: 28px;
   border: none;
   cursor: pointer;
   background-color: transparent;
@@ -193,13 +201,15 @@
 }
 
 .dropdown-content {
-  display: none;
+  display: flex;
+  flex-direction: column; /* Set flex-direction to column */
   position: absolute;
   background-color: #f9f9f9;
-  min-width: 100px;
+  min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  border-radius: 8px;
+  padding: 5px 0;
+  border-radius: 10px;
 }
 .dropdown-content a {
   color: black;
@@ -210,16 +220,16 @@
   font-size: 12px;
 }
 
-.dropdown-content a:hover {
+/* .dropdown-content a:hover {
   background-color: #f1f1f1;
-}
+} */
 .available-tiles-txt {
   margin-left: 20px;
 }
-.dropdown:hover .dropdown-content {
+/* .dropdown:hover .dropdown-content {
   display: flex;
   flex-direction: column;
-}
+} */
 .schemacards-tilepage {
   margin-left: 10px;
   margin-top: 10px;

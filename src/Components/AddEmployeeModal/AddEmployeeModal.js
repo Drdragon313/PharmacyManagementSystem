@@ -76,13 +76,11 @@ const AddEmployeeModal = ({
         console.log("Employees assigned successfully:", response.data);
         onAddEmployee(response.data.users);
 
-        // Show success message
         message.success("Employees assigned successfully");
       }
     } catch (error) {
       console.error("Error assigning employees to pharmacy:", error);
 
-      // Show error message
       message.error("Error assigning employees to pharmacy.");
     }
   };
@@ -117,7 +115,7 @@ const AddEmployeeModal = ({
               Cancel
             </CustomButton>
             <CustomButton
-              style={{ width: "40%" }}
+              style={{ width: "50%" }}
               type="primary"
               htmlType="submit"
             >

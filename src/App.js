@@ -87,15 +87,15 @@ function MainContent() {
   const accessDataLive =
     userPermissions?.find((module) => module.module_name === "Data live")
       ?.actions?.read || false;
-  const accessDashboard =
-    userPermissions?.find((module) => module.module_name === "Dashboard")
-      ?.actions?.read || false;
+  // const accessDashboard =
+  //   userPermissions?.find((module) => module.module_name === "Dashboard")
+  //     ?.actions?.read || false;
   const accessPharmacy =
     userPermissions?.find((module) => module.module_name === "Pharmacy")
       ?.actions?.read || false;
-  const accessUploadFile =
-    userPermissions?.find((module) => module.module_name === "Upload Files")
-      ?.actions?.read || false;
+  // const accessUploadFile =
+  //   userPermissions?.find((module) => module.module_name === "Upload Files")
+  //     ?.actions?.read || false;
   const accessEmployee =
     userPermissions?.find((module) => module.module_name === "Employees")
       ?.actions?.read || false;
@@ -112,37 +112,38 @@ function MainContent() {
   if (loading) {
     return <Spinner />;
   }
+
+  // Render nothing on excluded paths
+  if (excludedPaths.includes(location.pathname)) {
+    return (
+      <Routes>
+        <Route path="/" element={<Signin />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/checkemail" element={<CheckEmail />} />
+        <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route
+          path="/passwordupdatesuccess"
+          element={<PasswordUpdatedSuccess />}
+        />
+        <Route path="/setpassword" element={<SetPassword />} />
+      </Routes>
+    );
+  }
   if (!authToken && !excludedPaths.includes(location.pathname)) {
-    return <Navigate to="/accessdenied" />;
+    return <Navigate to="/" />;
   } else
     return (
       <>
         <Content className="MainContent">
           <Routes>
-            <Route path="/" element={<Signin />} />
-            <Route path="/forgotpassword" element={<ForgotPassword />} />
-            <Route path="/checkemail" element={<CheckEmail />} />
-            <Route path="/resetpassword" element={<ResetPassword />} />
             <Route
-              path="/passwordupdatesuccess"
-              element={<PasswordUpdatedSuccess />}
+              path="/dashboard"
+              element={
+                <MainLayout>
+                  <Dashboard />
+                </MainLayout>
+              }
             />
-            <Route path="/setpassword" element={<SetPassword />} />
-            {accessDashboard ? (
-              <Route
-                path="/dashboard"
-                element={
-                  <MainLayout>
-                    <Dashboard />
-                  </MainLayout>
-                }
-              />
-            ) : (
-              <Route
-                path="/dashboard"
-                element={<Navigate to="/accessdenied" />}
-              />
-            )}
 
             {accessDataLive ? (
               <Route
@@ -154,10 +155,7 @@ function MainContent() {
                 }
               />
             ) : (
-              <Route
-                path="/tilepage"
-                element={<Navigate to="/accessdenied" />}
-              />
+              <Route path="/tilepage" element={<Navigate to="/tilepage" />} />
             )}
             <Route
               path="schema"
@@ -168,18 +166,16 @@ function MainContent() {
               }
             />
             <Route path="accessdenied" element={<AccessDenied />} />
-            {accessUploadFile ? (
-              <Route
-                path="file"
-                element={
-                  <MainLayout>
-                    <ValidationOptions />
-                  </MainLayout>
-                }
-              />
-            ) : (
-              <Route path="file" element={<Navigate to="/accessdenied" />} />
-            )}
+
+            <Route
+              path="file"
+              element={
+                <MainLayout>
+                  <ValidationOptions />
+                </MainLayout>
+              }
+            />
+
             <Route
               path="file/fileUpload"
               element={
@@ -466,37 +462,5 @@ function MainContent() {
       </>
     );
 }
-
-// function shouldRenderNavbar(location) {
-//   const currentPath = location.pathname;
-//   return (
-//     currentPath !== "/" &&
-//     currentPath !== "/forgotpassword" &&
-//     currentPath !== "/checkemail" &&
-//     currentPath !== "/resetpassword" &&
-//     currentPath !== "/setpassword" &&
-//     currentPath !== "/profile" &&
-//     currentPath !== "/profile/permissions" &&
-//     currentPath !== "/profile/updatePassword" &&
-//     currentPath !== "/resendemail" &&
-//     currentPath !== "/passwordupdatesuccess"
-//   );
-// }
-
-// function shouldRenderTopnav(location) {
-//   const currentPath = location.pathname;
-//   return (
-//     currentPath !== "/" &&
-//     currentPath !== "/forgotpassword" &&
-//     currentPath !== "/checkemail" &&
-//     currentPath !== "/resetpassword" &&
-//     currentPath !== "/setpassword" &&
-//     currentPath !== "/profile" &&
-//     currentPath !== "/profile/permissions" &&
-//     currentPath !== "/profile/updatePassword" &&
-//     currentPath !== "/resendemail" &&
-//     currentPath !== "/passwordupdatesuccess"
-//   );
-// }
 
 export default App;

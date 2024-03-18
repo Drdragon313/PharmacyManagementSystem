@@ -94,64 +94,66 @@ const ViewEmployees = () => {
       >
         <Col span={22} style={{ marginLeft: "20px" }}>
           <div className="Labels-values-container">
-            <div className="labels">
-              <p>First name </p>
-              <p>Last name </p>
-              <p>Gender</p>
-              <p>Date of birth</p>
-              <p>Contact #</p>
-              <p>E-mail</p>
-              <p>Role</p>
-              <p>Salary</p>
-              <p>Pharmacy postal code</p>
-              <p>Line manager</p>
-              <p>Address</p>
-              <p>Pharmacy</p>
-            </div>
+            <div className="label-value-container-1">
+              <div className="labels">
+                <p>First name </p>
+                <p>Last name </p>
+                <p>Gender</p>
+                <p>Date of birth</p>
+                <p>Contact #</p>
+                <p>E-mail</p>
+                <p>Role</p>
+                <p>Salary</p>
+                <p>Pharmacy postal code</p>
+                <p>Line manager</p>
+                <p>Address</p>
+                <p>Pharmacy</p>
+              </div>
 
-            <div className="values">
-              <p>{employeeDetails.FName || "None"}</p>
-              <p> {employeeDetails.LName || "None"}</p>
-              <p> {employeeDetails.Gender || "None"}</p>
-              <p> {employeeDetails.DateOfBirth || "None"}</p>
-              <p> {employeeDetails.Contact || "None"}</p>
-              <p> {employeeDetails.Email || "None"}</p>
-              <p> {employeeDetails.roleName || "None"}</p>
-              <p> {employeeDetails.Salary || "None"}</p>
-              <p>
-                {employeeDetails.pharmacies
-                  ? employeeDetails.pharmacies.length > 0
-                    ? employeeDetails.pharmacies
-                        .map((value) => value.postCode)
-                        .join(", ")
-                    : "N/A"
-                  : "N/A"}
-              </p>
-              <p>
-                {employeeDetails.pharmacies
-                  ? employeeDetails.pharmacies.some(
-                      (value) => value.managerName !== ""
-                    )
-                    ? employeeDetails.pharmacies
-                        .filter((value) => value.managerName !== "")
-                        .map((value) => value.managerName)
-                        .join(", ")
-                    : "N/A"
-                  : "N/A"}
-              </p>
-              <p> {employeeDetails.Address || "N/A"}</p>
-              <p>
-                {employeeDetails.pharmacies
-                  ? employeeDetails.pharmacies.some(
-                      (value) => value.postCode !== ""
-                    )
-                    ? employeeDetails.pharmacies
-                        .filter((value) => value.postCode !== "")
-                        .map((value) => value.postCode)
-                        .join(", ")
-                    : "N/A"
-                  : "N/A"}
-              </p>
+              <div className="values">
+                <p>{employeeDetails.FName || "None"}</p>
+                <p> {employeeDetails.LName || "None"}</p>
+                <p> {employeeDetails.Gender || "None"}</p>
+                <p> {employeeDetails.DateOfBirth || "None"}</p>
+                <p> {employeeDetails.Contact || "None"}</p>
+                <p> {employeeDetails.Email || "None"}</p>
+                <p> {employeeDetails.roleName || "None"}</p>
+                <p> {employeeDetails.Salary || "None"}</p>
+                <p>
+                  {employeeDetails.pharmacies
+                    ? employeeDetails.pharmacies.length > 0
+                      ? employeeDetails.pharmacies
+                          .map((value) => value.postCode)
+                          .join(", ")
+                      : "N/A"
+                    : "N/A"}
+                </p>
+                <p>
+                  {employeeDetails.pharmacies
+                    ? employeeDetails.pharmacies.some(
+                        (value) => value.managerName !== ""
+                      )
+                      ? employeeDetails.pharmacies
+                          .filter((value) => value.managerName !== "")
+                          .map((value) => value.managerName)
+                          .join(", ")
+                      : "N/A"
+                    : "N/A"}
+                </p>
+                <p> {employeeDetails.Address || "N/A"}</p>
+                <p>
+                  {employeeDetails.pharmacies
+                    ? employeeDetails.pharmacies.some(
+                        (value) => value.postCode !== ""
+                      )
+                      ? employeeDetails.pharmacies
+                          .filter((value) => value.postCode !== "")
+                          .map((value) => value.postCode)
+                          .join(", ")
+                      : "N/A"
+                    : "N/A"}
+                </p>
+              </div>
             </div>
             <div className="values2">
               <h5>Employee permissions</h5>

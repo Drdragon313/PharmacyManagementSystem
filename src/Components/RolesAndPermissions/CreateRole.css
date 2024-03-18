@@ -11,6 +11,17 @@
 
   border-radius: 12px;
 }
+.role-title {
+  font-family: Poppins, sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 33px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #3a3475;
+  margin-left: 15px;
+  margin-top: 10px;
+}
 .roles-checkbox-table-container {
   width: 50%;
 }
