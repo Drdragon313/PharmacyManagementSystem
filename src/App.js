@@ -145,18 +145,15 @@ function MainContent() {
               }
             />
 
-            {accessDataLive ? (
-              <Route
-                path="/tilepage"
-                element={
-                  <MainLayout>
-                    <TilePage />
-                  </MainLayout>
-                }
-              />
-            ) : (
-              <Route path="/tilepage" element={<Navigate to="/tilepage" />} />
-            )}
+            <Route
+              path="/tilepage"
+              element={
+                <MainLayout>
+                  <TilePage />
+                </MainLayout>
+              }
+            />
+
             <Route
               path="schema"
               element={
@@ -386,7 +383,7 @@ function MainContent() {
               }
             />
             <Route path="resendemail" element={<ResendEmail />} />
-            {accessPharmacy ? (
+            {/* {accessPharmacy ? (
               <Route
                 path="pharmacies"
                 element={
@@ -400,7 +397,15 @@ function MainContent() {
                 path="pharmacies"
                 element={<Navigate to="/accessdenied" />}
               />
-            )}
+            )} */}
+            <Route
+              path="pharmacies"
+              element={
+                <MainLayout>
+                  <Pharmacies />
+                </MainLayout>
+              }
+            />
             <Route
               path="pharmacies/AddPharmacy"
               element={
