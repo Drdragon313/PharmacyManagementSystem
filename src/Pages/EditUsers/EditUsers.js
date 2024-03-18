@@ -33,13 +33,13 @@ const EditUsers = () => {
     Contact: "",
     DateOfBirth: "",
     Pharmacy: [],
-    postCode: "",
+    PostCode: "",
     Address: "",
     Line_Manager: "",
     Line_Manager_id: "",
     Line1: "",
     Line2: "",
-    postTown: "",
+    PostTown: "",
     salary: "",
     Available_Roles: [],
     AvailablePharmacies: [],
@@ -471,10 +471,10 @@ const EditUsers = () => {
               labelclassName="addUserNotLabel"
               labelText="Postcode"
               inputclassName="AddUsersDetailsInput"
-              inputName="postCode"
+              inputName="PostCode"
               handleChange={handleChange}
               handleBlur={handleFindAddress}
-              value={data.postCode}
+              value={data.PostCode}
             />{" "}
             <CustomSelect
               divclassName="mb-3"
@@ -486,7 +486,7 @@ const EditUsers = () => {
               options={
                 pCodeResponse ? pCodeResponse.map((item) => item.address) : []
               }
-              value={data.postTown}
+              value={data.PostTown}
             />
           </div>
           <div className="adjacent-fields">
@@ -498,7 +498,7 @@ const EditUsers = () => {
               inputclassName="AddUsersDetailsInput"
               inputName="PostTown"
               handleChange={handleChange}
-              value={data.postTown}
+              value={data.PostTown}
             />
             <div className="DetailsInput-container">
               {" "}

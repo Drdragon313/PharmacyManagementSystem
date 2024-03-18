@@ -26,11 +26,17 @@ const Navbar = () => {
           style={{
             textAlign: "center",
             backgroundColor: "transparent",
+            width: "100%",
           }}
         >
-          <Link style={{ textDecoration: "none" }} to="/faqpage">
+          <Link
+            className="link-help"
+            style={{ textDecoration: "none" }}
+            to="/faqpage"
+          >
             <CustomButton className="help-btn">
-              <Image preview={false} src={Helplogo} />
+              <Image preview={false} className="help-image" src={Helplogo} />
+
               <p>Help</p>
             </CustomButton>
           </Link>
