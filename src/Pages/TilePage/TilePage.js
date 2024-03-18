@@ -53,6 +53,7 @@ const TilePage = () => {
   const [deleteItem, setDeleteItem] = useState({ type: "", id: null });
   const [isEditModalVisible, setEditModalVisible] = useState(false);
   const [editedTileName, setEditedTileName] = useState("");
+  const [editedTilePath, setEditedTilePath] = useState("");
   const [selectedTileIdForEdit, setSelectedTileIdForEdit] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userPermissions, setUserPermissions] = useState(null);
@@ -169,12 +170,17 @@ const TilePage = () => {
     const selectedTile = tiles.find((tile) => tile.ID === tileId);
     setEditedTileName(selectedTile.TileName);
     setSelectedTileIdForEdit(tileId);
+    setEditedTilePath(selectedTile.Path);
     setEditModalVisible(true);
   };
 
   const handleEditTile = async () => {
     try {
-      await updateTileNameApi(selectedTileIdForEdit, editedTileName);
+      await updateTileNameApi(
+        selectedTileIdForEdit,
+        editedTileName,
+        editedTilePath
+      );
       message.success("Tile updated successfully");
       setEditModalVisible(false);
       fetchDataTiles(getPath());

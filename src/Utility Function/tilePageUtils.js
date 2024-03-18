@@ -84,11 +84,12 @@ export const fetchMoveTileData = (setMoveTileData) => {
       throw error;
     });
 };
-export const updateTileNameApi = async (tileId, tileName) => {
+export const updateTileNameApi = async (tileId, tileName, Path) => {
   try {
     const response = await axios.post(`${baseURL}/update-tile-name`, {
       tile_id: tileId,
       tile_name: tileName,
+      Path: Path,
     });
     return response.data; // You can modify this based on the response structure
   } catch (error) {

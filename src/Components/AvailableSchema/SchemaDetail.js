@@ -4,10 +4,11 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { numericToAlphabetic } from "../../Utility Function/numericToAlphabetic";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
-import { Button, Image, Spin } from "antd";
+import { Button, Col, Image, Spin } from "antd";
 import downloadIcon from "../../Assets/Download.svg";
 import CustomTable from "../../Components/CustomTable/CustomTable";
 import { downloadCSV } from "../../Utility Function/downloadCSV";
+import CustomBreadcrumb from "../CustomBeadcrumb/CustomBreadcrumb";
 const SchemaDetails = () => {
   const { schemaId } = useParams();
   const [schemaData, setSchemaData] = useState(null);
@@ -68,11 +69,21 @@ const SchemaDetails = () => {
       render: (Required) => (Required ? "Yes" : "No"),
     },
   ];
+  const breadcrumbItems = [
+    { label: "Upload Files", link: "/file" },
+    {
+      label: "File Details",
+      link: `/schema/${schemaId}`,
+    },
+  ];
   return (
     <div>
+      <Col className="breadcrumb-col" span={24}>
+        <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
+      </Col>
       {schemaData ? (
         <div className="table">
-          <h3>Tile Name: {schemaData.name}</h3>
+          <p className="pharmacy-list-head-txt">Tile Name: {schemaData.name}</p>
           <Button
             className="download-btn-schema-details"
             onClick={handleDownloadClick}

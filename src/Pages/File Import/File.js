@@ -126,7 +126,7 @@ const File = () => {
         <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
       </div>
       <div className="file-container">
-        <p className="table-tile-schema-details">Upload schema</p>
+        <p className="pharmacy-list-head-txt">Upload schema</p>
         <p className="file-paragraph">
           The CSV file's default column names can be viewed in the Details
           section for each tile. Additionally, a template file can be downloaded
