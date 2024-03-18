@@ -183,6 +183,9 @@ const Topnav = () => {
       </Header>
       {showMobileDrawer && (
         <Drawer
+          autoFocus={true}
+          maskStyle={{ width: "100%", zIndex: "1000", opacity: "100%" }}
+          mask={true}
           placement="left"
           onClose={() => setShowMobileDrawer(false)}
           open={showMobileDrawer}
@@ -195,7 +198,7 @@ const Topnav = () => {
               <Image src={logo} preview={false}></Image>
             </div>
             <div>
-              <p className="responsive-nav-txt">Pharmalytics</p>
+              <p className="responsive-nav-txt">Pharmlytics</p>
             </div>
 
             <div className="cross-btn">

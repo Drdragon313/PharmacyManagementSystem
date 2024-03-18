@@ -245,21 +245,16 @@ function MainContent() {
                 </MainLayout>
               }
             />
-            {accessEmployee ? (
-              <Route
-                path="/employeepage"
-                element={
-                  <MainLayout>
-                    <EmployeePage />
-                  </MainLayout>
-                }
-              />
-            ) : (
-              <Route
-                path="/employeepage"
-                element={<Navigate to="/accessdenied" />}
-              />
-            )}
+
+            <Route
+              path="/employeepage"
+              element={
+                <MainLayout>
+                  <EmployeePage />
+                </MainLayout>
+              }
+            />
+
             <Route
               path="/faqpage"
               element={
@@ -383,21 +378,7 @@ function MainContent() {
               }
             />
             <Route path="resendemail" element={<ResendEmail />} />
-            {/* {accessPharmacy ? (
-              <Route
-                path="pharmacies"
-                element={
-                  <MainLayout>
-                    <Pharmacies />
-                  </MainLayout>
-                }
-              />
-            ) : (
-              <Route
-                path="pharmacies"
-                element={<Navigate to="/accessdenied" />}
-              />
-            )} */}
+
             <Route
               path="pharmacies"
               element={
@@ -406,6 +387,7 @@ function MainContent() {
                 </MainLayout>
               }
             />
+
             <Route
               path="pharmacies/AddPharmacy"
               element={

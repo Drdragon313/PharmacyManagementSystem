@@ -20,6 +20,7 @@ import resendInviteIcon from "../../Assets/resendInviteIcon.svg";
 import { fetchUserPermissions } from "../../Utility Function/ModulesAndPermissions";
 import bookImg from "../../Assets/notebook.svg";
 import rolesImg from "../../Assets/material-symbols_map-outline-rounded.svg";
+import AccessDenied from "../AccessDenied/AccessDenied";
 const { Search } = Input;
 
 const EmployeeListing = () => {
@@ -145,6 +146,9 @@ const EmployeeListing = () => {
   const canCreateEmployee =
     userPermissions?.find((module) => module.module_name === "Employees")
       ?.actions?.write || false;
+  const canViewEmployee =
+    userPermissions?.find((module) => module.module_name === "Employees")
+      ?.actions?.read || false;
   const canDeleteEmployee =
     userPermissions?.find((module) => module.module_name === "Employees")
       ?.actions?.delete || false;
@@ -394,176 +398,182 @@ const EmployeeListing = () => {
   };
   return (
     <>
-      <div className="main-container-employees">
-        <Row
-          className="employee-list-breadcrumb"
-          gutter={{
-            xs: 8,
-            sm: 16,
-            md: 24,
-            lg: 32,
-          }}
-        ></Row>
-        <Row
-          className="employee-list-head"
-          gutter={{
-            xs: 8,
-            sm: 16,
-            md: 24,
-            lg: 32,
-          }}
-        >
-          <ConfirmationModal
-            title="Confirm Delete"
-            open={deleteModalVisible}
-            onConfirm={handleConfirmDelete}
-            onCancel={handleCancelDelete}
-            titleImage={<Image src={deleteImg} preview={false}></Image>}
-            okText="Yes"
-            btnTxt="Delete"
-            btnclassName="delete-modal-ok-btn"
-            cancelText="Cancel"
-            confirmationHeading="Remove Employee"
-            confirmationText="Are you sure you want to remove this employee? The employee will be deleted from system parmanently."
-          ></ConfirmationModal>
-          <ConfirmationModal
-            title="Resend Invite"
-            open={statusModalVisible}
-            onConfirm={handleConfirmResend}
-            onCancel={handleCancelResend}
-            titleImage={<Image src={resendInviteIcon} preview={false}></Image>}
-            okText="Yes"
-            btnTxt="Send"
-            btnclassName="resend-modal-ok-btn"
-            cancelText="Cancel"
-            confirmationHeading="Resend Invite"
-            confirmationText=" Are you sure you want to resend invite to this user? This
-            action cannot be undone."
-          ></ConfirmationModal>
+      {canViewEmployee ? (
+        <div className="main-container-employees">
+          <Row
+            className="employee-list-breadcrumb"
+            gutter={{
+              xs: 8,
+              sm: 16,
+              md: 24,
+              lg: 32,
+            }}
+          ></Row>
+          <Row
+            className="employee-list-head"
+            gutter={{
+              xs: 8,
+              sm: 16,
+              md: 24,
+              lg: 32,
+            }}
+          >
+            <ConfirmationModal
+              title="Confirm Delete"
+              open={deleteModalVisible}
+              onConfirm={handleConfirmDelete}
+              onCancel={handleCancelDelete}
+              titleImage={<Image src={deleteImg} preview={false}></Image>}
+              okText="Yes"
+              btnTxt="Delete"
+              btnclassName="delete-modal-ok-btn"
+              cancelText="Cancel"
+              confirmationHeading="Remove Employee"
+              confirmationText="Are you sure you want to remove this employee? The employee will be deleted from system parmanently."
+            ></ConfirmationModal>
+            <ConfirmationModal
+              title="Resend Invite"
+              open={statusModalVisible}
+              onConfirm={handleConfirmResend}
+              onCancel={handleCancelResend}
+              titleImage={
+                <Image src={resendInviteIcon} preview={false}></Image>
+              }
+              okText="Yes"
+              btnTxt="Send"
+              btnclassName="resend-modal-ok-btn"
+              cancelText="Cancel"
+              confirmationHeading="Resend Invite"
+              confirmationText=" Are you sure you want to resend invite to this user? This
+        action cannot be undone."
+            ></ConfirmationModal>
 
-          <p className="employee-list-head-txt">Employees list</p>
+            <p className="employee-list-head-txt">Employees list</p>
 
-          {canCreateEmployee && (
-            <Link to="/users/AddUser">
-              <CustomButton type="primary" className="create-emp-btn ">
-                <Image
-                  className="plus-outline-img"
-                  preview={false}
-                  src={plusOutline}
-                ></Image>
-                Create Employee
-              </CustomButton>
-            </Link>
-          )}
-        </Row>
-        <Row
-          className="employee-list-search-filter-container"
-          gutter={{
-            xs: 8,
-            sm: 16,
-            md: 24,
-            lg: 32,
-          }}
-        >
-          <div className="search-col">
-            <Search
-              className="search-bar"
-              placeholder="Search Here..."
-              onSearch={handleSearch}
-              enterButton
-              allowClear
-            />
-          </div>
+            {canCreateEmployee && (
+              <Link to="/users/AddUser">
+                <CustomButton type="primary" className="create-emp-btn ">
+                  <Image
+                    className="plus-outline-img"
+                    preview={false}
+                    src={plusOutline}
+                  ></Image>
+                  Create Employee
+                </CustomButton>
+              </Link>
+            )}
+          </Row>
+          <Row
+            className="employee-list-search-filter-container"
+            gutter={{
+              xs: 8,
+              sm: 16,
+              md: 24,
+              lg: 32,
+            }}
+          >
+            <div className="search-col">
+              <Search
+                className="search-bar"
+                placeholder="Search Here..."
+                onSearch={handleSearch}
+                enterButton
+                allowClear
+              />
+            </div>
 
-          <div className="filter-container-emp-list">
-            <Select
-              allowClear={true}
-              className="filter-pharm-btn"
-              mode="multiple"
-              value={selectedRole}
-              onChange={handleRoleChange}
-              placeholder={placeholderSelectRoles()}
-              showSearch={false}
-              optionLabelProp="label"
-            >
-              {availableRoles &&
-                availableRoles.map((role) => (
+            <div className="filter-container-emp-list">
+              <Select
+                allowClear={true}
+                className="filter-pharm-btn"
+                mode="multiple"
+                value={selectedRole}
+                onChange={handleRoleChange}
+                placeholder={placeholderSelectRoles()}
+                showSearch={false}
+                optionLabelProp="label"
+              >
+                {availableRoles &&
+                  availableRoles.map((role) => (
+                    <Select.Option
+                      className="select-options"
+                      key={role.id}
+                      value={role.id}
+                      label={role.name}
+                    >
+                      {role.name}
+                    </Select.Option>
+                  ))}
+              </Select>
+              <Select
+                allowClear={true}
+                className="filter-pharm-btn"
+                mode="multiple"
+                value={selectedPostalCode}
+                onChange={(values) => handlePostalCodeChange(values)}
+                placeholder={placeholderSelect()}
+                showSearch={false}
+                optionLabelProp="label"
+              >
+                {availablePostalCodes.map((postalCode) => (
                   <Select.Option
                     className="select-options"
-                    key={role.id}
-                    value={role.id}
-                    label={role.name}
+                    key={postalCode}
+                    value={postalCode}
+                    label={postalCode}
                   >
-                    {role.name}
+                    {postalCode}
                   </Select.Option>
                 ))}
-            </Select>
-            <Select
-              allowClear={true}
-              className="filter-pharm-btn"
-              mode="multiple"
-              value={selectedPostalCode}
-              onChange={(values) => handlePostalCodeChange(values)}
-              placeholder={placeholderSelect()}
-              showSearch={false}
-              optionLabelProp="label"
-            >
-              {availablePostalCodes.map((postalCode) => (
-                <Select.Option
-                  className="select-options"
-                  key={postalCode}
-                  value={postalCode}
-                  label={postalCode}
-                >
-                  {postalCode}
-                </Select.Option>
-              ))}
-            </Select>
-          </div>
-        </Row>
-        <Row
-          className=""
-          gutter={{
-            xs: 8,
-            sm: 16,
-            md: 24,
-            lg: 32,
-          }}
-        >
-          <Col
-            className="employee-details-table"
-            span={{ xs: 24, sm: 16, md: 8, lg: 4 }}
+              </Select>
+            </div>
+          </Row>
+          <Row
+            className=""
+            gutter={{
+              xs: 8,
+              sm: 16,
+              md: 24,
+              lg: 32,
+            }}
           >
-            <CustomTable
-              dataSource={tableDataSource}
-              footer={false}
-              columns={tableColumns.map((column) => ({
-                ...column,
-                title: (
-                  <span className="custom-table-header">{column.title}</span>
-                ),
-                render: (text, record) => (
-                  <span className="custom-table-content">
-                    {typeof column.render === "function"
-                      ? column.render(text, record)
-                      : text}
-                  </span>
-                ),
-              }))}
-            />
-          </Col>
-          <Col>
-            <PaginationComponent
-              limit={limit}
-              handleLimitChange={handleLimitChange}
-              page={page}
-              totalItems={totalItems}
-              handlePageChange={handlePageChange}
-              itemRender={itemRender}
-            />
-          </Col>
-        </Row>
-      </div>
+            <Col
+              className="employee-details-table"
+              span={{ xs: 24, sm: 16, md: 8, lg: 4 }}
+            >
+              <CustomTable
+                dataSource={tableDataSource}
+                footer={false}
+                columns={tableColumns.map((column) => ({
+                  ...column,
+                  title: (
+                    <span className="custom-table-header">{column.title}</span>
+                  ),
+                  render: (text, record) => (
+                    <span className="custom-table-content">
+                      {typeof column.render === "function"
+                        ? column.render(text, record)
+                        : text}
+                    </span>
+                  ),
+                }))}
+              />
+            </Col>
+            <Col>
+              <PaginationComponent
+                limit={limit}
+                handleLimitChange={handleLimitChange}
+                page={page}
+                totalItems={totalItems}
+                handlePageChange={handlePageChange}
+                itemRender={itemRender}
+              />
+            </Col>
+          </Row>
+        </div>
+      ) : (
+        <AccessDenied />
+      )}
     </>
   );
 };

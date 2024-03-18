@@ -12,13 +12,13 @@ import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb"
 import Spinner from "../../Components/Spinner/Spinner";
 import rightArrow from "../../Assets/rightarrow.svg";
 import leftArrow from "../../Assets/leftarrow.svg";
-import SignInFirstModal from "../../Components/SingInFirstModal/SignInFirstModal";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationModal";
 import editIcon from "../../Assets/editInBlue.svg";
 import PaginationComponent from "../../Components/PaginationComponent/PaginationComponent";
 import bookImg from "../../Assets/notebook.svg";
 import { fetchUserPermissions } from "../../Utility Function/ModulesAndPermissions";
+import AccessDenied from "../AccessDenied/AccessDenied";
 
 const Pharmacies = () => {
   const [tableDataSource, setTableDataSource] = useState([]);
@@ -33,7 +33,7 @@ const Pharmacies = () => {
   const [sortDirection, setSortDirection] = useState("asc");
   const [availablePostalCodes, setAvailablePostalCodes] = useState([]);
   const authToken = localStorage.getItem("AuthorizationToken");
-  const [modalVisible, setModalVisible] = useState(!authToken);
+
   const [selectedPostalCode, setSelectedPostalCode] = useState([]);
 
   useEffect(() => {
@@ -153,6 +153,9 @@ const Pharmacies = () => {
   const canCreatePharmacy =
     userPermissions?.find((module) => module.module_name === "Pharmacy")
       ?.actions?.write || false;
+  const canViewPharmacy =
+    userPermissions?.find((module) => module.module_name === "Pharmacy")
+      ?.actions?.read || false;
   const canDeletePharmacy =
     userPermissions?.find((module) => module.module_name === "Pharmacy")
       ?.actions?.delete || false;
@@ -266,13 +269,6 @@ const Pharmacies = () => {
     return <Spinner />;
   }
 
-  if (!authToken) {
-    const openModal = () => {
-      setModalVisible(true);
-    };
-    return <SignInFirstModal visible={modalVisible} open={openModal} />;
-  }
-
   const placeholderSelect = () => {
     return (
       <div className="placeholder-for-select-postcodes">
@@ -285,145 +281,151 @@ const Pharmacies = () => {
   };
 
   return (
-    <div className="main-container-pharmacies">
-      <Row
-        className="pharmacy-list-breadcrumb"
-        gutter={{
-          xs: 8,
-          sm: 16,
-          md: 24,
-          lg: 32,
-        }}
-      >
-        <Col className="breadcrumb-border" span={24}>
-          <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
-        </Col>
-      </Row>
-      <Row
-        className="pharmacy-list-head"
-        gutter={{
-          xs: 8,
-          sm: 16,
-          md: 24,
-          lg: 32,
-        }}
-      >
-        <ConfirmationModal
-          title="Confirm Delete"
-          open={deleteModalVisible}
-          onConfirm={handleConfirmDelete}
-          onCancel={handleCancelDelete}
-          confirmationHeading="Delete pharmacy"
-          confirmationText="Are you sure you want to delete this pharmacy? This action cannot be undone."
-          btnTxt="Delete"
-          cancelText="Cancel"
-          btnclassName="delete-btn-modal"
-        >
-          Are you sure you want to delete this pharmacy?
-        </ConfirmationModal>
-
-        <Col className="gutter-row" span={{ xs: 24, sm: 16, md: 8, lg: 4 }}>
-          <p className="pharmacy-list-head-txt">Pharmacy list</p>
-        </Col>
-        <Col span={{ xs: 24, sm: 16, md: 12, lg: 4 }}>
-          <Link to="AddPharmacy">
-            {canCreatePharmacy && (
-              <CustomButton type="primary">
-                <Image
-                  className="plus-outline-img"
-                  preview={false}
-                  src={plusOutline}
-                ></Image>
-                Create Pharmacy
-              </CustomButton>
-            )}
-          </Link>
-        </Col>
-      </Row>
-      <Row
-        className="pharmacy-list-search-filter-container"
-        gutter={{
-          xs: 8,
-          sm: 16,
-          md: 24,
-          lg: 32,
-        }}
-      >
-        <Col
-          className="gutter-row"
-          span={{ xs: 24, sm: 16, md: 8, lg: 4 }}
-        ></Col>
-        <Col
-          className="filter-container-pharm"
-          span={{ xs: 24, sm: 16, md: 8, lg: 4 }}
-        >
-          <Select
-            allowClear={true}
-            className="filter-pharm-btn"
-            mode="multiple"
-            value={selectedPostalCode}
-            onChange={handleSelectedPostalCodeChange}
-            placeholder={placeholderSelect()}
-            showSearch={false}
-            optionLabelProp="label"
+    <>
+      {canViewPharmacy ? (
+        <div className="main-container-pharmacies">
+          <Row
+            className="pharmacy-list-breadcrumb"
+            gutter={{
+              xs: 8,
+              sm: 16,
+              md: 24,
+              lg: 32,
+            }}
           >
-            {availablePostalCodes.map((postalCode) => (
-              <Select.Option
-                className="select-options"
-                key={postalCode}
-                value={postalCode}
-                label={postalCode}
+            <Col className="breadcrumb-border" span={24}>
+              <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
+            </Col>
+          </Row>
+          <Row
+            className="pharmacy-list-head"
+            gutter={{
+              xs: 8,
+              sm: 16,
+              md: 24,
+              lg: 32,
+            }}
+          >
+            <ConfirmationModal
+              title="Confirm Delete"
+              open={deleteModalVisible}
+              onConfirm={handleConfirmDelete}
+              onCancel={handleCancelDelete}
+              confirmationHeading="Delete pharmacy"
+              confirmationText="Are you sure you want to delete this pharmacy? This action cannot be undone."
+              btnTxt="Delete"
+              cancelText="Cancel"
+              btnclassName="delete-btn-modal"
+            >
+              Are you sure you want to delete this pharmacy?
+            </ConfirmationModal>
+
+            <Col className="gutter-row" span={{ xs: 24, sm: 16, md: 8, lg: 4 }}>
+              <p className="pharmacy-list-head-txt">Pharmacy list</p>
+            </Col>
+            <Col span={{ xs: 24, sm: 16, md: 12, lg: 4 }}>
+              <Link to="AddPharmacy">
+                {canCreatePharmacy && (
+                  <CustomButton type="primary">
+                    <Image
+                      className="plus-outline-img"
+                      preview={false}
+                      src={plusOutline}
+                    ></Image>
+                    Create Pharmacy
+                  </CustomButton>
+                )}
+              </Link>
+            </Col>
+          </Row>
+          <Row
+            className="pharmacy-list-search-filter-container"
+            gutter={{
+              xs: 8,
+              sm: 16,
+              md: 24,
+              lg: 32,
+            }}
+          >
+            <Col
+              className="gutter-row"
+              span={{ xs: 24, sm: 16, md: 8, lg: 4 }}
+            ></Col>
+            <Col
+              className="filter-container-pharm"
+              span={{ xs: 24, sm: 16, md: 8, lg: 4 }}
+            >
+              <Select
+                allowClear={true}
+                className="filter-pharm-btn"
+                mode="multiple"
+                value={selectedPostalCode}
+                onChange={handleSelectedPostalCodeChange}
+                placeholder={placeholderSelect()}
+                showSearch={false}
+                optionLabelProp="label"
               >
-                {postalCode}
-              </Select.Option>
-            ))}
-          </Select>
-        </Col>
-      </Row>
-      <Row
-        className=""
-        gutter={{
-          xs: 8,
-          sm: 16,
-          md: 24,
-          lg: 32,
-        }}
-      >
-        <Col
-          className="pharmacy-details-table"
-          span={{ xs: 24, sm: 16, md: 8, lg: 4 }}
-        >
-          <CustomTable
-            dataSource={tableDataSource}
-            footer={false}
-            columns={tableColumns.map((column) => ({
-              ...column,
-              title: (
-                <span className="custom-table-header">{column.title}</span>
-              ),
-              render: (text, record) => (
-                <span className="custom-table-content">
-                  {typeof column.render === "function"
-                    ? column.render(text, record)
-                    : text}
-                </span>
-              ),
-            }))}
-          />
-        </Col>
-        <Col span={{ xs: 24, sm: 16, md: 8, lg: 4 }}>
-          {" "}
-          <PaginationComponent
-            limit={limit}
-            handleLimitChange={handleLimitChange}
-            page={page}
-            totalItems={totalItems}
-            handlePageChange={handlePageChange}
-            itemRender={itemRender}
-          />
-        </Col>
-      </Row>
-    </div>
+                {availablePostalCodes.map((postalCode) => (
+                  <Select.Option
+                    className="select-options"
+                    key={postalCode}
+                    value={postalCode}
+                    label={postalCode}
+                  >
+                    {postalCode}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Col>
+          </Row>
+          <Row
+            className=""
+            gutter={{
+              xs: 8,
+              sm: 16,
+              md: 24,
+              lg: 32,
+            }}
+          >
+            <Col
+              className="pharmacy-details-table"
+              span={{ xs: 24, sm: 16, md: 8, lg: 4 }}
+            >
+              <CustomTable
+                dataSource={tableDataSource}
+                footer={false}
+                columns={tableColumns.map((column) => ({
+                  ...column,
+                  title: (
+                    <span className="custom-table-header">{column.title}</span>
+                  ),
+                  render: (text, record) => (
+                    <span className="custom-table-content">
+                      {typeof column.render === "function"
+                        ? column.render(text, record)
+                        : text}
+                    </span>
+                  ),
+                }))}
+              />
+            </Col>
+            <Col span={{ xs: 24, sm: 16, md: 8, lg: 4 }}>
+              {" "}
+              <PaginationComponent
+                limit={limit}
+                handleLimitChange={handleLimitChange}
+                page={page}
+                totalItems={totalItems}
+                handlePageChange={handlePageChange}
+                itemRender={itemRender}
+              />
+            </Col>
+          </Row>
+        </div>
+      ) : (
+        <AccessDenied />
+      )}
+    </>
   );
 };
 
