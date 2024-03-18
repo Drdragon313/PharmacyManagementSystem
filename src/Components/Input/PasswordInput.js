@@ -14,7 +14,7 @@ const PasswordInput = (props) => {
       </label>
       <br />
       <Input.Password
-        className="UpdatePasswordInput"
+        className="AddUsersDetailsInput"
         prefix={<img src={PasswordIcon} alt="Password Icon"></img>}
         name={props.name}
         required={true}

@@ -123,7 +123,7 @@ const AddEmployeeModalEditPharm = ({
                 Cancel
               </CustomButton>
               <CustomButton
-                style={{ width: "40%" }}
+                style={{ width: "50%" }}
                 type="primary"
                 htmlType="submit"
               >

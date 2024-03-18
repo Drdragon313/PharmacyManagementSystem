@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 
 const SideMenuBar = (props) => {
   const navigate = useNavigate();
-  const location = useLocation(); // Hook to get the current location
+  const location = useLocation();
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
   const handleMenuItemClick = (key) => {
@@ -84,7 +84,7 @@ const SideMenuBar = (props) => {
   useEffect(() => {
     const routeMappings = {
       1: "/dashboard",
-      2: "pharmacy",
+      2: "/file",
       3: "/tilepage",
       4: "/pharmacies",
       5: "/file",

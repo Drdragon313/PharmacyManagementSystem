@@ -1,5 +1,6 @@
 import axios from "axios";
 import { baseURL } from "../Components/BaseURLAPI/BaseURLAPI";
+import { message } from "antd";
 const localHeader = localStorage.getItem("AuthorizationToken");
 export async function saveSchema(
   schemaName,
@@ -34,12 +35,19 @@ export async function saveSchema(
         successCallback(newSchema);
       } else {
         console.error("Error:", response);
+        message.error(
+          "Error occurred while saving schema. schema with this name already exists"
+        );
       }
     } catch (error) {
       console.error("Error:", error);
+      message.error(
+        "Error occurred while saving schema. schema with this name already exists"
+      );
     }
   } else {
     console.error("No rows to save in the schema.");
+    message.warning("No rows to save in the schema.");
   }
 }
 export function updateFormDataArrayOnEdit(formDataArray, editedData) {

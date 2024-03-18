@@ -84,7 +84,7 @@ const AddUsers = () => {
   };
   useEffect(() => {
     axios
-      .get(`${baseURL}/list-available-roles`, {
+      .get(`${baseURL}/list-roles-dropdown`, {
         headers: {
           Authorization: ` ${authToken}`,
         },

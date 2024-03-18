@@ -58,18 +58,18 @@ const Signin = () => {
   };
 
   useEffect(() => {
-    // Find the first available module with its route
-    const firstAvailableModule = findFirstAvailableModule(userPermissions);
-    console.log("first avail", firstAvailableModule);
-    if (firstAvailableModule) {
-      navigate(routeMappings[firstAvailableModule.module_id]);
-      message.success("Logged In Successfully!", 2);
-    } else if (userPermissions.length > 0) {
-      message.error("No available modules found for the user.", 2);
+    if (userPermissions.length > 0) {
+      const firstAvailableModule = findFirstAvailableModule(userPermissions);
+      console.log("first avail", firstAvailableModule);
+      if (firstAvailableModule) {
+        navigate(routeMappings[firstAvailableModule.module_id]);
+        message.success("Logged In Successfully!", 2);
+      } else {
+        message.error("No available modules found for the user.", 2);
+      }
     }
   }, [userPermissions, navigate]);
 
-  // Function to find the first available module for the user
   const findFirstAvailableModule = (permissions) => {
     for (const permission of permissions) {
       if (permission.actions.read) {

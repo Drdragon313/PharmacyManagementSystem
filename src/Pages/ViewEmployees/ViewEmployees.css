@@ -45,6 +45,7 @@
 .Labels-values-container {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: 50px;
   border: 1px solid #ededed;
   border-radius: 5px;
@@ -52,7 +53,11 @@
   width: 100%;
   font-family: "Poppins", sans-serif;
 }
-
+.label-value-container-1 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
 .labels {
   flex: 1;
   padding-right: 1px;

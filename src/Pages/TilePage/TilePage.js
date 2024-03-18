@@ -11,6 +11,8 @@ import {
   message,
   Form,
   Breadcrumb,
+  Dropdown,
+  Menu,
 } from "antd";
 import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
 
@@ -53,6 +55,7 @@ const TilePage = () => {
   const [selectedTileIdForEdit, setSelectedTileIdForEdit] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userPermissions, setUserPermissions] = useState(null);
+
   const [form] = Form.useForm();
   const handleMoveButtonClick = (schemaId) => {
     setSelectedSchemaId(schemaId);
@@ -140,8 +143,7 @@ const TilePage = () => {
       fetchDataTiles(getPath());
     }
   };
-  const handleDeleteConfirmation = (type, id, event) => {
-    event.stopPropagation();
+  const handleDeleteConfirmation = (type, id) => {
     setDeleteConfirmationVisible(true);
     setDeleteItem({ type, id });
   };
@@ -162,8 +164,7 @@ const TilePage = () => {
       fetchDataTiles(getPath());
     }
   };
-  const handleEditTileClick = (tileId, event) => {
-    event.stopPropagation();
+  const handleEditTileClick = (tileId) => {
     const selectedTile = tiles.find((tile) => tile.ID === tileId);
     setEditedTileName(selectedTile.TileName);
     setSelectedTileIdForEdit(tileId);
@@ -241,42 +242,41 @@ const TilePage = () => {
           <h4 className="available-tiles-txt">Available Tiles</h4>
           <div className="allcards">
             {tiles.map((tile, index) => (
-              <CustomCard
-                className="tilecards"
-                key={index}
-                bordered={true}
-                onClick={() => handleTileClick(tile.TileName)}
-              >
+              <CustomCard className="tilecards" key={index} bordered={true}>
                 <div className="dropdown">
-                  <Button className="dropbtn">
-                    <MoreOutlined />
-                    <div className="dropdown-content">
-                      {canDeleteTiles && (
-                        <Button
-                          type="link"
-                          onClick={(event) =>
-                            handleDeleteConfirmation(
-                              "tile",
-                              tile.TileName,
-                              event
-                            )
-                          }
+                  <Dropdown
+                    overlay={
+                      <Menu>
+                        {canDeleteTiles && (
+                          <Menu.Item
+                            key="delete"
+                            onClick={() =>
+                              handleDeleteConfirmation("tile", tile.TileName)
+                            }
+                          >
+                            Delete
+                          </Menu.Item>
+                        )}
+                        {canEditTiles && (
+                          <Menu.Item
+                            key="edit"
+                            onClick={() => handleEditTileClick(tile.ID)}
+                          >
+                            Edit Tile
+                          </Menu.Item>
+                        )}
+                        <Menu.Item
+                          key="navigate"
+                          onClick={() => handleTileClick(tile.TileName)}
                         >
-                          Delete
-                        </Button>
-                      )}
-                      {canEditTiles && (
-                        <Button
-                          type="link"
-                          onClick={(event) =>
-                            handleEditTileClick(tile.ID, event)
-                          }
-                        >
-                          Edit Tile
-                        </Button>
-                      )}
-                    </div>
-                  </Button>
+                          Navigate Inside
+                        </Menu.Item>
+                      </Menu>
+                    }
+                    trigger={["click"]}
+                  >
+                    <Button className="dropbtn" icon={<MoreOutlined />} />
+                  </Dropdown>
                 </div>
                 <Space direction="vertical" size={2} className="tile-content">
                   <Avatar className="tile-avatar-img" shape="circle">
@@ -321,67 +321,48 @@ const TilePage = () => {
                   bordered={true}
                 >
                   <div className="dropdown">
-                    <Button className="dropbtn-schema">
-                      <MoreOutlined />
-                    </Button>
-                    <div className="dropdown-content">
-                      {canDeleteTiles && (
-                        <Button
-                          type="link"
-                          onClick={(event) =>
-                            handleDeleteConfirmation("schema", schema.id, event)
-                          }
-                        >
-                          Delete
-                        </Button>
-                      )}
-                      {canEditTiles && (
-                        <Button
-                          type="link"
-                          onClick={() => handleMoveButtonClick(schema.id)}
-                        >
-                          Move
-                        </Button>
-                      )}
-
-                      <Link to={`/schema/${schema.id}`}>
-                        <Button type="link">View Details</Button>
-                      </Link>
-                      <Modal
-                        open={isMoveModalVisible}
-                        title="Move Tile"
-                        onCancel={handleCloseMoveModal}
-                        footer={false}
-                      >
-                        <p>Select a Tile to move </p>
-                        <ul>
-                          {moveTileData &&
-                            moveTileData.map((tile, index) => (
-                              <div className="tiles-modal-list" key={index}>
-                                <Button
-                                  className={`move-tile-name-btn ${
-                                    selectedButtonIndex === index
-                                      ? "clicked"
-                                      : ""
-                                  }`}
-                                  type="text"
-                                  onClick={() => {
-                                    setSelectedTileId(tile.ID);
-                                    setSelectedButtonIndex(index);
-                                  }}
-                                >
-                                  {tile.TileName}
-                                </Button>
-                              </div>
-                            ))}
-                        </ul>
-                        {canEditTiles && (
-                          <CustomButton type="primary" onClick={moveSchema}>
-                            Move
-                          </CustomButton>
-                        )}
-                      </Modal>
-                    </div>
+                    <Dropdown
+                      overlay={
+                        <Menu>
+                          {canDeleteTiles && (
+                            <Menu.Item
+                              key="delete"
+                              onClick={(event) =>
+                                handleDeleteConfirmation(
+                                  "schema",
+                                  schema.id,
+                                  event
+                                )
+                              }
+                            >
+                              Delete
+                            </Menu.Item>
+                          )}
+                          {canEditTiles && (
+                            <Menu.Item
+                              key="move"
+                              onClick={() => handleMoveButtonClick(schema.id)}
+                            >
+                              Move
+                            </Menu.Item>
+                          )}
+                          <Menu.Item key="view">
+                            <Link
+                              style={{ textDecoration: "none" }}
+                              to={`/schema/${schema.id}`}
+                            >
+                              View Details
+                            </Link>
+                          </Menu.Item>
+                        </Menu>
+                      }
+                      trigger={["click"]}
+                    >
+                      <Button
+                        className="dropbtn-schema"
+                        icon={<MoreOutlined />}
+                      />
+                    </Dropdown>
                   </div>
                   <Space
                     className="schema-content"
@@ -479,6 +460,38 @@ const TilePage = () => {
           value={editedTileName}
           onChange={(e) => setEditedTileName(e.target.value)}
         /> */}
+      </Modal>
+      <Modal
+        open={isMoveModalVisible}
+        title="Move Tile"
+        onCancel={handleCloseMoveModal}
+        footer={false}
+      >
+        <p>Select a Tile to move </p>
+        <ul>
+          {moveTileData &&
+            moveTileData.map((tile, index) => (
+              <div className="tiles-modal-list" key={index}>
+                <Button
+                  className={`move-tile-name-btn ${
+                    selectedButtonIndex === index ? "clicked" : ""
+                  }`}
+                  type="text"
+                  onClick={() => {
+                    setSelectedTileId(tile.ID);
+                    setSelectedButtonIndex(index);
+                  }}
+                >
+                  {tile.TileName}
+                </Button>
+              </div>
+            ))}
+        </ul>
+        {canEditTiles && (
+          <CustomButton type="primary" onClick={moveSchema}>
+            Move
+          </CustomButton>
+        )}
       </Modal>
       <ConfirmationModal
         open={isDeleteConfirmationVisible}
