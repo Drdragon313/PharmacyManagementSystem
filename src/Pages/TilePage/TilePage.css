@@ -91,10 +91,6 @@
   transition: font-weight 0.3s;
 }
 
-.breadcrumb-item:hover {
-  font-weight: bold;
-}
-
 .breadcrumb-item.active {
   background-color: #e0e0e0;
 }

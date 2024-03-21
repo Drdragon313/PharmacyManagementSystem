@@ -241,7 +241,7 @@ const TilePage = () => {
                 key={index}
                 onClick={() => handleBreadcrumbClick(index)}
               >
-                {pathItem === "" ? "Home" : pathItem}
+                {pathItem === "" ? "Data Live" : pathItem}
               </Breadcrumb.Item>
             ))}
           </Breadcrumb>
