@@ -13,6 +13,8 @@ import { fetchUserPermissions } from "../../Utility Function/ModulesAndPermissio
 import axios from "axios";
 import PaginationComponent from "../PaginationComponent/PaginationComponent";
 import ReAssignModal from "../ReAssignModal/ReAssignModal";
+import AccessDenied from "../../Pages/AccessDenied/AccessDenied";
+import Spinner from "../Spinner/Spinner";
 
 const Roles = () => {
   const [rolesData, setRolesData] = useState(null);
@@ -23,6 +25,7 @@ const Roles = () => {
   const [roleIdToDelete, setRoleIdToDelete] = useState(null);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
+  const [loading, setLoading] = useState(true);
 
   const fetchRolesData = async () => {
     try {
@@ -39,6 +42,8 @@ const Roles = () => {
       }
     } catch (error) {
       console.error("Error fetching roles data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -91,6 +96,8 @@ const Roles = () => {
         await fetchUserPermissions(setUserPermissions);
       } catch (error) {
         console.error("Error fetching user permissions:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -99,6 +106,9 @@ const Roles = () => {
   const canCreateRoles =
     userPermissions?.find((module) => module.module_name === "Roles")?.actions
       ?.write || false;
+  const canViewRoles =
+    userPermissions?.find((module) => module.module_name === "Roles")?.actions
+      ?.read || false;
   const canDeleteRoles =
     userPermissions?.find((module) => module.module_name === "Roles")?.actions
       ?.delete || false;
@@ -152,42 +162,51 @@ const Roles = () => {
       ),
     },
   ];
+  if (loading === true) {
+    return <Spinner />;
+  }
   return (
-    <div className="main-container">
-      <div className="roles-txt">
-        <p className="role-title">Roles</p>
-        {canCreateRoles && (
-          <Link to="/rolesandpermissions/createrole">
-            <CustomButton type="primary">Create Role</CustomButton>
-          </Link>
-        )}
-      </div>
+    <>
+      {canViewRoles ? (
+        <div className="main-container">
+          <div className="roles-txt">
+            <p className="role-title">Roles</p>
+            {canCreateRoles && (
+              <Link to="/rolesandpermissions/createrole">
+                <CustomButton type="primary">Create Role</CustomButton>
+              </Link>
+            )}
+          </div>
 
-      <Row
-        gutter={{
-          xs: 8,
-          sm: 16,
-          md: 24,
-          lg: 32,
-        }}
-        style={{ marginTop: "10px", marginLeft: "1px" }}
-      >
-        <div className="roles-list-table">
-          {rolesData && (
-            <CustomTable dataSource={rolesData} columns={columns} />
+          <Row
+            gutter={{
+              xs: 8,
+              sm: 16,
+              md: 24,
+              lg: 32,
+            }}
+            style={{ marginTop: "10px", marginLeft: "1px" }}
+          >
+            <div className="roles-list-table">
+              {rolesData && (
+                <CustomTable dataSource={rolesData} columns={columns} />
+              )}
+            </div>
+            <Col> {renderPagination()}</Col>
+          </Row>
+          {roleIdToDelete && (
+            <ReAssignModal
+              open={ConfirmationModalVisible}
+              onConfirm={handleConfirmDelete}
+              onCancel={handleCancelDelete}
+              roleId={roleIdToDelete}
+            />
           )}
         </div>
-        <Col> {renderPagination()}</Col>
-      </Row>
-      {roleIdToDelete && (
-        <ReAssignModal
-          open={ConfirmationModalVisible}
-          onConfirm={handleConfirmDelete}
-          onCancel={handleCancelDelete}
-          roleId={roleIdToDelete}
-        />
+      ) : (
+        <AccessDenied />
       )}
-    </div>
+    </>
   );
 };
 

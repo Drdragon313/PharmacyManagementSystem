@@ -30,7 +30,7 @@ const FaqPage = () => {
     All: <AllContent />,
     Employee: <EmployeeContent />,
     Pharmacy: <PharmacyContent />,
-    Reports: <ReportsContent />,
+    "Reports & Files": <ReportsContent />,
     "Roles & permissions": <RolesPermissionsContent />,
   };
   const tabIconMap = {
