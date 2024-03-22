@@ -33,13 +33,13 @@ const FaqPage = () => {
     "Reports & Files": <ReportsContent />,
     "Roles & permissions": <RolesPermissionsContent />,
   };
-  const tabIconMap = {
-    All: <Image preview={false} src={AllImg} />,
-    Employee: <Image preview={false} src={AllImg} />,
-    Pharmacy: <Image preview={false} src={AllImg} />,
-    Reports: <Image preview={false} src={AllImg} />,
-    "Roles & permissions": <LockOutlined />,
-  };
+  // const tabIconMap = {
+  //   All: <Image preview={false} src={AllImg} />,
+  //   Employee: <Image preview={false} src={AllImg} />,
+  //   Pharmacy: <Image preview={false} src={AllImg} />,
+  //   Reports: <Image preview={false} src={AllImg} />,
+  //   "Roles & permissions": <LockOutlined />,
+  // };
   return (
     <div>
       <Row className="toggle-btn" gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
@@ -55,7 +55,7 @@ const FaqPage = () => {
                   "#F8FBFF"
                 )}
                 onClick={() => handleTabClick(tab)}
-                icon={tabIconMap[tab]}
+                // icon={tabIconMap[tab]}
               >
                 {tab}
               </Button>
