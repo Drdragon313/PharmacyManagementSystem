@@ -120,6 +120,10 @@ const TilePage = () => {
   };
 
   const handleCreateCard = async () => {
+    if (/^\s/.test(newCardName)) {
+      message.error("Tile name cannot start with a space.");
+      return;
+    }
     const isTileNameExists = tiles.some(
       (tile) => tile.TileName === newCardName
     );
@@ -175,6 +179,10 @@ const TilePage = () => {
   };
 
   const handleEditTile = async () => {
+    if (/^\s/.test(editedTileName)) {
+      message.error("Tile name cannot start with a space.");
+      return;
+    }
     try {
       await updateTileNameApi(
         selectedTileIdForEdit,
