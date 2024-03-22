@@ -23,7 +23,12 @@ const UpdateRole = () => {
     const fetchRoleData = async () => {
       try {
         const response = await axios.get(
-          `${baseURL}/get-role?role_id=${role_id}`
+          `${baseURL}/get-role?role_id=${role_id}`,
+          {
+            headers: {
+              Authorization: `${authToken}`,
+            },
+          }
         );
         const data = response.data;
 
