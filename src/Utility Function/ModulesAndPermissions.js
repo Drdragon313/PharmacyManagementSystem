@@ -17,7 +17,12 @@ export const fetchUserPermissions = async (setUserPermissions) => {
 };
 export const fetchModules = async (setModules) => {
   try {
-    const response = await axios.get(`${baseURL}/list-available-modules`);
+    const authToken = localStorage.getItem("AuthorizationToken");
+    const headers = { Authorization: authToken };
+    const response = await axios.get(
+      `${baseURL}/list-available-modules`,
+      headers
+    );
 
     if (response.data.status === "success") {
       setModules(response.data.Data.modules);
