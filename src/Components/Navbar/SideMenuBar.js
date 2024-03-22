@@ -21,6 +21,7 @@ const SideMenuBar = (props) => {
   const [menuItems, setMenuItems] = useState([]);
   const handleMenuItemClick = (key) => {
     setSelectedKeys([key]);
+    props.toggleMobileDrawer();
   };
   const SubMenuTitle = ({ title, icon }) => (
     <div className="reports-submenu">

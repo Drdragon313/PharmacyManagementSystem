@@ -9,6 +9,7 @@ import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import CustomTable from "../../Components/CustomTable/CustomTable";
+import PaginationComponent from "../../Components/PaginationComponent/PaginationComponent";
 
 const File = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,6 +18,8 @@ const File = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [listReports, setListReports] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [limit, setLimit] = useState(10);
+  const [totalItems, setTotalItems] = useState(0);
   const errorsPerPage = 6;
   const schemaData = localStorage.getItem("selectedSchemaData");
   const schemaID = localStorage.getItem("selectedSchemaID");
@@ -32,10 +35,11 @@ const File = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${baseURL}/get-files-data?schema_id=${schemaID}`,
+          `${baseURL}/get-files-data?schema_id=${schemaID}&page=${currentPage}&limit=${limit}`,
           { headers }
         );
         setListReports(response.data.data);
+        setTotalItems(response.data.total_items);
         console.log(response.data.data);
       } catch (error) {
         console.error("Error fetching schema data:", error);
@@ -52,7 +56,10 @@ const File = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-
+  const handleLimitChange = (value) => {
+    setLimit(value);
+    setCurrentPage(1); // Reset current page when changing limit
+  };
   const validateAndUpload = async (file) => {
     try {
       setIsLoading(true);
@@ -178,6 +185,13 @@ const File = () => {
         </Modal>
         <p className="table-tile-schema-details">Uploaded Reports List</p>
         <CustomTable dataSource={listReports} columns={columns} />
+        <PaginationComponent
+          limit={limit}
+          handleLimitChange={handleLimitChange}
+          page={currentPage}
+          totalItems={totalItems}
+          handlePageChange={handlePageChange}
+        />
         {isLoading && (
           <div className="loading-indicator">
             <Progress className="fileProgress" percent={progress} />

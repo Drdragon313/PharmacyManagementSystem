@@ -63,8 +63,8 @@
   flex: 1;
 }
 .breadcrumb-col {
-  border: 1px solid #ededed;
-  padding-left: 15px;
+  border-bottom: 1px solid #ededed;
+  padding-left: 10px !important;
   margin-top: 1px;
 }
 .custom-table-header {
