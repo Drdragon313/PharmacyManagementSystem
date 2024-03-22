@@ -47,7 +47,7 @@ const File = () => {
     };
 
     fetchData();
-  }, [schemaID, headers]);
+  }, [schemaID, headers, currentPage, limit]);
   const getCurrentPageErrors = () => {
     const startIndex = (currentPage - 1) * errorsPerPage;
     const endIndex = startIndex + errorsPerPage;
@@ -58,7 +58,7 @@ const File = () => {
   };
   const handleLimitChange = (value) => {
     setLimit(value);
-    setCurrentPage(1); // Reset current page when changing limit
+    setCurrentPage(1);
   };
   const validateAndUpload = async (file) => {
     try {

@@ -10,7 +10,11 @@ import CustomButton from "../CustomButton/CustomButton";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
 import { useNavigate } from "react-router-dom";
 import { CaretDownOutlined, CaretUpOutlined } from "@ant-design/icons";
+import { fetchUserPermissions } from "../../Utility Function/ModulesAndPermissions";
+
 import { Link } from "react-router-dom";
+import AccessDenied from "../../Pages/AccessDenied/AccessDenied";
+import Spinner from "../Spinner/Spinner";
 
 const CreateRole = () => {
   const authToken = localStorage.getItem("AuthorizationToken");
@@ -20,9 +24,22 @@ const CreateRole = () => {
   const [dataSource, setDataSource] = useState([]);
   const [roleName, setRoleName] = useState("");
   const [isAnyCheckboxChecked, setIsAnyCheckboxChecked] = useState(false);
-
+  const [userPermissions, setUserPermissions] = useState(null);
+  const [loading, setLoading] = useState(true);
   const previousModulesRef = useRef();
+  useEffect(() => {
+    const fetchUserPermissionData = async () => {
+      try {
+        await fetchUserPermissions(setUserPermissions);
+      } catch (error) {
+        console.error("Error fetching user permissions:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchUserPermissionData();
+  }, []);
   useEffect(() => {
     const fetchModules = async () => {
       try {
@@ -70,6 +87,9 @@ const CreateRole = () => {
 
     previousModulesRef.current = modules;
   }, [modules]);
+  const canViewRoles =
+    userPermissions?.find((module) => module.module_name === "Roles")?.actions
+      ?.read || false;
 
   const resetState = () => {
     setRoleName("");
@@ -384,84 +404,93 @@ const CreateRole = () => {
       message.error("Error creating role");
     }
   };
+  if (loading) {
+    return <Spinner />;
+  }
   return (
     <div className="main-container-roles-permissions">
-      <Row
-        className="pharmacy-list-breadcrumb"
-        gutter={{
-          xs: 8,
-          sm: 16,
-          md: 24,
-          lg: 32,
-        }}
-      >
-        <Col className="breadcrumb-row" span={24}>
-          <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
-        </Col>
-      </Row>
-      <Row
-        gutter={{
-          xs: 8,
-          sm: 16,
-          md: 24,
-          lg: 32,
-        }}
-        style={{ margin: "10px", marginTop: "30px" }}
-      >
-        <Col className="gutter-row" span={8}>
-          <label htmlFor="RolesInput" className="addRoleNameLabel">
-            Role name
-          </label>
-          <Input
-            name="RolesInput"
-            className="AddUsersDetailsInput"
-            value={roleName}
-            onChange={(e) => setRoleName(e.target.value)}
-          />
-        </Col>
-        <Col className="gutter-row" span={4}></Col>
-        <Col className="gutter-row" span={6}></Col>
-        <Col className="gutter-row" span={6}></Col>
-      </Row>
-      <Row style={{ margin: "10px", marginTop: "30px" }}>
-        <div className="roles-checkbox-table-container">
-          <label htmlFor="RolesInput" className="addRoleNameLabel">
-            Select Role Permissions
-          </label>
-          <CustomTable
-            className="roles-checkbox-table"
-            columns={columns}
-            dataSource={dataSource}
-            expandable={{
-              expandedRowRender,
-              expandIcon: ({ expanded, onExpand, record }) =>
-                record.subModules.length > 0 && (
-                  <span
-                    onClick={(e) => onExpand(record, e)}
-                    style={{ marginRight: 8, cursor: "pointer" }}
-                  >
-                    {expanded ? <CaretUpOutlined /> : <CaretDownOutlined />}
-                  </span>
-                ),
+      {canViewRoles ? (
+        <>
+          <Row
+            className="pharmacy-list-breadcrumb"
+            gutter={{
+              xs: 8,
+              sm: 16,
+              md: 24,
+              lg: 32,
             }}
-          />
-        </div>{" "}
-      </Row>
-      <Col span={23}>
-        <div className="btns-class">
-          <Link to="/employeepage">
-            <CustomButton className="cancel-btn">Cancel</CustomButton>
-          </Link>
-          <CustomButton
-            type="primary"
-            style={{ width: "185px", height: "45px" }}
-            onClick={() => handleCreateRole()}
-            disabled={!isAnyCheckboxChecked}
           >
-            Create role
-          </CustomButton>
-        </div>
-      </Col>
+            <Col className="breadcrumb-row" span={24}>
+              <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
+            </Col>
+          </Row>
+          <Row
+            gutter={{
+              xs: 8,
+              sm: 16,
+              md: 24,
+              lg: 32,
+            }}
+            style={{ margin: "10px", marginTop: "30px" }}
+          >
+            <Col className="gutter-row" span={8}>
+              <label htmlFor="RolesInput" className="addRoleNameLabel">
+                Role name
+              </label>
+              <Input
+                name="RolesInput"
+                className="AddUsersDetailsInput"
+                value={roleName}
+                onChange={(e) => setRoleName(e.target.value)}
+              />
+            </Col>
+            <Col className="gutter-row" span={4}></Col>
+            <Col className="gutter-row" span={6}></Col>
+            <Col className="gutter-row" span={6}></Col>
+          </Row>
+          <Row style={{ margin: "10px", marginTop: "30px" }}>
+            <div className="roles-checkbox-table-container">
+              <label htmlFor="RolesInput" className="addRoleNameLabel">
+                Select Role Permissions
+              </label>
+              <CustomTable
+                className="roles-checkbox-table"
+                columns={columns}
+                dataSource={dataSource}
+                expandable={{
+                  expandedRowRender,
+                  expandIcon: ({ expanded, onExpand, record }) =>
+                    record.subModules.length > 0 && (
+                      <span
+                        onClick={(e) => onExpand(record, e)}
+                        style={{ marginRight: 8, cursor: "pointer" }}
+                      >
+                        {expanded ? <CaretUpOutlined /> : <CaretDownOutlined />}
+                      </span>
+                    ),
+                }}
+              />
+            </div>{" "}
+          </Row>
+          <Col span={23}>
+            <div className="btns-class">
+              <Link to="/employeepage">
+                <CustomButton className="cancel-btn">Cancel</CustomButton>
+              </Link>
+              <CustomButton
+                type="primary"
+                style={{ width: "185px", height: "45px" }}
+                onClick={() => handleCreateRole()}
+                disabled={!isAnyCheckboxChecked}
+              >
+                Create role
+              </CustomButton>
+            </div>
+          </Col>
+        </>
+      ) : (
+        <AccessDenied />
+      )}
     </div>
   );
 };
