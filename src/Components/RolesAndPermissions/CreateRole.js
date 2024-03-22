@@ -26,7 +26,11 @@ const CreateRole = () => {
   useEffect(() => {
     const fetchModules = async () => {
       try {
-        const response = await axios.get(`${baseURL}/list-available-modules`);
+        const response = await axios.get(`${baseURL}/list-available-modules`, {
+          headers: {
+            Authorization: `${authToken}`,
+          },
+        });
         const data = response.data;
 
         if (data.status === "success") {
