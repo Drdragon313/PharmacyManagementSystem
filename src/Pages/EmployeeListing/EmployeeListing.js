@@ -400,7 +400,7 @@ const EmployeeListing = () => {
     <>
       {canViewEmployee ? (
         <div className="main-container-employees">
-          <Row
+          {/* <Row
             className="employee-list-breadcrumb"
             gutter={{
               xs: 8,
@@ -408,7 +408,7 @@ const EmployeeListing = () => {
               md: 24,
               lg: 32,
             }}
-          ></Row>
+          ></Row> */}
           <Row
             className="employee-list-head"
             gutter={{

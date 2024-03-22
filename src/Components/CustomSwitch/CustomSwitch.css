@@ -19,6 +19,7 @@
 .breadcrumb-col {
   padding-left: 10px;
   font-family: "Poppins", sans-serif;
+  border-top: none;
 }
 .switch-btns {
   width: 100%;

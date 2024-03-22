@@ -184,7 +184,11 @@ const Topnav = () => {
       {showMobileDrawer && (
         <Drawer
           autoFocus={true}
-          maskStyle={{ width: "100%", zIndex: "1000", opacity: "100%" }}
+          maskStyle={{
+            width: "100%",
+            zIndex: "1000",
+            opacity: "100%",
+          }}
           mask={true}
           placement="left"
           onClose={() => setShowMobileDrawer(false)}
@@ -192,6 +196,7 @@ const Topnav = () => {
           className="mobile-drawer-nav"
           title={false}
           closeIcon={false}
+          width={1000}
         >
           <div className="top-nav-logo-container">
             <div className="responsive-nav-logo">
