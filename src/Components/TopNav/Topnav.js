@@ -26,7 +26,6 @@ const Topnav = () => {
     Role: "",
   });
   const navigate = useNavigate();
-
   const getInitials = () => {
     const firstNameInitial = userData.FName ? userData.FName.charAt(0) : "";
     const lastNameInitial = userData.LName ? userData.LName.charAt(0) : "";
@@ -217,7 +216,7 @@ const Topnav = () => {
           </div>
           <SideMenuBar
             className="side-menu-bar-items"
-            toggleMobileDrawer={handleToggleMobileDrawer}
+            toggleMobileDrawer={() => setShowMobileDrawer(false)}
           />
           <Footer
             style={{
