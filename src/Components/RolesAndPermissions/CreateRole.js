@@ -388,12 +388,20 @@ const CreateRole = () => {
 
       console.log("Formatted Permissions:", formattedPermissions);
 
-      const response = await axios.post(`${baseURL}/create-role`, {
-        role_name: roleName,
-        role_description: "Testing Role, not a finalized one.",
-        vendor_id: 1,
-        permissions: formattedPermissions,
-      });
+      const response = await axios.post(
+        `${baseURL}/create-role`,
+        {
+          role_name: roleName,
+          role_description: "Testing Role, not a finalized one.",
+          vendor_id: 1,
+          permissions: formattedPermissions,
+        },
+        {
+          headers: {
+            Authorization: `${authToken}`,
+          },
+        }
+      );
 
       console.log("Role created successfully:", response.data);
       message.success("Role created successfully");

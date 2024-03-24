@@ -9,6 +9,7 @@ import axios from "axios";
 const ReAssignModal = ({ open, onConfirm, onCancel, roleId }) => {
   const [numberOfEmployees, setNumberOfEmployees] = useState(null);
   const [selectedRoleId, setSelectedRoleId] = useState(null);
+  const authToken = localStorage.getItem("AuthorizationToken");
 
   const handleRoleSelect = (value) => {
     setSelectedRoleId(value);
@@ -38,10 +39,18 @@ const ReAssignModal = ({ open, onConfirm, onCancel, roleId }) => {
 
   const handleConfirmDelete = async () => {
     try {
-      await axios.post(`${baseURL}/delete-role`, {
-        role_id_to_delete: roleId,
-        new_role_id: selectedRoleId,
-      });
+      await axios.post(
+        `${baseURL}/delete-role`,
+        {
+          role_id_to_delete: roleId,
+          new_role_id: selectedRoleId,
+        },
+        {
+          headers: {
+            Authorization: ` ${authToken}`,
+          },
+        }
+      );
       onConfirm(selectedRoleId);
 
       setSelectedRoleId(null);
