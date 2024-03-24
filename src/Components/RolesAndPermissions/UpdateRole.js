@@ -395,6 +395,11 @@ const UpdateRole = () => {
           role_description: "Testing Role, not a finalized one.",
           vendor_id: 1,
           permissions: formattedPermissions,
+        },
+        {
+          headers: {
+            Authorization: `${authToken}`,
+          },
         }
       );
 

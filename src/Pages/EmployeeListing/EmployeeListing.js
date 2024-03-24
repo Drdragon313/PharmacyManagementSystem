@@ -193,7 +193,12 @@ const EmployeeListing = () => {
   const handleConfirmDelete = async () => {
     try {
       await axios.delete(
-        `${baseURL}/delete-user?user_id=${employeeToDeleteId}&pharmacy_id=${pharmacyToDeleteId}`
+        `${baseURL}/delete-user?user_id=${employeeToDeleteId}&pharmacy_id=${pharmacyToDeleteId}`,
+        {
+          headers: {
+            Authorization: `${authToken}`,
+          },
+        }
       );
       const updatedData = tableDataSource.filter(
         (item) => item.userID !== employeeToDeleteId
