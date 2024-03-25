@@ -4,8 +4,6 @@ import signinBackground from "../../Assets/SigninBack.svg";
 import EmailBackgroundLogo from "../../Assets/EmailBackgroundLogo.svg";
 import PharmalyticsLogo from "../../Assets/Pharmalytics-Logo.svg";
 import CheckEmailicon from "../../Assets/CheckEmailicon.svg";
-import { Button } from "antd";
-import { ArrowRightOutlined } from "@ant-design/icons";
 
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import { useNavigate } from "react-router-dom";
@@ -34,11 +32,6 @@ const ResendEmail = () => {
         <div className="SigninLogoContainertxt">
           <p className="SigninLogoContainertitletext1">Elevate Your</p>
           <p className="SigninLogoContainertitletext2">Pharmacy Insights</p>
-        </div>
-        <div className="LearnMoreBtn">
-          <Button>
-            Learn More <ArrowRightOutlined className="LearnMoreArrow" />
-          </Button>
         </div>
       </div>
       <div className="siginFieldsContainer">

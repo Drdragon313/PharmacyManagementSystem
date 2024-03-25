@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import pharmImg from "../../Assets/Asset 1 4.png";
-import { Button, Image, Input, Space } from "antd";
+import { Image, Input, Space } from "antd";
 import { useEffect } from "react";
 
-import {
-  EyeTwoTone,
-  EyeInvisibleOutlined,
-  ArrowRightOutlined,
-} from "@ant-design/icons";
+import { EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import phamalyticsLogo from "../../Assets/pharmaylics_logo.svg";
@@ -84,11 +80,6 @@ const PasswordResetForm = (props) => {
           <p className="title">
             Elevate Your <br /> <strong>Pharmacy Insights</strong>{" "}
           </p>
-        </div>
-        <div className="LearnMoreBtn">
-          <Button>
-            Learn More <ArrowRightOutlined className="LearnMoreArrow" />
-          </Button>
         </div>
       </div>
       <div className="siginFieldsContainer">

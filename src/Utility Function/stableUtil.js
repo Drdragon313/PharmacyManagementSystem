@@ -32,6 +32,7 @@ export async function saveSchema(
       );
 
       if (response.status === 200) {
+        message.success("Schema created successfully");
         successCallback(newSchema);
       } else {
         console.error("Error:", response);
@@ -41,9 +42,6 @@ export async function saveSchema(
       }
     } catch (error) {
       console.error("Error:", error);
-      message.error(
-        "Error occurred while saving schema. schema with this name already exists"
-      );
     }
   } else {
     console.error("No rows to save in the schema.");

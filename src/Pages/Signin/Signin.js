@@ -5,13 +5,12 @@ import PharmalyticsLogo from "../../Assets/Pharmalytics-Logo.svg";
 import Email_icon from "../../Assets/Email-icon.svg";
 import Password_icon from "../../Assets/Password_icon.svg";
 import { useNavigate } from "react-router-dom";
-import { Button, Form, message } from "antd";
+import { Form, message } from "antd";
 import Spinner from "../../Components/Spinner/Spinner";
 import { Input } from "antd";
 import {
   EyeTwoTone,
   EyeInvisibleOutlined,
-  ArrowRightOutlined,
   LoginOutlined,
 } from "@ant-design/icons";
 import { login } from "../../Utility Function/login";
@@ -102,11 +101,6 @@ const Signin = () => {
             <div className="SigninLogoContainertxt">
               <p className="SigninLogoContainertitletext1">Elevate Your</p>
               <p className="SigninLogoContainertitletext2">Pharmacy Insights</p>
-            </div>
-            <div className="LearnMoreBtn">
-              <Button>
-                Learn More <ArrowRightOutlined className="LearnMoreArrow" />
-              </Button>
             </div>
           </div>
           <div className="siginFieldsContainer">
