@@ -1,5 +1,6 @@
 import axios from "axios";
 import { baseURL } from "../Components/BaseURLAPI/BaseURLAPI";
+import { message } from "antd";
 
 export const fetchTilesAndSchemas = async (tilePath) => {
   try {
@@ -31,6 +32,7 @@ export const deleteCard = async (tileName) => {
     const response = await axios.delete(
       `${baseURL}/delete-tile?tileName=${tileName}`
     );
+    message.success("Tile deleted successfully");
     console.log(response.data);
     return response.data.Data.tiles;
   } catch (error) {
@@ -43,6 +45,7 @@ export const deleteSchema = async (schema_id) => {
     const response = await axios.delete(
       `${baseURL}/delete-tile-schema?schema_id=${schema_id}`
     );
+    message.success("Schema deleted successfully");
     return response.data.Data.schemas;
   } catch (error) {
     console.error("Error in deleting the schema:", error);

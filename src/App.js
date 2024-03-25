@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   BrowserRouter,
   Routes,
@@ -51,9 +51,9 @@ import Prescriptions from "./Iframes/Prescriptions";
 import TillSales from "./Iframes/TillSales";
 import Income from "./Iframes/Income";
 import Dashboard from "./Iframes/Dashboard";
-import { fetchUserPermissions } from "./Utility Function/ModulesAndPermissions";
+// import { fetchUserPermissions } from "./Utility Function/ModulesAndPermissions";
 import AccessDenied from "./Pages/AccessDenied/AccessDenied";
-import Spinner from "./Components/Spinner/Spinner";
+// import Spinner from "./Components/Spinner/Spinner";
 
 const { Content } = Layout;
 
@@ -68,37 +68,20 @@ function App() {
 }
 
 function MainContent() {
-  const [userPermissions, setUserPermissions] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // useEffect(() => {
+  //   const fetchUserPermissionData = async () => {
+  //     try {
+  //       await fetchUserPermissions(setUserPermissions);
+  //     } catch (error) {
+  //       console.error("Error fetching user permissions:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-  useEffect(() => {
-    const fetchUserPermissionData = async () => {
-      try {
-        await fetchUserPermissions(setUserPermissions);
-      } catch (error) {
-        console.error("Error fetching user permissions:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  //   fetchUserPermissionData();
+  // }, []);
 
-    fetchUserPermissionData();
-  }, []);
-  const accessDataLive =
-    userPermissions?.find((module) => module.module_name === "Data live")
-      ?.actions?.read || false;
-  // const accessDashboard =
-  //   userPermissions?.find((module) => module.module_name === "Dashboard")
-  //     ?.actions?.read || false;
-  const accessPharmacy =
-    userPermissions?.find((module) => module.module_name === "Pharmacy")
-      ?.actions?.read || false;
-  // const accessUploadFile =
-  //   userPermissions?.find((module) => module.module_name === "Upload Files")
-  //     ?.actions?.read || false;
-  const accessEmployee =
-    userPermissions?.find((module) => module.module_name === "Employees")
-      ?.actions?.read || false;
   const location = useLocation();
   const authToken = localStorage.getItem("AuthorizationToken");
   const excludedPaths = [
@@ -109,9 +92,9 @@ function MainContent() {
     "/setpassword",
     "/passwordupdatesuccess",
   ];
-  if (loading) {
-    return <Spinner />;
-  }
+  // if (loading) {
+  //   return <Spinner />;
+  // }
 
   // Render nothing on excluded paths
   if (excludedPaths.includes(location.pathname)) {
@@ -120,6 +103,7 @@ function MainContent() {
         <Route path="/" element={<Signin />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/checkemail" element={<CheckEmail />} />
+        <Route path="/resendemail" element={<ResendEmail />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route
           path="/passwordupdatesuccess"
@@ -377,7 +361,6 @@ function MainContent() {
                 </MainLayout>
               }
             />
-            <Route path="resendemail" element={<ResendEmail />} />
 
             <Route
               path="pharmacies"

@@ -3,10 +3,10 @@ import signinBackground from "../../Assets/SigninBack.svg";
 import PharmacyImage from "../../Assets/Pharmacy-img.svg";
 import PharmalyticsLogo from "../../Assets/Pharmalytics-Logo.svg";
 import Forgot_Icon from "../../Assets/Forgot_Password_Icon.svg";
-import { Button, Input, message } from "antd";
+import { Input, message } from "antd";
 import "./ForgotPassword.css";
 import Email_icon from "../../Assets/Email-icon.svg";
-import { ArrowRightOutlined } from "@ant-design/icons";
+
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
@@ -68,11 +68,6 @@ const ForgotPassword = () => {
         <div className="SigninLogoContainertxt">
           <p className="SigninLogoContainertitletext1">Elevate Your</p>
           <p className="SigninLogoContainertitletext2">Pharmacy Insights</p>
-        </div>
-        <div className="LearnMoreBtn">
-          <Button>
-            Learn More <ArrowRightOutlined className="LearnMoreArrow" />
-          </Button>
         </div>
       </div>
       <div className="siginFieldsContainer">
