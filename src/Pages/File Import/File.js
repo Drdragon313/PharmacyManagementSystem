@@ -10,6 +10,8 @@ import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb"
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import CustomTable from "../../Components/CustomTable/CustomTable";
 import PaginationComponent from "../../Components/PaginationComponent/PaginationComponent";
+import eyeIcon from "../../Assets/Icon feather-eye.svg";
+import { Link } from "react-router-dom";
 
 const File = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,6 +26,7 @@ const File = () => {
   const schemaData = localStorage.getItem("selectedSchemaData");
   const schemaID = localStorage.getItem("selectedSchemaID");
   const localHeader = localStorage.getItem("AuthorizationToken");
+
   const headers = useMemo(() => {
     return {
       Authorization: localHeader,
@@ -159,6 +162,12 @@ const File = () => {
               Choose File
             </CustomButton>
           </Upload>
+          <Link style={{ textDecoration: "none" }} to={`/schema/${schemaID}`}>
+            <CustomButton className="ghost-btn">
+              <Image className="down-img" preview={false} src={eyeIcon}></Image>
+              View Details
+            </CustomButton>
+          </Link>
         </div>
         <Modal
           open={showModal}
