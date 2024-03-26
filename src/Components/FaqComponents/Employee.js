@@ -69,7 +69,7 @@ const Employee = () => {
     <div>
       <Collapse
         bordered={false}
-        defaultActiveKey={["1"]}
+        defaultActiveKey={[0]}
         expandIconPosition="end"
         expandIcon={({ isActive }) =>
           isActive ? (

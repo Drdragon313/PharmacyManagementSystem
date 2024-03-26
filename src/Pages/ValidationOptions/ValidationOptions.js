@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./VaidationOptions.css";
-import { Row, Button, Space, Image, Dropdown, Menu } from "antd";
+import { Row, Space, Image } from "antd";
 import schemaImg from "../../Assets/schemaImg.svg";
 import axios from "axios";
 import { addIndex } from "../../redux/features/SchemaSelectionSlice/SchemaSelectionSlice";
@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
 import CustomCard from "../../Components/Card/Card";
 import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
-import { MoreOutlined } from "@ant-design/icons";
+
 import Spinner from "../../Components/Spinner/Spinner";
 const ValidationOptions = () => {
   const schemaDataArray = useSelector((state) => state.schema.schemaDataArray);
@@ -87,90 +87,35 @@ const ValidationOptions = () => {
           <div className="Options-containerElements">
             <Row gutter={22} className="schema-conatiner-row">
               {schemas.map((schema, index) => (
-                <CustomCard
-                  className="schema-file-upload-cards"
-                  bordered={true}
-                  key={index}
-                >
-                  <div className="schema-file-upload-content">
-                    <div className="dropdown">
-                      <Dropdown
-                        overlay={
-                          <Menu>
-                            <Menu.Item key="uploadFile">
-                              <div
-                                onClick={() =>
-                                  handleMenuClick("uploadFile", index)
-                                }
-                              >
-                                {" "}
-                                <Link
-                                  style={{
-                                    textDecoration: "none",
-                                    color: "#000",
-                                  }}
-                                  to="fileUpload"
-                                >
-                                  Upload File
-                                </Link>
-                              </div>
-                            </Menu.Item>
-
-                            <Menu.Item key="view">
-                              <Link
-                                style={{ textDecoration: "none" }}
-                                to={`/schema/${schema.schema_id}`}
-                              >
-                                View Details
-                              </Link>
-                            </Menu.Item>
-                          </Menu>
-                        }
-                        trigger={["click"]}
+                <Link to="fileUpload">
+                  <CustomCard
+                    className="schema-file-upload-cards"
+                    bordered={true}
+                    key={index}
+                    onClick={() => handleMenuClick("uploadFile", index)}
+                  >
+                    <div className="schema-file-upload-content">
+                      <Space
+                        direction="vertical"
+                        size={2}
+                        className="schema-content"
                       >
-                        <Button
-                          className="dropbtn-schema"
-                          icon={<MoreOutlined />}
-                        />
-                      </Dropdown>
+                        <Image
+                          className="schema-file-upload-img"
+                          preview={false}
+                          src={schemaImg}
+                        ></Image>
+
+                        <h5 className="schema-file-upload-name">
+                          {" "}
+                          {schema.schema_name}
+                        </h5>
+                      </Space>
+
+                      <div></div>
                     </div>
-                    {/* <Button className="dropbtn-schema-vo">
-                        <MoreOutlined />
-                      </Button>
-                      <div className="dropdown-content">
-                        <Link to="fileUpload">
-                          <Button
-                            type="link"
-                            onClick={() => handleMenuClick("uploadFile", index)}
-                          >
-                            Upload File
-                          </Button>
-                        </Link>
-                        <Link to={`/schema/${schema.schema_id}`}>
-                          <Button type="link">View Details</Button>
-                        </Link>
-                      </div> */}
-
-                    <Space
-                      direction="vertical"
-                      size={2}
-                      className="schema-content"
-                    >
-                      <Image
-                        className="schema-file-upload-img"
-                        preview={false}
-                        src={schemaImg}
-                      ></Image>
-
-                      <h5 className="schema-file-upload-name">
-                        {" "}
-                        {schema.schema_name}
-                      </h5>
-                    </Space>
-
-                    <div></div>
-                  </div>
-                </CustomCard>
+                  </CustomCard>
+                </Link>
               ))}
             </Row>
           </div>

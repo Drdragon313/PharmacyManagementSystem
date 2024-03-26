@@ -66,3 +66,22 @@
   letter-spacing: 0em;
   text-align: left;
 }
+.upload-download-btn-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.ghost-btn {
+  border: 1px solid #3a3475;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  color: #3a3475;
+  font-family: Poppins, sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0.3840723931789398px;
+  text-align: left;
+  text-decoration: none;
+}

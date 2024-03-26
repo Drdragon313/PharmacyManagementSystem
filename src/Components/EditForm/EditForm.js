@@ -64,7 +64,7 @@ const EditForm = ({
       footer={false}
     >
       <div className="schema-modal-form">
-        <Form form={form}>
+        <Form form={form} onFinish={handleFormSubmit}>
           <div className="first-row-schema-modal">
             <Form.Item
               name="fieldName"
@@ -121,7 +121,7 @@ const EditForm = ({
             </Checkbox>
           </Form.Item>
           <Form.Item>
-            <CustomButton type="primary" onClick={handleFormSubmit}>
+            <CustomButton type="primary" htmlType="submit">
               Add Row
             </CustomButton>
           </Form.Item>

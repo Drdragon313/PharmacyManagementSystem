@@ -35,10 +35,7 @@ const Pharmacy = () => {
       children: (
         <div>
           <p>{item.Answers}</p>
-          <p>
-            {/* <strong>Navigation Path: </strong> */}
-            {item.Path}
-          </p>
+          <p>{item.Path}</p>
           <div className="faq-img">
             {item.Image1 && (
               <Image src={item.Image1} alt="FAQ Image" preview={false} />
@@ -72,7 +69,7 @@ const Pharmacy = () => {
     <div>
       <Collapse
         bordered={false}
-        defaultActiveKey={["1"]}
+        defaultActiveKey={[0]}
         expandIconPosition="end"
         expandIcon={({ isActive }) =>
           isActive ? (
