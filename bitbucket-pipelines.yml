@@ -79,7 +79,7 @@ pipelines:
           - ./aws/install
           - IMAGE="637423645633.dkr.ecr.eu-west-2.amazonaws.com/pharmlytics-frontend"
           - NAME="pharmlytics-frontend"
-          - ENV="${BITBUCKET_BRANCH}";
+          - if [[ "${BITBUCKET_BRANCH}" == "master" ]]; then ENV="prod" else ENV="${BITBUCKET_BRANCH}" fi
           - TAG1="${ENV}-${BITBUCKET_BUILD_NUMBER}"
           - TAG2="${ENV}-latest"
           - aws configure set aws_access_key_id "${AWS_KEY_PHARMLYTICS_ACCOUNT}"
