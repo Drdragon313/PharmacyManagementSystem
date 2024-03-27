@@ -85,7 +85,7 @@ pipelines:
           - aws configure set aws_access_key_id "${AWS_KEY_PHARMLYTICS_ACCOUNT}"
           - aws configure set aws_secret_access_key "${AWS_SECRET_PHARMLYTICS_ACCOUNT}"
           - aws ecr get-login-password --region "${AWS_REGION}" | docker login -u AWS --password-stdin $IMAGE
-          - aws s3 cp s3://prod-pharmalytics/environment-files/frontend/prod.env ./.env
+          - aws s3 cp s3://prod-pharmlytics/environment-files/frontend/prod.env ./.env
           - ls -al
           - docker build -f Dockerfile-Prod -t $NAME:$TAG1 .
           - docker tag $NAME:$TAG1 $IMAGE:$TAG1
