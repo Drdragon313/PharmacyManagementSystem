@@ -70,7 +70,13 @@ const EditForm = ({
               name="fieldName"
               label="Field Name"
               initialValue={editRow?.Fieldname}
-              rules={[{ required: true, message: "Please enter a field name" }]}
+              rules={[
+                { required: true, message: "Please enter a field name" },
+                {
+                  pattern: /^[^\s].*/,
+                  message: "Field name cannot start with a blank space",
+                },
+              ]}
             >
               <Input className="SchemaDetailsInput" />
             </Form.Item>
