@@ -36,6 +36,7 @@ const File = () => {
   const [totalItems, setTotalItems] = useState(0);
   const errorsPerPage = 6;
   const schemaData = localStorage.getItem("selectedSchemaData");
+  const [schemasData, setSchemasData] = useState(null);
   const schemaID = localStorage.getItem("selectedSchemaID");
   const localHeader = localStorage.getItem("AuthorizationToken");
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
@@ -61,6 +62,22 @@ const File = () => {
 
     fetchUserPermissionData();
   }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${baseURL}/schema/get-all-schema?schema_id=${schemaID}`,
+          { headers }
+        );
+        setSchemasData(response.data.schema.schemaDataArray[0]);
+        console.log(response.data.schema);
+      } catch (error) {
+        console.error("Error fetching schema data:", error);
+      }
+    };
+
+    fetchData();
+  }, [schemaID, headers]);
   const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
@@ -220,7 +237,9 @@ const File = () => {
             <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
           </div>
           <div className="file-container">
-            <p className="pharmacy-list-head-txt">Upload Report</p>
+            <p className="pharmacy-list-head-txt">
+              {schemasData?.name} CSV Upload
+            </p>
             <p className="file-paragraph">
               The CSV file's default column names can be viewed in the Details
               section for each tile. Additionally, a template file can be
@@ -287,7 +306,7 @@ const File = () => {
                 />
               )}
             </Modal>
-            <p className="table-tile-schema-details">Uploaded Reports List</p>
+            <p className="table-tile-schema-details">Uploaded List</p>
             <div className="upload-file-table">
               <CustomTable dataSource={listReports} columns={columns} />
             </div>
