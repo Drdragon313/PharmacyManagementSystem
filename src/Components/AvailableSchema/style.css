@@ -1,0 +1,36 @@
+.download-btn-schema-details {
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end;
+  gap: 10px;
+  border: 1px solid #3a3475;
+  color: #3a3475;
+  font-family: Poppins, sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0.3840723931789398px;
+  text-align: left;
+  margin-bottom: 20px;
+  height: 5.5vh;
+  line-height: 30.15px;
+}
+.down-img-schema-details {
+  width: 20px;
+  height: 20px;
+}
+.table {
+  padding: 10px;
+}
+.schema-table-schema-details {
+  margin-top: 20px !important;
+}
+.loader {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  align-items: center;
+  position: absolute;
+  top: 55%;
+  left: 56%;
+  transform: translate(-50%, -50%);
+}

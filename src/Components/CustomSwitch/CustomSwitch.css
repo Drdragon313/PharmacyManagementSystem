@@ -1,0 +1,31 @@
+.toggle-btn-container {
+  border: 1px solid #425cda33;
+  border-radius: 12px;
+  padding: 2px;
+  margin-left: 20px;
+  width: 310px;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #f8fbff;
+  margin-top: 2%;
+  gap: 5px;
+}
+.full-width-line {
+  color: #808080;
+}
+
+.breadcrumb-col {
+  padding-left: 10px;
+  font-family: "Poppins", sans-serif;
+  border-top: none;
+}
+.switch-btns {
+  width: 100%;
+}
+@media (max-width: 340px) {
+  .toggle-btn-container {
+    width: 90%;
+  }
+}

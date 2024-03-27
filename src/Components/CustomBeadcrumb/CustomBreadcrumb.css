@@ -1,0 +1,26 @@
+.custom-breadcrumb {
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+}
+
+.breadcrumb-link {
+  text-decoration: none;
+  color: #425cda;
+}
+
+.breadcrumb-link.active-link {
+  color: #2d2d2d;
+}
+.breadcrumb-link.active-link:hover {
+  cursor: default;
+}
+
+.breadcrumb-label {
+  color: #333;
+}
+
+.breadcrumb-separator {
+  margin: 0 5px;
+  color: #777;
+}

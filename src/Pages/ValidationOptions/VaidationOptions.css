@@ -1,0 +1,149 @@
+.validation-page-heading-txt {
+  font-family: Poppins, sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 33px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #3a3475;
+  margin-left: 15px;
+  margin-top: 10px;
+}
+.Validation-container {
+  height: auto !important;
+}
+.schema-conatiner-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.Options-container {
+  border-radius: 10px;
+  border: 1px solid #d3d3d3;
+  width: 75vw;
+  height: auto;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+.breadcrumb-validation-page {
+  border: 1px solid #ededed;
+  padding-left: 10px;
+  font-family: Poppins, sans-serif;
+}
+.schema-file-upload-cards {
+  margin-left: 10px;
+  width: 230px;
+  text-align: center;
+  height: 150px;
+  background: #fff;
+  justify-content: center;
+  transform: border-style 0.5s border-color 0.5s box-shadow 1s;
+  color: #2a44c1;
+  border: 1px solid#2a44c1;
+  border-radius: 12px;
+}
+.schema-file-upload-cards:hover {
+  cursor: pointer;
+  background-color: #eff1ff !important;
+  color: #2a44c1;
+  border-style: solid;
+}
+.schema-file-upload-content {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-left: -20px;
+  margin-top: -20px;
+}
+
+.schema-file-upload-img {
+  height: 60px !important;
+  width: 60px !important;
+}
+.Options-container {
+  border: none;
+}
+
+.Validation-Img {
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  min-height: 40px;
+  min-width: 20px;
+  max-height: 80px;
+  max-width: 40px;
+}
+.schema-file-upload-name {
+  font-size: 12 !important;
+}
+
+.Validation-Schemacheckbox {
+  margin-left: 120px;
+}
+.Validation-buttoncontainer {
+  display: flex;
+  justify-content: center;
+}
+.Validation-button {
+  margin-top: 10px;
+  background: #2a44c1;
+  color: white;
+}
+.Validation-button-disabled {
+  margin-top: 10px;
+}
+.zeroSchemas {
+  color: #707477;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.options-pagination {
+  margin-top: 20px;
+}
+.optionsCustomCard {
+  min-width: 40%;
+  margin: 10px;
+}
+.loader {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  align-items: center;
+  position: absolute;
+  top: 55%;
+  left: 56%;
+  transform: translate(-50%, -50%);
+}
+.dropbtn-schema-vo {
+  color: #2a44c1;
+  padding: 1px;
+  border-radius: 5px;
+  margin-left: 20px;
+  margin-top: -10px;
+  font-size: 25px;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  position: absolute;
+}
+@media screen and (max-width: 768px) {
+  .optionsCustomCard {
+    min-width: 100%;
+    margin: 10px 0;
+  }
+  .schema-conatiner-row {
+    align-items: center !important;
+    justify-content: center;
+  }
+}
+.dropdown {
+  margin-top: 2px;
+}
+
+.schemacards-fileimport {
+  height: 180px;
+}

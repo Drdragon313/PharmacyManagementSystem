@@ -1,0 +1,165 @@
+.ResendContainer {
+  display: flex;
+}
+.resend-company-logo {
+  position: absolute;
+  top: 30px;
+  left: 50px;
+}
+.ResendLogoContainer {
+  width: 50vw;
+  height: 100vh;
+  background-color: #ececec;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+.resend-pharm-img {
+  height: 50%;
+  width: 50%;
+  margin-top: 100px;
+}
+.ResendPowerText {
+  color: white;
+  margin-top: 15px;
+  margin-right: 5px;
+}
+.ResendFieldsContainer {
+  width: 50vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.ResendFields {
+  width: 50%;
+}
+.ResendText {
+  color: #707477;
+}
+.ResendText-small {
+  color: #707477;
+  font-size: 12px;
+}
+.ResendBoldLabel {
+  font-weight: bold;
+}
+.ResendBoldLabel::after {
+  content: " *";
+  color: red;
+}
+.ResendForget {
+  text-decoration: none;
+  font-size: 11px;
+}
+.Resendbtn {
+  color: white;
+  width: 100%;
+  background: #818181;
+  border: none;
+  border-radius: 10px;
+}
+.resend-btn-primary {
+  width: 100%;
+  background-color: #fff;
+  color: #707477;
+  border-color: #707477;
+  border-radius: 10px;
+}
+.ResendTerms {
+  border-top: 1px solid #dddddf;
+}
+.ResendFooter {
+  margin-top: 15%;
+  color: #707477;
+}
+.ResendRegisterNow {
+  color: black;
+  font-weight: bold;
+}
+
+.resend-stay-signedin-forgot-pass {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.resend-stay-signedin {
+  display: flex;
+  flex-direction: row;
+}
+.resend-stay-signedin-txt {
+  margin-left: 5px;
+  font-size: 10px;
+}
+.resend-title {
+  font-size: 30px;
+  font-weight: bold;
+  color: #818181;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.resend-description-txt {
+  color: #818181;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 12px;
+}
+.resend-txt {
+  text-align: center;
+  width: 60%;
+}
+.resend-container-foot {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 100px;
+}
+.resend-btn-light {
+  height: 35px;
+  width: 120px;
+  font-size: 11px;
+  background-color: #707477;
+  color: aliceblue;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 10px;
+}
+.CheckEmailIcon {
+  margin-right: 3%;
+  width: 8%;
+  height: 8%;
+  margin-bottom: 2%;
+}
+.resend-btn-primary {
+  width: 38%;
+  background-color: #fff;
+  color: #3a3475;
+  border-color: #3a3475;
+  border-radius: 10px;
+}
+.resendbtn {
+  margin-left: 23%;
+  color: white;
+  width: 38%;
+  background: #3a3475;
+  border: none;
+  border-radius: 10px;
+}
+.resend-email-btns {
+  display: flex;
+  flex-direction: row;
+  gap: 100px;
+}
+.back-to-login-btn {
+  border-radius: 10px;
+  width: 16vh;
+  height: 6vh;
+  color: #3a3475 !important;
+  background-color: #fff !important;
+  border-color: #3a3475;
+  font-size: 14px;
+}
+.back-to-login-btn:hover {
+  background-color: #3a3475 !important;
+  color: #fff !important;
+}

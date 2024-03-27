@@ -1,0 +1,15 @@
+.add-emp-modal-btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.add-emp-modal-cancel-btn {
+  width: 40%;
+}
+.add-emp-modal-ok-btn {
+  width: 40%;
+}
+.add-emp-modal {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}

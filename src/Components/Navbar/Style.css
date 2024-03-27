@@ -1,0 +1,78 @@
+.NavbarMenu .ant-menu-item {
+  background-color: transparent !important;
+  color: #bababa !important;
+  transition: color 0.3s;
+  outline: none !important;
+}
+.NavbarMenu .ant-menu-item:hover,
+.NavbarMenu .ant-menu-item:active,
+.NavbarMenu .ant-menu-item-selected {
+  color: #fff !important;
+}
+.ant-menu-item-selected > .ant-menu-item-inner {
+  color: #fff !important;
+}
+.reports-submenu {
+  background-color: transparent !important;
+  color: #bababa !important;
+  transition: color 0.3s;
+  outline: none !important;
+}
+.reports-submenu:hover,
+.reports-submenu:active {
+  color: #fff !important;
+}
+.ant-menu-submenu-arrow {
+  color: #bababa !important;
+}
+.reports-submenu-item {
+  margin-left: 8% !important;
+  margin-top: -5% !important;
+}
+.NavbarMenu {
+  height: 100%;
+  width: 100%;
+  font-weight: bold;
+  background-color: #3a3475;
+  margin-top: 30px;
+}
+.side-bar-links {
+  text-decoration: none !important;
+}
+.menu-items-sidebar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.icons-sidenav {
+  height: 20px;
+  width: 20px;
+}
+.icons-sidenav-reports {
+  height: 20px;
+  width: 20px;
+  margin-right: 8%;
+}
+.NavbarFooter {
+  background-color: transparent;
+  color: aliceblue;
+  margin-bottom: auto;
+}
+.logo {
+  margin-left: 60px;
+  margin-top: 10px;
+  margin-bottom: 50px;
+  min-height: 51px;
+  min-width: 48px;
+  max-height: 71px;
+  max-width: 68px;
+}
+.ant-layout-sider-collapsed .ant-layout-sider-children {
+  height: 80px;
+  transition: all 0.2s;
+}
+.menu-items-sidebar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

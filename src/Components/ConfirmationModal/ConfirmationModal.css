@@ -1,0 +1,45 @@
+.delete-modal-body {
+  font-family: Poppins, sans-serif;
+  width: 25% !important;
+}
+.delete-modal-btns-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.delete-modal-ok-btn {
+  background-color: #d92d20 !important;
+  width: 50%;
+  height: 5vh;
+
+  transition: background-color 1ms, color 1ms;
+}
+.delete-modal-okh-btn :hover {
+  background-color: #fff !important;
+  border: 1px solid #d92d20 !important;
+  color: #d92d20 !important;
+}
+.delete-modal-cancel-btn {
+  width: 50%;
+  height: 5vh;
+}
+.delete-pharm-modal-heading-txt {
+  font-family: Inter, sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 31px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #101828;
+}
+.delete-pharm-modal-body-txt {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #667085;
+  margin-bottom: 30px;
+}

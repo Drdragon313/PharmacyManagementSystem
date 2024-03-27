@@ -1,0 +1,239 @@
+.main-container-employees {
+  font-family: "Poppins", sans-serif;
+  margin: 10px;
+  margin-left: 10px;
+}
+.employee-list-head-txt {
+  font-family: Poppins, sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 33px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #3a3475;
+  margin-left: 15px;
+  margin-top: 10px;
+}
+.employee-list-head {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding-left: 30px;
+}
+.search-col {
+  width: 30%;
+}
+.search-bar {
+  width: 100%;
+}
+.employee-list-search-filter-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: space-between;
+  border: 1px solid #ededed;
+  border-radius: 8px;
+  width: 100%;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  margin-left: 1px !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  font-family: "Poppins", sans-serif;
+}
+.filter-container-emp-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-right: 10px;
+}
+.create-emp-btn {
+  justify-content: center;
+  width: 100%;
+  font-family: "Poppins", sans-serif;
+  background-color: #425cda;
+}
+.filter-emp-btn {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  width: 175px;
+  text-align: left;
+  justify-content: space-evenly;
+  margin-right: -10px;
+  padding-left: 30px;
+  background-image: url("../../Assets/notebook.svg");
+  background-repeat: no-repeat;
+  background-size: 15px;
+  background-position: 5px center;
+}
+.filter-role-btn {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  width: 100px;
+  text-align: left;
+  justify-content: space-evenly;
+  margin-right: -10px;
+  padding-left: 30px; /* Adjust the padding to make space for the image */
+  background-image: url("../../Assets/Role-vector.svg"); /* Replace with the correct path to your image */
+  background-repeat: no-repeat;
+  background-size: 15px; /* Adjust the size of the image */
+  background-position: 5px center; /* Adjust the position of the image */
+}
+.filter-container-emp .filter-emp-btn {
+  font-size: 12px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid #425cda;
+  color: #425cda;
+}
+.filter-container-emp .filter-role-btn {
+  font-size: 12px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid #425cda;
+  color: #425cda;
+}
+.filter-icon {
+  padding-right: 10px;
+}
+.filter-select-placeholder {
+  margin-top: 30px;
+  color: #425cda;
+  font-family: "Poppins", sans-serif;
+}
+.plus-outline-img {
+  height: 10px;
+  width: 10px;
+  margin-right: -10px;
+  padding-right: 10px;
+}
+.search-bar {
+  background: #fff !important;
+  border-radius: 12px;
+}
+.action-btns {
+  cursor: pointer;
+}
+
+.custom-table-header {
+  font-family: "Poppins", sans-serif;
+}
+.custom-table-content {
+  font-family: "Poppins", sans-serif;
+}
+.items-per-page-dropdown {
+  border: 1px solid #ededed;
+  border-radius: 10px;
+  width: 60px;
+  height: 35px !important;
+  padding: 5px;
+  margin-bottom: 17px;
+}
+.emp-table-footer {
+  background-color: #fff !important;
+  height: 60px;
+  border: 1px solid #ededed;
+  border-radius: 12px;
+  padding-top: 5px;
+  padding-left: 50px;
+}
+.ant-table-column-sorters .ant-tooltip {
+  display: none !important;
+}
+.ant-pagination .ant-pagination-item a {
+  font-size: 12px;
+  font-family: Roboto, sans-serif;
+}
+
+:where(.css-dev-only-do-not-override-nnuwmp).ant-pagination
+  .ant-pagination-item-active {
+  background-color: #425cda !important;
+  height: 30px;
+  color: #fff;
+  border: transparent;
+}
+
+.filter-emp-btn option {
+  padding: 8px;
+  background-color: #fff;
+
+  border-radius: 12px;
+  font-size: 12px;
+}
+.filter-role-btn option {
+  padding: 8px;
+  background-color: #fff;
+  border-radius: 12px;
+  font-size: 12px;
+}
+.filter-emp-btn option:hover {
+  background-color: #007bff;
+}
+.filter-role-btn option:hover {
+  background-color: #007bff;
+}
+/* Styles for the dropdown list when open (optional) */
+.filter-emp-btn:focus {
+  border-color: #007bff; /* Change color on focus if needed */
+  outline: none; /* Remove default outline on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a box shadow on focus */
+}
+.filter-role-btn:focus {
+  border-color: #007bff; /* Change color on focus if needed */
+  outline: none; /* Remove default outline on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a box shadow on focus */
+}
+.status-circle {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 5px; /* Adjust as needed for spacing */
+}
+.status-pointer {
+  cursor: pointer;
+  text-decoration: underline;
+  transition: text-decoration 0.1s;
+}
+.status-pointer :hover {
+  text-decoration: none !important;
+}
+.delete-modal-ok-btn {
+  background-color: #d92d20 !important;
+  width: 50%;
+  height: 5vh;
+
+  transition: background-color 1ms, color 1ms;
+}
+.resend-modal-ok-btn {
+  background-color: #425cda !important;
+  width: 50%;
+  height: 5vh;
+
+  transition: background-color 1ms, color 1ms;
+}
+.employee-details-table {
+  width: 100vw !important;
+}
+@media only screen and (max-width: 668px) {
+  .search-col {
+    width: 100%;
+  }
+  .create-emp-btn {
+    margin-bottom: 10px;
+  }
+  .employee-details-table {
+    width: 100%;
+    overflow-x: auto !important;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .employee-details-table {
+    width: 100%;
+    overflow-x: auto !important;
+  }
+}
