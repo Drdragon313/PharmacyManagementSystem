@@ -72,6 +72,10 @@ const SchemaDetails = () => {
   const breadcrumbItems = [
     { label: "Upload Files", link: "/file" },
     {
+      label: "Choose File",
+      link: `/file/fileUpload`,
+    },
+    {
       label: "File Details",
       link: `/schema/${schemaId}`,
     },

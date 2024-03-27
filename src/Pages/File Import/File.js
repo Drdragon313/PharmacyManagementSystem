@@ -1,4 +1,12 @@
-import { Upload, message, Progress, Pagination, Image, Modal } from "antd";
+import {
+  Upload,
+  message,
+  Progress,
+  Pagination,
+  Image,
+  Modal,
+  Space,
+} from "antd";
 import React, { useState, useEffect, useMemo } from "react";
 import { validateCSV } from "../../Utility Function/FileUtils";
 import "./File.css";
@@ -12,6 +20,10 @@ import CustomTable from "../../Components/CustomTable/CustomTable";
 import PaginationComponent from "../../Components/PaginationComponent/PaginationComponent";
 import eyeIcon from "../../Assets/Icon feather-eye.svg";
 import { Link } from "react-router-dom";
+import deleteActionbtn from "../../Assets/deleteAction.svg";
+import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationModal";
+import { fetchUserPermissions } from "../../Utility Function/ModulesAndPermissions";
+import Spinner from "../../Components/Spinner/Spinner";
 
 const File = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -26,13 +38,29 @@ const File = () => {
   const schemaData = localStorage.getItem("selectedSchemaData");
   const schemaID = localStorage.getItem("selectedSchemaID");
   const localHeader = localStorage.getItem("AuthorizationToken");
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [recordToDelete, setRecordToDelete] = useState(null);
+  const [userPermissions, setUserPermissions] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const headers = useMemo(() => {
     return {
       Authorization: localHeader,
     };
   }, [localHeader]);
+  useEffect(() => {
+    const fetchUserPermissionData = async () => {
+      try {
+        await fetchUserPermissions(setUserPermissions);
+      } catch (error) {
+        console.error("Error fetching user permissions:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchUserPermissionData();
+  }, []);
   const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
@@ -107,6 +135,10 @@ const File = () => {
   };
   const columns = [
     {
+      title: "ID",
+      dataIndex: "id",
+    },
+    {
       title: "File Name",
       dataIndex: "file_name",
     },
@@ -122,92 +154,169 @@ const File = () => {
       title: "Uploaded by",
       dataIndex: "upload_by",
     },
+    {
+      title: "Action(s)",
+      width: 150,
+      fixed: "right",
+      render: (text, record) => (
+        <Space className="action-btns">
+          {canDeleteFile && (
+            <Image
+              preview={false}
+              src={deleteActionbtn}
+              onClick={() => handleDeleteConfirmation(record.id)}
+            ></Image>
+          )}
+        </Space>
+      ),
+    },
   ];
+  const handleDeleteConfirmation = (recordId) => {
+    setRecordToDelete(recordId);
+    setShowDeleteConfirmation(true);
+  };
+
+  const handleDelete = () => {
+    axios
+      .delete(`${baseURL}/delete-files-data?id=${recordToDelete}`, { headers })
+      .then(() => {
+        message.success("Record deleted successfully");
+        setListReports((prevReports) =>
+          prevReports.filter((report) => report.id !== recordToDelete)
+        );
+      })
+      .catch((error) => {
+        message.error("Failed to delete record");
+        console.error("Delete error:", error);
+      })
+      .finally(() => {
+        setShowDeleteConfirmation(false);
+      });
+  };
+  const canUploadFile =
+    userPermissions?.find((module) => module.module_name === "Upload Files")
+      ?.actions?.write || false;
+  const canViewFile =
+    userPermissions?.find((module) => module.module_name === "Upload Files")
+      ?.actions?.read || false;
+  const canDeleteFile =
+    userPermissions?.find((module) => module.module_name === "Upload Files")
+      ?.actions?.delete || false;
   const breadcrumbItems = [
-    { label: "Available Schemas", link: "/file" },
+    { label: "Upload Files", link: "/file" },
     { label: "Choose File", link: `/file/fileUpload` },
   ];
   const handleModalCancel = () => {
     setShowModal(false);
   };
+  if (loading === true) {
+    return <Spinner />;
+  }
   return (
-    <div>
-      <div className="breadcrumb-file-upload">
-        <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
-      </div>
-      <div className="file-container">
-        <p className="pharmacy-list-head-txt">Upload schema</p>
-        <p className="file-paragraph">
-          The CSV file's default column names can be viewed in the Details
-          section for each tile. Additionally, a template file can be downloaded
-          from there.
-        </p>
-        <div className="upload-download-btn-container">
-          <Upload
-            listType="text"
-            className="file-upload"
-            accept=".csv"
-            beforeUpload={validateAndUpload}
-            showUploadList={error ? true : false}
-            onRemove={() => {
-              setError([]);
-            }}
-          >
-            <CustomButton className="import-button">
-              <Image
-                className="down-img"
-                preview={false}
-                src={uploadloadIcon}
-              ></Image>
-              Choose File
-            </CustomButton>
-          </Upload>
-          <Link style={{ textDecoration: "none" }} to={`/schema/${schemaID}`}>
-            <CustomButton className="ghost-btn">
-              <Image className="down-img" preview={false} src={eyeIcon}></Image>
-              View Details
-            </CustomButton>
-          </Link>
-        </div>
-        <Modal
-          open={showModal}
-          onCancel={handleModalCancel}
-          footer={null}
-          title="Errors in the uploaded file"
-        >
-          {error &&
-            getCurrentPageErrors().map((value, index) => (
-              <div style={{ color: "red" }} key={index}>
-                <p>{value}</p>
-              </div>
-            ))}
-          {error.length > errorsPerPage && (
-            <Pagination
-              current={currentPage}
-              pageSize={errorsPerPage}
-              total={error.length}
-              onChange={handlePageChange}
-              showSizeChanger={false}
-              className="pagination"
-            />
-          )}
-        </Modal>
-        <p className="table-tile-schema-details">Uploaded Reports List</p>
-        <CustomTable dataSource={listReports} columns={columns} />
-        <PaginationComponent
-          limit={limit}
-          handleLimitChange={handleLimitChange}
-          page={currentPage}
-          totalItems={totalItems}
-          handlePageChange={handlePageChange}
-        />
-        {isLoading && (
-          <div className="loading-indicator">
-            <Progress className="fileProgress" percent={progress} />
+    <>
+      {canUploadFile && (
+        <div>
+          <div className="breadcrumb-file-upload">
+            <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
           </div>
-        )}
-      </div>
-    </div>
+          <div className="file-container">
+            <p className="pharmacy-list-head-txt">Upload Report</p>
+            <p className="file-paragraph">
+              The CSV file's default column names can be viewed in the Details
+              section for each tile. Additionally, a template file can be
+              downloaded from there.
+            </p>
+            <div className="upload-download-btn-container">
+              {canUploadFile && (
+                <Upload
+                  listType="text"
+                  className="file-upload"
+                  accept=".csv"
+                  beforeUpload={validateAndUpload}
+                  showUploadList={error ? true : false}
+                  onRemove={() => {
+                    setError([]);
+                  }}
+                >
+                  <CustomButton className="import-button">
+                    <Image
+                      className="down-img"
+                      preview={false}
+                      src={uploadloadIcon}
+                    ></Image>
+                    Choose File
+                  </CustomButton>
+                </Upload>
+              )}
+              {canViewFile && (
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to={`/schema/${schemaID}`}
+                >
+                  <CustomButton className="ghost-btn">
+                    <Image
+                      className="down-img"
+                      preview={false}
+                      src={eyeIcon}
+                    ></Image>
+                    View Details
+                  </CustomButton>
+                </Link>
+              )}
+            </div>
+            <Modal
+              open={showModal}
+              onCancel={handleModalCancel}
+              footer={null}
+              title="Errors in the uploaded file"
+            >
+              {error &&
+                getCurrentPageErrors().map((value, index) => (
+                  <div style={{ color: "red" }} key={index}>
+                    <p>{value}</p>
+                  </div>
+                ))}
+              {error.length > errorsPerPage && (
+                <Pagination
+                  current={currentPage}
+                  pageSize={errorsPerPage}
+                  total={error.length}
+                  onChange={handlePageChange}
+                  showSizeChanger={false}
+                  className="pagination"
+                />
+              )}
+            </Modal>
+            <p className="table-tile-schema-details">Uploaded Reports List</p>
+            <div className="upload-file-table">
+              <CustomTable dataSource={listReports} columns={columns} />
+            </div>
+            <PaginationComponent
+              limit={limit}
+              handleLimitChange={handleLimitChange}
+              page={currentPage}
+              totalItems={totalItems}
+              handlePageChange={handlePageChange}
+            />
+            {isLoading && (
+              <div className="loading-indicator">
+                <Progress className="fileProgress" percent={progress} />
+              </div>
+            )}
+          </div>
+          <ConfirmationModal
+            open={showDeleteConfirmation}
+            onConfirm={handleDelete}
+            onCancel={() => setShowDeleteConfirmation(false)}
+            confirmationHeading="Delete File"
+            confirmationText="Are you sure you want to delete this record?"
+            titleImage={null}
+            btnclassName=""
+            btnTxt="Delete"
+          />
+        </div>
+      )}
+    </>
   );
 };
 
