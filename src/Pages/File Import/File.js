@@ -24,7 +24,7 @@ import deleteActionbtn from "../../Assets/deleteAction.svg";
 import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationModal";
 import { fetchUserPermissions } from "../../Utility Function/ModulesAndPermissions";
 import Spinner from "../../Components/Spinner/Spinner";
-
+import AccessDenied from "../AccessDenied/AccessDenied";
 const File = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -177,13 +177,11 @@ const File = () => {
       fixed: "right",
       render: (text, record) => (
         <Space className="action-btns">
-          {canDeleteFile && (
-            <Image
-              preview={false}
-              src={deleteActionbtn}
-              onClick={() => handleDeleteConfirmation(record.id)}
-            ></Image>
-          )}
+          <Image
+            preview={false}
+            src={deleteActionbtn}
+            onClick={() => handleDeleteConfirmation(record.id)}
+          ></Image>
         </Space>
       ),
     },
@@ -210,15 +208,11 @@ const File = () => {
         setShowDeleteConfirmation(false);
       });
   };
-  const canUploadFile =
-    userPermissions?.find((module) => module.module_name === "Upload Files")
-      ?.actions?.write || false;
+
   const canViewFile =
     userPermissions?.find((module) => module.module_name === "Upload Files")
       ?.actions?.read || false;
-  const canDeleteFile =
-    userPermissions?.find((module) => module.module_name === "Upload Files")
-      ?.actions?.delete || false;
+
   const breadcrumbItems = [
     { label: "Upload Files", link: "/file" },
     { label: "Choose File", link: `/file/fileUpload` },
@@ -231,7 +225,7 @@ const File = () => {
   }
   return (
     <>
-      {canUploadFile && (
+      {canViewFile ? (
         <div>
           <div className="breadcrumb-file-upload">
             <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
@@ -246,27 +240,26 @@ const File = () => {
               downloaded from there.
             </p>
             <div className="upload-download-btn-container">
-              {canUploadFile && (
-                <Upload
-                  listType="text"
-                  className="file-upload"
-                  accept=".csv"
-                  beforeUpload={validateAndUpload}
-                  showUploadList={error ? true : false}
-                  onRemove={() => {
-                    setError([]);
-                  }}
-                >
-                  <CustomButton className="import-button">
-                    <Image
-                      className="down-img"
-                      preview={false}
-                      src={uploadloadIcon}
-                    ></Image>
-                    Choose File
-                  </CustomButton>
-                </Upload>
-              )}
+              <Upload
+                listType="text"
+                className="file-upload"
+                accept=".csv"
+                beforeUpload={validateAndUpload}
+                showUploadList={error ? true : false}
+                onRemove={() => {
+                  setError([]);
+                }}
+              >
+                <CustomButton className="import-button">
+                  <Image
+                    className="down-img"
+                    preview={false}
+                    src={uploadloadIcon}
+                  ></Image>
+                  Choose File
+                </CustomButton>
+              </Upload>
+
               {canViewFile && (
                 <Link
                   style={{ textDecoration: "none" }}
@@ -334,6 +327,8 @@ const File = () => {
             btnTxt="Delete"
           />
         </div>
+      ) : (
+        <AccessDenied />
       )}
     </>
   );

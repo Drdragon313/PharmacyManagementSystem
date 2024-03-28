@@ -25,38 +25,34 @@ const Pharmacy = () => {
   }, []);
 
   const getItems = (panelStyle) => {
-    return faqData.map((item) => ({
-      key: item.key,
-      label: (
-        <div>
-          <p className="heading-expandable-faq">{item.Questions}</p>
-        </div>
-      ),
-      children: (
-        <div>
-          <p>{item.Answers}</p>
-          <p>{item.Path}</p>
-          <div className="faq-img">
-            {item.Image1 && (
-              <Image src={item.Image1} alt="FAQ Image" preview={false} />
-            )}
+    return faqData
+      .filter((item) => item.Questions && item.Answers)
+      .map((item, index) => ({
+        key: index,
+        label: (
+          <div>
+            <p className="heading-expandable-faq">{item.Questions}</p>
           </div>
-          <div className="faq-img">
-            {item.Image2 && (
-              <Image src={item.Image2} alt="FAQ Image" preview={false} />
-            )}
+        ),
+        children: (
+          <div>
+            <p>{item.Answers}</p>
+            <p>{item.Path}</p>
+            <div className="faq-img">
+              {item.Image1 && (
+                <Image src={item.Image1} alt="FAQ Image" preview={false} />
+              )}
+            </div>
+            <div className="faq-img">
+              {item.Image2 && (
+                <Image src={item.Image2} alt="FAQ Image" preview={false} />
+              )}
+            </div>
           </div>
-          <div className="faq-img">
-            {item.Image3 && (
-              <Image src={item.Image3} alt="FAQ Image" preview={false} />
-            )}
-          </div>
-        </div>
-      ),
-      style: panelStyle,
-    }));
+        ),
+        style: panelStyle,
+      }));
   };
-
   const { token } = theme.useToken();
   const panelStyle = {
     marginBottom: 24,

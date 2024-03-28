@@ -80,7 +80,6 @@ const Stable = () => {
       dispatch(updateFormDataOrder([]));
       dispatch(updateSchemaName(newSchema.name));
       dispatch(resetId());
-      window.location.reload();
     });
     navigate("/tilepage");
   };

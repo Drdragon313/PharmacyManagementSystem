@@ -42,6 +42,8 @@ export async function saveSchema(
       }
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      window.location.reload();
     }
   } else {
     console.error("No rows to save in the schema.");
