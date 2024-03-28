@@ -9,6 +9,7 @@ import downloadIcon from "../../Assets/Download.svg";
 import CustomTable from "../../Components/CustomTable/CustomTable";
 import { downloadCSV } from "../../Utility Function/downloadCSV";
 import CustomBreadcrumb from "../CustomBeadcrumb/CustomBreadcrumb";
+import Spinner from "../Spinner/Spinner";
 const SchemaDetails = () => {
   const { schemaId } = useParams();
   const [schemaData, setSchemaData] = useState(null);
@@ -107,10 +108,7 @@ const SchemaDetails = () => {
           />
         </div>
       ) : (
-        <div className="loader">
-          <Spin size="large"></Spin>
-          <p>Loading schema data...</p>
-        </div>
+        <Spinner />
       )}
     </div>
   );
