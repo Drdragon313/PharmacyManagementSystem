@@ -26,11 +26,17 @@ const Roles = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [loading, setLoading] = useState(true);
+  const authToken = localStorage.getItem("AuthorizationToken");
 
   const fetchRolesData = async () => {
     try {
       const response = await axios.get(
-        `${baseURL}/list-available-roles?page=${page}&limit=${limit}`
+        `${baseURL}/list-available-roles?page=${page}&limit=${limit}`,
+        {
+          headers: {
+            Authorization: `${authToken}`,
+          },
+        }
       );
       const data = response.data;
 
