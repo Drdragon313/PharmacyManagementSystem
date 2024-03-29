@@ -216,7 +216,7 @@ const Topnav = () => {
           </div>
           <SideMenuBar
             className="side-menu-bar-items"
-            toggleMobileDrawer={() => setShowMobileDrawer(false)}
+            toggleMobileDrawer={handleToggleMobileDrawer}
           />
           <Footer
             style={{

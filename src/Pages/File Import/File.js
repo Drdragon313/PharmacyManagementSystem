@@ -177,11 +177,13 @@ const File = () => {
       fixed: "right",
       render: (text, record) => (
         <Space className="action-btns">
-          <Image
-            preview={false}
-            src={deleteActionbtn}
-            onClick={() => handleDeleteConfirmation(record.id)}
-          ></Image>
+          {subModulePermissionsDelete && (
+            <Image
+              preview={false}
+              src={deleteActionbtn}
+              onClick={() => handleDeleteConfirmation(record.id)}
+            ></Image>
+          )}
         </Space>
       ),
     },
@@ -212,6 +214,17 @@ const File = () => {
   const canViewFile =
     userPermissions?.find((module) => module.module_name === "Upload Files")
       ?.actions?.read || false;
+  const subModulePermissionsWrite =
+    userPermissions
+      ?.find((module) => module.module_name === "Upload Files")
+      .sub_modules.find((subModule) => subModule.sub_module_name === "Owing")
+      ?.actions?.write || false;
+
+  const subModulePermissionsDelete =
+    userPermissions
+      ?.find((module) => module.module_name === "Upload Files")
+      .sub_modules.find((subModule) => subModule.sub_module_name === "Owing")
+      ?.actions?.delete || false;
 
   const breadcrumbItems = [
     { label: "Upload Files", link: "/file" },
@@ -240,25 +253,27 @@ const File = () => {
               downloaded from there.
             </p>
             <div className="upload-download-btn-container">
-              <Upload
-                listType="text"
-                className="file-upload"
-                accept=".csv"
-                beforeUpload={validateAndUpload}
-                showUploadList={error ? true : false}
-                onRemove={() => {
-                  setError([]);
-                }}
-              >
-                <CustomButton className="import-button">
-                  <Image
-                    className="down-img"
-                    preview={false}
-                    src={uploadloadIcon}
-                  ></Image>
-                  Choose File
-                </CustomButton>
-              </Upload>
+              {subModulePermissionsWrite && (
+                <Upload
+                  listType="text"
+                  className="file-upload"
+                  accept=".csv"
+                  beforeUpload={validateAndUpload}
+                  showUploadList={error ? true : false}
+                  onRemove={() => {
+                    setError([]);
+                  }}
+                >
+                  <CustomButton className="import-button">
+                    <Image
+                      className="down-img"
+                      preview={false}
+                      src={uploadloadIcon}
+                    ></Image>
+                    Choose File
+                  </CustomButton>
+                </Upload>
+              )}
 
               {canViewFile && (
                 <Link
