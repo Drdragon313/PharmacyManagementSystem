@@ -290,6 +290,7 @@ const CreateRole = () => {
         key: "write",
         render: (_, subModule) => (
           <Checkbox
+            disabled={true}
             checked={subModule.write || false}
             onChange={(e) =>
               handleSubModuleCheckboxChange(e, subModule, "write", record.key)
@@ -319,6 +320,7 @@ const CreateRole = () => {
 
         render: (_, subModule) => (
           <Checkbox
+            disabled={true}
             checked={subModule.update || false}
             onChange={(e) =>
               handleSubModuleCheckboxChange(e, subModule, "update", record.key)
@@ -333,6 +335,7 @@ const CreateRole = () => {
 
         render: (_, subModule) => (
           <Checkbox
+            disabled={true}
             checked={subModule.delete || false}
             onChange={(e) =>
               handleSubModuleCheckboxChange(e, subModule, "delete", record.key)
