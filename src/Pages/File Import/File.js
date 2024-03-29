@@ -177,7 +177,7 @@ const File = () => {
       fixed: "right",
       render: (text, record) => (
         <Space className="action-btns">
-          {subModulePermissionsDelete && (
+          {canDeleteFile && (
             <Image
               preview={false}
               src={deleteActionbtn}
@@ -214,17 +214,13 @@ const File = () => {
   const canViewFile =
     userPermissions?.find((module) => module.module_name === "Upload Files")
       ?.actions?.read || false;
-  const subModulePermissionsWrite =
-    userPermissions
-      ?.find((module) => module.module_name === "Upload Files")
-      .sub_modules.find((subModule) => subModule.sub_module_name === "Owing")
-      ?.actions?.write || false;
 
-  const subModulePermissionsDelete =
-    userPermissions
-      ?.find((module) => module.module_name === "Upload Files")
-      .sub_modules.find((subModule) => subModule.sub_module_name === "Owing")
+  const canDeleteFile =
+    userPermissions?.find((module) => module.module_name === "Upload Files")
       ?.actions?.delete || false;
+  const canUploadFile =
+    userPermissions?.find((module) => module.module_name === "Upload Files")
+      ?.actions?.write || false;
 
   const breadcrumbItems = [
     { label: "Upload Files", link: "/file" },
@@ -253,7 +249,7 @@ const File = () => {
               downloaded from there.
             </p>
             <div className="upload-download-btn-container">
-              {subModulePermissionsWrite && (
+              {canUploadFile && (
                 <Upload
                   listType="text"
                   className="file-upload"
