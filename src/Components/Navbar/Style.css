@@ -39,6 +39,9 @@
 .side-bar-links {
   text-decoration: none !important;
 }
+.side-bar-links:active {
+  color: #fff !important;
+}
 .menu-items-sidebar {
   display: flex;
   flex-direction: row;
