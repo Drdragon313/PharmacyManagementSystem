@@ -73,6 +73,10 @@ const SchemaForm = ({ onAddRow }) => {
                     required: true,
                     message: "Please input Field Name",
                   },
+                  {
+                    pattern: /^[^\s].*/,
+                    message: "Field name cannot start with a blank space",
+                  },
                 ]}
               >
                 <Input className="SchemaDetailsInput" />
