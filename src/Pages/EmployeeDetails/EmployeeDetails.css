@@ -31,7 +31,7 @@
   font-family: "Poppins", sans-serif;
 }
 .ant-spin-container {
-  border: 1px solid #ededed;
+  /* border: 1px solid #ededed; */
   border-radius: 5px;
   font-family: "Poppins", sans-serif;
   width: 100%;

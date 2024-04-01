@@ -66,7 +66,7 @@ const SchemaDetails = () => {
     {
       title: "Required",
       dataIndex: "Required",
-      width: "30%",
+
       render: (Required) => (Required ? "Yes" : "No"),
     },
   ];
@@ -105,7 +105,7 @@ const SchemaDetails = () => {
               className="schema-table-schema-details"
               dataSource={schemaData.data}
               columns={columns}
-              bordered
+              bordered={true}
             />
           </div>
         </div>

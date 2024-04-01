@@ -19,6 +19,7 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import { fetchUserPermissions } from "../../Utility Function/ModulesAndPermissions";
+import AccessDenied from "../AccessDenied/AccessDenied";
 const { Option } = Select;
 
 const EditUsers = () => {
@@ -52,6 +53,7 @@ const EditUsers = () => {
   const [permissions, setPermissions] = useState([]);
   const [selectedRole, setSelectedRole] = useState();
   const [isRoleSelectDisabled, setIsRoleSelectDisabled] = useState(false);
+
   const { userID } = useParams();
   const breadcrumbItems = [
     { label: "Employees", link: "/employeepage" },
@@ -269,278 +271,297 @@ const EditUsers = () => {
       }));
     }
   };
-  return (
-    <div className="EditUsersBasicContainer">
-      {userID && (
-        <div className="breadcrumb-border-edit-user">
-          <CustomBreadcrumb
-            seperator=">>"
-            items={breadcrumbItems}
-          ></CustomBreadcrumb>
-        </div>
-      )}
-      <div className="EditUsersBasicInfoHeading">
-        {userID ? (
-          <h5 className="usercreationtxt">Edit Employee Details</h5>
-        ) : (
-          <h5>Update Profile</h5>
-        )}
-      </div>
-      <div className="EditUsersDetails">
-        <form onSubmit={handleSubmit}>
-          <div className="adjacent-fields">
-            {" "}
-            <CustomInput
-              divclassName="mb-3"
-              labelclassName={userID ? "adduserLabel" : "addUserNotLabel"}
-              labelText="First Name"
-              inputclassName="AddUsersDetailsInput"
-              inputName="FName"
-              handleChange={handleChange}
-              value={data.FName}
-            />
-            <CustomInput
-              divclassName="mb-3"
-              labelclassName={userID ? "adduserLabel" : "addUserNotLabel"}
-              labelText="Last Name"
-              inputclassName="AddUsersDetailsInput"
-              inputName="LName"
-              handleChange={handleChange}
-              value={data.LName}
-            />
-          </div>
-          <div className="adjacent-fields">
-            <CustomSelect
-              divclassName="mb-3"
-              labelclassName="addUserNotLabel"
-              labelText="Gender"
-              selectclassName="AddUsersDetailsInput"
-              name="Gender"
-              onChange={handleSelectChange}
-              value={data.Gender}
-              options={["Male", "Female", "Other", "Do Not Wish to Disclose"]}
-            />
-            <div className="mb-3">
-              <label htmlFor="DOB" className="addUserNotLabel">
-                Date of birth
-              </label>
-              <br />
-              <DatePicker
-                disabled={userID ? false : true}
-                className="AddUsersDetailsInput"
-                name="DateOfBirth"
-                onChange={handleDateChange}
-                format="DD-MM-YYYY"
-                disabledDate={(current) =>
-                  current &&
-                  (current > moment().endOf("day") ||
-                    current < moment().subtract(100, "years") ||
-                    current > moment().subtract(18, "years"))
-                }
-                placeholder={data.DateOfBirth}
-              />
-            </div>
-          </div>
-          <div className="adjacent-fields">
-            {" "}
-            <div className="mb-3">
-              <label htmlFor="Contact" className="addUserNotLabelContact">
-                Contact number
-              </label>
-              <br />
-              <Input
-                className="AddUsersDetailsInput"
-                name="Contact"
-                onChange={(e) => {
-                  handleChange(e);
-                  handleContactValidation(e.target.value);
-                }}
-                value={data.Contact}
-              />
-              {data.Contact.length > 0 && !validContact && (
-                <p className="InvalidContactTxt">Invalid Contact</p>
-              )}
-            </div>{" "}
-            <CustomInput
-              divclassName="mb-3"
-              labelclassName={userID ? "adduserLabel" : "addUserNotLabel"}
-              labelText="Email"
-              type="email"
-              inputclassName="AddUsersDetailsInput"
-              inputName="Email"
-              handleChange={handleChange}
-              value={data.Email}
-              disabled={true}
-            />
-          </div>
-          <div className="adjacent-fields">
-            {" "}
-            <div className="mb-3">
-              <label className={userID ? "adduserLabel" : "addUserNotLabel"}>
-                Role
-              </label>
-              <br />
-              <Select
-                disabled={userID ? isRoleSelectDisabled : true}
-                className="AddUsersDetailsInput"
-                name="Selected_Role_Name"
-                value={data.Selected_Role_Name}
-                onChange={(value) =>
-                  handleSelectChange("Selected_Role_Name", value)
-                }
-              >
-                {data.Available_Roles.map((option) => (
-                  <Option key={option.id} value={option.id}>
-                    {option.role_name}
-                  </Option>
-                ))}
-              </Select>
-            </div>{" "}
-            <div className="mb-3">
-              <label className="addUserNotLabel">Permissions</label>
-              <br />
-              <Select
-                className="AddUsersDetailsInput"
-                name="Role_Permissions"
-                value={data.Role_Permissions}
-                style={{
-                  backgroundColor:
-                    userID && !isRoleSelectDisabled ? "#d9d9d9" : "inherit",
-                }}
-                onChange={(value) =>
-                  handleSelectChange("Role_Permissions", value)
-                }
-                disabled={userID && !isRoleSelectDisabled ? false : true}
-              >
-                {permissions.map((option) => (
-                  <Option key={option} value={option}>
-                    {option}
-                  </Option>
-                ))}
-              </Select>
-            </div>
-          </div>
-          <div className="adjacent-fields">
-            {" "}
-            <div className="mb-3">
-              <label className="addUserNotLabel">Pharmacy</label>
-              <br />
-              <Select
-                className="AddUsersDetailsInput"
-                name="Pharmacy"
-                value={data.Pharmacy}
-                onChange={(value) => handleSelectChange("Pharmacy", value)}
-                disabled={userID ? false : true}
-              >
-                {data.AvailablePharmacies &&
-                  data.AvailablePharmacies.map((option) => (
-                    <Option key={option.id} value={option.id}>
-                      {option.pharmacy_name}
-                    </Option>
-                  ))}
-              </Select>
-            </div>
-            <div className="DetailsInput-container">
-              {" "}
-              <CustomInput
-                divclassName="mb-3"
-                labelclassName="addUserNotLabel"
-                labelText="Salary"
-                inputclassName="DetailsInput"
-                inputName="salary"
-                handleChange={handleChange}
-                value={data.salary}
-                disabled={userID ? false : true}
-              />
-              <CustomInput
-                divclassName="mb-3"
-                labelclassName="addUserNotLabel"
-                labelText="Line manager"
-                inputclassName="DetailsInput"
-                inputName="Line_Manager"
-                handleChange={handleChange}
-                value={data.Line_Manager}
-                disabled={true}
-              />
-            </div>
-          </div>
-          <div className="adjacent-fields">
-            {" "}
-            <CustomInput
-              divclassName="mb-3"
-              labelclassName="addUserNotLabel"
-              labelText="Postcode"
-              inputclassName="AddUsersDetailsInput"
-              inputName="PostCode"
-              handleChange={handleChange}
-              handleBlur={handleFindAddress}
-              value={data.PostCode}
-            />{" "}
-            <CustomSelect
-              divclassName="mb-3"
-              labelclassName="adduserNotLabel"
-              labelText="Please Select your Address"
-              selectclassName="AddUsersDetailsInput"
-              name="Address"
-              onChange={handleSelectChange}
-              options={
-                pCodeResponse ? pCodeResponse.map((item) => item.address) : []
-              }
-              value={data.PostTown}
-            />
-          </div>
-          <div className="adjacent-fields">
-            {" "}
-            <CustomInput
-              divclassName="mb-3"
-              labelclassName="addUserNotLabel"
-              labelText="Town"
-              inputclassName="AddUsersDetailsInput"
-              inputName="PostTown"
-              handleChange={handleChange}
-              value={data.PostTown}
-            />
-            <div className="DetailsInput-container">
-              {" "}
-              <CustomInput
-                divclassName="mb-3"
-                labelclassName="addUserNotLabel"
-                labelText="Building No."
-                inputclassName="DetailsInput"
-                inputName="Line1"
-                handleChange={handleChange}
-                value={data.Line1}
-              />{" "}
-              <CustomInput
-                divclassName="mb-3"
-                labelclassName="addUserNotLabel"
-                labelText="Street No"
-                inputclassName="DetailsInput"
-                inputName="Line2"
-                handleChange={handleChange}
-                value={data.Line2}
-              />{" "}
-            </div>
-          </div>
 
-          <div className="AddUsersInformationUpdateBtnContainer">
-            <Link to="/employeepage">
-              {" "}
-              <CustomButton className="AddUsersInformationCancelBtn">
-                Cancel
-              </CustomButton>
-            </Link>
-            <CustomButton
-              className="add-user-btn-submit"
-              htmlType="submit"
-              type="primary"
-            >
-              {userID ? "Update User" : "Update Profile"}
-            </CustomButton>
+  const canEditUsers =
+    permissions?.find((module) => module.module_name === "Employees")?.actions
+      ?.update || false;
+  return (
+    <>
+      {canEditUsers ? (
+        <div className="EditUsersBasicContainer">
+          {userID && (
+            <div className="breadcrumb-border-edit-user">
+              <CustomBreadcrumb
+                seperator=">>"
+                items={breadcrumbItems}
+              ></CustomBreadcrumb>
+            </div>
+          )}
+          <div className="EditUsersBasicInfoHeading">
+            {userID ? (
+              <h5 className="usercreationtxt">Edit Employee Details</h5>
+            ) : (
+              <h5>Update Profile</h5>
+            )}
           </div>
-        </form>
-      </div>
-    </div>
+          <div className="EditUsersDetails">
+            <form onSubmit={handleSubmit}>
+              <div className="adjacent-fields">
+                {" "}
+                <CustomInput
+                  divclassName="mb-3"
+                  labelclassName={userID ? "adduserLabel" : "addUserNotLabel"}
+                  labelText="First Name"
+                  inputclassName="AddUsersDetailsInput"
+                  inputName="FName"
+                  handleChange={handleChange}
+                  value={data.FName}
+                />
+                <CustomInput
+                  divclassName="mb-3"
+                  labelclassName={userID ? "adduserLabel" : "addUserNotLabel"}
+                  labelText="Last Name"
+                  inputclassName="AddUsersDetailsInput"
+                  inputName="LName"
+                  handleChange={handleChange}
+                  value={data.LName}
+                />
+              </div>
+              <div className="adjacent-fields">
+                <CustomSelect
+                  divclassName="mb-3"
+                  labelclassName="addUserNotLabel"
+                  labelText="Gender"
+                  selectclassName="AddUsersDetailsInput"
+                  name="Gender"
+                  onChange={handleSelectChange}
+                  value={data.Gender}
+                  options={[
+                    "Male",
+                    "Female",
+                    "Other",
+                    "Do Not Wish to Disclose",
+                  ]}
+                />
+                <div className="mb-3">
+                  <label htmlFor="DOB" className="addUserNotLabel">
+                    Date of birth
+                  </label>
+                  <br />
+                  <DatePicker
+                    disabled={userID ? false : true}
+                    className="AddUsersDetailsInput"
+                    name="DateOfBirth"
+                    onChange={handleDateChange}
+                    format="DD-MM-YYYY"
+                    disabledDate={(current) =>
+                      current &&
+                      (current > moment().endOf("day") ||
+                        current < moment().subtract(100, "years") ||
+                        current > moment().subtract(18, "years"))
+                    }
+                    placeholder={data.DateOfBirth}
+                  />
+                </div>
+              </div>
+              <div className="adjacent-fields">
+                {" "}
+                <div className="mb-3">
+                  <label htmlFor="Contact" className="addUserNotLabelContact">
+                    Contact number
+                  </label>
+                  <br />
+                  <Input
+                    className="AddUsersDetailsInput"
+                    name="Contact"
+                    onChange={(e) => {
+                      handleChange(e);
+                      handleContactValidation(e.target.value);
+                    }}
+                    value={data.Contact}
+                  />
+                  {data.Contact.length > 0 && !validContact && (
+                    <p className="InvalidContactTxt">Invalid Contact</p>
+                  )}
+                </div>{" "}
+                <CustomInput
+                  divclassName="mb-3"
+                  labelclassName={userID ? "adduserLabel" : "addUserNotLabel"}
+                  labelText="Email"
+                  type="email"
+                  inputclassName="AddUsersDetailsInput"
+                  inputName="Email"
+                  handleChange={handleChange}
+                  value={data.Email}
+                  disabled={true}
+                />
+              </div>
+              <div className="adjacent-fields">
+                {" "}
+                <div className="mb-3">
+                  <label
+                    className={userID ? "adduserLabel" : "addUserNotLabel"}
+                  >
+                    Role
+                  </label>
+                  <br />
+                  <Select
+                    disabled={userID ? isRoleSelectDisabled : true}
+                    className="AddUsersDetailsInput"
+                    name="Selected_Role_Name"
+                    value={data.Selected_Role_Name}
+                    onChange={(value) =>
+                      handleSelectChange("Selected_Role_Name", value)
+                    }
+                  >
+                    {data.Available_Roles.map((option) => (
+                      <Option key={option.id} value={option.id}>
+                        {option.role_name}
+                      </Option>
+                    ))}
+                  </Select>
+                </div>{" "}
+                <div className="mb-3">
+                  <label className="addUserNotLabel">Permissions</label>
+                  <br />
+                  <Select
+                    className="AddUsersDetailsInput"
+                    name="Role_Permissions"
+                    value={data.Role_Permissions}
+                    style={{
+                      backgroundColor:
+                        userID && !isRoleSelectDisabled ? "#d9d9d9" : "inherit",
+                    }}
+                    onChange={(value) =>
+                      handleSelectChange("Role_Permissions", value)
+                    }
+                    disabled={userID && !isRoleSelectDisabled ? false : true}
+                  >
+                    {permissions.map((option) => (
+                      <Option key={option} value={option}>
+                        {option}
+                      </Option>
+                    ))}
+                  </Select>
+                </div>
+              </div>
+              <div className="adjacent-fields">
+                {" "}
+                <div className="mb-3">
+                  <label className="addUserNotLabel">Pharmacy</label>
+                  <br />
+                  <Select
+                    className="AddUsersDetailsInput"
+                    name="Pharmacy"
+                    value={data.Pharmacy}
+                    onChange={(value) => handleSelectChange("Pharmacy", value)}
+                    disabled={userID ? false : true}
+                  >
+                    {data.AvailablePharmacies &&
+                      data.AvailablePharmacies.map((option) => (
+                        <Option key={option.id} value={option.id}>
+                          {option.pharmacy_name}
+                        </Option>
+                      ))}
+                  </Select>
+                </div>
+                <div className="DetailsInput-container">
+                  {" "}
+                  <CustomInput
+                    divclassName="mb-3"
+                    labelclassName="addUserNotLabel"
+                    labelText="Salary"
+                    inputclassName="DetailsInput"
+                    inputName="salary"
+                    handleChange={handleChange}
+                    value={data.salary}
+                    disabled={userID ? false : true}
+                  />
+                  <CustomInput
+                    divclassName="mb-3"
+                    labelclassName="addUserNotLabel"
+                    labelText="Line manager"
+                    inputclassName="DetailsInput"
+                    inputName="Line_Manager"
+                    handleChange={handleChange}
+                    value={data.Line_Manager}
+                    disabled={true}
+                  />
+                </div>
+              </div>
+              <div className="adjacent-fields">
+                {" "}
+                <CustomInput
+                  divclassName="mb-3"
+                  labelclassName="addUserNotLabel"
+                  labelText="Postcode"
+                  inputclassName="AddUsersDetailsInput"
+                  inputName="PostCode"
+                  handleChange={handleChange}
+                  handleBlur={handleFindAddress}
+                  value={data.PostCode}
+                />{" "}
+                <CustomSelect
+                  divclassName="mb-3"
+                  labelclassName="adduserNotLabel"
+                  labelText="Please Select your Address"
+                  selectclassName="AddUsersDetailsInput"
+                  name="Address"
+                  onChange={handleSelectChange}
+                  options={
+                    pCodeResponse
+                      ? pCodeResponse.map((item) => item.address)
+                      : []
+                  }
+                  value={data.PostTown}
+                />
+              </div>
+              <div className="adjacent-fields">
+                {" "}
+                <CustomInput
+                  divclassName="mb-3"
+                  labelclassName="addUserNotLabel"
+                  labelText="Town"
+                  inputclassName="AddUsersDetailsInput"
+                  inputName="PostTown"
+                  handleChange={handleChange}
+                  value={data.PostTown}
+                />
+                <div className="DetailsInput-container">
+                  {" "}
+                  <CustomInput
+                    divclassName="mb-3"
+                    labelclassName="addUserNotLabel"
+                    labelText="Building No."
+                    inputclassName="DetailsInput"
+                    inputName="Line1"
+                    handleChange={handleChange}
+                    value={data.Line1}
+                  />{" "}
+                  <CustomInput
+                    divclassName="mb-3"
+                    labelclassName="addUserNotLabel"
+                    labelText="Street No"
+                    inputclassName="DetailsInput"
+                    inputName="Line2"
+                    handleChange={handleChange}
+                    value={data.Line2}
+                  />{" "}
+                </div>
+              </div>
+
+              <div className="AddUsersInformationUpdateBtnContainer">
+                <Link to="/employeepage">
+                  {" "}
+                  <CustomButton className="AddUsersInformationCancelBtn">
+                    Cancel
+                  </CustomButton>
+                </Link>
+                <CustomButton
+                  className="add-user-btn-submit"
+                  htmlType="submit"
+                  type="primary"
+                >
+                  {userID ? "Update User" : "Update Profile"}
+                </CustomButton>
+              </div>
+            </form>
+          </div>
+        </div>
+      ) : (
+        <AccessDenied />
+      )}
+    </>
   );
 };
 

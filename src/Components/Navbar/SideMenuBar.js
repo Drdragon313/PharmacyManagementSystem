@@ -164,6 +164,14 @@ const SideMenuBar = (props) => {
                       alt="Icon"
                     />
                     <Link
+                      style={{
+                        color:
+                          selectedKeys.length > 0 &&
+                          (selectedKeys[0] === `${menuItem.module_id}` ||
+                            selectedKeys[0] === `sub${menuItem.sub_module_id}`)
+                            ? "#fff"
+                            : "#bababa",
+                      }}
                       className="side-bar-links"
                       to={getRouteByModuleId(menuItem.module_id)}
                     >

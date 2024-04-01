@@ -74,6 +74,9 @@ const ViewEmployees = () => {
   const canViewEmployees =
     userPermissions?.find((module) => module.module_name === "Employees")
       ?.actions?.read || false;
+  const canEditEmployees =
+    userPermissions?.find((module) => module.module_name === "Employees")
+      ?.actions?.update || false;
 
   return (
     <div className="main-container-pharmacy-details">
@@ -96,16 +99,18 @@ const ViewEmployees = () => {
               <p className="emp-details-head-txt">
                 {employeeDetails.FName} details
               </p>
-              <Link to={`/employeepage/${userID}/editUser`}>
-                <Button type="primary" className="primary-Class">
-                  <Image
-                    className="plus-outline-img"
-                    preview={false}
-                    src={editIcon}
-                  ></Image>
-                  Edit details
-                </Button>
-              </Link>
+              {canEditEmployees && (
+                <Link to={`/employeepage/${userID}/editUser`}>
+                  <Button type="primary" className="primary-Class">
+                    <Image
+                      className="plus-outline-img"
+                      preview={false}
+                      src={editIcon}
+                    ></Image>
+                    Edit details
+                  </Button>
+                </Link>
+              )}
             </Col>
           </Row>
           <Row
