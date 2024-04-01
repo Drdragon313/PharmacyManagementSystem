@@ -95,15 +95,26 @@ const Stable = () => {
     });
   };
 
-  const handleSaveAndSuccess = async () => {
-    saveSchema(schemaName, formDataArray, tilePath, dispatch, (newSchema) => {
-      success();
-      dispatch(addSchemaData(newSchema));
-      dispatch(resetSchemaDataArray(newSchema));
-      dispatch(updateFormDataOrder([]));
-      dispatch(updateSchemaName(newSchema.name));
-      dispatch(resetId());
-    });
+  const handleSaveAndSuccess = () => {
+    saveSchema(
+      navigate,
+      schemaName,
+      formDataArray,
+      tilePath,
+      dispatch,
+      (newSchema) => {
+        success();
+        dispatch(addSchemaData(newSchema));
+        dispatch(resetSchemaDataArray(newSchema));
+        dispatch(updateFormDataOrder([]));
+        dispatch(updateSchemaName(newSchema.name));
+        dispatch(resetId());
+      },
+      () => {
+        // Clear formDataArray on error
+        dispatch(updateFormDataOrder([]));
+      }
+    );
   };
 
   const handleEditSubmit = (editedData) => {

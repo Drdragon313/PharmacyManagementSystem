@@ -15,8 +15,10 @@
   line-height: 30.15px;
 }
 .down-img-schema-details {
-  width: 20px;
-  height: 20px;
+  width: 2rem;
+  height: 2rem;
+  margin-top: -5px !important;
+  background: transparent;
 }
 .table {
   padding: 10px;
@@ -33,4 +35,7 @@
   top: 55%;
   left: 56%;
   transform: translate(-50%, -50%);
+}
+.schema-table-container {
+  overflow-x: auto;
 }
