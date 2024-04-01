@@ -3,10 +3,10 @@ import { baseURL } from "../Components/BaseURLAPI/BaseURLAPI";
 import { message } from "antd";
 const localHeader = localStorage.getItem("AuthorizationToken");
 export async function saveSchema(
+  navigate,
   schemaName,
   formDataArray,
   tilePath,
-
   successCallback
 ) {
   if (formDataArray.length > 0) {
@@ -34,16 +34,17 @@ export async function saveSchema(
       if (response.status === 200) {
         message.success("Schema created successfully");
         successCallback(newSchema);
+        navigate("/tilepage");
+        window.location.reload();
       } else {
         console.error("Error:", response);
-        message.error(
-          "Error occurred while saving schema. schema with this name already exists"
-        );
       }
     } catch (error) {
       console.error("Error:", error);
-    } finally {
-      window.location.reload();
+
+      message.error(
+        "Error occurred while saving schema. Schema with this name already exists. Please go back to Data Live page and reload before creating new schema"
+      );
     }
   } else {
     console.error("No rows to save in the schema.");

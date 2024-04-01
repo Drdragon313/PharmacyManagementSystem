@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { numericToAlphabetic } from "../../Utility Function/numericToAlphabetic";
 import { baseURL } from "../BaseURLAPI/BaseURLAPI";
-import { Button, Col, Image, Spin } from "antd";
+import { Button, Col, Image } from "antd";
 import downloadIcon from "../../Assets/Download.svg";
 import CustomTable from "../../Components/CustomTable/CustomTable";
 import { downloadCSV } from "../../Utility Function/downloadCSV";
@@ -100,12 +100,14 @@ const SchemaDetails = () => {
             ></Image>
             Download example CSV
           </Button>
-          <CustomTable
-            className="schema-table-schema-details"
-            dataSource={schemaData.data}
-            columns={columns}
-            bordered
-          />
+          <div className="schema-table-container">
+            <CustomTable
+              className="schema-table-schema-details"
+              dataSource={schemaData.data}
+              columns={columns}
+              bordered
+            />
+          </div>
         </div>
       ) : (
         <Spinner />
