@@ -94,6 +94,7 @@ pipelines:
           - docker push $IMAGE:$TAG2
      - step:
          <<: *deploy_to_ecs
+         trigger: manual
          script:
           - ENV="${BITBUCKET_BRANCH}"
           - if [[ "${ENV}" == "master" ]]; then CLUSTER_NAME="${PROD_ECS_CLUSTER_NAME_PHARMLYTICS_ACCOUNT}"; elif [[ "${ENV}" == "qa" ]]; then CLUSTER_NAME="${QA_ECS_CLUSTER_NAME}"; elif [[ "${ENV}" == "develop" ]]; then CLUSTER_NAME="${DEV_ECS_CLUSTER_NAME}"; fi
