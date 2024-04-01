@@ -36,6 +36,12 @@
   left: 56%;
   transform: translate(-50%, -50%);
 }
-.schema-table-container {
-  overflow-x: auto;
+
+@media only screen and (max-width: 668px) {
+  .schema-table-container {
+    overflow-x: auto;
+  }
+  .schema-table-schema-details {
+    border: 1px solid;
+  }
 }

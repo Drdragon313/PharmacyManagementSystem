@@ -107,12 +107,8 @@ const Stable = () => {
         dispatch(addSchemaData(newSchema));
         dispatch(resetSchemaDataArray(newSchema));
         dispatch(updateFormDataOrder([]));
-        dispatch(updateSchemaName(newSchema.name));
+        dispatch(updateSchemaName(newSchema?.name));
         dispatch(resetId());
-      },
-      () => {
-        // Clear formDataArray on error
-        dispatch(updateFormDataOrder([]));
       }
     );
   };

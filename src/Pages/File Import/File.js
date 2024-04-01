@@ -131,6 +131,7 @@ const File = () => {
           navigate("UploadSuccess");
         })
         .catch((error) => {
+          message.error(error.response.data.message, 3);
           if (
             error.response &&
             error.response.data &&
@@ -139,7 +140,7 @@ const File = () => {
           ) {
             message.error(error.response.data.error.message, 3);
           } else {
-            message.error("File Uploading Failed!", 3);
+            console.error(error.message, 3);
           }
         });
     } catch (errorMessage) {
