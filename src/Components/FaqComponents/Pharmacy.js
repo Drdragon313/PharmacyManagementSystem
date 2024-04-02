@@ -48,6 +48,11 @@ const Pharmacy = () => {
                 <Image src={item.Image2} alt="FAQ Image" preview={false} />
               )}
             </div>
+            <div className="faq-img">
+              {item.Image3 && (
+                <Image src={item.Image3} alt="FAQ Image" preview={false} />
+              )}
+            </div>
           </div>
         ),
         style: panelStyle,
