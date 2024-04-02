@@ -40,8 +40,14 @@
 @media only screen and (max-width: 668px) {
   .schema-table-container {
     overflow-x: auto;
+    width: 100%;
   }
   .schema-table-schema-details {
     border: 1px solid;
+    width: 100%;
+  }
+  :where(.css-dev-only-do-not-override-nnuwmp).ant-spin-nested-loading
+    .ant-spin-container {
+    width: max-content;
   }
 }

@@ -51,7 +51,7 @@ export const validateCSV = async (file, schemaData, setProgress) => {
               if (expectedType === "string" && actualType === "string") {
                 const fieldValue = row[fieldName];
                 const specialCharactersRegex =
-                  /[!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/;
+                  /[!@#$%^&*()_+=[\]{};':"\\|,.<>?]/;
                 if (specialCharactersRegex.test(fieldValue)) {
                   hasInvalidChunk = true;
                   errorArray.push(
