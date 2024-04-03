@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import { Button, Col, Image, Row } from "antd";
+import { Button, Col, Row } from "antd";
 import "./FaqPage.css";
-import AllImg from "../../Assets/all.svg";
 import AllContent from "../../Components/FaqComponents/All";
 import EmployeeContent from "../../Components/FaqComponents/Employee";
 import PharmacyContent from "../../Components/FaqComponents/Pharmacy";
 import ReportsContent from "../../Components/FaqComponents/Reports";
 import RolesPermissionsContent from "../../Components/FaqComponents/RoleAndPermissions";
-import { LockOutlined } from "@ant-design/icons";
 
 const generateButtonStyle = (checked, background, color) => ({
-  width: 250,
+  width: "100%",
   height: 40,
   background: checked ? background : color,
   color: checked ? color : background,
@@ -33,13 +31,7 @@ const FaqPage = () => {
     "Reports & Files": <ReportsContent />,
     "Roles & permissions": <RolesPermissionsContent />,
   };
-  // const tabIconMap = {
-  //   All: <Image preview={false} src={AllImg} />,
-  //   Employee: <Image preview={false} src={AllImg} />,
-  //   Pharmacy: <Image preview={false} src={AllImg} />,
-  //   Reports: <Image preview={false} src={AllImg} />,
-  //   "Roles & permissions": <LockOutlined />,
-  // };
+
   return (
     <div>
       <Row className="toggle-btn" gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
