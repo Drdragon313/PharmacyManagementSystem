@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Topnav.css";
 import { MenuOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, Dropdown, message, Drawer, Image } from "antd";
+import { Avatar, Dropdown, message, Drawer, Image, Space } from "antd";
 import { Layout } from "antd";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -224,9 +224,13 @@ const Topnav = () => {
               backgroundColor: "transparent",
             }}
           >
-            <Link to="/faqpage">
+            <Link style={{ textDecoration: "none" }} to="/faqpage">
               <CustomButton className="help-btn">
-                <Image preview={false} src={Helplogo} />
+                <Image
+                  style={{ width: "1rem" }}
+                  preview={false}
+                  src={Helplogo}
+                />
                 <p>Help</p>
               </CustomButton>
             </Link>
