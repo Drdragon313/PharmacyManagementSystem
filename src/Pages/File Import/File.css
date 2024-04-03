@@ -85,6 +85,15 @@
   text-align: left;
   text-decoration: none;
 }
+.uploaded-for-column {
+  max-width: 150px; /* Adjust the width as needed */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.uploaded-for-column:hover {
+  cursor: pointer;
+}
 
 @media (max-width: 768px) {
   .upload-file-table {
