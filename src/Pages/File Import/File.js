@@ -6,6 +6,7 @@ import {
   Image,
   Modal,
   Space,
+  Tooltip,
 } from "antd";
 import React, { useState, useEffect, useMemo } from "react";
 import { validateCSV } from "../../Utility Function/FileUtils";
@@ -24,7 +25,7 @@ import deleteActionbtn from "../../Assets/deleteAction.svg";
 import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationModal";
 import { fetchUserPermissions } from "../../Utility Function/ModulesAndPermissions";
 import Spinner from "../../Components/Spinner/Spinner";
-
+import AccessDenied from "../AccessDenied/AccessDenied";
 const File = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -126,20 +127,28 @@ const File = () => {
           headers,
           "Content-Type": "multipart/form-data",
         })
-        .then(() => {
+        .then((response) => {
           message.success("File Uploaded Successfully!");
+          if (response.data.data.uploadErrors) {
+            message.warning(
+              `Data for these Pharmacies was not uploaded as you donot have permissions for it: ${response.data.data.uploadErrors}`,
+              10
+            );
+          }
+          console.log("resposne daata", response.data.data);
           navigate("UploadSuccess");
         })
         .catch((error) => {
+          message.error(error.response.data.message, 3);
           if (
             error.response &&
             error.response.data &&
             error.response.data.error &&
             error.response.data.error.message
           ) {
-            message.error(error.response.data.error.message, 3);
+            // message.error(error.response.data.error.message, 3);
           } else {
-            message.error("File Uploading Failed!", 3);
+            console.error(error.message, 3);
           }
         });
     } catch (errorMessage) {
@@ -168,8 +177,18 @@ const File = () => {
       dataIndex: "upload_date",
     },
     {
-      title: "Uploaded by",
+      title: "Uploaded By",
       dataIndex: "upload_by",
+    },
+    {
+      title: "Uploaded For",
+      dataIndex: "uploaded_for",
+      render: (text) => (
+        <Tooltip placement="topLeft" title={text}>
+          <span className="uploaded-for-tooltip">{text}</span>
+        </Tooltip>
+      ),
+      className: "uploaded-for-column",
     },
     {
       title: "Action(s)",
@@ -210,15 +229,18 @@ const File = () => {
         setShowDeleteConfirmation(false);
       });
   };
-  const canUploadFile =
-    userPermissions?.find((module) => module.module_name === "Upload Files")
-      ?.actions?.write || false;
+
   const canViewFile =
     userPermissions?.find((module) => module.module_name === "Upload Files")
       ?.actions?.read || false;
+
   const canDeleteFile =
     userPermissions?.find((module) => module.module_name === "Upload Files")
       ?.actions?.delete || false;
+  const canUploadFile =
+    userPermissions?.find((module) => module.module_name === "Upload Files")
+      ?.actions?.write || false;
+
   const breadcrumbItems = [
     { label: "Upload Files", link: "/file" },
     { label: "Choose File", link: `/file/fileUpload` },
@@ -231,7 +253,7 @@ const File = () => {
   }
   return (
     <>
-      {canUploadFile && (
+      {canViewFile ? (
         <div>
           <div className="breadcrumb-file-upload">
             <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
@@ -267,6 +289,7 @@ const File = () => {
                   </CustomButton>
                 </Upload>
               )}
+
               {canViewFile && (
                 <Link
                   style={{ textDecoration: "none" }}
@@ -334,6 +357,8 @@ const File = () => {
             btnTxt="Delete"
           />
         </div>
+      ) : (
+        <AccessDenied />
       )}
     </>
   );

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { message } from "antd";
+import React, { useState, useEffect } from "react";
+import { message, Modal } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addFormData,
@@ -26,15 +26,32 @@ import {
   updateFormDataArrayOnEdit,
 } from "../../Utility Function/stableUtil";
 import CustomButton from "../CustomButton/CustomButton";
+
 const Stable = () => {
   const tilePath = localStorage.getItem("tilePath");
   const [rowId, setRowId] = useState(1);
   const [editRow, setEditRow] = useState(null);
   const [editModalVisible, setEditModalVisible] = useState(false);
+  const [confirmModalVisible, setConfirmModalVisible] = useState(false); // State to control confirmation modal
   const schemaName = useSelector((state) => state.schema.schemaName);
   const dispatch = useDispatch();
   const formDataArray = useSelector((state) => state.form.formDataArray);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    return () => {
+      if (confirmModalVisible) {
+        return; // Don't show the success message if the confirmation modal is open
+      }
+      return message.warning("Please save schema before leaving this page");
+    };
+  }, [confirmModalVisible]);
+
+  const handleConfirmOk = () => {
+    // Perform any additional actions needed before unmounting
+    setConfirmModalVisible(false);
+  };
+
   const handleAddRow = (formDataArray) => {
     const numericId = rowId;
     const alphabeticId = numericToAlphabetic(numericId);
@@ -42,9 +59,11 @@ const Stable = () => {
     dispatch(addFormData(formDataArray));
     setRowId(rowId + 1);
   };
+
   const handleDelete = (id) => {
     dispatch(removeFormData(id));
   };
+
   const editFormData = (id) => {
     const rowToEdit = formDataArray.find((entry) => entry.id === id);
     if (rowToEdit) {
@@ -52,6 +71,7 @@ const Stable = () => {
       setEditModalVisible(true);
     }
   };
+
   const onDragEnd = (result) => {
     if (!result.destination) {
       return;
@@ -65,25 +85,34 @@ const Stable = () => {
     );
     dispatch(updateFormDataOrder(reorderedData));
   };
-  const [messageApi, contextHolder] = message.useMessage();
+
   const success = () => {
-    messageApi.open({
-      type: "success",
+    message.success({
       content: "Schema Saved Successfully",
+      onClose: () => {
+        navigate("/tilepage");
+      },
     });
   };
-  const handleSaveAndSuccess = async () => {
-    saveSchema(schemaName, formDataArray, tilePath, dispatch, (newSchema) => {
-      success();
-      dispatch(addSchemaData(newSchema));
-      dispatch(resetSchemaDataArray(newSchema));
-      dispatch(updateFormDataOrder([]));
-      dispatch(updateSchemaName(newSchema.name));
-      dispatch(resetId());
-      window.location.reload();
-    });
-    navigate("/tilepage");
+
+  const handleSaveAndSuccess = () => {
+    saveSchema(
+      navigate,
+      schemaName,
+      formDataArray,
+      tilePath,
+      dispatch,
+      (newSchema) => {
+        success();
+        dispatch(addSchemaData(newSchema));
+        dispatch(resetSchemaDataArray(newSchema));
+        dispatch(updateFormDataOrder([]));
+        dispatch(updateSchemaName(newSchema?.name));
+        dispatch(resetId());
+      }
+    );
   };
+
   const handleEditSubmit = (editedData) => {
     const updatedDataArray = updateFormDataArrayOnEdit(
       formDataArray,
@@ -93,6 +122,7 @@ const Stable = () => {
     setEditRow(null);
     setEditModalVisible(false);
   };
+
   return (
     <div className="Stable">
       <div className="buttons">
@@ -117,7 +147,14 @@ const Stable = () => {
           )}
         </Droppable>
       </DragDropContext>
-      {contextHolder}
+      <Modal
+        title="Confirm"
+        open={confirmModalVisible}
+        onOk={handleConfirmOk}
+        onCancel={() => setConfirmModalVisible(false)}
+      >
+        <p>Are you sure you want to leave this page?</p>
+      </Modal>
       {editRow && (
         <EditForm
           editRow={editRow}

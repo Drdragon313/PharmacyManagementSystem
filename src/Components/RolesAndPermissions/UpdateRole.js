@@ -300,6 +300,7 @@ const UpdateRole = () => {
         width: 100,
         render: (_, subModule) => (
           <Checkbox
+            disabled={true}
             checked={subModule.write}
             onChange={(e) =>
               handleSubModuleCheckboxChange(e, subModule, "write", record.key)
@@ -328,6 +329,7 @@ const UpdateRole = () => {
         width: 100,
         render: (_, subModule) => (
           <Checkbox
+            disabled={true}
             checked={subModule.update}
             onChange={(e) =>
               handleSubModuleCheckboxChange(e, subModule, "update", record.key)
@@ -342,6 +344,7 @@ const UpdateRole = () => {
         width: 100,
         render: (_, subModule) => (
           <Checkbox
+            disabled={true}
             checked={subModule.delete}
             onChange={(e) =>
               handleSubModuleCheckboxChange(e, subModule, "delete", record.key)

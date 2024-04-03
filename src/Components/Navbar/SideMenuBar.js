@@ -17,10 +17,14 @@ import { useNavigate } from "react-router-dom";
 const SideMenuBar = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [selectedKeys, setSelectedKeys] = useState([]);
+  const [selectedKeys, setSelectedKeys] = useState("");
   const [menuItems, setMenuItems] = useState([]);
   const handleMenuItemClick = (key) => {
-    setSelectedKeys([key]);
+    setSelectedKeys(key);
+    if (props.toggleMobileDrawer) {
+      props.toggleMobileDrawer();
+    }
+    navigate(getRouteByModuleId(key));
   };
   const SubMenuTitle = ({ title, icon }) => (
     <div className="reports-submenu">
@@ -149,7 +153,7 @@ const SideMenuBar = (props) => {
                   <Space
                     direction="horizontal"
                     size={10}
-                    className="menu-items-sidebar"
+                    // className="menu-items-sidebar"
                   >
                     <img
                       className="icons-sidenav"
@@ -161,8 +165,16 @@ const SideMenuBar = (props) => {
                       alt="Icon"
                     />
                     <Link
+                      // style={{
+                      //   color:
+                      //     selectedKeys &&
+                      //     (selectedKeys === `${menuItem.module_id}` ||
+                      //       selectedKeys === `sub${menuItem.sub_module_id}`)
+                      //       ? "#fff"
+                      //       : "#bababa",
+                      // }}
                       className="side-bar-links"
-                      to={getRouteByModuleId(menuItem.module_id)}
+                      // to={getRouteByModuleId(menuItem.module_id)}
                     >
                       {menuItem.module_name}
                     </Link>

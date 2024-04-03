@@ -187,6 +187,8 @@
 .siginContainer {
   display: flex;
   font-family: Lato, sans-serif;
+  height: 100%;
+  overflow-y: hidden;
 }
 
 .signinLogoMainContainer {

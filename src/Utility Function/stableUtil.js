@@ -3,6 +3,7 @@ import { baseURL } from "../Components/BaseURLAPI/BaseURLAPI";
 import { message } from "antd";
 const localHeader = localStorage.getItem("AuthorizationToken");
 export async function saveSchema(
+  navigate,
   schemaName,
   formDataArray,
   tilePath,
@@ -42,6 +43,9 @@ export async function saveSchema(
       }
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      navigate("/tilepage");
+      window.location.reload();
     }
   } else {
     console.error("No rows to save in the schema.");

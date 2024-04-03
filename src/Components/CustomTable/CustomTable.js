@@ -1,6 +1,6 @@
 import { Table } from "antd";
 
-const CustomTable = ({ dataSource, columns, footer, expandable }) => {
+const CustomTable = ({ dataSource, columns, footer, expandable, bordered }) => {
   return (
     <Table
       dataSource={dataSource}
@@ -8,6 +8,7 @@ const CustomTable = ({ dataSource, columns, footer, expandable }) => {
       pagination={false}
       footer={footer}
       expandable={expandable}
+      bordered={bordered}
     />
   );
 };

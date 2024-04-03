@@ -216,7 +216,7 @@ const Topnav = () => {
           </div>
           <SideMenuBar
             className="side-menu-bar-items"
-            toggleMobileDrawer={() => setShowMobileDrawer(false)}
+            toggleMobileDrawer={handleToggleMobileDrawer}
           />
           <Footer
             style={{
@@ -224,9 +224,13 @@ const Topnav = () => {
               backgroundColor: "transparent",
             }}
           >
-            <Link to="/faqpage">
+            <Link style={{ textDecoration: "none" }} to="/faqpage">
               <CustomButton className="help-btn">
-                <Image preview={false} src={Helplogo} />
+                <Image
+                  style={{ width: "1rem" }}
+                  preview={false}
+                  src={Helplogo}
+                />
                 <p>Help</p>
               </CustomButton>
             </Link>

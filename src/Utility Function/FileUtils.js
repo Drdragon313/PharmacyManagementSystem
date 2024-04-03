@@ -47,6 +47,24 @@ export const validateCSV = async (file, schemaData, setProgress) => {
                   );
                 }
               }
+
+              if (expectedType === "string" && actualType === "string") {
+                const fieldValue = row[fieldName];
+                const specialCharactersRegex =
+                  /[!@#$%^&*()_+=[\]{};':"\\|,.<>?]/;
+                const emptyOrStartingWithSpaceRegex = /^\s*$/;
+                if (
+                  specialCharactersRegex.test(fieldValue) ||
+                  emptyOrStartingWithSpaceRegex.test(fieldValue)
+                ) {
+                  hasInvalidChunk = true;
+                  errorArray.push(
+                    `Special characters found in column ${fieldName} at row ${
+                      rowNumber + 1
+                    }.`
+                  );
+                }
+              }
             });
           });
         } else {
@@ -54,7 +72,6 @@ export const validateCSV = async (file, schemaData, setProgress) => {
           errorArray.push("No data found in the CSV file.");
         }
       },
-
       complete: () => {
         if (!hasInvalidChunk) {
           resolve();
