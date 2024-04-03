@@ -52,7 +52,11 @@ export const validateCSV = async (file, schemaData, setProgress) => {
                 const fieldValue = row[fieldName];
                 const specialCharactersRegex =
                   /[!@#$%^&*()_+=[\]{};':"\\|,.<>?]/;
-                if (specialCharactersRegex.test(fieldValue)) {
+                const emptyOrStartingWithSpaceRegex = /^\s*$/;
+                if (
+                  specialCharactersRegex.test(fieldValue) ||
+                  emptyOrStartingWithSpaceRegex.test(fieldValue)
+                ) {
                   hasInvalidChunk = true;
                   errorArray.push(
                     `Special characters found in column ${fieldName} at row ${

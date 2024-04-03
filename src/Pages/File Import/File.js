@@ -138,7 +138,7 @@ const File = () => {
             error.response.data.error &&
             error.response.data.error.message
           ) {
-            message.error(error.response.data.error.message, 3);
+            // message.error(error.response.data.error.message, 3);
           } else {
             console.error(error.message, 3);
           }
