@@ -6,6 +6,7 @@ import {
   Image,
   Modal,
   Space,
+  Tooltip,
 } from "antd";
 import React, { useState, useEffect, useMemo } from "react";
 import { validateCSV } from "../../Utility Function/FileUtils";
@@ -126,8 +127,15 @@ const File = () => {
           headers,
           "Content-Type": "multipart/form-data",
         })
-        .then(() => {
+        .then((response) => {
           message.success("File Uploaded Successfully!");
+          if (response.data.data.uploadErrors) {
+            message.warning(
+              `Data for these Pharmacies was not uploaded as you donot have permissions for it: ${response.data.data.uploadErrors}`,
+              10
+            );
+          }
+          console.log("resposne daata", response.data.data);
           navigate("UploadSuccess");
         })
         .catch((error) => {
@@ -169,8 +177,18 @@ const File = () => {
       dataIndex: "upload_date",
     },
     {
-      title: "Uploaded by",
+      title: "Uploaded By",
       dataIndex: "upload_by",
+    },
+    {
+      title: "Uploaded For",
+      dataIndex: "uploaded_for",
+      render: (text) => (
+        <Tooltip placement="topLeft" title={text}>
+          <span className="uploaded-for-tooltip">{text}</span>
+        </Tooltip>
+      ),
+      className: "uploaded-for-column",
     },
     {
       title: "Action(s)",

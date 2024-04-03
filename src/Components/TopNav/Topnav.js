@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Topnav.css";
 import { MenuOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, Dropdown, message, Drawer, Image, Space } from "antd";
+import { Avatar, Dropdown, message, Drawer, Image } from "antd";
 import { Layout } from "antd";
 import { Link } from "react-router-dom";
 import axios from "axios";
