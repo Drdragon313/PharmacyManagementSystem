@@ -357,7 +357,7 @@ const Pharmacies = () => {
             >
               <Select
                 allowClear={true}
-                className="filter-pharm-btn"
+                className="ant-select-selector"
                 mode="multiple"
                 value={selectedPostalCode}
                 onChange={handleSelectedPostalCodeChange}

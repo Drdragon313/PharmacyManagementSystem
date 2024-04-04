@@ -490,7 +490,7 @@ const EmployeeListing = () => {
             <div className="filter-container-emp-list">
               <Select
                 allowClear={true}
-                className="filter-pharm-btn"
+                className="ant-select-selector"
                 mode="multiple"
                 value={selectedRole}
                 onChange={handleRoleChange}
@@ -512,7 +512,7 @@ const EmployeeListing = () => {
               </Select>
               <Select
                 allowClear={true}
-                className="filter-pharm-btn"
+                className="ant-select-selector"
                 mode="multiple"
                 value={selectedPostalCode}
                 onChange={(values) => handlePostalCodeChange(values)}

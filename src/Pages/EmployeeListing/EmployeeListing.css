@@ -219,6 +219,10 @@
 .employee-details-table {
   width: 100vw !important;
 }
+.ant-select-selector {
+  border-radius: 12px;
+  min-height: 5vh;
+}
 @media only screen and (max-width: 668px) {
   .search-col {
     width: 100%;

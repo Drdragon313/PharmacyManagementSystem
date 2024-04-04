@@ -45,6 +45,11 @@
   /* margin-right: -10px;
   padding-left: 30px; Adjust the padding to make space for the image */
 }
+.ant-select-selector {
+  border-radius: 12px !important;
+  min-height: 5vh;
+  width: 24vw !important;
+}
 :where(.css-dev-only-do-not-override-nnuwmp).ant-select-multiple
   .ant-select-selector {
   border-radius: 12px !important;
@@ -165,8 +170,8 @@
   .pharmacy-details-table {
     overflow-x: auto;
   }
-  .filter-pharm-btn {
-    width: 85vw !important;
+  .ant-select-selector {
+    width: 80vw !important;
   }
   .pharmacy-list-search-filter-container {
     margin-top: 20px;

@@ -75,15 +75,15 @@
   text-decoration: none !important;
 }
 .mobile-drawer-nav {
-  max-width: 30vb !important;
-  min-width: 29vb !important;
+  max-width: 27vb !important;
+  min-width: 22vb !important;
   min-height: 55vh !important;
   background-color: #3a3475 !important;
   padding: 0px !important;
 }
 .ant-drawer-body {
-  max-width: 40vb !important;
-  min-width: 30vb !important;
+  max-width: 30vb !important;
+  min-width: 25vb !important;
   min-height: 55vh !important;
   background-color: #3a3475 !important;
   padding: 0px !important;
