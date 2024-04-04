@@ -327,7 +327,7 @@ const EmployeeListing = () => {
     {
       title: "Action(s)",
       width: "10%",
-      fixed: "right",
+
       render: (text, record) => (
         <Space className="action-btns">
           <Link to={`${record.userID}/viewUser`}>

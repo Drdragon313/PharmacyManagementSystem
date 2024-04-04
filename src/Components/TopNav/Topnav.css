@@ -76,7 +76,7 @@
 }
 .mobile-drawer-nav {
   max-width: 30vb !important;
-  min-width: 26vb !important;
+  min-width: 29vb !important;
   min-height: 55vh !important;
   background-color: #3a3475 !important;
 }
@@ -89,6 +89,9 @@
 }
 :where(.css-dev-only-do-not-override-nnuwmp).ant-drawer .ant-drawer-header {
   background-color: #3a3475;
+}
+.help-btn {
+  width: max-content;
 }
 
 .mobileButton {
@@ -112,7 +115,7 @@
     margin-right: -40px !important;
   }
   .help-btn {
-    width: max-content;
+    width: 100%;
   }
 }
 @media only screen and (min-height: 768px) {
