@@ -20,6 +20,8 @@ import { Link } from "react-router-dom";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import { fetchUserPermissions } from "../../Utility Function/ModulesAndPermissions";
 import AccessDenied from "../AccessDenied/AccessDenied";
+import Spinner from "../../Components/Spinner/Spinner";
+
 const { Option } = Select;
 
 const EditUsers = () => {
@@ -50,9 +52,11 @@ const EditUsers = () => {
   const authToken = localStorage.getItem("AuthorizationToken");
   const [validContact, setValidContact] = useState(false);
   const [pCodeResponse, setPCodeResponse] = useState([]);
+  const [userPermissions, setUserPermissions] = useState(null);
   const [permissions, setPermissions] = useState([]);
   const [selectedRole, setSelectedRole] = useState();
   const [isRoleSelectDisabled, setIsRoleSelectDisabled] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const { userID } = useParams();
   const breadcrumbItems = [
@@ -62,7 +66,19 @@ const EditUsers = () => {
       link: `/employeepage/${userID}/editUser`,
     },
   ];
+  useEffect(() => {
+    const fetchUserPermissionData = async () => {
+      try {
+        await fetchUserPermissions(setUserPermissions);
+      } catch (error) {
+        console.error("Error fetching user permissions:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchUserPermissionData();
+  }, []);
   useEffect(() => {
     setValidContact(true);
     if (userID) {
@@ -273,8 +289,12 @@ const EditUsers = () => {
   };
 
   const canEditUsers =
-    permissions?.find((module) => module.module_name === "Employees")?.actions
-      ?.update || false;
+    userPermissions?.find((module) => module.module_name === "Employees")
+      ?.actions?.update || false;
+
+  if (loading === true) {
+    return <Spinner />;
+  }
   return (
     <>
       {canEditUsers ? (
