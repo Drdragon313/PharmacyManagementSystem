@@ -260,7 +260,7 @@ const TilePage = () => {
               <div className="allcards">
                 {tiles.map((tile, index) => (
                   <CustomCard className="tilecards" key={index} bordered={true}>
-                    <div className="dropdown">
+                    <div className="dropdown-tile">
                       <Dropdown
                         overlay={
                           <Menu>
@@ -300,7 +300,7 @@ const TilePage = () => {
                     </div>
                     <Space
                       direction="vertical"
-                      size={2}
+                      size={10}
                       className="tile-content"
                     >
                       <Avatar className="tile-avatar-img" shape="circle">
