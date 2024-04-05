@@ -1,6 +1,3 @@
-:root {
-  overflow: none;
-}
 .main-container-roles-permissions {
   padding-left: 20px;
 }
@@ -97,12 +94,18 @@
   border-bottom: 1px solid #ededed;
   width: 100%;
 }
+
 @media (max-width: 768px) {
   .roles-list-table {
     overflow-x: auto;
   }
   .roles-checkbox-table-container {
     overflow-x: auto;
+    width: 100%;
+  }
+  .ant-spin-container {
+    border-radius: 5px;
+    font-family: "Poppins", sans-serif;
     width: 100%;
   }
 }

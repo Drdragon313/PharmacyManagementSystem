@@ -141,7 +141,7 @@ const Roles = () => {
     },
     {
       title: "Action(s)",
-      fixed: "right",
+
       width: 150,
       render: (text, record) => (
         <Space className="action-btns">

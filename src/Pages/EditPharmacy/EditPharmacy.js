@@ -265,7 +265,6 @@ const EditPharmacy = () => {
                   <br />
                   <DatePicker
                     className="AddUsersDetailsInput"
-                    required={true}
                     format="DD-MM-YYYY"
                     name="dateOfCreation"
                     onChange={handleDateChange}

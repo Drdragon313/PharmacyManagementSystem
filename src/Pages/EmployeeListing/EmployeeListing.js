@@ -289,7 +289,7 @@ const EmployeeListing = () => {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      width: "8%",
+      width: "10%",
 
       render: (text, record) => (
         <>

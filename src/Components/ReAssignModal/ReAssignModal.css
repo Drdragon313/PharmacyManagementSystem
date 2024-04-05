@@ -1,12 +1,13 @@
 .reassign-modal-body {
   font-family: Poppins, sans-serif;
-  width: 25% !important;
+  width: 26% !important;
 }
 .reassign-modal-btns-container {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-top: 20px;
 }
 .reassign-modal-ok-btn {
   background-color: #d92d20 !important;

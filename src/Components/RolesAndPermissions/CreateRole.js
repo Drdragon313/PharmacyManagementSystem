@@ -465,7 +465,7 @@ const CreateRole = () => {
                 Select Role Permissions
               </label>
               <CustomTable
-                className="roles-checkbox-table"
+                className="ant-spin-container"
                 columns={columns}
                 dataSource={dataSource}
                 expandable={{

@@ -485,6 +485,7 @@ const EditUsers = () => {
                     inputName="salary"
                     handleChange={handleChange}
                     value={data.salary}
+                    type="number"
                     disabled={userID ? false : true}
                   />
                   <CustomInput

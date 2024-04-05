@@ -111,7 +111,7 @@
   margin-right: -10px;
   padding-right: 10px;
 }
-.search-bar {
+.ant-input .search-bar {
   background: #fff !important;
   border-radius: 12px;
 }

@@ -128,12 +128,20 @@ const AddUsers = () => {
       })
       .catch(() => {});
   }, [selectedPharmacy]);
-  const ukTelephoneNumberRegex = /^\+44\s?\d{3}\s?\d{7}$/;
 
-  const handleContactBlur = (e) => {
-    const contactValue = e.target.value;
-    console.log("blur called");
-    if (ukTelephoneNumberRegex.test(contactValue)) {
+  // const handleContactBlur = (e) => {
+  //   const contactValue = e.target.value;
+  //   console.log("blur called");
+  //   if (ukTelephoneNumberRegex.test(contactValue)) {
+  //     setValidContact(true);
+  //   } else {
+  //     setValidContact(false);
+  //   }
+  // };
+  const handleContactValidation = (contactValue) => {
+    const ukTelephoneNumberRegex = /^\+44\s?\d{3}\s?\d{7}$/;
+
+    if (contactValue && ukTelephoneNumberRegex.test(contactValue)) {
       setValidContact(true);
     } else {
       setValidContact(false);
@@ -269,8 +277,10 @@ const AddUsers = () => {
               <Input
                 className="AddUsersDetailsInput"
                 name="Contact"
-                onChange={handleChange}
-                onBlur={handleContactBlur}
+                onChange={(e) => {
+                  handleChange(e);
+                  handleContactValidation(e.target.value);
+                }}
               />
               {data.Contact.length > 0 && !validContact && (
                 <p className="InvalidContactTxt">Invalid Contact</p>
@@ -310,6 +320,7 @@ const AddUsers = () => {
                 className="AddUsersDetailsInput"
                 name="Role"
                 onChange={(value) => handleSelectChange("Permissions", value)}
+                disabled={true}
               >
                 {permissions.map((option) => (
                   <Option key={option} value={option}>
@@ -344,6 +355,7 @@ const AddUsers = () => {
                 inputclassName="DetailsInput"
                 inputName="salary"
                 handleChange={handleChange}
+                type="number"
                 value={data.salary}
               />
               <CustomInput

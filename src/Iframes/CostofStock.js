@@ -1,15 +1,33 @@
 import React, { useState, useEffect } from "react";
 import "./Iframe.css";
 import { PowerBIEmbed } from "powerbi-client-react";
+import { fetchUserPermissions } from "../Utility Function/ModulesAndPermissions";
 
 import { embedConfig, getReportData } from "../Utility Function/ReportUtils";
+import AccessDenied from "../Pages/AccessDenied/AccessDenied";
+import Spinner from "../Components/Spinner/Spinner";
 const CostofStock = () => {
   const [reportData, setReportData] = useState({
     embedToken: "",
     pharmacyIDs: [],
     reportID: "",
   });
+  const [userPermissions, setUserPermissions] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [screenSize, setScreenSize] = useState(window.innerWidth);
+  useEffect(() => {
+    const fetchUserPermissionData = async () => {
+      try {
+        await fetchUserPermissions(setUserPermissions);
+      } catch (error) {
+        console.error("Error fetching user permissions:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserPermissionData();
+  }, []);
   useEffect(() => {
     getReportData(setReportData);
     const handleScroll = (e) => {
@@ -25,35 +43,50 @@ const CostofStock = () => {
   const table = "public pharmacies";
   const column = "id";
   const operator = "eq";
+  const subModulePermissionsWrite =
+    userPermissions
+      ?.find((module) => module.module_name === "Reports")
+      .sub_modules.find(
+        (subModule) => subModule.sub_module_name === "Cost of Stock"
+      )?.actions?.read || false;
 
+  if (loading === true) {
+    return <Spinner />;
+  }
   return (
-    <div className="iframe-container">
-      <PowerBIEmbed
-        embedConfig={embedConfig(
-          reportData.reportID,
-          reportData.embedToken,
-          reportData.pharmacyIDs,
-          table,
-          column,
-          operator,
-          screenSize
-        )}
-        eventHandlers={
-          new Map([
-            [
-              "error",
-              function (event) {
-                console.log("Error while loading report:", event.detail);
-              },
-            ],
-          ])
-        }
-        cssClassName={"exampleIframe"}
-        getEmbeddedComponent={(embeddedReport) => {
-          window.report = embeddedReport;
-        }}
-      />
-    </div>
+    <>
+      {subModulePermissionsWrite ? (
+        <div className="iframe-container">
+          <PowerBIEmbed
+            embedConfig={embedConfig(
+              reportData.reportID,
+              reportData.embedToken,
+              reportData.pharmacyIDs,
+              table,
+              column,
+              operator,
+              screenSize
+            )}
+            eventHandlers={
+              new Map([
+                [
+                  "error",
+                  function (event) {
+                    console.log("Error while loading report:", event.detail);
+                  },
+                ],
+              ])
+            }
+            cssClassName={"exampleIframe"}
+            getEmbeddedComponent={(embeddedReport) => {
+              window.report = embeddedReport;
+            }}
+          />
+        </div>
+      ) : (
+        <AccessDenied />
+      )}
+    </>
   );
 };
 

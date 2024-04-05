@@ -171,14 +171,29 @@
 .LoginOutlined {
   margin-right: 3%;
 }
-.SigninInputField {
+/* .SigninInputField {
   border-radius: 12px;
   height: 40px;
   border: 1px solid #dddddf;
   background-color: #f9f9f9 !important;
-  color: black;
+  color: black !important;
+} */
+.ant-input {
+  border-radius: 12px;
 }
+.ant-input .SigninInputField {
+  border-radius: 12px;
+  height: 40px;
+  border: 1px solid #dddddf;
 
+  color: black !important;
+}
+#exampleInputPassword1 {
+  height: 28px !important;
+}
+#exampleInputEmail1 {
+  height: 28px !important;
+}
 .Email_icon {
   height: 80%;
   width: 80%;

@@ -359,7 +359,7 @@ const UpdateRole = () => {
         columns={subModuleColumns}
         dataSource={record.subModules}
         pagination={false}
-        showHeader={false}
+        showHeader={true}
       />
     );
   };
@@ -478,6 +478,7 @@ const UpdateRole = () => {
                 Select Role Permissions
               </label>
               <CustomTable
+                className="ant-spin-container"
                 columns={columns}
                 dataSource={dataSource}
                 expandable={{
