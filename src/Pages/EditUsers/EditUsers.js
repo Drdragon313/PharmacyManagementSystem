@@ -224,6 +224,9 @@ const EditUsers = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "salary" && parseFloat(value) < 0) {
+      return; // Do not update state if salary is negative
+    }
     setData((prevUserData) => ({
       ...prevUserData,
       [name]: value,

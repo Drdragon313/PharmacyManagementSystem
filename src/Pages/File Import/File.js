@@ -193,7 +193,7 @@ const File = () => {
     {
       title: "Action(s)",
       width: 150,
-      fixed: "right",
+
       render: (text, record) => (
         <Space className="action-btns">
           {canDeleteFile && (

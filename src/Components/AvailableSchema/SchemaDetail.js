@@ -102,7 +102,7 @@ const SchemaDetails = () => {
           </Button>
           <div className="schema-table-container">
             <CustomTable
-              className="schema-table-schema-details"
+              className="ant-spin-container"
               dataSource={schemaData.data}
               columns={columns}
               bordered={true}

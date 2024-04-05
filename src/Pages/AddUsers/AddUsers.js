@@ -150,6 +150,9 @@ const AddUsers = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "salary" && parseFloat(value) < 0) {
+      return;
+    }
     setData((prevUserData) => ({
       ...prevUserData,
       [name]: value,

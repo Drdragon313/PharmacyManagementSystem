@@ -1,11 +1,11 @@
-import { Button, Image, Space } from "antd";
+import { Image, Space } from "antd";
 import React from "react";
 import phamalyticsLogo from "../../Assets/pharmaylics_logo.svg";
 import pharmImg from "../../Assets/updatedPassImg.png";
 import tick from "../../Assets/tick.svg";
 
 import "./PasswordUpdatedSuccess.css";
-import { ArrowRightOutlined } from "@ant-design/icons";
+
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 
@@ -22,12 +22,6 @@ const PasswordUpdatedSuccess = () => {
           <h2 className="title">
             Elevate Your <br></br> <strong>Pharmacy Insights</strong>
           </h2>
-          <Button className="learn-more-btn">
-            <div className="learn-more">
-              Learn More
-              <ArrowRightOutlined />
-            </div>
-          </Button>
         </div>
       </div>
       <div className="siginFieldsContainer">

@@ -192,8 +192,10 @@
 }
 
 .dropdown {
-  margin-left: 150px;
-  margin-top: -20px;
+  margin-left: 140px;
+  margin-top: -2px;
+  border: none;
+  background-color: transparent;
 }
 
 .dropdown-content {
