@@ -144,7 +144,7 @@ const Signin = () => {
                     size="medium"
                     type="email"
                     id="exampleInputEmail1"
-                    className="SigninInputField"
+                    className="ant-input"
                     aria-describedby="emailHelp"
                     required={true}
                     value={email}
@@ -175,7 +175,7 @@ const Signin = () => {
                       />
                     }
                     id="exampleInputPassword1"
-                    className="SigninInputField"
+                    className="ant-input"
                     required={true}
                     iconRender={(visible) =>
                       visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
