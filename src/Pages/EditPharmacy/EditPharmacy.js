@@ -301,7 +301,7 @@ const EditPharmacy = () => {
                     onChange={(value) =>
                       handleSelectChange("managerName", value)
                     }
-                    value={data.managerID}
+                    value={data?.managerName}
                   >
                     {managers.map((manager) => (
                       <Option key={manager.id} value={manager.id}>
