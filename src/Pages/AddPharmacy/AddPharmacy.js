@@ -282,7 +282,7 @@ const AddPharmacy = () => {
                   </label>
                   <br />
                   <Select
-                    className="AddPharmacySelect"
+                    className="ant-select-selector"
                     name="managerName"
                     onChange={(value) =>
                       handleSelectChange("PharmacyManager", value)
@@ -315,7 +315,7 @@ const AddPharmacy = () => {
                   divclassName="mb-3"
                   labelclassName="adduserNotLabel"
                   labelText="Please Select your Address"
-                  selectclassName="AddPharmacySelect"
+                  selectclassName="ant-select-selector"
                   name="Address"
                   onChange={handleSelectChange}
                   options={

@@ -368,6 +368,7 @@ const AddUsers = () => {
                 inputName="Line_Manager"
                 handleChange={handleChange}
                 value={manager?.manager_name || ""}
+                disabled={true}
               />
             </div>
           </div>
