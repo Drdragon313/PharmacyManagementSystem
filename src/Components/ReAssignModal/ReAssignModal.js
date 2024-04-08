@@ -106,7 +106,7 @@ const ReAssignModal = ({ open, onConfirm, onCancel, roleId }) => {
             should be reassigned.
           </p>
           <p className="label-roles-dropdown">Reassign Role to Employees</p>
-          <div style={{ width: "90%" }}>
+          <div style={{ width: "100%" }}>
             {" "}
             <RolesDropdown
               onSelect={handleRoleSelect}
