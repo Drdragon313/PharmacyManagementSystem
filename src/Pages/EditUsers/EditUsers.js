@@ -501,7 +501,7 @@ const EditUsers = () => {
                     <CustomInput
                       divclassName="mb-3"
                       labelclassName="addUserNotLabel"
-                      labelText="Line manager"
+                      labelText="Pharmacy manager"
                       inputclassName="DetailsInput"
                       inputName="Line_Manager"
                       handleChange={handleChange}
