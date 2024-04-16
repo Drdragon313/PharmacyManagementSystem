@@ -1,0 +1,84 @@
+.reassign-modal-body {
+  font-family: Poppins, sans-serif;
+  width: 26% !important;
+}
+.reassign-modal-btns-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.reassign-modal-ok-btn {
+  background-color: #d92d20 !important;
+  width: 50%;
+  height: 5vh;
+
+  transition: background-color 1ms, color 1ms;
+}
+.reassign-modal-okh-btn :hover {
+  background-color: #fff !important;
+  border: 1px solid #d92d20 !important;
+  color: #d92d20 !important;
+}
+.reassign-modal-cancel-btn {
+  width: 50%;
+  height: 5vh;
+}
+.delete-pharm-modal-heading-txt {
+  font-family: Inter, sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 31px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #101828;
+}
+.delete-pharm-modal-body-txt {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #667085;
+  margin-bottom: 30px;
+}
+.roles-dropdown-reassign-modal {
+  width: 100%;
+  cursor: pointer !important;
+}
+.label-roles-dropdown {
+  font-family: Poppins, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0px;
+  text-align: left;
+  margin-bottom: 2px;
+}
+@media only screen and (max-width: 768px) {
+  .reassign-modal-body {
+    width: 80% !important; /* Adjust width of modal */
+  }
+
+  .reassign-modal-btns-container {
+    flex-direction: column; /* Stack buttons vertically */
+  }
+
+  .reassign-modal-ok-btn,
+  .reassign-modal-cancel-btn {
+    width: 100%; /* Make buttons full width */
+    margin-top: 10px; /* Add space between buttons */
+  }
+
+  .delete-pharm-modal-heading-txt {
+    font-size: 18px; /* Decrease heading font size */
+    font-family: Poppins, sans-serif;
+  }
+
+  .delete-pharm-modal-body-txt {
+    font-size: 12px; /* Decrease body text font size */
+    font-family: Poppins, sans-serif;
+  }
+}

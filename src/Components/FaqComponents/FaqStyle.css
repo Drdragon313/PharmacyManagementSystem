@@ -1,0 +1,14 @@
+.heading-expandable-faq {
+  font-family: Poppins, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #101828;
+}
+.faq-img {
+  width: 50%;
+  height: 50%;
+  margin-top: 10px;
+}

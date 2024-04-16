@@ -1,0 +1,31 @@
+.populate-container {
+  margin-left: 20px;
+}
+.populate-import-button {
+  margin-top: 10px;
+  background: linear-gradient(to right, #001529, #009de1);
+  color: white;
+}
+.populate-paragraph {
+  color: #707477;
+}
+.populate-file-upload {
+  width: 80vw;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center;
+}
+.populate-uploadText {
+  height: 10px;
+}
+.populate-supportedText {
+  color: #707477;
+  font-size: 11px;
+  height: 10px;
+}
+.populate-dragger {
+  width: 99%;
+}
+.AutoPopulatefileProgress {
+  width: 80vw;
+}

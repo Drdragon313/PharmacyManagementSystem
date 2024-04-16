@@ -1,0 +1,31 @@
+.Stable {
+  margin: 20px;
+  margin-top: 5px;
+}
+.schemaTable {
+  margin: 10px;
+  border: 1px solid black;
+  border-radius: 2px;
+}
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+.save-button {
+  background: linear-gradient(to right, #001529, #009de1);
+  position: absolute;
+  top: 5;
+  right: 40px;
+}
+
+.addrow {
+  background: linear-gradient(to right, #001529, #009de1) !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  z-index: 999;
+}

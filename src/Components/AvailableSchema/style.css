@@ -1,0 +1,53 @@
+.download-btn-schema-details {
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end;
+  gap: 10px;
+  border: 1px solid #3a3475;
+  color: #3a3475;
+  font-family: Poppins, sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0.3840723931789398px;
+  text-align: left;
+  margin-bottom: 20px;
+  height: 5.5vh;
+  line-height: 30.15px;
+}
+.down-img-schema-details {
+  width: 2rem;
+  height: 2rem;
+  margin-top: -5px !important;
+  background: transparent;
+}
+.table {
+  padding: 10px;
+}
+.schema-table-schema-details {
+  margin-top: 20px !important;
+}
+.loader {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  align-items: center;
+  position: absolute;
+  top: 55%;
+  left: 56%;
+  transform: translate(-50%, -50%);
+}
+
+@media only screen and (max-width: 668px) {
+  .schema-table-container {
+    overflow-x: auto;
+    width: 100%;
+  }
+  .schema-table-schema-details {
+    border: 1px solid;
+    width: 100%;
+  }
+  :where(.css-dev-only-do-not-override-nnuwmp).ant-spin-nested-loading
+    .ant-spin-container {
+    width: max-content;
+  }
+}

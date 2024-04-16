@@ -1,0 +1,19 @@
+.first-row-schema-modal {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 10px;
+}
+.schema-modal {
+  width: max-content !important;
+}
+.SchemaDetailsInput {
+  border-radius: 10px !important;
+  width: 100% !important;
+  height: 6vh;
+}
+.SchemaDetailSelect {
+  border-radius: 10px !important;
+  width: 100% !important;
+  height: 6vh;
+}

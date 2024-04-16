@@ -1,0 +1,240 @@
+.signinLogoMainContainer {
+  position: relative;
+  width: 50vw;
+  height: 100vh;
+  background-color: #ececec;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+.SigninLogoContainerpharm-img {
+  height: calc(100% + 10%);
+  width: calc(100% + 10%);
+  background: linear-gradient(115deg, #3a3475 0%, #110a59 77.92%);
+  position: absolute;
+  top: -5%;
+  left: -5%;
+  z-index: 0;
+}
+.PharmacyImage {
+  height: 45%;
+  width: 45%;
+  z-index: 1;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -80%);
+}
+.LearnMoreArrow {
+  display: inline-flex !important;
+}
+.LearnMoreBtn {
+  z-index: 1;
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -80%);
+}
+.siginPowerText {
+  color: white;
+  margin-top: 15px;
+  margin-right: 5px;
+}
+.siginFieldsContainer {
+  z-index: 1;
+  background-color: white;
+  width: 50vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 5%;
+  border-bottom-left-radius: 5%;
+}
+.signinFields {
+  width: 50%;
+}
+.signinText {
+  color: #707477;
+}
+.signinboldLabel {
+  font-weight: bold;
+  font-size: 12px;
+  margin-left: 6px;
+}
+.signinboldLabel::after {
+  content: " *";
+  color: red;
+}
+.signinForget {
+  text-decoration: none;
+  font-size: 11px;
+  color: #3a3475;
+}
+.login-btn {
+  color: white;
+  width: 100%;
+  background: #3a3475;
+  border-radius: 10px;
+  height: 5vh;
+  font-size: 16px;
+  font-family: Lato, sans-serif;
+}
+.login-btn:hover {
+  background-color: #110a59 !important;
+}
+.siginTerms {
+  border-top: 1px solid #dddddf;
+}
+.signinFooter {
+  margin-top: 15%;
+  color: #707477;
+}
+.signinRegisterNow {
+  color: black;
+  font-weight: bold;
+}
+
+.stay-signedin-forgot-pass {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.stay-signedin {
+  display: flex;
+  flex-direction: row;
+}
+.stay-signedin-txt {
+  margin-left: 5px;
+}
+.SigninLogoContainertitletext1 {
+  color: #fff;
+  text-align: center;
+  font-family: Lato;
+  font-size: 1.8rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 50%;
+  letter-spacing: 2px;
+}
+.SigninLogoContainertitletext2 {
+  color: #fff;
+  font-family: Lato;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 50%;
+  letter-spacing: 2px;
+}
+.SigninLogoContainerdescription-txt {
+  color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 12px;
+}
+.SigninLogoContainertxt {
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  text-align: center;
+  color: white;
+  width: 60%;
+}
+.container-foot {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 100px;
+}
+.btn-light {
+  height: 35px;
+  width: 120px;
+  font-size: 11px;
+  background-color: #707477;
+  color: aliceblue;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 10px;
+}
+.PharmalyticsLogo {
+  height: 90%;
+  width: 90%;
+}
+.LoginText {
+  margin-top: 3%;
+  color: #3a3475;
+  font-weight: 350;
+}
+.LoginOutlined {
+  margin-right: 3%;
+}
+/* .SigninInputField {
+  border-radius: 12px;
+  height: 40px;
+  border: 1px solid #dddddf;
+  background-color: #f9f9f9 !important;
+  color: black !important;
+} */
+.ant-input {
+  border-radius: 12px;
+}
+.ant-input .SigninInputField {
+  border-radius: 12px;
+  height: 40px;
+  border: 1px solid #dddddf;
+
+  color: black !important;
+}
+#exampleInputPassword1 {
+  height: 28px !important;
+}
+#exampleInputEmail1 {
+  height: 28px !important;
+}
+.Email_icon {
+  height: 80%;
+  width: 80%;
+}
+/* Default styles for larger screens */
+.siginContainer {
+  display: flex;
+  font-family: Lato, sans-serif;
+  height: 100%;
+  overflow-y: hidden;
+}
+
+.signinLogoMainContainer {
+  position: relative;
+  width: 50vw;
+  height: 100vh;
+  background-color: #ececec;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Updated styles for smaller screens */
+@media only screen and (max-width: 965px) {
+  .siginContainer {
+    flex-direction: column;
+  }
+
+  .signinLogoMainContainer {
+    display: none; /* Hide the logo container on smaller screens */
+  }
+
+  .siginFieldsContainer {
+    width: 100% !important; /* Take up the full width on smaller screens */
+    border-top-left-radius: 0 !important; /* Remove border radius on smaller screens */
+    border-bottom-left-radius: 0 !important;
+  }
+  .signinFields {
+    width: 80% !important; /* Adjust the width of the content within .siginFieldsContainer */
+    max-width: 400px; /* Set a maximum width if needed */
+    margin: 0 auto; /* Center the content horizontally */
+  }
+}

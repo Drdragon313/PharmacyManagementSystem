@@ -1,0 +1,138 @@
+.TopnavHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #ededed;
+}
+.top-nav-logo-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-left: 20px;
+  color: #fff;
+  width: 110px;
+  font-family: Helvetica;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.responsive-nav-logo {
+  width: 100px;
+}
+.cross-btn {
+  width: 150px;
+  margin-right: -50px;
+}
+.responsive-nav-txt {
+  margin-top: 20px;
+}
+.ProfileDropdown {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+}
+.top-nav-column {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.TopnavUser {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  justify-content: center;
+}
+.TopnavUserName {
+  height: 20px;
+
+  color: #009cdf;
+}
+.TopnavJobTitle {
+  height: 20px;
+  margin-bottom: 50px;
+}
+.TopnavProfileLogo {
+  font-size: 20px;
+}
+.nav-itmes-contianer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.nav-itmes-contianer :hover {
+  cursor: pointer;
+}
+.ProfileNavlink {
+  text-decoration: none !important;
+}
+.mobile-drawer-nav {
+  max-width: 27vb !important;
+  min-width: 22vb !important;
+  min-height: 55vh !important;
+  background-color: #3a3475 !important;
+  padding: 0px !important;
+}
+.ant-drawer-body {
+  max-width: 30vb !important;
+  min-width: 25vb !important;
+  min-height: 55vh !important;
+  background-color: #3a3475 !important;
+  padding: 0px !important;
+}
+/* :where(.css-dev-only-do-not-override-nnuwmp).ant-drawer .ant-drawer-body {
+  padding-top: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+
+  background-color: #3a3475;
+} */
+/* :where(.css-dev-only-do-not-override-nnuwmp).ant-drawer .ant-drawer-header {
+  background-color: #3a3475;
+} */
+.help-btn {
+  width: max-content;
+}
+
+.mobileButton {
+  display: none;
+  margin-left: -20px;
+
+  @media (max-width: 768px) {
+    display: block;
+    font-size: 20px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .TopnavHeader {
+    background-color: #3a3475;
+    color: #fff;
+  }
+  .TopnavUser {
+    display: none;
+  }
+  .nav-itmes-contianer {
+    margin-right: -40px !important;
+  }
+  .help-btn {
+    width: max-content;
+  }
+  .mobile-drawer-nav {
+    padding: 1px !important;
+  }
+}
+@media only screen and (min-height: 768px) {
+  .mobile-drawer-nav {
+    padding: 1px !important;
+    width: 15vb !important;
+    height: 100vh !important;
+  }
+}

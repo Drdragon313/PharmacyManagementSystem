@@ -1,0 +1,17 @@
+.UploadSuccess-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.UploadText {
+  margin-top: 20px;
+}
+.ContinueButtonContainer {
+  margin-top: 20px;
+}
+.UploadContinueButton {
+  background: #425cda;
+  color: white;
+}

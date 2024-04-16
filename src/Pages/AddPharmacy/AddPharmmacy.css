@@ -1,0 +1,210 @@
+.AddPharmacyBasicContainer {
+  height: auto !important;
+  font-family: Poppins, sans-serif;
+}
+.AddPharmacyBasicInfoHeading {
+  margin-left: 20px;
+}
+
+.AddPharmacyDetails {
+  display: flex;
+  padding-left: 20px;
+  padding-top: 10px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.AddPharmacyDetailsInput {
+  height: 6vh;
+  width: 24vw;
+  background: #fdfdfd !important;
+  border-radius: 12px;
+}
+
+.AddPharmacyInformationBtnsContainer {
+  display: flex;
+  width: 30%;
+  justify-content: space-between;
+  gap: 20px;
+}
+.add-emp-modal-button {
+  width: 24vw;
+  margin-bottom: 20px;
+}
+.AddPharmacyInformationCancelBtn {
+  border-radius: 10px;
+  border: 1px solid #3a3475;
+  color: #3a3475;
+  width: 100% !important;
+}
+/* .AddPharmacyInformationUpdateBtn {
+  border-radius: 10px;
+  background: #425cda;
+  color: white;
+  width: 12vw;
+} */
+.ant-select-custom .ant-select-selector {
+  height: 6vh !important;
+  width: 100%;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  background: #fdfdfd !important;
+}
+div.ant-select-selector {
+  min-height: 6vh;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  background: #fdfdfd !important;
+  padding-top: 1px;
+}
+.select-custom {
+  min-height: 6vh;
+  width: 100%;
+  border-radius: 15px !important;
+  display: flex;
+  align-items: center;
+  background: #fdfdfd !important;
+  padding-top: 1px;
+  padding-bottom: 0;
+}
+.ant-select-custom .ant-select-arrow {
+  padding-top: 1px;
+  padding-bottom: 0;
+}
+.ant-select-custom .ant-select-selection-placeholder::placeholder {
+  display: flex;
+  align-items: center;
+}
+.addPharmacyLabel {
+  margin-left: 0px;
+}
+.addPharmacyLabel::after {
+  content: " *";
+  font-weight: bold;
+  color: red;
+}
+
+.addPharmacyManager::after {
+  content: " *";
+  font-weight: bold;
+  color: red;
+}
+.adduserNotLabel::after {
+  content: " *";
+  font-weight: bold;
+  color: red;
+}
+.addPharmacyNotLabel {
+  margin-left: 0px;
+}
+.dateOfCreationLabel::after {
+  content: none;
+  font-weight: bold;
+  color: red;
+}
+.Pharmacycreationtxt {
+  color: #3a3475;
+}
+.AddPharmacySelect {
+  width: 24vw;
+}
+.add-user-in-pharm-select {
+  height: 5vh;
+  width: 24vw;
+  background: #fdfdfd;
+}
+.ant-select-show-search:where(
+    .css-dev-only-do-not-override-nnuwmp
+  ).ant-select:not(.ant-select-customize-input)
+  .ant-select-selector {
+  border-radius: 12px;
+  width: 100%;
+}
+.ant-input.css-dev-only-do-not-override-nnuwmp.AddPharmacyDetailsInput {
+  background: #fdfdfd !important;
+}
+.ant-input.css-dev-only-do-not-override-nnuwmp.AddUsersDetailsInput {
+  background: #fdfdfd !important;
+}
+.AddPharmacyInformationUpdateBtn {
+  font-family: "Poppins", sans-serif;
+  color: white;
+  background-color: #425cda;
+  border-radius: 10px;
+  transition: all;
+
+  border-radius: 10px;
+  width: 100% !important;
+}
+:where(.css-dev-only-do-not-override-nnuwmp).ant-select-single:not(
+    .ant-select-customize-input
+  )
+  .ant-select-selector {
+  border-radius: 12px !important;
+}
+.AddPharmacyInformationUpdateBtn:focus {
+  box-shadow: 0 0 0 2px #425cda;
+}
+.breadcrumb-border-add-pharmacy {
+  border-top: 1px solid #ededed;
+  border-bottom: 1px solid #ededed;
+  border-left: none;
+  padding-left: 10px;
+}
+.plus-outline-img {
+  height: 25px;
+  width: 25px;
+  margin-right: -10px;
+  padding-right: 10px;
+  margin-bottom: 3px;
+}
+.plus-btn-edit-pharm {
+  background-color: #fff;
+  width: 100% !important;
+  font-family: "Poppins", sans-serif;
+  margin-right: 20px !important;
+  color: #425cda;
+  border-color: #425cda;
+  height: 8%;
+  border-radius: 8px;
+}
+.dashed-btn-add-emp {
+  background-color: #fff;
+  width: 100% !important;
+  font-family: "Poppins", sans-serif;
+  margin-right: 20px !important;
+  color: #425cda;
+  border-color: #425cda;
+  height: 6vh !important;
+  border-radius: 8px;
+}
+.AddPharmacyInformationBtnsContainer {
+  width: 24vw;
+}
+@media only screen and (max-width: 668px) {
+  .adjacent-fields {
+    gap: 1px;
+  }
+  .AddPharmacyBasicContainer {
+    height: auto !important;
+    padding-bottom: 20px;
+  }
+  .AddPharmacyDetails {
+    height: auto !important;
+  }
+  .AddPharmacySelect {
+    width: 80vw !important;
+  }
+  .add-emp-modal-button {
+    width: 85%;
+    margin-bottom: 20px;
+  }
+  .AddPharmacyInformationBtnsContainer {
+    width: 80vw;
+  }
+}

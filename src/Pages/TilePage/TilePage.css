@@ -1,0 +1,328 @@
+.allcards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 10px;
+}
+.allSchemas {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 10px;
+}
+.tilepage-container {
+  height: 80%;
+}
+.tilecards {
+  border: 1px solid #2a44c1;
+  color: #2a44c1;
+  border-radius: 10px;
+  padding: 16px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 230px;
+  text-align: center;
+  height: 150px;
+  transform: border-style 0.5s border-color 0.5s, box-shadow 1s;
+}
+.tilecards:hover {
+  cursor: pointer;
+  background-color: #eff1ff;
+  color: #2a44c1;
+  border-style: solid;
+}
+.tile-avatar-img {
+  background-color: transparent;
+  height: 90px;
+  width: 90px;
+  align-items: center;
+  justify-content: center;
+  margin-top: -13px;
+}
+.schema-content .schema-img {
+  height: 60px;
+  width: 60px;
+}
+.tile-avatar-img .tile-img {
+  height: 60px;
+  width: 60px;
+}
+.tile-avatar-img {
+  margin-bottom: -25px;
+}
+.tile-content {
+  margin-top: 20px;
+  color: #2a44c1;
+}
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+.create-card-button {
+  margin-top: 16px;
+}
+.title-description {
+  margin-left: 10px;
+  margin-top: 20px;
+}
+.add-new-tile {
+  display: flex;
+  flex-direction: row;
+  margin-left: 30px;
+}
+.create-new-tile-btn-txt {
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+}
+.buttons {
+  justify-content: space-between;
+}
+
+.breadcrumb {
+  padding-left: 20px;
+  margin-top: 1px;
+  border-bottom: 1px solid #ededed;
+}
+.breadcrumb-item {
+  cursor: pointer;
+  transition: font-weight 0.3s;
+}
+
+.breadcrumb-item.active {
+  background-color: #e0e0e0;
+}
+.choose-option-modal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.add-button {
+  margin-left: 50px;
+  margin-top: 60px;
+}
+.add-button-tile {
+  margin: 60px;
+  margin-top: 70px;
+}
+.button-container {
+  display: flex;
+  flex-direction: row;
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 230px;
+  text-align: center;
+  height: 150px;
+  border-width: 3px;
+  border-style: dashed;
+  border-color: #707477;
+  border-radius: 15px;
+  align-items: center;
+  justify-content: center;
+  transition: border-style 0.5s border-color 0.5s, box-shadow 0.5s,
+    background-color 0.5s, color 0.5s;
+}
+.button-container:hover {
+  cursor: pointer;
+  border-color: #001529;
+  background: #eff1ff;
+  color: #fff;
+  border-style: solid;
+}
+.button-container-schema {
+  display: flex;
+  flex-direction: row;
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 230px;
+  text-align: center;
+  height: 150px;
+  border-width: 3px;
+  border-style: dashed;
+  border-color: #707477;
+  border-radius: 15px;
+  align-items: center;
+  justify-content: center;
+  transition: border-style 0.5s border-color 0.5s, box-shadow 0.5s,
+    background-color 0.5s, color 0.5s;
+}
+.button-container-schema:hover {
+  cursor: pointer;
+  border-color: #001529;
+  background: #eff1ff;
+  color: aliceblue;
+  border-style: solid;
+}
+.avatar-uploader {
+  margin-top: 1px;
+  margin-top: 20px;
+}
+.upload-img {
+  display: flex;
+  flex-direction: row;
+}
+.upload-img-text {
+  margin-top: 1px;
+}
+.available-tiles-txt {
+  font-family: Poppins, sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 33px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #3a3475;
+  margin-left: 15px;
+  margin-top: 10px;
+}
+.dropbtn {
+  color: #2a44c1;
+  padding: 1px;
+  border-radius: 5px;
+  margin-left: 5px;
+  margin-top: -30px;
+  font-size: 28px;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  position: absolute;
+}
+.dropdown-tile {
+  margin-left: 140px;
+  margin-top: -10px;
+  padding-bottom: -20px;
+  border: none;
+  background-color: transparent;
+}
+.dropdown {
+  margin-left: 140px;
+  margin-top: -8px;
+  /* padding-bottom: -20px; */
+  border: none;
+  background-color: transparent;
+}
+
+.dropdown-content {
+  display: flex;
+  flex-direction: column; /* Set flex-direction to column */
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  padding: 5px 0;
+  border-radius: 10px;
+}
+.dropdown-content a {
+  color: black;
+
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+}
+
+/* .dropdown-content a:hover {
+  background-color: #f1f1f1;
+} */
+.available-tiles-txt {
+  margin-left: 20px;
+}
+/* .dropdown:hover .dropdown-content {
+  display: flex;
+  flex-direction: column;
+} */
+.schemacards-tilepage {
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 230px;
+  text-align: center;
+  height: 150px;
+  background: #fff;
+  justify-content: center;
+  transform: border-style 0.5s border-color 0.5s box-shadow 1s;
+  color: #2a44c1;
+  border: 1px solid#2a44c1;
+  border-radius: 12px;
+}
+.schemacards-tilepage:hover {
+  cursor: pointer;
+  background-color: #eff1ff;
+  color: #2a44c1;
+  border-style: solid;
+}
+.schema-content {
+  text-align: center;
+  margin-left: 10px;
+  margin-top: 30px;
+}
+.dropbtn-schema {
+  color: #2a44c1;
+  padding: 1px;
+  border-radius: 5px;
+  margin-left: 10px;
+  margin-top: -10px;
+  font-size: 25px;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  position: absolute;
+}
+.tiles-modal-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.move-tile-name-btn {
+  background-color: #ffffff;
+}
+
+.move-tile-name-btn.clicked {
+  background: #2a44c1;
+}
+.icons {
+  background: #2a44c1;
+  max-width: 100px !important;
+  max-height: 100px !important;
+  border-radius: 5px;
+  transform: border-style 0.5s border-color 0.5s box-shadow 1s;
+}
+.icons-modal {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+}
+.icons:hover {
+  cursor: pointer;
+  border-color: black;
+  box-shadow: 2px 2px 4px rgba(0, 21, 41, 100);
+  color: aliceblue;
+  border-style: solid;
+}
+.delete-confirm-btn {
+  background-color: red;
+  width: 50%;
+  height: 5vh;
+}
+@media only screen and (max-width: 560px) {
+  .allcards,
+  .allSchemas {
+    align-items: center;
+    justify-content: center;
+  }
+  .button-container-schema {
+    margin-top: 10px;
+  }
+}
+@media only screen and (max-width: 560px) {
+  .button-container-schema {
+    margin-top: 10px;
+  }
+}

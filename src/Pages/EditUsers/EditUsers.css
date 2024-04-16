@@ -1,0 +1,127 @@
+.EditUsersBasicContainer {
+  height: auto !important;
+}
+.EditUsersBasicInfoHeading {
+  padding-top: 2%;
+  margin-left: 2.4%;
+}
+
+.EditUsersDetails {
+  height: auto;
+  margin: 20px !important;
+}
+.AddUsersOneDetails {
+  width: 34vw;
+  display: flex;
+  justify-content: center;
+}
+.AddUsersTwoDetails {
+  width: 34vw;
+  display: flex;
+  justify-content: center;
+}
+.AddUsersThreeDetails {
+  width: 34vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.EditUsersDetailsInput {
+  height: 6vh;
+  width: 24vw;
+  border-radius: 12px;
+}
+.EditUsersDetailsInputContact {
+  height: 6vh;
+  width: 24vw;
+  border-radius: 12px;
+}
+.addUserNotLabelContact::after {
+  content: " *";
+  font-weight: bold;
+  color: red;
+}
+.DetailsInput {
+  height: 6vh;
+  border-radius: 12px;
+}
+
+.EditUsersInformationUpdateBtnContainer {
+  display: flex;
+  width: 24vw;
+
+  justify-content: space-between;
+}
+.AddUsersInformationCancelBtn {
+  border-radius: 10px;
+  border: 1px solid #3a3475;
+  color: #3a3475;
+  width: 8vw;
+}
+.AddUsersInformationUpdateBtn {
+  border-radius: 10px;
+  background: #425cda;
+  color: white;
+  width: 12vw;
+}
+.GenderInput {
+  width: 24vw !important;
+}
+.ant-select-custom .ant-select-selector {
+  height: 6vh !important;
+  /* width: 18vw !important; */
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  background: #f9f9f9 !important;
+}
+.ant-select-custom .ant-select-arrow {
+  padding-top: 1px;
+  padding-bottom: 0;
+}
+.ant-select-custom .ant-select-selection-placeholder::placeholder {
+  display: flex;
+  align-items: center;
+}
+.adduserLabel {
+  margin-left: 3%;
+}
+.adduserLabel::after {
+  content: " *";
+  font-weight: bold;
+  color: red;
+}
+.addUserNotLabel {
+  margin-left: 3%;
+}
+.usercreationtxt {
+  color: #3a3475;
+  margin-bottom: 30px;
+}
+.breadcrumb-border-edit-user {
+  border: 1px solid #ededed;
+  padding-left: 10px;
+}
+.ant-select-disabled:where(.css-dev-only-do-not-override-nnuwmp).ant-select:not(
+    .ant-select-customize-input
+  )
+  .ant-select-selector {
+  background-color: #f5f5f5 !important;
+}
+:where(.css-dev-only-do-not-override-nnuwmp).ant-input-disabled,
+:where(.css-dev-only-do-not-override-nnuwmp).ant-input[disabled] {
+  background-color: #f5f5f5 !important;
+}
+@media only screen and (max-width: 668px) {
+  .adjacent-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1px !important;
+  }
+  .AddUsersDetailsInput {
+    width: 100% !important;
+  }
+  .DetailsInput {
+    width: 60% !important;
+  }
+}
