@@ -1,19 +1,37 @@
-import React from "react";
-import { Modal, Form, Input, Button, message } from "antd";
+import React, { useEffect, useState } from "react";
+import { Modal, Form, Input, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateSchemaName } from "../../redux/features/SchemaSlice/schemaSlice";
 import "./schemaCreationForm.css";
 import CustomButton from "../CustomButton/CustomButton";
-
+import { fetchTilesAndSchemas } from "../../Utility Function/tilePageUtils";
+const schemaPath = localStorage.getItem("tilePath");
 const SchemaCreationForm = ({ visible, onCancel, selectedType, tilePath }) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const [schema, setSchemas] = useState();
+
+  useEffect(() => {
+    const fetchDataTiles = async () => {
+      const data = await fetchTilesAndSchemas(schemaPath);
+
+      setSchemas(data.schemas);
+      console.log("schemas now", data);
+    };
+    fetchDataTiles();
+  }, []);
   const handleCreate = async () => {
     try {
       const values = await form.validateFields();
       const { schemaName } = values;
+      if (schema.find((schema) => schema.schema_name === schemaName)) {
+        message.error(
+          "Schema name already exists. Please choose a different name."
+        );
+        return;
+      }
       dispatch(updateSchemaName(schemaName));
       if (selectedType === "manual") {
         navigate(`/customschema`);
@@ -22,6 +40,7 @@ const SchemaCreationForm = ({ visible, onCancel, selectedType, tilePath }) => {
       } else if (selectedType === "csv") {
         navigate(`/schema/autopopulate`);
       }
+
       onCancel();
     } catch (error) {
       message.error("Validation error", error, 3);
@@ -30,7 +49,6 @@ const SchemaCreationForm = ({ visible, onCancel, selectedType, tilePath }) => {
         message.destroy();
       }, 2000);
     }
-    console.log("path: ", tilePath);
   };
   return (
     <Modal
