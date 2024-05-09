@@ -432,6 +432,7 @@ const TilePage = () => {
             onCancel={closeCardModal}
             tilePath={path}
           />
+
           <Modal
             open={activeModal === "createTile"}
             title="Create New Tile"
