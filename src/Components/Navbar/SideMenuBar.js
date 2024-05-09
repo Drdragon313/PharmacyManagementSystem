@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Menu, Space } from "antd";
 import "./Style.css";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import dataLive from "../../Assets/datalive.svg";
 import HeartGrey from "../../Assets/heart grey.svg";
 import empIcon from "../../Assets/emp_icon.svg";
@@ -153,6 +153,13 @@ const SideMenuBar = (props) => {
                   <Space
                     direction="horizontal"
                     size={10}
+                    style={{
+                      color:
+                        location?.pathname ===
+                        getRouteByModuleId(menuItem.module_id)
+                          ? "#fff"
+                          : "",
+                    }}
                     // className="menu-items-sidebar"
                   >
                     <img
@@ -164,7 +171,8 @@ const SideMenuBar = (props) => {
                       }
                       alt="Icon"
                     />
-                    <Link
+                    {menuItem.module_name}
+                    {/* <Link
                       // style={{
                       //   color:
                       //     selectedKeys &&
@@ -177,7 +185,7 @@ const SideMenuBar = (props) => {
                       // to={getRouteByModuleId(menuItem.module_id)}
                     >
                       {menuItem.module_name}
-                    </Link>
+                    </Link> */}
                   </Space>
                 </Menu.Item>
               )}

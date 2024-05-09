@@ -102,7 +102,8 @@ const ForgotPassword = () => {
                 Email
               </label>
               <Input
-                className={`SigninInputField ${
+                id="exampleInputEmail1"
+                className={`ant-input ${
                   !isEmailValid ? "SigninErrorInput" : ""
                 }`}
                 onChange={handleInputChange}

@@ -193,10 +193,10 @@ const Topnav = () => {
           placement="left"
           onClose={() => setShowMobileDrawer(false)}
           open={showMobileDrawer}
-          className="mobile-drawer-nav"
+          className="ant-drawer-body"
           title={false}
           closeIcon={false}
-          width={1000}
+          width={1200}
         >
           <div className="top-nav-logo-container">
             <div className="responsive-nav-logo">

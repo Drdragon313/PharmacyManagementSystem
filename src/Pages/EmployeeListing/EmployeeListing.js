@@ -289,7 +289,7 @@ const EmployeeListing = () => {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      width: "8%",
+      width: "10%",
 
       render: (text, record) => (
         <>
@@ -327,7 +327,7 @@ const EmployeeListing = () => {
     {
       title: "Action(s)",
       width: "10%",
-      fixed: "right",
+
       render: (text, record) => (
         <Space className="action-btns">
           <Link to={`${record.userID}/viewUser`}>
@@ -490,7 +490,7 @@ const EmployeeListing = () => {
             <div className="filter-container-emp-list">
               <Select
                 allowClear={true}
-                className="filter-pharm-btn"
+                className="ant-select-selector"
                 mode="multiple"
                 value={selectedRole}
                 onChange={handleRoleChange}
@@ -512,7 +512,7 @@ const EmployeeListing = () => {
               </Select>
               <Select
                 allowClear={true}
-                className="filter-pharm-btn"
+                className="ant-select-selector"
                 mode="multiple"
                 value={selectedPostalCode}
                 onChange={(values) => handlePostalCodeChange(values)}

@@ -9,7 +9,7 @@ const ConfirmationModal = ({
   confirmationHeading,
   confirmationText,
   titleImage,
-  btnclassName,
+
   btnTxt,
 }) => {
   return (

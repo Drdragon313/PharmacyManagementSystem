@@ -19,7 +19,12 @@ const ReAssignModal = ({ open, onConfirm, onCancel, roleId }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${baseURL}/list-users-of-a-role?role_id=${roleId}`
+          `${baseURL}/list-users-of-a-role?role_id=${roleId}`,
+          {
+            headers: {
+              Authorization: `${authToken}`,
+            },
+          }
         );
         const data = response.data;
         if (data.status === "success") {
@@ -101,7 +106,13 @@ const ReAssignModal = ({ open, onConfirm, onCancel, roleId }) => {
             should be reassigned.
           </p>
           <p className="label-roles-dropdown">Reassign Role to Employees</p>
-          <RolesDropdown onSelect={handleRoleSelect} excludedRoleId={roleId} />
+          <div style={{ width: "100%" }}>
+            {" "}
+            <RolesDropdown
+              onSelect={handleRoleSelect}
+              excludedRoleId={roleId}
+            />
+          </div>
         </Modal>
       ) : (
         <Modal

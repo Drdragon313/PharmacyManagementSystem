@@ -39,21 +39,33 @@
 }
 .labels-values-container {
   display: flex;
+  flex-direction: column;
+  gap: 30px;
   border: 1px solid #ededed;
   border-radius: 5px;
   padding: 10px;
-  width: 75%;
+  width: 100%;
   font-family: "Poppins", sans-serif;
 }
 
-.labels {
-  flex: 1;
-  padding-right: 1px;
-  font-weight: bold; /* Adjust the spacing between labels and values as needed */
+.emp-details-container {
+  margin-left: 20px;
+  width: 100%;
 }
-
+.labels {
+  padding-right: 1px;
+  font-weight: bold;
+}
+.labels-txt {
+  font-weight: bold;
+  white-space: nowrap;
+}
 .values {
-  flex: 2;
+  margin-left: 20px;
+  width: calc(100% - 120px);
+  word-wrap: break-word;
+  font-size: 14px;
+  line-height: 1.5;
 }
 .breadcrumb-col {
   border: 1px solid #ededed;

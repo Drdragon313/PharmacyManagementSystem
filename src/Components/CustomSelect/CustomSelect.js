@@ -24,6 +24,7 @@ const CustomSelect = ({
         name={name}
         onChange={(value) => onChange(name, value)}
         value={value}
+        style={{ borderRadius: "12px" }}
       >
         {options.map((option) => (
           <Option key={option} value={option}>

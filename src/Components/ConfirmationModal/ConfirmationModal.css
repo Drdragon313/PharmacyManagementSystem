@@ -2,11 +2,12 @@
   font-family: Poppins, sans-serif;
   width: 25% !important;
 }
-.delete-modal-btns-container {
+.reassign-modal-btns-container {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
 }
 .delete-modal-ok-btn {
   background-color: #d92d20 !important;

@@ -16,6 +16,12 @@
   flex-wrap: wrap;
   padding-left: 10px;
 }
+.ant-pagination-item-active a {
+  background-color: #425cda;
+  border-radius: 5px;
+  color: #fff !important;
+  height: 1.4rem;
+}
 .pagination-col-right {
   display: flex;
   flex-direction: row;

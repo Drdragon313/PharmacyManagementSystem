@@ -66,43 +66,31 @@ const EmployeeDetails = () => {
           lg: 32,
         }}
       >
-        <Col className="emp-detail-heading" span={6}>
+        <Col className="emp-detail-heading" span={12}>
           <p>{employeeDetails.FName} details</p>
         </Col>
-        <Col className="primary-btns" span={6}></Col>
-        <Col className="emp-detail-heading-btn" span={6}></Col>
-        <Col className="gutter-row" span={4}></Col>
       </Row>
-      <Row
-        style={{ margin: "5px", marginTop: "10px" }}
-        gutter={{
-          xs: 8,
-          sm: 16,
-          md: 24,
-          lg: 32,
-        }}
-      >
-        <Col span={22} style={{ marginLeft: "20px" }}>
-          <div className="labels-values-container">
-            <div className="labels">
-              <p>First name </p>
-              <p>Last name </p>
-              <p>Gender</p>
-              <p>Date of birth</p>
-              <p>Contact #</p>
-              <p>E-mail</p>
-            </div>
-            <div className="values">
-              <p>{employeeDetails.FName}</p>
-              <p> {employeeDetails.LName}</p>
-              <p> {employeeDetails.Gender || "None"}</p>
-              <p> {employeeDetails.DateOfBirth}</p>
-              <p> {employeeDetails.Contact}</p>
-              <p> {employeeDetails.Email}</p>
-            </div>
+
+      <div className="emp-details-container">
+        <div className="labels-values-container">
+          <div className="labels">
+            <p className="labels-txt">First name </p>
+            <p>Last name </p>
+            <p>Gender</p>
+            <p>Date of birth</p>
+            <p>Contact #</p>
+            <p>E-mail</p>
           </div>
-        </Col>
-      </Row>
+          <div className="values">
+            <p>{employeeDetails.FName}</p>
+            <p> {employeeDetails.LName}</p>
+            <p> {employeeDetails.Gender || "None"}</p>
+            <p> {employeeDetails.DateOfBirth}</p>
+            <p> {employeeDetails.Contact}</p>
+            <p> {employeeDetails.Email}</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

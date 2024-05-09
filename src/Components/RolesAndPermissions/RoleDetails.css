@@ -31,11 +31,10 @@
   font-family: "Poppins", sans-serif;
 }
 .ant-spin-container {
-  /* border: 1px solid #ededed; */
   border-radius: 5px;
   font-family: "Poppins", sans-serif;
   width: 100%;
-  text-align: center;
+  border: none;
 }
 .labels-values-container {
   display: flex;
@@ -89,6 +88,11 @@
   .Labels-values-container {
     display: flex;
     flex-direction: column;
+  }
+  .ant-spin-container {
+    border-radius: 5px;
+    font-family: "Poppins", sans-serif;
+    width: 100%;
   }
   .values-container {
     display: flex;

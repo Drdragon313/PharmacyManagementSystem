@@ -12,7 +12,7 @@
 .values-container {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 20px;
 }
 .primary-Class {
   background-color: #425cda;
@@ -62,6 +62,7 @@
   flex: 1;
   padding-right: 1px;
   font-weight: bold;
+  width: max-content;
 }
 
 .values {

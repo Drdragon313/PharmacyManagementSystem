@@ -100,7 +100,7 @@
   color: red;
 }
 .addUserNotLabel {
-  margin-left: 3%;
+  margin-left: 10px !important;
 }
 .usercreationtxt {
   color: #3a3475;

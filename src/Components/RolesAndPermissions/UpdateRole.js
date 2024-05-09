@@ -21,6 +21,8 @@ const UpdateRole = () => {
   const [isAnyCheckboxChecked, setIsAnyCheckboxChecked] = useState(false);
   const [userPermissions, setUserPermissions] = useState(null);
   const [roleName, setRoleName] = useState("");
+  const [initialRoleName, setInitialRoleName] = useState("");
+
   const [loading, setLoading] = useState(true);
 
   const { role_id } = useParams();
@@ -53,6 +55,7 @@ const UpdateRole = () => {
         if (data.status === "success") {
           const roleData = data.data;
           setRoleName(roleData.role_name);
+          setInitialRoleName(roleData.role_name);
 
           const updatedDataSource = roleData.permissions.map((module) => ({
             key: module.module_id,
@@ -87,6 +90,7 @@ const UpdateRole = () => {
       ?.read || false;
   const resetState = () => {
     setRoleName("");
+    setInitialRoleName("");
     setCheckedCheckboxes([]);
   };
   const navigate = useNavigate();
@@ -359,7 +363,7 @@ const UpdateRole = () => {
         columns={subModuleColumns}
         dataSource={record.subModules}
         pagination={false}
-        showHeader={false}
+        showHeader={true}
       />
     );
   };
@@ -478,6 +482,7 @@ const UpdateRole = () => {
                 Select Role Permissions
               </label>
               <CustomTable
+                className="ant-spin-container"
                 columns={columns}
                 dataSource={dataSource}
                 expandable={{
@@ -506,7 +511,9 @@ const UpdateRole = () => {
                   type="primary"
                   style={{ width: "185px", height: "45px" }}
                   onClick={() => handleUpdateRole()}
-                  disabled={!isAnyCheckboxChecked}
+                  disabled={
+                    !isAnyCheckboxChecked && roleName === initialRoleName
+                  }
                 >
                   Update role
                 </CustomButton>

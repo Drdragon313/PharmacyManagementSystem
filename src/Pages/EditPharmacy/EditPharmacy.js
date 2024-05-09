@@ -265,7 +265,6 @@ const EditPharmacy = () => {
                   <br />
                   <DatePicker
                     className="AddUsersDetailsInput"
-                    required={true}
                     format="DD-MM-YYYY"
                     name="dateOfCreation"
                     onChange={handleDateChange}
@@ -302,7 +301,7 @@ const EditPharmacy = () => {
                     onChange={(value) =>
                       handleSelectChange("managerName", value)
                     }
-                    value={data.managerID}
+                    value={data?.managerName}
                   >
                     {managers.map((manager) => (
                       <Option key={manager.id} value={manager.id}>

@@ -8,11 +8,15 @@ const { Option } = Select;
 const RolesDropdown = ({ excludedRoleId, onSelect }) => {
   const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const authToken = localStorage.getItem("AuthorizationToken");
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const response = await axios.get(`${baseURL}/list-available-roles`);
+        const response = await axios.get(`${baseURL}/list-available-roles`, {
+          headers: {
+            Authorization: `${authToken}`,
+          },
+        });
         const data = response.data;
 
         if (data.status === "success" && data.Data && data.Data.roles) {

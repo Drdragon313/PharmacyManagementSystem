@@ -217,7 +217,7 @@ const Pharmacies = () => {
     {
       title: "Action(s)",
       width: 150,
-      fixed: "right",
+
       render: (text, record) => (
         <Space className="action-btns">
           <Link to={`/pharmacies/${record.id}/pharmacydetails`}>
@@ -357,7 +357,7 @@ const Pharmacies = () => {
             >
               <Select
                 allowClear={true}
-                className="filter-pharm-btn"
+                className="ant-select-selector"
                 mode="multiple"
                 value={selectedPostalCode}
                 onChange={handleSelectedPostalCodeChange}

@@ -75,19 +75,31 @@
   text-decoration: none !important;
 }
 .mobile-drawer-nav {
-  max-width: 26vb !important;
-  min-width: 23vb !important;
+  max-width: 27vb !important;
+  min-width: 22vb !important;
   min-height: 55vh !important;
+  background-color: #3a3475 !important;
+  padding: 0px !important;
 }
-:where(.css-dev-only-do-not-override-nnuwmp).ant-drawer .ant-drawer-body {
+.ant-drawer-body {
+  max-width: 30vb !important;
+  min-width: 25vb !important;
+  min-height: 55vh !important;
+  background-color: #3a3475 !important;
+  padding: 0px !important;
+}
+/* :where(.css-dev-only-do-not-override-nnuwmp).ant-drawer .ant-drawer-body {
   padding-top: 0px !important;
   padding-left: 0px !important;
   padding-right: 0px !important;
 
   background-color: #3a3475;
-}
-:where(.css-dev-only-do-not-override-nnuwmp).ant-drawer .ant-drawer-header {
+} */
+/* :where(.css-dev-only-do-not-override-nnuwmp).ant-drawer .ant-drawer-header {
   background-color: #3a3475;
+} */
+.help-btn {
+  width: max-content;
 }
 
 .mobileButton {
@@ -113,10 +125,14 @@
   .help-btn {
     width: max-content;
   }
+  .mobile-drawer-nav {
+    padding: 1px !important;
+  }
 }
 @media only screen and (min-height: 768px) {
   .mobile-drawer-nav {
-    width: 12vb !important;
+    padding: 1px !important;
+    width: 15vb !important;
     height: 100vh !important;
   }
 }

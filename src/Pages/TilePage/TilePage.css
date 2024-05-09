@@ -39,6 +39,7 @@
   width: 90px;
   align-items: center;
   justify-content: center;
+  margin-top: -13px;
 }
 .schema-content .schema-img {
   height: 60px;
@@ -190,10 +191,19 @@
   background-color: transparent;
   position: absolute;
 }
-
+.dropdown-tile {
+  margin-left: 140px;
+  margin-top: -10px;
+  padding-bottom: -20px;
+  border: none;
+  background-color: transparent;
+}
 .dropdown {
-  margin-left: 150px;
-  margin-top: -20px;
+  margin-left: 140px;
+  margin-top: -8px;
+  /* padding-bottom: -20px; */
+  border: none;
+  background-color: transparent;
 }
 
 .dropdown-content {
