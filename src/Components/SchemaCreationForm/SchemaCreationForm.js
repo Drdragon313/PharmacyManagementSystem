@@ -26,7 +26,10 @@ const SchemaCreationForm = ({ visible, onCancel, selectedType, tilePath }) => {
     try {
       const values = await form.validateFields();
       const { schemaName } = values;
-      if (schema.find((schema) => schema.schema_name === schemaName)) {
+      if (
+        schema &&
+        schema.find((schema) => schema.schema_name === schemaName)
+      ) {
         message.error(
           "Schema name already exists. Please choose a different name."
         );
