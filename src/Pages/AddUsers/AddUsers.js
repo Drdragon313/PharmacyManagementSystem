@@ -1,40 +1,40 @@
-import React, { useEffect, useState } from "react";
-import "./AddUsers.css";
-import Input from "antd/es/input/Input";
-import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
-import axios from "axios";
-import { Col, DatePicker, Row, Select, message } from "antd";
-import { getMaxDate } from "../../Utility Function/DateUtils";
-import { getMinDate } from "../../Utility Function/DateUtils";
+import React, { useEffect, useState } from 'react';
+import './AddUsers.css';
+import Input from 'antd/es/input/Input';
+import { baseURL } from '../../Components/BaseURLAPI/BaseURLAPI';
+import axios from 'axios';
+import { Col, DatePicker, Row, Select, message } from 'antd';
+import { getMaxDate } from '../../Utility Function/DateUtils';
+import { getMinDate } from '../../Utility Function/DateUtils';
 import {
   AddressHandler,
-  PostCodeHandler,
-} from "../../Utility Function/PostCodeUtils";
-import CustomInput from "../../Components/CustomInput/CustomInput";
-import CustomSelect from "../../Components/CustomSelect/CustomSelect";
-import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
-import { useNavigate } from "react-router-dom";
-import moment from "moment";
-import CustomButton from "../../Components/CustomButton/CustomButton";
+  PostCodeHandler
+} from '../../Utility Function/PostCodeUtils';
+import CustomInput from '../../Components/CustomInput/CustomInput';
+import CustomSelect from '../../Components/CustomSelect/CustomSelect';
+import CustomBreadcrumb from '../../Components/CustomBeadcrumb/CustomBreadcrumb';
+import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
+import CustomButton from '../../Components/CustomButton/CustomButton';
 
 const { Option } = Select;
 const AddUsers = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({
-    FName: "",
-    Gender: "",
-    LName: "",
-    Role: "",
-    Email: "",
-    Contact: "",
-    DateOfBirth: "",
+    FName: '',
+    Gender: '',
+    LName: '',
+    Role: '',
+    Email: '',
+    Contact: '',
+    DateOfBirth: '',
     Pharmacy: null,
-    postCode: "",
-    Address: "",
-    Line1: "",
-    Line2: "",
-    postTown: "",
-    Line_Manager: null,
+    postCode: '',
+    Address: '',
+    Line1: '',
+    Line2: '',
+    postTown: '',
+    Line_Manager: null
   });
   const [validContact, setValidContact] = useState(false);
   const [avaiableRoles, setAvailableRoles] = useState([]);
@@ -44,27 +44,27 @@ const AddUsers = () => {
   const [avaiablePharmacies, setAvailablePharmacies] = useState([]);
   const [pCodeResponse, setPCodeResponse] = useState([]);
   const [permissions, setPermissions] = useState([]);
-  const authToken = localStorage.getItem("AuthorizationToken");
+  const authToken = localStorage.getItem('AuthorizationToken');
   const handleFindAddress = () => {
     PostCodeHandler(data, setPCodeResponse);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!data.FName || !data.LName || !data.Email || !data.Role) {
-      message.error("Please fill in necessary fields.", 3);
+      message.error('Please fill in necessary fields.', 3);
       return;
     }
-    const localHeader = localStorage.getItem("AuthorizationToken");
+    const localHeader = localStorage.getItem('AuthorizationToken');
     const headers = {
-      Authorization: localHeader,
+      Authorization: localHeader
     };
     if (validContact) {
       axios
         .post(`${baseURL}/register-user`, data, { headers })
         .then(() => {
-          message.success("User Created Successfully!", 3);
+          message.success('User Created Successfully!', 3);
 
-          navigate("/employeepage");
+          navigate('/employeepage');
         })
         .catch((error) => {
           if (
@@ -75,19 +75,19 @@ const AddUsers = () => {
           ) {
             message.error(error.response.data.error.message, 3);
           } else {
-            message.error("User Creation Failed!", 3);
+            message.error('User Creation Failed!', 3);
           }
         });
     } else {
-      message.error("Please enter a valid UK telephone number.", 3);
+      message.error('Please enter a valid UK telephone number.', 3);
     }
   };
   useEffect(() => {
     axios
       .get(`${baseURL}/list-roles-dropdown`, {
         headers: {
-          Authorization: ` ${authToken}`,
-        },
+          Authorization: ` ${authToken}`
+        }
       })
       .then((response) => {
         const data = response.data.Data.roles;
@@ -97,8 +97,8 @@ const AddUsers = () => {
     axios
       .get(`${baseURL}/list-pharmacies-dropdown`, {
         headers: {
-          Authorization: ` ${authToken}`,
-        },
+          Authorization: ` ${authToken}`
+        }
       })
       .then((response) => {
         const pharmData = response.data.data;
@@ -123,7 +123,7 @@ const AddUsers = () => {
         setManager(managerData);
         setData((prevData) => ({
           ...prevData,
-          Line_Manager: managerData.manager_id,
+          Line_Manager: managerData.manager_id
         }));
       })
       .catch(() => {});
@@ -150,40 +150,40 @@ const AddUsers = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "salary" && parseFloat(value) < 0) {
+    if (name === 'salary' && parseFloat(value) < 0) {
       return;
     }
     setData((prevUserData) => ({
       ...prevUserData,
-      [name]: value,
+      [name]: value
     }));
   };
   const handleDateChange = (date, dateString) => {
     const currentDate = moment();
-    const selectedDate = moment(dateString, "DD-MM-YYYY");
+    const selectedDate = moment(dateString, 'DD/MM/YYYY');
     const maxDate = getMaxDate();
     const minDate = getMinDate();
 
-    if (selectedDate.isAfter(currentDate, "day")) {
-      message.error("Date of Birth cannot be in the future");
-    } else if (selectedDate.isBefore(moment(minDate, "DD-MM-YYYY"))) {
-      message.error("Date of Birth should be after 100 years ago");
-    } else if (selectedDate.isAfter(moment(maxDate, "DD-MM-YYYY"))) {
-      message.error("Date of Birth should be before 18 years ago");
+    if (selectedDate.isAfter(currentDate, 'day')) {
+      message.error('Date of Birth cannot be in the future');
+    } else if (selectedDate.isBefore(moment(minDate, 'DD/MM/YYYY'))) {
+      message.error('Date of Birth should be after 100 years ago');
+    } else if (selectedDate.isAfter(moment(maxDate, 'DD/MM/YYYY'))) {
+      message.error('Date of Birth should be before 18 years ago');
     } else {
       setData((prevUserData) => ({
         ...prevUserData,
-        DateOfBirth: dateString,
+        DateOfBirth: dateString
       }));
     }
   };
 
   const handleSelectChange = (fieldName, value) => {
-    if (fieldName === "Role") {
+    if (fieldName === 'Role') {
       setSelectedRole(value);
-    } else if (fieldName === "Pharmacy") {
+    } else if (fieldName === 'Pharmacy') {
       setSelectedPharmacy(value);
-    } else if (fieldName === "Address") {
+    } else if (fieldName === 'Address') {
       const selectedAddress = pCodeResponse.find(
         (item) => item.address === value
       );
@@ -192,21 +192,21 @@ const AddUsers = () => {
     }
     setData((prevData) => ({
       ...prevData,
-      [fieldName]: value,
+      [fieldName]: value
     }));
   };
   const breadcrumbItems = [
     {
-      label: "Employees",
-      link: "/employeepage",
+      label: 'Employees',
+      link: '/employeepage'
     },
     {
-      label: "Add Employee",
-      link: "/users/AddUser",
-    },
+      label: 'Add Employee',
+      link: '/users/AddUser'
+    }
   ];
   const HandleBtnBacktoLogin = () => {
-    navigate("/employeepage");
+    navigate('/employeepage');
   };
   return (
     <div className="AddUsersBasicContainer">
@@ -242,7 +242,7 @@ const AddUsers = () => {
             />
           </div>
           <div className="adjacent-fields">
-            {" "}
+            {' '}
             <CustomSelect
               labelclassName="addUserNotLabel"
               labelText="Gender"
@@ -250,7 +250,7 @@ const AddUsers = () => {
               name="Gender"
               onChange={handleSelectChange}
               value={data.Gender}
-              options={["Male", "Female", "Other", "Do Not Wish to Disclose"]}
+              options={['Male', 'Female', 'Other', 'Do Not Wish to Disclose']}
             />
             <div>
               <label htmlFor="DOB" className="addUserNotLabel">
@@ -261,12 +261,12 @@ const AddUsers = () => {
                 className="AddUsersDetailsInput"
                 name="DateOfBirth"
                 onChange={handleDateChange}
-                format="DD-MM-YYYY"
+                format="DD/MM/YYYY"
                 disabledDate={(current) =>
                   current &&
-                  (current > moment().endOf("day") ||
-                    current < moment().subtract(100, "years") ||
-                    current > moment().subtract(18, "years"))
+                  (current > moment().endOf('day') ||
+                    current < moment().subtract(100, 'years') ||
+                    current > moment().subtract(18, 'years'))
                 }
               />
             </div>
@@ -288,7 +288,7 @@ const AddUsers = () => {
               {data.Contact.length > 0 && !validContact && (
                 <p className="InvalidContactTxt">Invalid Contact</p>
               )}
-            </div>{" "}
+            </div>{' '}
             <CustomInput
               labelclassName="adduserLabel"
               labelText="Email"
@@ -300,14 +300,14 @@ const AddUsers = () => {
             />
           </div>
           <div className="adjacent-fields">
-            {" "}
+            {' '}
             <div>
               <label className="adduserLabel">Role</label>
               <br />
               <Select
                 className="AddUsersDetailsInput"
                 name="Role"
-                onChange={(value) => handleSelectChange("Role", value)}
+                onChange={(value) => handleSelectChange('Role', value)}
               >
                 {avaiableRoles.map((option) => (
                   <Option key={option.id} value={option.id}>
@@ -315,14 +315,14 @@ const AddUsers = () => {
                   </Option>
                 ))}
               </Select>
-            </div>{" "}
+            </div>{' '}
             <div>
               <label className="addUserNotLabel">Permissions</label>
               <br />
               <Select
                 className="AddUsersDetailsInput"
                 name="Role"
-                onChange={(value) => handleSelectChange("Permissions", value)}
+                onChange={(value) => handleSelectChange('Permissions', value)}
                 disabled={true}
               >
                 {permissions.map((option) => (
@@ -334,19 +334,19 @@ const AddUsers = () => {
             </div>
           </div>
           <div className="adjacent-fields">
-            {" "}
+            {' '}
             <div>
               <label className="addUserNotLabel">Pharmacy</label>
               <br />
               <Select
                 className="AddUsersDetailsInput"
                 name="Role"
-                onChange={(value) => handleSelectChange("Pharmacy", value)}
+                onChange={(value) => handleSelectChange('Pharmacy', value)}
               >
                 {avaiablePharmacies &&
                   avaiablePharmacies.map((option) => (
                     <Option key={option.id} value={option.id}>
-                      {option.pharmacyName}
+                      {option.pharmacyName}-{option.location}
                     </Option>
                   ))}
               </Select>
@@ -367,13 +367,13 @@ const AddUsers = () => {
                 inputclassName="DetailsInput"
                 inputName="Line_Manager"
                 handleChange={handleChange}
-                value={manager?.manager_name || ""}
+                value={manager?.manager_name || ''}
                 disabled={true}
               />
             </div>
           </div>
           <div className="adjacent-fields">
-            {" "}
+            {' '}
             <CustomInput
               labelclassName="addUserNotLabel"
               labelText="Postcode"
@@ -382,7 +382,7 @@ const AddUsers = () => {
               handleChange={handleChange}
               handleBlur={handleFindAddress}
               value={data.postCode}
-            />{" "}
+            />{' '}
             <CustomSelect
               labelclassName="addUserNotLabel"
               labelText="Select address"
@@ -395,7 +395,7 @@ const AddUsers = () => {
             />
           </div>
           <div className="adjacent-fields">
-            {" "}
+            {' '}
             <CustomInput
               labelclassName="addUserNotLabel"
               labelText="Building Name"
@@ -403,7 +403,7 @@ const AddUsers = () => {
               inputName="Line1"
               handleChange={handleChange}
               value={data.Line1}
-            />{" "}
+            />{' '}
             <CustomInput
               labelclassName="addUserNotLabel"
               labelText="Town"

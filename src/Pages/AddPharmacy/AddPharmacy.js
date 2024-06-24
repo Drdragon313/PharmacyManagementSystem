@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from "react";
-import "./AddPharmmacy.css";
+import React, { useState, useEffect } from 'react';
+import './AddPharmmacy.css';
 
-import { Input, Select, DatePicker, message, Button, Image } from "antd";
-import axios from "axios";
-import { baseURL } from "../../Components/BaseURLAPI/BaseURLAPI";
-import CustomInput from "../../Components/CustomInput/CustomInput";
-import CustomSelect from "../../Components/CustomSelect/CustomSelect";
-import moment from "moment";
+import { Input, Select, DatePicker, message, Button, Image } from 'antd';
+import axios from 'axios';
+import { baseURL } from '../../Components/BaseURLAPI/BaseURLAPI';
+import CustomInput from '../../Components/CustomInput/CustomInput';
+import CustomSelect from '../../Components/CustomSelect/CustomSelect';
+import moment from 'moment';
 import {
   AddressHandler,
-  PostCodeHandler,
-} from "../../Utility Function/PostCodeUtils";
-import { Link, useNavigate } from "react-router-dom";
-import CustomButton from "../../Components/CustomButton/CustomButton";
-import CustomBreadcrumb from "../../Components/CustomBeadcrumb/CustomBreadcrumb";
-import AddEmployeeModalEditPharm from "../../Components/AddEmployeeModalEditPharm/AddEmployeeModalEditPharm";
-import plusOutline from "../../Assets/add-circle-line-blue.svg";
-import { fetchUserPermissions } from "../../Utility Function/ModulesAndPermissions";
-import Spinner from "../../Components/Spinner/Spinner";
-import AccessDenied from "../AccessDenied/AccessDenied";
+  PostCodeHandler
+} from '../../Utility Function/PostCodeUtils';
+import { Link, useNavigate } from 'react-router-dom';
+import CustomButton from '../../Components/CustomButton/CustomButton';
+import CustomBreadcrumb from '../../Components/CustomBeadcrumb/CustomBreadcrumb';
+import AddEmployeeModalEditPharm from '../../Components/AddEmployeeModalEditPharm/AddEmployeeModalEditPharm';
+import plusOutline from '../../Assets/add-circle-line-blue.svg';
+import { fetchUserPermissions } from '../../Utility Function/ModulesAndPermissions';
+import Spinner from '../../Components/Spinner/Spinner';
+import AccessDenied from '../AccessDenied/AccessDenied';
 const AddPharmacy = () => {
   const [managers, setManagers] = useState([]);
   const navigate = useNavigate();
@@ -31,27 +31,27 @@ const AddPharmacy = () => {
 
   console.log(users);
   const [data, setData] = useState({
-    pharmacyName: "",
-    dateOfCreation: "",
+    pharmacyName: '',
+    dateOfCreation: '',
     rent: null,
-    Line1: "",
-    Line2: "",
-    postCode: "",
-    postTown: "",
+    Line1: '',
+    Line2: '',
+    postCode: '',
+    postTown: '',
     managerID: null,
-    users: [],
+    users: []
   });
-  const pharmacy_id = "";
+  const pharmacy_id = '';
   useEffect(() => {
     axios
       .get(`${baseURL}/list-pharmacy-managers`)
       .then((response) => {
-        if (response.data.status === "success") {
+        if (response.data.status === 'success') {
           setManagers(response.data.data);
         }
       })
       .catch((error) => {
-        console.error("Error fetching pharmacy managers:", error);
+        console.error('Error fetching pharmacy managers:', error);
       });
   }, []);
 
@@ -63,7 +63,7 @@ const AddPharmacy = () => {
       try {
         await fetchUserPermissions(setUserPermissions);
       } catch (error) {
-        console.error("Error fetching user permissions:", error);
+        console.error('Error fetching user permissions:', error);
       } finally {
         setLoading(false);
       }
@@ -73,7 +73,7 @@ const AddPharmacy = () => {
   }, []);
 
   const canAddPharmacy =
-    permissions?.find((module) => module.module_name === "Pharmacy")?.actions
+    permissions?.find((module) => module.module_name === 'Pharmacy')?.actions
       ?.write || false;
   const handleFindAddress = () => {
     const { postCode, value } = data;
@@ -81,29 +81,29 @@ const AddPharmacy = () => {
     PostCodeHandler(data, setPCodeResponse);
 
     if (postCode !== value) {
-      message.warning("Please update the address according to the postcode");
+      message.warning('Please update the address according to the postcode');
 
       setData((prevUserData) => ({
         ...prevUserData,
-        Line1: "",
-        Line2: "",
-        postTown: "",
+        Line1: '',
+        Line2: '',
+        postTown: ''
       }));
     }
   };
 
   const handleDateChange = (date, dateString) => {
     const currentDate = moment();
-    const selectedDate = moment(dateString, "DD-MM-YYYY");
+    const selectedDate = moment(dateString, 'DD/MM/YYYY');
 
-    if (selectedDate.isAfter(currentDate, "day")) {
-      message.error("Date of creation cannot be in the future");
-    } else if (currentDate.diff(selectedDate, "years") > 100) {
-      message.error("Date of creation cannot be more than 100 years ago");
+    if (selectedDate.isAfter(currentDate, 'day')) {
+      message.error('Date of creation cannot be in the future');
+    } else if (currentDate.diff(selectedDate, 'years') > 100) {
+      message.error('Date of creation cannot be more than 100 years ago');
     } else {
       setData((prevUserData) => ({
         ...prevUserData,
-        dateOfCreation: dateString,
+        dateOfCreation: dateString
       }));
     }
   };
@@ -111,34 +111,34 @@ const AddPharmacy = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "rent" && parseInt(value) < 0) {
-      message.error("Rent cannot be less than 0");
+    if (name === 'rent' && parseInt(value) < 0) {
+      message.error('Rent cannot be less than 0');
     } else {
       setData((prevUserData) => ({
         ...prevUserData,
-        [name]: name === "rent" ? parseInt(value) : value,
+        [name]: name === 'rent' ? parseInt(value) : value
       }));
     }
   };
   const handleSelectChange = (fieldName, value) => {
     setData((prevData) => ({
       ...prevData,
-      [fieldName]: value,
+      [fieldName]: value
     }));
-    if (fieldName === "PharmacyManager") {
+    if (fieldName === 'PharmacyManager') {
       const managerId = value;
 
       setData((prevData) => ({
         ...prevData,
-        managerID: managerId,
+        managerID: managerId
       }));
     }
-    if (fieldName === "Address") {
+    if (fieldName === 'Address') {
       const selectedAddress = pCodeResponse.find(
         (item) => item.address === value
       );
       const selectedUdprn = selectedAddress.udprn;
-      console.log("Selected udpRN:", selectedUdprn);
+      console.log('Selected udpRN:', selectedUdprn);
       AddressHandler(setData, selectedUdprn);
     }
   };
@@ -146,46 +146,46 @@ const AddPharmacy = () => {
     e.preventDefault();
     if (!data.managerID) {
       message.error(
-        "Please select a Pharmacy Manager before creating the pharmacy"
+        'Please select a Pharmacy Manager before creating the pharmacy'
       );
       return;
     }
     if (!data.postCode || !data.postTown) {
-      message.error("Please select the appropriate address");
+      message.error('Please select the appropriate address');
       return;
     }
 
     if (!data.pharmacyName) {
-      message.error("Please Enter a Name for your pharmacy");
+      message.error('Please Enter a Name for your pharmacy');
       return;
     }
     const updatedData = {
       ...data,
-      users: users,
+      users: users
     };
 
     axios
       .post(`${baseURL}/create-pharmacy`, updatedData)
       .then((response) => {
-        console.log("Pharmacy created successfully:", response.data);
-        message.success("Pharmacy Created Successfully");
-        navigate("/pharmacies");
+        console.log('Pharmacy created successfully:', response.data);
+        message.success('Pharmacy Created Successfully');
+        navigate('/pharmacies');
         setData({
-          pharmacyName: "",
-          dateOfCreation: "",
+          pharmacyName: '',
+          dateOfCreation: '',
           rent: null,
-          Line1: "",
-          Line2: "",
-          postCode: "",
-          postTown: "",
+          Line1: '',
+          Line2: '',
+          postCode: '',
+          postTown: '',
           managerID: null,
-          users: [],
+          users: []
         });
         setSelectedUsers([]);
       })
       .catch((error) => {
-        console.error("Error creating pharmacy:", error);
-        message.error("Error creating pharmacy", 3);
+        console.error('Error creating pharmacy:', error);
+        message.error('Error creating pharmacy', 3);
       });
   };
 
@@ -202,12 +202,12 @@ const AddPharmacy = () => {
 
   const updateUsersArray = (selectedUsers) => {
     setSelectedUsers(selectedUsers);
-    console.log("selected user", selectedUsers);
+    console.log('selected user', selectedUsers);
   };
 
   const breadcrumbItems = [
-    { label: "Pharmacy", link: "/pharmacies" },
-    { label: "Add Pharmacy", link: "/pharmacies/AddPharmacy" },
+    { label: 'Pharmacy', link: '/pharmacies' },
+    { label: 'Add Pharmacy', link: '/pharmacies/AddPharmacy' }
   ];
 
   if (loading === true) {
@@ -218,7 +218,7 @@ const AddPharmacy = () => {
       {canAddPharmacy ? (
         <div className="AddPharmacyBasicContainer">
           <div>
-            {" "}
+            {' '}
             <div className="breadcrumb-border-add-pharmacy">
               <CustomBreadcrumb items={breadcrumbItems}></CustomBreadcrumb>
             </div>
@@ -253,11 +253,11 @@ const AddPharmacy = () => {
                   <br />
                   <DatePicker
                     className="AddUsersDetailsInput"
-                    format="DD-MM-YYYY"
+                    format="DD/MM/YYYY"
                     name="dateOfCreation"
                     onChange={handleDateChange}
                     disabledDate={(current) =>
-                      current && current.isAfter(moment().endOf("day"))
+                      current && current.isAfter(moment().endOf('day'))
                     }
                   />
                 </div>
@@ -285,7 +285,7 @@ const AddPharmacy = () => {
                     className="ant-select-selector"
                     name="managerName"
                     onChange={(value) =>
-                      handleSelectChange("PharmacyManager", value)
+                      handleSelectChange('PharmacyManager', value)
                     }
                     value={data.managerID}
                     required={true}
@@ -299,7 +299,7 @@ const AddPharmacy = () => {
                 </div>
               </div>
               <div className="adjacent-fields">
-                {" "}
+                {' '}
                 <CustomInput
                   divclassName="mb-3"
                   labelclassName="adduserNotLabel"
@@ -310,7 +310,7 @@ const AddPharmacy = () => {
                   handleBlur={handleFindAddress}
                   value={data.postCode}
                   required={true}
-                />{" "}
+                />{' '}
                 <CustomSelect
                   divclassName="mb-3"
                   labelclassName="adduserNotLabel"
@@ -327,7 +327,7 @@ const AddPharmacy = () => {
                 />
               </div>
               <div className="adjacent-fields">
-                {" "}
+                {' '}
                 <CustomInput
                   divclassName="mb-3"
                   labelText="Building Name"
@@ -336,7 +336,7 @@ const AddPharmacy = () => {
                   handleChange={handleChange}
                   value={data.Line1}
                   required={true}
-                />{" "}
+                />{' '}
                 <CustomInput
                   divclassName="mb-3"
                   labelText="Post Town"

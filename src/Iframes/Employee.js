@@ -72,6 +72,7 @@ const Employee = () => {
   if (loading === true) {
     return <Spinner />;
   }
+
   return (
     <>
       {subModulePermissionsRead ? (

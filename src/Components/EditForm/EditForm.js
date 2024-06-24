@@ -4,7 +4,7 @@ import CustomSelect from "../Select/Select";
 import { useOptions } from "../../optionContext/OptionContext";
 import { filterValidationOptions } from "../../Utility Function/validationOptions";
 import CustomButton from "../CustomButton/CustomButton";
-
+import "./EditForm.css";
 const EditForm = ({
   editRow,
   onCancel,
